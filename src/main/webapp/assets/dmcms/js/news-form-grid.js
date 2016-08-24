@@ -296,7 +296,7 @@ function getForm(contentType) {
 				label : "所属频道",
 				url : "../channel/tree?siteId=" + currentSiteId,
 				autoParam : [ "id", "name", "pId" ],
-				expandAll : true,
+				expandAll : false,
 				beforeCheck : function(treeId, treeNode) {
 					if (treeNode.isParent) {
 						return false;

@@ -45,7 +45,7 @@
     var FileManager = function (element, options) {
         options = options || {};
         this.$element = $(element);
-        this.options = $.extend(true, {}, FileManager.default, options);
+        this.options = $.extend(true, {}, FileManager.defaults, options);
         this.$pathNav;
         this.pathNavArray;
         this.currentFolder;
@@ -58,7 +58,7 @@
         return this;
     }
 
-    FileManager.default = {
+    FileManager.defaults = {
         "rootPath": "",
         "currentPath": "",
         "height": 500,

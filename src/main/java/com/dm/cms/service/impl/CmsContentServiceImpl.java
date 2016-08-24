@@ -177,7 +177,9 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 				.selectByPrimaryKey(contentId);
 		content.setStatus(new Short("2"));
 		Date now = new Date();
-		content.setPublishDate(now);
+		if(content.getPublishDate()!=null){
+			content.setPublishDate(now);
+		}
 		content.setUpdateTime(now);
 		content.setIsHtml(true);
 		CmsChannel channel = cmsChannelMapper.selectByPrimaryKey(content

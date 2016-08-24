@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream
+
 ;($(document).ready(function(){
 	var url = "http://127.0.0.1/dmbase/cmsStatic/addVisited";
 	var path = window.location.pathname;
