@@ -273,6 +273,7 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 			}
 		} else {
 			cmsContent.setStatus(status);
+			cmsContent.setIsHtml(false);
 			this.cmsContentMapper.updateByPrimaryKeySelective(cmsContent);
 			succ = true;
 

@@ -102,6 +102,8 @@
 				<entry key="videoListDirective" value-ref="videoListDirective" />
 				<entry key="searchListDirective" value-ref="searchListDirective" />
 				<entry key="friendlinkDirective" value-ref="friendlinkDirective"></entry>
+				<entry key="advertisingListDirective" value-ref="advertisingListDirective"></entry>
+				<entry key="advertisingDirective" value-ref="advertisingDirective"></entry>
             </map>
         </property>
         <property name="defaultEncoding">
@@ -130,7 +132,8 @@
     <bean id="videoListDirective" class="com.dm.cms.directive.VideoListDirective" />
     <bean id="searchListDirective" class="com.dm.search.directive.SearchListDirective" />
    <bean id="friendlinkDirective" class="com.dm.cms.directive.FriendlinkListDirective"></bean>
-   
+   <bean id="advertisingListDirective" class="com.dm.cms.directive.AdvertisingListDirective"></bean>
+   <bean id="advertisingDirective" class="com.dm.cms.directive.AdvertisingDirective"></bean>
     <!-- 自定义标签结束 -->
 
     <!-- json格式设置 -->

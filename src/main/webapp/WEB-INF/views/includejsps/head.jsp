@@ -5,7 +5,7 @@
 		<div class="container">
 			<!-- BEGIN LOGO -->
 			<div class="page-logo">
-				<a><img src="<%=basePath%>assets/admin/layout3/img/logo-default.png" alt="logo" class="logo-default"></a>
+<a><img src="<%=basePath%>assets/admin/layout3/img/logo-big-white-jinhu.png" alt="中国·金湖" style="height:66px;"</a>
 			</div>
 			<!-- END LOGO -->
 			<!-- BEGIN RESPONSIVE MENU TOGGLER -->

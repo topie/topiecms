@@ -59,8 +59,8 @@
 <!-- BEGIN LOGO -->
 <div class="logo">
     <a href="#"> <img
-            src="<%=basePath%>assets/admin/layout3/img/logo-big-white.png"
-            style="height: 17px;" alt=""/> </a>
+            src="<%=basePath%>assets/admin/layout3/img/logo-big-white-jinhu.png"
+            style="height: 60px;" alt="中国·金湖"/> </a>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->

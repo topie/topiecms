@@ -23,7 +23,7 @@ public class CmsMessageServiceImpl implements CmsMessageService{
 	@Autowired
 	private CmsMessageMapper cmsMessageMapper;
 	@Value("${cmsMessageIsNeedCheck}")
-	private boolean cmsMessageIsNeedCheck;
+	private Boolean cmsMessageIsNeedCheck;
 	@Autowired
 	private CmsReplyMapper replyMapper;
 
