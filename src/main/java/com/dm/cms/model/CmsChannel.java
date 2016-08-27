@@ -30,12 +30,23 @@ public class CmsChannel implements Serializable {
     
     private String mUrl;
     
+    private String channelIcon;//频道图标
+    
     public Integer getPageSize() {
 		return pageSize;
 	}
 
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
+	}
+	
+
+	public String getChannelIcon() {
+		return channelIcon;
+	}
+
+	public void setChannelIcon(String channelIcon) {
+		this.channelIcon = channelIcon;
 	}
 
 	public String getForbidden() {

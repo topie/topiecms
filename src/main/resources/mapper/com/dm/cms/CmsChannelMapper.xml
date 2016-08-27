@@ -21,6 +21,7 @@
 		<result column="page_size" property="pageSize" jdbcType="VARCHAR"/>
 		<result column="url" property="url" jdbcType="VARCHAR"/>
 		<result column="channel_type" property="channelType" jdbcType="VARCHAR"/>
+		<result column="channel_icon" property="channelIcon" jdbcType="VARCHAR"/>
 	</resultMap>
 	<resultMap id="TreeNodeMap" type="com.dm.platform.dto.TreeNode">
 		<id column="id" property="id" jdbcType="INTEGER" />
@@ -40,7 +41,7 @@
 		id, pid, display_name, en_name, site_id, site_domain, template_id,
 		is_html, seq,
 		create_time,
-		create_user, update_time,forbidden,page_size,url,channel_type
+		create_user, update_time,forbidden,page_size,url,channel_type,channel_icon
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
@@ -107,7 +108,7 @@
 		en_name, site_id,
 		site_domain, template_id,
 		is_html, seq, create_time,
-		create_user,url,channel_type,
+		create_user,url,channel_type,channel_icon,
 		update_time,forbidden,page_size)
 		values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER},
 		#{displayName,jdbcType=VARCHAR},
@@ -118,7 +119,7 @@
 		#{createTime,jdbcType=TIMESTAMP},
 		#{createUser,jdbcType=INTEGER},
 		#{url,jdbcType=VARCHAR},
-		#{channelType},
+		#{channelType},#{channelIcon},
 		#{updateTime,jdbcType=TIMESTAMP},
 		#{forbidden,jdbcType=VARCHAR},
 		#{pageSize})
@@ -177,6 +178,9 @@
 			<if test="channelType != null">
 				channel_type,
 			</if>
+			<if test="channelIcon!=null">
+				channel_icon,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -226,6 +230,9 @@
 			</if>
 			<if test="channelType != null">
 				#{channelType},
+			</if>
+			<if test="channelIcon!=null">
+				#{channelIcon},
 			</if>
 		</trim>
 	</insert>
@@ -277,7 +284,10 @@
 				page_size = #{pageSize},
 			</if>
 			<if test="channelType != null">
-				channel_type = #{channelType} 
+				channel_type = #{channelType}, 
+			</if>
+			<if test="channelIcon!=null">
+				channel_icon=#{channelIcon}
 			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
@@ -309,7 +319,8 @@
 		forbidden =
 		#{forbidden,jdbcType=VARCHAR},
 		page_size = #{pageSize},
-		channel_type = #{channelType}
+		channel_type = #{channelType},
+		channel_icon = #{channelIcon}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<select id="selectRecordsByArgMap" resultMap="BaseResultMap"
@@ -320,7 +331,7 @@
 		t.id,t.pid,t.display_name,t.en_name,t.site_id,t.site_domain,t.template_id,
 		t.is_html,t.seq,
 		t.create_time,
-		t.create_user,t.update_time,t.forbidden,t.page_size,url,channel_type
+		t.create_user,t.update_time,t.forbidden,t.page_size,url,channel_type,channel_icon 
 		FROM
 		cms_channel t
 		LEFT JOIN t_group_channel gc

@@ -509,6 +509,25 @@
 				message : {
 					required : "频道名称"
 				}
+			},{
+				type : 'image',
+				id : 'channelIcon',
+				name : 'channelIcon',
+				label : '频道图标',
+				isAjaxUpload : true,
+				autoUpload : true,
+				uploadUrl : '../attachment/singleUpload',
+				onSuccess : function(data) {
+					if (data.status == "1") {
+						$("#channelIcon")
+								.attr("value", data.attachment.attachmentUrl);
+					} else {
+						alert(data.msg);
+					}
+				},
+				deleteHandle : function() {
+					$("#channelIcon").attr("value", "");
+				}
 			} ];
 			var forbidden={
 				type:'radioGroup',
