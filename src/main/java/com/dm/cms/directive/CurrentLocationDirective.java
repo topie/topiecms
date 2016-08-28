@@ -79,7 +79,7 @@ public class CurrentLocationDirective implements TemplateDirectiveModel {
 							.findOneById(channelId);
 					stb.insert(0, channelEntity.getDisplayName());
 					mstb.insert(0, channelEntity.getDisplayName());
-					CmsChannel parent = getParent(channelId, stb,mstb, divider,
+					CmsChannel parent = getParent(channelEntity.getPid(), stb,mstb, divider,
 							flag);
 					CmsSite siteEntity = cmsSiteService.findOneById(parent.getSiteId());
 					if (siteEntity.getIsHtml() != null && siteEntity.getIsHtml()) {

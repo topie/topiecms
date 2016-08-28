@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 
 import com.dm.cms.model.CmsChannel;
 import com.dm.cms.service.CmsChannelService;
+import com.dm.cms.service.CmsContentService;
 
 import freemarker.core.Environment;
 import freemarker.template.ObjectWrapper;
@@ -29,6 +30,8 @@ public class ChannelDirective implements TemplateDirectiveModel {
 	
 	@Autowired
 	CmsChannelService channelService;
+	@Autowired
+	CmsContentService cmsContentService;
 	
 	@Override
 	public void execute(Environment env,Map params, TemplateModel[] model,
@@ -36,6 +39,9 @@ public class ChannelDirective implements TemplateDirectiveModel {
 		// TODO Auto-generated method stub
 		Integer channelId = Integer.valueOf(getRequiredParam(params, "channelId"));
 		CmsChannel cmsChannel = channelService.findOneById(channelId);
+		if(cmsChannel.getChannelType().equals("3")){//单页
+			cmsChannel.setContentText(cmsContentService.findOneById(cmsChannel.getPageSize()).getContentText());
+		}
 		env.setVariable("channel",ObjectWrapper.DEFAULT_WRAPPER.wrap(cmsChannel));
 		body.render(env.getOut());  
 	}

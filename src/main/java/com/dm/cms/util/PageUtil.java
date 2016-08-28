@@ -30,17 +30,19 @@ public class PageUtil {
 			extendName = ".html";
 		}
 		StringBuffer sb = new StringBuffer();
-		sb.append("<div id='pagination'>");
+		sb.append("<div class=\"text-right new-page\"><span class=\"new-page-pd\"><span class=\"color-green\">");
 		
 		if(totalpage==0){
-			sb.append("第0/0页,"+"共0条记录。");
+			sb.append("0/0</span>&nbsp;页</span>,"
+		+" <span class=\"new-page-pd\">共&nbsp;<span class=\"color-green\">0</span>&nbsp;条记录</span>");
 		}else{
-			sb.append("第"+(thispage)+"/"+totalpage+"页,"+"共"+totalcount+"条记录。");
+			sb.append((thispage)+"/"+totalpage+"</span>&nbsp;页</span>"
+		+"<span class=\"new-page-pd\">共&nbsp;<span class=\"color-green\">"+totalcount+"</span>&nbsp;条记录</span>");
 		}
 		
 		if(thispage==1){
-			sb.append("<a href='javascript:;' class='page_disable'>首页</a>");
-			sb.append("<a href='javascript:;' class='page_disable'>上一页</a>");
+			sb.append("<a href='javascript:;' class='btn btn-link'>首页</a>");
+			sb.append("<a href='javascript:;' class='btn btn-link'>上一页</a>");
 		}else{
 			int newPage = thispage-1;
 			String href;
@@ -52,13 +54,13 @@ public class PageUtil {
 				 href = url.substring(0, url.indexOf(extendName)-1);
 				 href = href + newPage+extendName;
 			}
-			sb.append("<a  href='"+href+"'>首页</a>");
-			sb.append("<a  href="+href+">上一页</a>");
+			sb.append("<a class='btn btn-link' href='"+href+"'>首页</a>");
+			sb.append("<a class='btn btn-link' href="+href+">上一页</a>");
 		}
 		//sb = getChannelPaginationLis(cId,isHtml,htmlDir,sb,thispage,totalpage);
 		if((thispage==totalpage)||(totalpage==0)){
-			sb.append("<a  href='javascript:;' class='page_disable'>下一页</a>");
-			sb.append("<a  href='javascript:;' class='page_disable'>尾页</a>");
+			sb.append("<a  href='javascript:;' class='btn btn-link'>下一页</a>");
+			sb.append("<a  href='javascript:;' class='btn btn-link'>尾页</a>");
 		}else{
 			int newPage = thispage+1;
 			String href;
@@ -68,8 +70,8 @@ public class PageUtil {
 				href = url.substring(0, url.indexOf(extendName)-1);
 				href = href +newPage+extendName;
 			}
-			sb.append("<a href="+href+">下一页</a>");
-			sb.append("<a href="+href+">尾页</a>");
+			sb.append("<a class='btn btn-link' href="+href+">下一页</a>");
+			sb.append("<a class='btn btn-link' href="+href+">尾页</a>");
 		}
 		sb.append("</div>");
 		return sb.toString();

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dm.cms.model.CmsChannel;
 import com.dm.cms.service.CmsChannelService;
+import com.dm.cms.service.CmsContentService;
 
 import freemarker.core.Environment;
 import freemarker.template.ObjectWrapper;
@@ -29,6 +30,8 @@ public class ChannelListDirective implements TemplateDirectiveModel{
 	
 	@Autowired
 	CmsChannelService cmsChannelService;
+	@Autowired
+	CmsContentService cmsContentService;
 	
 	@Override
 	public void execute(Environment env, Map params, TemplateModel[] loopVars,
@@ -58,6 +61,11 @@ public class ChannelListDirective implements TemplateDirectiveModel{
 		List<CmsChannel> cmsChannels = cmsChannelService.findByRoot(params);
 		log.debug("-------params------{}",params);
 		log.debug("-------channelIds------{}",cmsChannels.size());
+		for(CmsChannel c:cmsChannels){
+			if(c.getChannelType().equals("3")){//单页
+				c.setContentText(cmsContentService.findOneById(c.getPageSize()).getContentText());
+			}
+		}
 		env.setVariable("channels",ObjectWrapper.DEFAULT_WRAPPER.wrap(cmsChannels));
 		body.render(env.getOut());  
 	}
