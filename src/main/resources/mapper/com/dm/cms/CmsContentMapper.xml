@@ -26,6 +26,9 @@
         <result column="status" property="status" jdbcType="SMALLINT"/>
         <result column="origin" property="origin" jdbcType="VARCHAR"/>
         <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="is_comment" property="isComment" jdbcType="BIT" />
+        <result column="title_style" property="titleStyle" jdbcType="VARCHAR"/>
+        <result column="keywords" property="keywords" jdbcType="VARCHAR"/>
         <result column="seq" property="seq" jdbcType="INTEGER"/>
     </resultMap>
     <resultMap id="AttachmentMap" type="com.dm.cms.model.CmsAttachment">
@@ -57,7 +60,7 @@
         -->
         id, title, title_image_url, title_image_illustrate, brief, content_type, author,
         publish_date, channel_id,channel_en_name,site_domain, template_id, is_html, create_time,
-        create_user, update_time,url,origin,seq,
+        create_user, update_time,url,origin,seq,is_comment,title_style,keywords,
         status
     </sql>
     <sql id="Blob_Column_List">
@@ -121,7 +124,7 @@
         author, publish_date, channel_id,channel_en_name,site_domain,
         template_id, is_html, create_time,
         create_user, update_time, status,content_text,origin,url,
-        seq)
+        seq,is_comment,title_style,keywords)
         values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
         #{titleImageUrl,jdbcType=VARCHAR},
         #{titleImageIllustrate,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR},
@@ -133,7 +136,8 @@
         #{templateId,jdbcType=INTEGER}, #{isHtml,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP},
         #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
         #{status,jdbcType=SMALLINT},
-        #{contentText,jdbcType=LONGVARCHAR},#{origin},#{url},#{seq})
+        #{contentText,jdbcType=LONGVARCHAR},#{origin},#{url},#{seq},#{isComment,jdbcType=BIT},#{titleStyle,jdbcType=VARCHAR}
+        ,#{keywords,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.dm.cms.model.CmsContent" useGeneratedKeys="true"
             keyProperty="id">
@@ -203,8 +207,17 @@
             <if test="url!=null">
             	url,
             </if>
-            <if test="seq!=null">
+              <if test="seq!=null">
             	seq,
+            </if>
+            <if test="isComment!=null">
+            	is_comment,
+            </if>
+             <if test="keywords!=null">
+            	keywords,
+            </if>
+             <if test="titleStyle!=null">
+            	title_style,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -270,6 +283,15 @@
             </if>
             <if test="seq!=null">
             	#{seq},
+            </if>
+            <if test="isComment!=null">
+            	#{isComment,jdbcType=BIT},
+            </if>
+            <if test="keywords!=null">
+            	#{keywords},
+            </if>
+            <if test="titleStyle!=null">
+            	#{titleStyle},
             </if>
         </trim>
     </insert>
@@ -366,7 +388,8 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
         status = #{status,jdbcType=SMALLINT},
         content_text = #{contentText,jdbcType=LONGVARCHAR},
-        origin=#{origin},url=#{url},seq=#{seq}
+        origin=#{origin},url=#{url},seq=#{seq},
+        keywords
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.dm.cms.model.CmsContent">
@@ -391,7 +414,9 @@
         create_user = #{createUser,jdbcType=INTEGER},
         update_time = #{updateTime,jdbcType=TIMESTAMP},
         status = #{status,jdbcType=SMALLINT},
-        origin=#{origin},url=#{url},seq=#{seq}
+        origin=#{origin},url=#{url},seq=#{seq},
+        is_comment=#{isComment,jdbcType=BIT},title=#{titleStyle,jdbcType=VARCHAR}
+        ,keywords=#{keywords,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 

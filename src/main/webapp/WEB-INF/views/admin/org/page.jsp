@@ -482,7 +482,23 @@
                 message: {
                     required: "请输入组织机构"
                 }
-            }, {
+            }, 
+            {
+                type: 'text',//类型
+                name: 'orgPerson',//name
+                id: 'orgPerson',//id
+                label: '部门负责人',//左边label
+                cls: 'input-large'
+            }, 
+            {
+                type: 'text',//类型
+                name: 'orgDuty',//name
+                id: 'orgDuty',//id
+                label: '负责人职务',//左边label
+                showIcon: true,
+                cls: 'input-large',
+            },
+            {
                 type: 'text',//类型
                 name: 'seq',//name
                 id: 'seq',//id
@@ -497,7 +513,8 @@
                     required: "请输入图标",
                     number: "请输入数字"
                 }
-            }, {
+            }, 
+            {
                 type: 'tree',//类型
                 name: 'userIds',//name
                 id: 'userIds',//id

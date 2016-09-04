@@ -297,20 +297,13 @@ function getAudioForm(typeId) {
 
 		},
 		ajaxSuccess : function() {
-			modal.hide();
+			$("#content_grid").html("");
 			grid.reload();
 		},
 		submitText : "保存",// 保存按钮的文本
 		showReset : true,// 是否显示重置按钮
 		resetText : "重置",// 重置按钮文本
 		isValidate : true,// 开启验证
-		buttons : [ {
-			type : 'button',
-			text : '关闭',
-			handle : function() {
-				modal.hide();
-			}
-		} ],
 		buttonsAlign : "center",
 		// 表单元素
 		items : items

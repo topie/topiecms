@@ -2,6 +2,7 @@ package com.dm.cms.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -291,6 +292,57 @@ public class CmsPortalController {
 		model.addAttribute("webSurvey", webSur);
 		return "/template/result";
     }
+	
+	@RequestMapping("/leader/leaderfront")
+    public String leaderfront(Model model,String id)
+    {
+		if(StringUtils.isEmpty(id))
+			id="1";
+         Leader leader = leaderService.findOne(id);
+         model.addAttribute("leader",leader);
+         return "/template/leader";
+    }
+	
+	@RequestMapping("/org/orgList")
+    public String orgList(Model model,Integer pageNum,Integer pageSize)
+    {
+		pageNum = pageNum==null?1:pageNum;
+		pageSize = pageSize==null?15:pageSize;
+        List<Org> orgs = orgService.listOrg(pageNum-1, pageSize);
+        Long total = orgService.countMenuGrou();
+        long totalPage = total/pageSize;
+        long nextPage = 0;
+        long prePage =0 ;
+        if(total%pageSize!=0)
+        {
+        	totalPage++;
+        }
+        if(pageNum<totalPage)
+        {
+        nextPage = pageNum+1;
+        }
+        else
+        {
+           nextPage=totalPage;	
+        }
+        if(pageNum>1)
+        {
+        prePage = pageNum-1; 
+        }
+        else
+        {
+        	prePage =1;
+        }
+        model.addAttribute("total", total);
+        model.addAttribute("orgs", orgs);
+        model.addAttribute("pageNum", pageNum);
+        model.addAttribute("nextPage", nextPage);
+        model.addAttribute("prePage", prePage);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalPage", totalPage);
+		return "/template/org_content";
+    }
+
 	@RequestMapping("/interview/{inteviewId}.htm")
 	public String interiew(Model model,@PathVariable("inteviewId")Integer inteviewId)
 	{
