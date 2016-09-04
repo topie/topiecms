@@ -368,8 +368,8 @@ var options = {
 		}
 	};
 /*************访谈类gird**************/
-var options = {
-		url : "./list", // ajax地址
+var interviewOptions = {
+		url : "../interview/list", // ajax地址
 		pageNum : 1,// 当前页码
 		pageSize : 5,// 每页显示条数
 		idFiled : "id",// id域指定
@@ -383,10 +383,15 @@ var options = {
 			field : "title",
 			sort : true
 		}, {
-			title : "来源",
-			field : "origin",
-			sort : true
+			title : "开始时间",
+			field : "startTime"
 		}, {
+			title : "开始时间",
+			field : "startTime"
+		}, {
+			title : "嘉宾",
+			field : "guests"
+		},{
 			title : "状态",
 			field : "status",
 			format : function(i, c) {
@@ -408,21 +413,21 @@ var options = {
 			cls : "green btn-sm",
 			icon : "fa fa-search",
 			handle : function(index, data) {
-				window.open(data.url);
+				window.open(data.filed1);
 			}
 		}, {
 
 			text : "发布",
 			cls : "green btn-sm",
 			handle : function(i, data) {
-				var url = "./check?status=2&ids="+data.id
+				var url = "../interview/check?status=2&ids="+data.id
 				check(url,data.id);
 			}
 		}, {
 			text : "驳回",
 			cls : "yellow btn-sm",
 			handle : function(i, data) {
-				var url = "./check?status=3&ids="+data.id
+				var url = "../interview/check?status=3&ids="+data.id
 				check(url,data.id);
 			}
 		} ],
@@ -432,7 +437,7 @@ var options = {
 			cls : "btn green btn-sm",
 			handle : function(i, data) {
 				var ids = grid.getSelectIds();
-				var url = "./check?status=2&ids="+ids;
+				var url = "../interview/check?status=2&ids="+ids;
 				check(url,ids);
 			}
 		}, {
@@ -440,7 +445,7 @@ var options = {
 			cls : "btn green btn-sm",
 			handle : function(i, data) {
 				var ids = grid.getSelectIds();
-				var url = "./check?status=3&ids="+ids;
+				var url = "../interview/check?status=3&ids="+ids;
 				check(url,ids);
 			}
 		}],

@@ -51,7 +51,7 @@ public class CmsInterviewServiceIpml implements CmsInterviewService {
 	public Map insert(CmsInterview interview) {
 		Date now = new Date();
 		interview.setCreateTime(now);
-		interview.setStatus("1");
+		interview.setStatus("0");
 		UserAccount user = UserAccountUtil.getInstance()
 				.getCurrentUserAccount();
 		if (user != null)
@@ -303,6 +303,22 @@ public class CmsInterviewServiceIpml implements CmsInterviewService {
 		PageHelper.startPage(pageNum, pageSize);
 		return new PageInfo<CmsInterviewRole>(this.cmsInterviewRoleMapper.findList(map));
 	
+	}
+
+	@Override
+	public void checke(String ids, String status) {
+		if(ids!=null && !ids.equals("")){
+			String [] d = ids.split(",");
+			for(String i:d){
+				Integer id = Integer.valueOf(i);
+				CmsInterview record = new CmsInterview();
+				record.setId(id);
+				record.setStatus(status);
+				this.cmsInterviewMapper.updateByPrimaryKeySelective(record);
+			}
+				
+		}
+		
 	}
 
 }

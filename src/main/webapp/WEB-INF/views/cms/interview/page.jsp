@@ -280,6 +280,14 @@
 				if(res.status==1){
 					bootbox.alert("操作成功");
 					currentInterviewId=res.interviewId;
+					 $("#about_grid").html("");
+						$("#image_grid").html("");
+						$("#role_grid").html("");
+						 $("#record_grid").html("");
+					about_grid = $("#about_grid").dmGrid(aboutoptions(currentInterviewId));
+					image_grid = $("#image_grid").dmGrid(imageoptions(currentInterviewId));
+					role_grid = $("#role_grid").dmGrid(roleoptions(currentInterviewId));
+					record_grid = $("#record_grid").dmGrid(recordoptions(currentInterviewId));
 				}else{
 					bootbox.alert("操作失败");
 				}
@@ -529,7 +537,6 @@
 		in_modal = $.dmModal({
 			id : "siteForm",
 			title : "添加",
-			height:"500px",
 			width:"800px",
 			distroy : true
 		});
@@ -671,7 +678,10 @@
 				text : "添加",
 				cls : "btn green btn-sm",//按钮样式
 				handle : function(grid) {
-
+					if(currentInterviewId==''){
+						bootbox.alert('请先添加基本信息!');
+						return false;
+					}
 					inFoMode(roleFormOpt,{interviewId:currentInterviewId});
 				}
 			} ]	
@@ -810,6 +820,10 @@
 				text : "添加",
 				cls : "btn green btn-sm",//按钮样式
 				handle : function(grid) {
+					if(currentInterviewId==''){
+						bootbox.alert('请先添加基本信息!');
+						return false;
+					}
 					inFoMode(recordFormOpt(currentInterviewId),{interviewId:currentInterviewId});
 				}
 			} ]
@@ -871,8 +885,8 @@
 						id : 'roleId',//id
 						label : '发言人',//左边label
 						cls : 'input-large',
-						item:[],
-						itmeUrl:"../interview/loadRolesRadio?interviewId="+id,
+						items:[],
+						itemsUrl:"../interview/loadRolesRadio?interviewId="+id,
 						rule : {
 							required : true
 						},

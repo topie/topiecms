@@ -18,6 +18,7 @@ import com.dm.cms.model.CmsAttachment;
 import com.dm.cms.model.CmsAudio;
 import com.dm.cms.model.CmsChannel;
 import com.dm.cms.model.CmsContent;
+import com.dm.cms.model.CmsInterview;
 import com.dm.cms.model.CmsNovel;
 import com.dm.cms.model.CmsSite;
 import com.dm.cms.model.CmsTemplate;
@@ -28,6 +29,7 @@ import com.dm.cms.service.CmsAttachmentService;
 import com.dm.cms.service.CmsAudioService;
 import com.dm.cms.service.CmsChannelService;
 import com.dm.cms.service.CmsContentService;
+import com.dm.cms.service.CmsInterviewService;
 import com.dm.cms.service.CmsNovelService;
 import com.dm.cms.service.CmsSiteService;
 import com.dm.cms.service.CmsTemplateService;
@@ -83,6 +85,8 @@ public class CmsPortalController {
 	OrgService orgService;
 	 @Autowired
 	 private CmsVoteService cmsVoteService;
+	 @Autowired
+	 private CmsInterviewService cmsInterviewService;
 
 	private Logger log = LoggerFactory.getLogger(CmsPortalController.class);
 
@@ -287,6 +291,14 @@ public class CmsPortalController {
 		model.addAttribute("webSurvey", webSur);
 		return "/template/result";
     }
+	@RequestMapping("/interview/{inteviewId}.htm")
+	public String interiew(Model model,@PathVariable("inteviewId")Integer inteviewId)
+	{
+		CmsInterview c =this.cmsInterviewService.loadOne(inteviewId);
+		model.addAttribute("cmsInterview", c);
+		
+		return  getTemplatePath(Integer.valueOf(c.getFiled2()), false);
+	}
 	@RequestMapping("/vote/{voteId}.htm")
     public String vote(Model model,@PathVariable("voteId") Integer voteId)
     {

@@ -72,4 +72,6 @@ public interface CmsInterviewService {
 
 	CmsInterviewImage loadImage(Integer imageId);
 
+	void checke(String ids, String status);
+
 }

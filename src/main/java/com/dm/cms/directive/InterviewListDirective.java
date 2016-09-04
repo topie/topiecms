@@ -1,4 +1,3 @@
-
 package com.dm.cms.directive;
 
 import java.io.IOException;
@@ -12,11 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.dm.cms.model.CmsChannel;
-import com.dm.cms.model.CmsInterview;
 import com.dm.cms.model.CmsNovel;
 import com.dm.cms.model.CmsVote;
 import com.dm.cms.service.CmsChannelService;
-import com.dm.cms.service.CmsInterviewService;
 import com.dm.cms.service.CmsVoteService;
 import com.dm.cms.util.PageUtil;
 import com.github.pagehelper.PageInfo;
@@ -34,12 +31,12 @@ import freemarker.template.TemplateModel;
  * @author wjl
  * @createdate 2016年1月15日 下午2:45:16
  */
-public class VoteListDirective implements TemplateDirectiveModel {
+public class InterviewListDirective implements TemplateDirectiveModel {
 
-	private Logger log = LoggerFactory.getLogger(VoteListDirective.class);
+	private Logger log = LoggerFactory.getLogger(InterviewListDirective.class);
 
 	@Autowired
-	private CmsInterviewService cmsInterviewService;
+	private CmsVoteService cmsVoteService;
 	@Autowired
 	private CmsChannelService cmsChannelService;
 
@@ -72,9 +69,9 @@ public class VoteListDirective implements TemplateDirectiveModel {
 		novel.setChannelId(channelId);
 		novel.setStatus("5");
 		map.put("model", novel);
-		PageInfo<CmsInterview> page = this.cmsInterviewService.findByPage(pageNum, pageSize, map);
+		PageInfo<CmsVote> page = this.cmsVoteService.findPage(pageNum, pageSize, map);
 
-		List<CmsInterview> novels = page.getList();
+		List<CmsVote> novels = page.getList();
 		// long total = page.getTotal();
 		int titleLeft = 0;
 		if (params.get("titleLeft") != null) {
@@ -84,7 +81,7 @@ public class VoteListDirective implements TemplateDirectiveModel {
 		if (params.get("descLeft") != null) {
 			descLeft = Integer.valueOf(params.get("descLeft").toString());
 		}
-			for (CmsInterview ce : novels) {
+			for (CmsVote ce : novels) {
 				if ( descLeft!= 0 && ce.getTitle().length() > descLeft) {
 					ce.setTitle(ce.getTitle()
 							.substring(0, descLeft) + "……");

@@ -63,6 +63,12 @@ public class CmsInterviewController {
 		map.put("interviewId", interview.getId());
 		return map;
 	}
+	@RequestMapping("/check")
+	@ResponseBody
+	public Object insertOrUpdate(String ids,String status){
+		 this.cmsInterviewService.checke(ids,status);
+		 return ResponseUtil.success();
+	}
 	@RequestMapping("/list")
 	@ResponseBody
 	public Object list(
@@ -191,8 +197,8 @@ public class CmsInterviewController {
 		List<Map> radios = new ArrayList<Map>();
 		for(CmsInterviewRole ro:roles){
 			Map m = new HashMap();
-			map.put("text", role.getRoleName()+"["+role.getPersonName()+"]");
-			map.put("value", role.getId());
+			map.put("text", ro.getRoleName()+"["+role.getPersonName()+"]");
+			map.put("value", ro.getId());
 			radios.add(map);
 		}
 		return radios;

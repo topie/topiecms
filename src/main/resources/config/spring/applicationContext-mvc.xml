@@ -136,7 +136,7 @@
    <bean id="friendlinkDirective" class="com.dm.cms.directive.FriendlinkListDirective"></bean>
    <bean id="advertisingListDirective" class="com.dm.cms.directive.AdvertisingListDirective"></bean>
    <bean id="advertisingDirective" class="com.dm.cms.directive.AdvertisingDirective"></bean>
-   <bean id="voteListDirective" calss="com.dm.cms.directive.VoteListDirective"></bean>
+   <bean id="voteListDirective" class="com.dm.cms.directive.VoteListDirective"></bean>
     <!-- 自定义标签结束 -->
 
     <!-- json格式设置 -->
