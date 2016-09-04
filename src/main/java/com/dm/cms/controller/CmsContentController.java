@@ -102,6 +102,8 @@ public class CmsContentController {
 				.getChannelId());
 		cmsContent.setSiteDomain(cmsChannel.getSiteDomain());
 		cmsContent.setChannelEnName(cmsChannel.getEnName());
+		String titleStyleArray[] = cmsContent.getTitleStyle().split(","); 
+		cmsContent.setTitleStyle("font-size:"+titleStyleArray[1]+";color:"+titleStyleArray[0]);
 		cmsContentService.insertCmsContent(cmsContent);
 	}
 

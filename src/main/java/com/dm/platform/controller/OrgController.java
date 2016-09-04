@@ -124,6 +124,8 @@ public class OrgController extends DefaultController {
 				org.setId(System.currentTimeMillis());
 				org.setCode(UUIDUtils.getUUID16());
 				org.setName(dto.getName());
+				org.setOrgDuty(dto.getOrgDuty());
+				org.setOrgPerson(dto.getOrgPerson());
 				org.setSeq(dto.getSeq());
 				if(dto.getpId()!=null){
 					Org po = orgService.findOne(dto.getpId());
@@ -134,6 +136,8 @@ public class OrgController extends DefaultController {
 				org = orgService.findOne(dto.getId());
 				org.setName(dto.getName());
 				org.setSeq(dto.getSeq());
+				org.setOrgDuty(dto.getOrgDuty());
+				org.setOrgPerson(dto.getOrgPerson());
 				orgService.updateOrg(org);
 			}
 			if(!StringUtils.isEmpty(dto.getUserIds())){

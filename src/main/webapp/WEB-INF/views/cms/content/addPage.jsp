@@ -17,7 +17,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>后台管理 | 内容信息管理和发布</title>
+<title>TOPIECMS | 内容信息管理和发布</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 <meta content="" name="description" />
@@ -55,7 +55,7 @@
 		<!-- END PAGE HEAD -->
 		<!-- BEGIN PAGE CONTENT -->
 		<div class="page-content">
-			<div class="container" style="width:1300px;">
+			<div class="container">
 				<!-- BEGIN PAGE CONTENT INNER -->
 				<div class="row margin-top-10">
 					<div class="col-md-3 col-sm-12">
@@ -163,17 +163,8 @@
      type="text/javascript"></script>
      <script src="<%=basePath%>assets/dmcms/js/audio-form-grid.js"
      type="text/javascript"></script>
-      <script src="<%=basePath%>assets/dmcms/js/interview-form-grid.js"
-     type="text/javascript"></script>
-     <%--  <script src="<%=basePath%>assets/dmcms/js/interview-about.js"
-     type="text/javascript"></script>
-      <script src="<%=basePath%>assets/dmcms/js/interview-role.js"
-     type="text/javascript"></script>
-      <script src="<%=basePath%>assets/dmcms/js/interview-image.js"
-     type="text/javascript"></script>
-      <script src="<%=basePath%>assets/dmcms/js/interview-record.js"
-     type="text/javascript"></script>
-	  --%><script type="text/javascript">
+     
+	<script type="text/javascript">
 	/**********普通内容操作函数****************/
 	function deleteItems(ids) {
 		if (ids.length > 0) {
@@ -355,7 +346,7 @@
 							label : "频道",
 							url : "../channel/tree?siteId=" + currentSiteId+"&channelType="+currentChannelType,
 							autoParam : [ "id", "name", "pId" ],
-							expandAll : false,
+							expandAll : true,
 							chkboxType:{"Y": "s","N": ""},
 							beforeCheck:function(treeId, treeNode) {
 									if (treeNode.isParent) {
@@ -393,10 +384,7 @@
 			{
 			formOption = getNovelForm(contentType);
 			}
-		else if(currentChannelType == '8')
-		{
-		formOption = getInterviewForm(contentType);
-		}
+		
 		var form = modal.$body.dmForm(formOption);
 		form.setValue("channelId", currentChannelId);
 		form.setValue("contentType",contentType);
@@ -418,8 +406,8 @@
 			{
 			formOption = getNovelForm(contentType);
 			}
-		$("#content_grid").html("");
-		var form = $("#content_grid").dmForm(formOption);
+		
+		var form = modal.$body.dmForm(formOption);
 		form.setValue("channelId", currentChannelId);
 		form.setValue("contentType",contentType);
 	}
@@ -427,7 +415,6 @@
 		initSelect2Site();
 		grid = $("#content_grid").dmGrid(options);
 	});
-	
 	</script>
 	<!-- END JAVASCRIPTS -->
 </body>

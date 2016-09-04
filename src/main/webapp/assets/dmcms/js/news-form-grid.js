@@ -4,7 +4,27 @@ var channelTree;
 var currentSiteId;
 var currentChannelId;
 var currentChannelType;
-
+function flushGrid()
+{
+	$("#content_grid").html("");
+	if (currentChannelType == '0') {
+		options.url = "./list?channelId=" + currentChannelId;
+		grid = $("#content_grid").dmGrid(options);
+	} else if (currentChannelType == '5') {
+		videoOptions.url = "../video/list?channelId="
+				+ currentChannelId;
+		grid = $("#content_grid").dmGrid(videoOptions);
+	} else if (currentChannelType == '6') {
+		audioOptions.url = "../audio/list?channelId="
+				+ currentChannelId;
+		grid = $("#content_grid").dmGrid(audioOptions);
+	} 
+	else if (currentChannelType == '7') {
+		novelOptions.url = "../novel/list?channelId="
+				+ currentChannelId;
+		grid = $("#content_grid").dmGrid(novelOptions);
+	}
+}
 var channelSetting = {
 	view : {
 		showIcon : false,
@@ -51,6 +71,10 @@ var channelSetting = {
 			channelTree.expandAll(false);
 		},
 		onClick : function(event, treeId, treeNode) {
+			currentChannelId = treeNode.id;
+			currentChannelType = treeNode.type;
+			flushGrid();
+			/*
 			currentChannelId = treeNode.id;
 			if (currentChannelType == treeNode.type) {
 				if (currentChannelType == '0') {
@@ -106,6 +130,7 @@ var channelSetting = {
 					grid = $("#content_grid").dmGrid(interviewOptions);
 				}
 			}
+			}*/
 		}
 	}
 };
@@ -207,13 +232,14 @@ var options = {
 		handle : function(index, data) {
 			// index为点击操作的行数
 			// data为该行的数据
-			modal = $.dmModal({
+			/*modal = $.dmModal({
 				id : "siteForm",
 				title : "编辑内容信息-" + data.title,
 				distroy : true
 			});
-			modal.show();
-			var form = modal.$body.dmForm(getForm(data.contentType));
+			modal.show();*/
+			$("#content_grid").html("");
+			var form = $("#content_grid").dmForm(getForm(data.contentType));
 			form.loadRemote("./load?contentId=" + data.id);
 		}
 	}, {
@@ -331,6 +357,46 @@ function getForm(contentType) {
 				}
 			},
 			{
+				type : 'colorpicker',// 类型
+				name : 'titleStyle',// name
+				id : 'titleStyle',// id
+				label : '标题颜色',// 左边label
+				cls : 'input-large'
+			},
+			{
+				type : 'select',// 类型
+				name : 'titleStyle',// name
+				id : 'titleStyle',// id
+				label : '标题字体',// 左边label
+				cls : 'input-large',
+				items : [ {
+					value : "20px",
+					text : '20px'
+				},{
+					value : "25px",
+					text : '25px'
+				},{
+					value : "30px",
+					text : '30px'
+				}, {
+					value : "35px",
+					text : '35px'
+				}, {
+					value : "40px",
+					text : '40px'
+				}, {
+					value : "50px",
+					text : '50px'
+				}]
+			},
+			{
+				type : 'text',// 类型
+				name : 'keywords',// name
+				id : 'keywords',// id
+				label : '关键字',// 左边label
+				cls : 'input-large'
+			},
+			{
 				type : 'textarea',// 类型
 				row : 3,
 				name : 'brief',// name
@@ -379,6 +445,19 @@ function getForm(contentType) {
 				} ],
 				itemsUrl : "../template/selects?templateType=2&siteId="
 						+ currentSiteId
+			},{
+				type : 'select',// 类型
+				name : 'isComment',// name
+				id : 'isComment',// id
+				label : '是否开启评论',// 左边label
+				cls : 'input-large',
+				items : [ {
+					value : false,
+					text : '否'
+				},{
+					value : true,
+					text : '是'
+				} ],
 			} ];
 	var titleImg = {
 		type : 'image',
@@ -465,20 +544,12 @@ function getForm(contentType) {
 
 		},
 		ajaxSuccess : function() {
-			modal.hide();
-			grid.reload();
+			flushGrid();
 		},
 		submitText : "保存",// 保存按钮的文本
 		showReset : true,// 是否显示重置按钮
 		resetText : "重置",// 重置按钮文本
 		isValidate : true,// 开启验证
-		buttons : [ {
-			type : 'button',
-			text : '关闭',
-			handle : function() {
-				modal.hide();
-			}
-		} ],
 		buttonsAlign : "center",
 		// 表单元素
 		items : items

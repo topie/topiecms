@@ -11,6 +11,8 @@ public class OrgDto {
 		this.id = org.getId();
 		this.name = org.getName();
 		this.code = org.getCode();
+		this.orgDuty = org.getOrgDuty();
+		this.orgPerson = org.getOrgPerson();
 		this.seq = org.getSeq();
 		if(org.getParent()!=null){
 			this.pId = org.getParent().getId();
@@ -39,6 +41,10 @@ public class OrgDto {
 	private String userIds;
 	
 	private String childrenIds;
+	
+	private String orgPerson;
+	
+	private String orgDuty;
 
 	public Long getId() {
 		return id;
@@ -82,5 +88,16 @@ public class OrgDto {
 	public void setChildrenIds(String childrenIds) {
 		this.childrenIds = childrenIds;
 	}
-	
+	public String getOrgPerson() {
+		return orgPerson;
+	}
+	public void setOrgPerson(String orgPerson) {
+		this.orgPerson = orgPerson;
+	}
+	public String getOrgDuty() {
+		return orgDuty;
+	}
+	public void setOrgDuty(String orgDuty) {
+		this.orgDuty = orgDuty;
+	}
 }
