@@ -9,8 +9,8 @@
     <result column="target" property="target" jdbcType="VARCHAR" />
     <result column="image_width" property="imageWidth" jdbcType="VARCHAR" />
     <result column="image_height" property="imageHeight" jdbcType="VARCHAR" />
-    <result column="startime" property="startime" jdbcType="TIMESTAMP" />
-    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="startime" property="startime" jdbcType="VARCHAR" />
+    <result column="endtime" property="endtime" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="site_id" property="siteId" jdbcType="BIGINT" />
     <result column="click_count" property="clickCount" jdbcType="INTEGER" />
@@ -61,7 +61,7 @@
       enabled)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, 
       #{link,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR}, #{imageWidth,jdbcType=VARCHAR}, 
-      #{imageHeight,jdbcType=VARCHAR}, #{startime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{imageHeight,jdbcType=VARCHAR}, #{startime,jdbcType=VARCHAR}, #{endtime,jdbcType=VARCHAR}, 
       #{type,jdbcType=VARCHAR}, #{siteId,jdbcType=BIGINT}, #{clickCount,jdbcType=INTEGER}, 
       #{enabled,jdbcType=BIT})
   </insert>
@@ -131,10 +131,10 @@
         #{imageHeight,jdbcType=VARCHAR},
       </if>
       <if test="startime != null" >
-        #{startime,jdbcType=TIMESTAMP},
+        #{startime,jdbcType=VARCHAR},
       </if>
       <if test="endtime != null" >
-        #{endtime,jdbcType=TIMESTAMP},
+        #{endtime,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
@@ -172,10 +172,10 @@
         image_height = #{imageHeight,jdbcType=VARCHAR},
       </if>
       <if test="startime != null" >
-        startime = #{startime,jdbcType=TIMESTAMP},
+        startime = #{startime,jdbcType=VARCHAR},
       </if>
       <if test="endtime != null" >
-        endtime = #{endtime,jdbcType=TIMESTAMP},
+        endtime = #{endtime,jdbcType=VARCHAR},
       </if>
       <if test="type != null" >
         type = #{type,jdbcType=VARCHAR},
@@ -200,8 +200,8 @@
       target = #{target,jdbcType=VARCHAR},
       image_width = #{imageWidth,jdbcType=VARCHAR},
       image_height = #{imageHeight,jdbcType=VARCHAR},
-      startime = #{startime,jdbcType=TIMESTAMP},
-      endtime = #{endtime,jdbcType=TIMESTAMP},
+      startime = #{startime,jdbcType=VARCHAR},
+      endtime = #{endtime,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
       site_id = #{siteId,jdbcType=BIGINT},
       click_count = #{clickCount,jdbcType=INTEGER},

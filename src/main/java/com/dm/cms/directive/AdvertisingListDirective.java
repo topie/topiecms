@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dm.cms.model.CmsAdvertising;
 import com.dm.cms.service.CmsAdvertisingService;
+import com.dm.platform.util.DmDateUtil;
 import com.github.pagehelper.PageInfo;
 
 import freemarker.core.Environment;
@@ -46,8 +47,8 @@ public class AdvertisingListDirective implements TemplateDirectiveModel {
 		if (params.get("checkDate") != null
 				&& Boolean.valueOf(params.get("checkDate").toString())) {
 			Date now = new Date();
-			ad.setStartime(now);
-			ad.setEndtime(now);
+			ad.setStartime(DmDateUtil.DateToStr(now));
+			ad.setEndtime(DmDateUtil.DateToStr(now));
 		}
 		if (params.get("type") != null) {
 			ad.setType(params.get("type").toString());

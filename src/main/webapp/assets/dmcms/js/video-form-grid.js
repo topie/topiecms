@@ -11,10 +11,10 @@ var videoOptions = {
 	indexNumWidth : "5%",
 	pageSelect : [ 5, 15, 30, 50 ],
 	cloums : [ {
-		title : "片名",
+		title : "标题",
 		field : "name"
 	}, {
-		title : "导演",
+		title : "作者",
 		field : "director"
 	}, {
 		title : "状态",
@@ -121,22 +121,8 @@ var videoOptions = {
 		handle : function(grid) {
 			deleteItems(grid.getSelectIds());
 		}
-	} ],
-	search : {
-		rowEleNum : 2,
-		// 搜索栏元素
-		items : [ {
-			type : "text",
-			label : "片名",
-			name : "name",
-			placeholder : "输入要搜索的影片名"
-		}, {
-			type : "text",
-			label : "导演",
-			name : "actor",
-			placeholder : "输入要搜索的导演姓名"
-		} ]
-	}
+	} ]
+	
 };
 
 /** *************视频表单*************** */
@@ -161,14 +147,14 @@ function getVideoForm(typeId) {
 				type : 'text',// 类型
 				name : 'name',// name
 				id : 'name',// id
-				label : '片名',// 左边label
+				label : '标题',// 左边label
 				cls : 'input-large',
 				rule : {
 					required : true,
 					maxlength : 50
 				},
 				message : {
-					required : "请输入片名",
+					required : "请输入标题",
 					maxlength : "最多输入50字符"
 				}
 			},
@@ -176,46 +162,8 @@ function getVideoForm(typeId) {
 				type : 'text',// 类型
 				name : 'director',// name
 				id : 'director',// id
-				label : '导演',// 左边label
-				cls : 'input-large',
-				rule : {
-					required : true,
-					maxlength : 50
-				},
-				message : {
-					required : "请输入片名",
-					maxlength : "最多输入50字节"
-				}
-			},
-			{
-				type : 'text',// 类型
-				name : 'actor',// name
-				id : 'actor',// id
-				label : '演员',// 左边label
-				cls : 'input-large',
-				rule : {
-					required : true,
-					maxlength : 100
-				},
-				message : {
-					required : "请输入演员",
-					maxlength : "最多输入100字符"
-				}
-			},
-			{
-				type : 'text',// 类型
-				name : 'origin',// name
-				id : 'origin',// id
-				label : '来源',// 左边label
-				cls : 'input-large',
-				rule : {
-					required : true,
-					maxlength : 100
-				},
-				message : {
-					required : "请输入来源",
-					maxlength : "最多输入100字符"
-				}
+				label : '作者',// 左边label
+				cls : 'input-large'
 			},
 			{
 				type : 'select',// 类型
@@ -234,21 +182,15 @@ function getVideoForm(typeId) {
 		type : 'kindEditor',
 		name : 'introduce',
 		id : 'introduce',
-		label : '影片介绍',
+		label : '视频介绍',
 		height : "300px",
-		width : "400px",
-		rule : {
-			required : true
-		},
-		message : {
-			required : "影片介绍"
-		}
+		width : "400px"
 	};
 	var titleImg = {
 		type : 'image',
 		id : 'imageUrl',
 		name : 'imageUrl',
-		label : '影片海报图',
+		label : '视频图片',
 		isAjaxUpload : true,
 		autoUpload : true,
 		uploadUrl : '../attachmentOther/singleUpload?mediaType=video',
@@ -288,9 +230,22 @@ function getVideoForm(typeId) {
 			required : "上传视频",
 		}
 	};
+	var videoUrl={
+			type : 'text',
+			name : 'origin',
+			id : 'origin',
+			label : '视频地址',
+			rule : {
+				required : true
+			},
+			message : {
+				required : "请填写视频地址",
+			}
+	}
 	items.push(titleImg);
 	items.push(contentText);
-	items.push(offic);
+	items.push(videoUrl);
+	//items.push(offic);
 	var formOpts = {
 		id : "media_form",// 表单id
 		name : "media_form",// 表单名

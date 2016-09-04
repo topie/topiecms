@@ -48,7 +48,7 @@ var channelSetting = {
 					closeInSeconds : 5
 				});
 			}
-			channelTree.expandAll(true);
+			channelTree.expandAll(false);
 		},
 		onClick : function(event, treeId, treeNode) {
 			currentChannelId = treeNode.id;
@@ -69,6 +69,11 @@ var channelSetting = {
 				else if (currentChannelType == '7') {
 					grid.reload({
 						url : "../novel/list?channelId=" + currentChannelId
+					});
+				}
+				else if (currentChannelType == '8') {
+					grid.reload({
+						url : "../interview/list?channelId=" + currentChannelId
 					});
 				}
 			} else {
@@ -93,6 +98,12 @@ var channelSetting = {
 					novelOptions.url = "../novel/list?channelId="
 							+ currentChannelId;
 					grid = $("#content_grid").dmGrid(novelOptions);
+				}
+				else if (currentChannelType == '8') {
+					$("#content_grid").html("");
+					interviewOptions.url = "../interview/list?channelId="
+							+ currentChannelId;
+					grid = $("#content_grid").dmGrid(interviewOptions);
 				}
 			}
 		}
@@ -336,6 +347,12 @@ function getForm(contentType) {
 				}
 			},
 			{
+				type : 'datepicker',//类型
+				name : 'publishTime',//name
+				id : 'publishTime',//id
+				label : '发布时间',//左边label
+				cls : 'input-large'
+			},{
 				type : 'text',// 类型
 				name : 'origin',// name
 				id : 'origin',// id

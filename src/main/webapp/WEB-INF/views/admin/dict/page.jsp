@@ -1,10 +1,14 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,com.dm.platform.util.TDictUtil" pageEncoding="UTF-8"%>
 <%@ taglib uri="/WEB-INF/tlds/c.tld" prefix="c"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
+	String name="TOPIECMS";
+	/* if(TDictUtil.getJsonByTDictCode("ZD.01")!=null){
+		name =TDictUtil.getJsonByTDictCode("ZD.01");
+	} */
 %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -17,7 +21,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>TOPIECMS | 站点管理</title>
+<title>后台管理  | 字典管理</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 <meta content="" name="description" />

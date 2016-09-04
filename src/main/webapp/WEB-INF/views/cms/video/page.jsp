@@ -17,7 +17,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>TOPIECMS | 娱乐和wiki</title>
+<title>后台管理 | 娱乐和wiki</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 <meta content="" name="description" />

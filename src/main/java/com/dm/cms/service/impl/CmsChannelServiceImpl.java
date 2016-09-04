@@ -281,8 +281,24 @@ import com.github.pagehelper.PageInfo;
     
     @Override
     public List<CmsChannel> findByRoot(Map argMap)
-    {
+    {	
+    	Integer pageNum =null;
+    	Integer pageSize = null;
+    	if(argMap.get("pageSize")!=null){
+    		pageSize = Integer.valueOf(argMap.get("pageSize").toString());
+    		if(argMap.get("pageNum")!=null){
+    			pageNum = Integer.valueOf(argMap.get("pageNum").toString());
+    		}
+    		if(pageNum==null) pageNum=1;
+    	}
+    	if(pageSize!=null){
+    		PageHelper.startPage(pageNum, pageSize);
+    	}
     	List<CmsChannel> cmsChannels =  cmsChannelMapper.selectByRoot(argMap);
+    	if(pageSize!=null){
+    		PageInfo<CmsChannel> page = new PageInfo<CmsChannel>(cmsChannels);
+    		cmsChannels = page.getList();
+    	}
     	return cmsChannels;
     }
     

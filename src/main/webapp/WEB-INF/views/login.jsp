@@ -12,7 +12,7 @@
 <!-- BEGIN HEAD -->
 <head>
     <meta charset="utf-8"/>
-    <title>TOPIECMS | 登录</title>
+    <title>后台管理 | 登录</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -211,7 +211,7 @@
     </form>
     <!-- END REGISTRATION FORM -->
 </div>
-<div class="copyright hide">2015 © TOPIECMS. orange.
+<div class="copyright hide">2015 © 中国. 金湖.
 </div>
 <!-- END LOGIN -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->

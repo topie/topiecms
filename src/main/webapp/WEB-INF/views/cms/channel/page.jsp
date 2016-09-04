@@ -17,7 +17,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>TOPIECMS | 频道管理</title>
+<title>后台管理 | 频道管理</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 <meta content="" name="description" />
@@ -216,7 +216,7 @@
 							closeInSeconds : 5
 						});
 					}
-					channelTree.expandAll(true);
+					channelTree.expandAll(false);
 				},
 				onClick : function(event, treeId, treeNode) {
 					currentChannelId = treeNode.id;
@@ -302,6 +302,8 @@
 						return "音频频道";
 					if(c.channelType==7)
 						return "小说频道";
+					if(c.channelType==8)
+						return "访谈频道";
 					return "普通频道";
 				},
 				width : "10%"
@@ -427,6 +429,14 @@
 					icon : "fa fa-cubes",
 					handle : function(grid) {//按钮点击事件
 						showForm('5',"视频频道");
+					}
+				},
+				{
+					text : "访谈频道",//按钮文本
+					cls : "btn green btn-sm",//按钮样式
+					icon : "fa fa-cubes",
+					handle : function(grid) {//按钮点击事件
+						showForm('8',"访谈频道");
 					}
 				},{
 					text : "音频频道",//按钮文本
@@ -639,12 +649,17 @@
 				items.push(pageSize);
  				items.push(templateType);
 			}
-			else if(channelType==6){//小说频道
+			else if(channelType==6){//音乐频道
 				items.push(eName);
 				items.push(pageSize);
  				items.push(templateType);
 			}
-			else if(channelType==7){//小说频道
+			else if(channelType==7){//视频频道
+				items.push(eName);
+				items.push(pageSize);
+ 				items.push(templateType);
+			}
+			else if(channelType==8){//访谈频道
 				items.push(eName);
 				items.push(pageSize);
  				items.push(templateType);
