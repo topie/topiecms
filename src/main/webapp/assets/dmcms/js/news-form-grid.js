@@ -24,6 +24,22 @@ function flushGrid()
 				+ currentChannelId;
 		grid = $("#content_grid").dmGrid(novelOptions);
 	}
+	else if (currentChannelType == '8') {
+		$("#content_grid").html("");
+		interviewOptions.url = "../interview/list?channelId="
+				+ currentChannelId;
+		grid = $("#content_grid").dmGrid(interviewOptions);
+	}
+	else if (currentChannelType == '9') {
+		$("#content_grid").html("");
+		voteOptions.url = "../vote/list?channelId="
+				+ currentChannelId;
+		grid = $("#content_grid").dmGrid(voteOptions);
+	}else if (currentChannelType == '10') {
+		$("#content_grid").html("");
+		fileoptions.url = "./list?channelId=" + currentChannelId;
+		grid = $("#content_grid").dmGrid(fileoptions);
+	}
 }
 var channelSetting = {
 	view : {
