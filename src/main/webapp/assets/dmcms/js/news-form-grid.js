@@ -149,7 +149,7 @@ var channelSetting = {
 					grid = $("#content_grid").dmGrid(fileoptions);
 				}
 			}
-			}*/
+			}
 		}
 	}
 };
