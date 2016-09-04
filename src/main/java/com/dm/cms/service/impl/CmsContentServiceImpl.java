@@ -1,5 +1,6 @@
 package com.dm.cms.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 
 import com.dm.cms.handler.generatorHtmlHandler;
 import com.dm.cms.model.CmsAttachment;
@@ -72,6 +76,10 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 			cmsContent.setTemplateId(cmsTemplateConfigService.load(null,
 					cmsContent.getChannelId()).getContentTemplateId());
 		}
+		if(cmsContent.getPublishDate()==null){
+			cmsContent.setPublishDate(new Date());
+		}
+		cmsContent.setCreateTime(new Date());
 		cmsContentMapper.insertSelective(cmsContent);
 	}
 
@@ -349,5 +357,10 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		cmsContent.setSeq(cmsContentSeq);
 		this.cmsContentMapper.updateByPrimaryKeySelective(cmsContent);
 	}
+	@InitBinder
+    public void initBinder(ServletRequestDataBinder binder){
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
+                true));
+    }
 
 }

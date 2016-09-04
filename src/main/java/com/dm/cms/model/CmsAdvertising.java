@@ -1,6 +1,5 @@
 package com.dm.cms.model;
 
-import java.util.Date;
 
 public class CmsAdvertising {
     private Integer id;
@@ -17,9 +16,9 @@ public class CmsAdvertising {
 
     private String imageHeight;
     
-    private Date startime;
+    private String startime;
 
-    private Date endtime;
+    private String endtime;
 
     private String type;
 
@@ -85,19 +84,19 @@ public class CmsAdvertising {
         this.imageHeight = imageHeight == null ? null : imageHeight.trim();
     }
 
-    public Date getStartime() {
+    public String getStartime() {
         return startime;
     }
 
-    public void setStartime(Date startime) {
+    public void setStartime(String startime) {
         this.startime = startime;
     }
 
-    public Date getEndtime() {
+    public String getEndtime() {
         return endtime;
     }
 
-    public void setEndtime(Date endtime) {
+    public void setEndtime(String endtime) {
         this.endtime = endtime;
     }
 

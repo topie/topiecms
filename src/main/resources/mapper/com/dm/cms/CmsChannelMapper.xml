@@ -90,6 +90,12 @@
 					    #{item}  
 					 </foreach>
 			    </if>
+			    <if test="cludeIds != null">
+                  and id in
+	                 <foreach item="item" index="index" collection="cludeIds" open="(" separator="," close=")">  
+					    #{item}  
+					 </foreach>
+			    </if>
 			     order by ${order}
         </where>
 	</select>
