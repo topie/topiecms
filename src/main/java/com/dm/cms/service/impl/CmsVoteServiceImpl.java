@@ -1,6 +1,7 @@
 package com.dm.cms.service.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,6 +116,25 @@ public class CmsVoteServiceImpl implements CmsVoteService {
 		CmsVoteOption o = this.cmsVoteOptionMapper.selectByPrimaryKey(id);
 		o.setClickTimes(o.getClickTimes()+1);
 		this.cmsVoteOptionMapper.updateByPrimaryKey(o);
+	}
+
+	@Override
+	public CmsVote findOne(Integer id) {
+		return this.cmsVoteMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public CmsVoteOption findOneOpt(Integer id) {
+		return this.cmsVoteOptionMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<CmsVoteOption> loadOpt(Integer voteId) {
+		Map map = new HashMap();
+		CmsVoteOption op = new CmsVoteOption();
+		op.setVoteId(voteId);
+		map.put("model", op);
+		return this.cmsVoteOptionMapper.findList(map);
 	}
 
 }

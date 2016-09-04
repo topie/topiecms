@@ -107,6 +107,7 @@
 				<entry key="leaderListDirective" value-ref="leaderListDirective"></entry>
 				<entry key="leaderDirective" value-ref="leaderDirective"></entry>
 				<entry key="orgListDirective" value-ref="orgListDirective"></entry>
+				<entry key="voteListDirectiev" value-ref="voteListDirective"></entry>
             </map>
         </property>
         <property name="defaultEncoding">
@@ -137,9 +138,11 @@
    <bean id="friendlinkDirective" class="com.dm.cms.directive.FriendlinkListDirective"></bean>
    <bean id="advertisingListDirective" class="com.dm.cms.directive.AdvertisingListDirective"></bean>
    <bean id="advertisingDirective" class="com.dm.cms.directive.AdvertisingDirective"></bean>
+<<<<<<< HEAD
    <bean id="leaderDirective" class="com.dm.cms.directive.LeaderDirective"></bean>
     <bean id="leaderListDirective" class="com.dm.cms.directive.LeaderListDirective"></bean>
     <bean id="orgListDirective" class="com.dm.cms.directive.OrgListDirective"></bean>
+   <bean id="voteListDirective" class="com.dm.cms.directive.VoteListDirective"></bean>
     <!-- 自定义标签结束 -->
 
     <!-- json格式设置 -->

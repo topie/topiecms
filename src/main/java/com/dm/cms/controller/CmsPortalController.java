@@ -2,18 +2,6 @@ package com.dm.cms.controller;
 
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,18 +19,23 @@ import com.dm.cms.model.CmsAttachment;
 import com.dm.cms.model.CmsAudio;
 import com.dm.cms.model.CmsChannel;
 import com.dm.cms.model.CmsContent;
+import com.dm.cms.model.CmsInterview;
 import com.dm.cms.model.CmsNovel;
 import com.dm.cms.model.CmsSite;
 import com.dm.cms.model.CmsTemplate;
 import com.dm.cms.model.CmsVideo;
+import com.dm.cms.model.CmsVote;
+import com.dm.cms.model.CmsVoteOption;
 import com.dm.cms.service.CmsAttachmentService;
 import com.dm.cms.service.CmsAudioService;
 import com.dm.cms.service.CmsChannelService;
 import com.dm.cms.service.CmsContentService;
+import com.dm.cms.service.CmsInterviewService;
 import com.dm.cms.service.CmsNovelService;
 import com.dm.cms.service.CmsSiteService;
 import com.dm.cms.service.CmsTemplateService;
 import com.dm.cms.service.CmsVideoService;
+import com.dm.cms.service.CmsVoteService;
 import com.dm.platform.model.Org;
 import com.dm.platform.service.OrgService;
 import com.dm.websurvey.model.Leader;
@@ -91,6 +84,10 @@ public class CmsPortalController {
 	 @Autowired LeaderService leaderService;
 	 @Autowired
 	OrgService orgService;
+	 @Autowired
+	 private CmsVoteService cmsVoteService;
+	 @Autowired
+	 private CmsInterviewService cmsInterviewService;
 
 	private Logger log = LoggerFactory.getLogger(CmsPortalController.class);
 
@@ -346,6 +343,32 @@ public class CmsPortalController {
 		return "/template/org_content";
     }
 
+	@RequestMapping("/interview/{inteviewId}.htm")
+	public String interiew(Model model,@PathVariable("inteviewId")Integer inteviewId)
+	{
+		CmsInterview c =this.cmsInterviewService.loadOne(inteviewId);
+		model.addAttribute("cmsInterview", c);
+		
+		return  getTemplatePath(Integer.valueOf(c.getFiled2()), false);
+	}
+	@RequestMapping("/vote/{voteId}.htm")
+    public String vote(Model model,@PathVariable("voteId") Integer voteId)
+    {
+		CmsVote webSur =this.cmsVoteService.findOne(voteId);
+		model.addAttribute("cmsVote", webSur);
+		List<CmsVoteOption> potions = this.cmsVoteService.loadOpt(voteId);
+		model.addAttribute("options",potions);
+		return  getTemplatePath(Integer.valueOf(webSur.getFiled2()), false);
+    }
+	@RequestMapping("/vote/{voteId}r.htm")
+    public String voter(Model model,@PathVariable("voteId") Integer voteId)
+    {
+		CmsVote webSur =this.cmsVoteService.findOne(voteId);
+		model.addAttribute("cmsVote", webSur);
+		List<CmsVoteOption> potions = this.cmsVoteService.loadOpt(voteId);
+		model.addAttribute("options",potions);
+		return  getTemplatePath(Integer.valueOf(webSur.getFiled2()), false)+"_result";
+    }
 	/*
 	 * @RequestMapping("/channel/{enName}_{channelId}.htm") public String
 	 * channel(Model model, @PathVariable("channelId") Integer channelId,

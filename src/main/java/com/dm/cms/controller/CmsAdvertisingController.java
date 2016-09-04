@@ -1,7 +1,10 @@
 package com.dm.cms.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dm.cms.model.CmsAdvertising;
 import com.dm.cms.service.CmsAdvertisingService;
+import com.dm.platform.model.TDictItem;
 import com.dm.platform.util.PageConvertUtil;
 import com.dm.platform.util.ResponseUtil;
 import com.dm.platform.util.SqlParam;
+import com.dm.platform.util.TDictUtil;
 import com.github.pagehelper.PageInfo;
 
 @Controller
@@ -75,6 +80,7 @@ public class CmsAdvertisingController {
 		 this.cmsAdvertisingService.click(id);
 		 return ResponseUtil.success();
 	}
+	
 	@InitBinder
     public void initBinder(ServletRequestDataBinder binder){
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),

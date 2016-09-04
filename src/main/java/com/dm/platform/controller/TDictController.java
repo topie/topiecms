@@ -118,6 +118,19 @@ public class TDictController {
 		this.tDictService.deleteItem(itemid);
 		return ResponseUtil.success("操作成功！");
 	}
+	@RequestMapping("/getItems")
+	@ResponseBody
+	public Object getLocal(String code){
+		List<TDictItem> list =TDictUtil.itemList(code);
+		List<Map> ls = new ArrayList<Map>();
+		for(TDictItem item:list){
+			Map mp = new HashMap();
+			mp.put("text", item.getItemName());
+			mp.put("value", item.getItemCode());
+			ls.add(mp);
+		}
+		 return ls;
+	}
 //	@ExceptionHandler(DmErrorException.class)
 //	public Object ExceptionHandler(DmErrorException e){
 //		return ResponseUtil.error(e.getErr());

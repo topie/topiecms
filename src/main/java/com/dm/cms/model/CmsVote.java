@@ -2,6 +2,8 @@ package com.dm.cms.model;
 
 import java.util.Date;
 
+import com.dm.platform.util.ConfigUtil;
+
 public class CmsVote {
     private Integer id;
 
@@ -27,11 +29,11 @@ public class CmsVote {
 
     private String createUser;
 
-    private Date publishTime;
+    private String publishTime;
 
-    private String filed1;
+    private String filed1;//url
 
-    private String filed2;
+    private String filed2;//模板
 
     private String filed3;
 
@@ -133,16 +135,17 @@ public class CmsVote {
         this.createUser = createUser == null ? null : createUser.trim();
     }
 
-    public Date getPublishTime() {
+    public String getPublishTime() {
         return publishTime;
     }
 
-    public void setPublishTime(Date publishTime) {
+    public void setPublishTime(String publishTime) {
         this.publishTime = publishTime;
     }
 
     public String getFiled1() {
-        return filed1;
+    	String projectName = ConfigUtil.getConfigContent("cms","projectName");
+		return "/"+projectName+"/portal/vote/"+id+".htm";
     }
 
     public void setFiled1(String filed1) {

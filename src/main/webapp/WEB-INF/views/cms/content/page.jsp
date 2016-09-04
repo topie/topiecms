@@ -165,6 +165,8 @@
      type="text/javascript"></script>
       <script src="<%=basePath%>assets/dmcms/js/interview-form-grid.js"
      type="text/javascript"></script>
+      <script src="<%=basePath%>assets/dmcms/js/vote-form-grid.js"
+     type="text/javascript"></script>
      <%--  <script src="<%=basePath%>assets/dmcms/js/interview-about.js"
      type="text/javascript"></script>
       <script src="<%=basePath%>assets/dmcms/js/interview-role.js"
@@ -195,6 +197,14 @@
 					else if(currentChannelType=='7')
 					{
 					url = "../novel/delete?novelIds=" + ids;	
+					}
+					else if(currentChannelType=='8')
+					{
+					url = "../novel/delete?novelIds=" + ids;	
+					}
+					else if(currentChannelType=='9')
+					{
+					url = "../vote/delete?voteIds=" + ids;	
 					}
 					$.ajax({
 						type : "POST",
@@ -396,6 +406,10 @@
 		else if(currentChannelType == '8')
 		{
 		formOption = getInterviewForm(contentType);
+		}
+		else if(currentChannelType == '9')
+		{
+		formOption = getVoteForm(contentType);
 		}
 		var form = modal.$body.dmForm(formOption);
 		form.setValue("channelId", currentChannelId);

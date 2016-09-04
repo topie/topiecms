@@ -13,7 +13,7 @@
     <result column="filed5" property="filed5" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, vote_id, option, click_times, filed1, filed2, filed3, filed4, filed5
+    id, vote_id, `option`, click_times, filed1, filed2, filed3, filed4, filed5
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -25,7 +25,7 @@
     select 
     <include refid="Base_Column_List" />
     from cms_vote_option
-    where vote_id = #{voteId,jdbcType=INTEGER}
+    where vote_id = #{model.voteId,jdbcType=INTEGER}
     order by id
     </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -33,7 +33,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.dm.cms.model.CmsVoteOption" >
-    insert into cms_vote_option (id, vote_id, option, 
+    insert into cms_vote_option (id, vote_id, `option`, 
       click_times, filed1, filed2, 
       filed3, filed4, filed5
       )
@@ -52,7 +52,7 @@
         vote_id,
       </if>
       <if test="option != null" >
-        option,
+        `option`,
       </if>
       <if test="clickTimes != null" >
         click_times,
@@ -110,7 +110,7 @@
         vote_id = #{voteId,jdbcType=INTEGER},
       </if>
       <if test="option != null" >
-        option = #{option,jdbcType=VARCHAR},
+        `option` = #{option,jdbcType=VARCHAR},
       </if>
       <if test="clickTimes != null" >
         click_times = #{clickTimes,jdbcType=INTEGER},
@@ -136,7 +136,7 @@
   <update id="updateByPrimaryKey" parameterType="com.dm.cms.model.CmsVoteOption" >
     update cms_vote_option
     set vote_id = #{voteId,jdbcType=INTEGER},
-      option = #{option,jdbcType=VARCHAR},
+      `option` = #{option,jdbcType=VARCHAR},
       click_times = #{clickTimes,jdbcType=INTEGER},
       filed1 = #{filed1,jdbcType=VARCHAR},
       filed2 = #{filed2,jdbcType=VARCHAR},

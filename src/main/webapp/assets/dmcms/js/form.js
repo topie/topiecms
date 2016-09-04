@@ -389,6 +389,26 @@
                 });
                 return ele;
             },
+            'textButton': function (data, form) {
+                var buttonInputImpl = '<div class="input-icon"><input showicon=${showIcon_} id="${id_}" class="form-control ${cls_}" ${readonly_} ${disabled_} ${attribute_} name="${name_}" placeholder="${placeholder_}" type="text">'
+                	+'</div><span class="input-group-btn"><button id="${id_}_button" class="btn btn-success" type="button"> ${buttonName_}</button></span></div></div>';
+                var ele = $.tmpl(textTmpl, {
+                    "id_": (data.id == undefined ? data.name : data.id),
+                    "name_": data.name,
+                    "showIcon_": data.showIcon == undefined ? false
+                        : data.showIcon,
+                    "placeholder_": (data.placeholder == undefined ? ""
+                        : data.placeholder),
+                    "cls_": data.cls == undefined ? ""
+                        : (data.icon != undefined ? "" : data.cls),
+                    "readonly_": (data.readonly ? "readonly" : ""),
+                    "disabled_": (data.disabled ? "disabled" : ""),
+                    "attribute_": (data.attribute == undefined ? ""
+                        : data.attribute),
+                    "buttonName_":(data.buttonName == undefined ? "按钮":data.buttonName)
+                });
+                return ele;
+            },
             'password': function (data, form) {
                 var passwordTmpl = '<input type="password" id="${id_}" name="${name_}" class="form-control ${cls_}" ${readonly_} ${disabled_} ${attribute_} placeholder="${placeholder_}">';
                 var ele = $.tmpl(passwordTmpl, {

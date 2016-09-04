@@ -1,9 +1,14 @@
 package com.dm.cms.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,28 +55,62 @@ public class CmsVoteController {
 		this.cmsVoteService.updateStatus(id,"9");
 		return ResponseUtil.success();
 	}
+	@RequestMapping("/load")
+	@ResponseBody
+	public Object load(Integer id){
+		return this.cmsVoteService.findOne(id);
+	}
+	@RequestMapping("/loadOpt")
+	@ResponseBody
+	public Object loadOpt(Integer id){
+		return this.cmsVoteService.findOneOpt(id);
+	}
 	@RequestMapping("/check")
 	@ResponseBody
-	public Object check(Integer id){
-		this.cmsVoteService.updateStatus(id,"2");
+	public Object check(String voteIds){
+		if(voteIds==null && voteIds.equals("")){
+			return ResponseUtil.error();
+		}
+		for(String i:voteIds.split(",")){
+			Integer id = Integer.valueOf(i);
+			this.cmsVoteService.updateStatus(id,"2");
+		}
 		return ResponseUtil.success();
 	}
 	@RequestMapping("/back")
 	@ResponseBody
-	public Object back(Integer id){
-		this.cmsVoteService.updateStatus(id,"3");
+	public Object back(String  voteIds){
+		if(voteIds==null && voteIds.equals("")){
+			return ResponseUtil.error();
+		}
+		for(String i:voteIds.split(",")){
+			Integer id = Integer.valueOf(i);
+			this.cmsVoteService.updateStatus(id,"3");
+		}
 		return ResponseUtil.success();
 	}
 	@RequestMapping("/pass")
 	@ResponseBody
-	public Object pass(Integer id){
-		this.cmsVoteService.updateStatus(id,"4");
+	public Object pass(String  voteIds){
+		if(voteIds==null && voteIds.equals("")){
+			return ResponseUtil.error();
+		}
+		for(String i:voteIds.split(",")){
+			Integer id = Integer.valueOf(i);
+			this.cmsVoteService.updateStatus(id,"4");
+		}
 		return ResponseUtil.success();
 	}
 	@RequestMapping("/publish")
 	@ResponseBody
-	public Object publish(Integer id){
-		this.cmsVoteService.updateStatus(id,"5");
+	public Object publish(String  voteIds){
+		if(voteIds==null && voteIds.equals("")){
+			return ResponseUtil.error();
+		}
+		for(String i:voteIds.split(",")){
+			Integer id = Integer.valueOf(i);
+			this.cmsVoteService.updateStatus(id,"5");
+		}
 		return ResponseUtil.success();
 	}
 	@RequestMapping("/listOpt")
@@ -109,5 +148,10 @@ public class CmsVoteController {
 		this.cmsVoteService.commitCheck(voteId,optionIds);
 		return ResponseUtil.success();
 	}
+	@InitBinder
+    public void initBinder(ServletRequestDataBinder binder){
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
+                true));
+    }
 	
 }

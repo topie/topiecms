@@ -171,7 +171,7 @@
 					}
 					return '<image src="'+c.imageUrl+'" title="'+c.name+'" style="width:90px;"/>';
 				}
-			},{
+			}/* ,{
 				title : "是否展示",
 				field : "",
 				width : "10%",
@@ -181,7 +181,7 @@
 					}
 					return "否";
 				}
-			} ],
+			}  */],
 			actionCloumText : "操作",//操作列文本
 			actionCloumWidth : "20%",
 			actionCloums : [
@@ -193,6 +193,28 @@
 						}
 					}
 					,{
+						
+						text : "删除",
+						cls : "btn red btn-sm",//按钮样式
+						handle : function(i,c) {
+							deleteItem(c.id);
+						}
+					}
+					/* ,{
+						
+						textHandle : function(i,c){
+							if(c.enabled){
+								return "设置为不展示";
+							}
+							return "设置为展示";
+						},
+						cls : "btn yellow btn-sm",//按钮样式
+						handle : function(i,c) {
+							$.ajax(){
+								
+							}
+						}
+					}, */{
 						
 						text : "删除",
 						cls : "btn red btn-sm",//按钮样式
@@ -290,6 +312,12 @@
 				deleteHandle : function() {
 					$("#imageUrl").attr("value", "");
 				}
+			},{
+				type:"radioGroup",
+				name:"type",
+				id :"type",
+				label:"位置",
+				items:[{text:"位置1",value:"AD1"},{text:"位置2",value:"AD2"},{text:"位置3",value:"AD3"}]
 			},{
 				type : 'datepicker',//类型
 				name : 'startime',//name

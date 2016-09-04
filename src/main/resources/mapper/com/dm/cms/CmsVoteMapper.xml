@@ -14,7 +14,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="click_count" property="clickCount" jdbcType="INTEGER" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
-    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="publish_time" property="publishTime" jdbcType="VARCHAR" />
     <result column="filed1" property="filed1" jdbcType="VARCHAR" />
     <result column="filed2" property="filed2" jdbcType="VARCHAR" />
     <result column="filed3" property="filed3" jdbcType="VARCHAR" />
@@ -58,7 +58,7 @@
       #{description,jdbcType=VARCHAR}, #{checkType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{startTime,jdbcType=VARCHAR}, #{endTime,jdbcType=VARCHAR}, #{isResult,jdbcType=BIT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{clickCount,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, 
-      #{publishTime,jdbcType=TIMESTAMP}, #{filed1,jdbcType=VARCHAR}, #{filed2,jdbcType=VARCHAR}, 
+      #{publishTime,jdbcType=VARCHAR}, #{filed1,jdbcType=VARCHAR}, #{filed2,jdbcType=VARCHAR}, 
       #{filed3,jdbcType=VARCHAR}, #{filed4,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dm.cms.model.CmsVote" >
@@ -154,7 +154,7 @@
         #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="publishTime != null" >
-        #{publishTime,jdbcType=TIMESTAMP},
+        #{publishTime,jdbcType=VARCHAR},
       </if>
       <if test="filed1 != null" >
         #{filed1,jdbcType=VARCHAR},
@@ -207,7 +207,7 @@
         create_user = #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="publishTime != null" >
-        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+        publish_time = #{publishTime,jdbcType=VARCHAR},
       </if>
       <if test="filed1 != null" >
         filed1 = #{filed1,jdbcType=VARCHAR},
@@ -237,7 +237,7 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       click_count = #{clickCount,jdbcType=INTEGER},
       create_user = #{createUser,jdbcType=VARCHAR},
-      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      publish_time = #{publishTime,jdbcType=VARCHAR},
       filed1 = #{filed1,jdbcType=VARCHAR},
       filed2 = #{filed2,jdbcType=VARCHAR},
       filed3 = #{filed3,jdbcType=VARCHAR},

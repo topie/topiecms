@@ -33,9 +33,9 @@ var interviewOptions = {
 		title : "状态",
 		field : "status",
 		format : function(i, c) {
-			if (c.status == "0")
-				return "待审核";
 			if (c.status == "1")
+				return "待审核";
+			if (c.status == "0")
 				return "新建";
 			if (c.status == "2")
 				return "已核实";
@@ -70,7 +70,7 @@ var interviewOptions = {
 				distroy : true
 			});
 			currentInterviewId=data.id;
-			modal.show();
+			setTimeout("modal.show();",500);
 			var form = modal.$body.load("../interview/page?id="+data.id);
 			/*var form = modal.$body.dmForm(getVideoForm(data.contentType));
 			form.loadRemote("../video/load?videoId=" + data.id);*/
@@ -97,7 +97,7 @@ var interviewOptions = {
 					title : "添加",
 					distroy : true
 				});
-				modal.show();
+				setTimeout("modal.show();",500);
 				var form = modal.$body.load("../interview/add?channelId="+currentChannelId);
 				currentInterviewId='';
 			}
@@ -120,7 +120,7 @@ var interviewOptions = {
 		handle : function(grid) {
 			var ids = grid.getSelectIds();
 			if (ids.length > 0) {
-				var url = "../interview/commit?interviewIds=" + ids;
+				var url = "../interview/check?status=1&ids=" + ids;
 				$.ajax({
 					url : url,
 					type : "POST",

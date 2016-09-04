@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.dm.platform.util.ConfigUtil;
+
 public class CmsInterview {
     private Integer id;
 
@@ -174,7 +176,8 @@ public class CmsInterview {
     }
 
     public String getFiled1() {
-        return filed1;
+    	String projectName = ConfigUtil.getConfigContent("cms","projectName");
+		return "/"+projectName+"/portal/interview/"+id+".htm";
     }
 
     public void setFiled1(String filed1) {
