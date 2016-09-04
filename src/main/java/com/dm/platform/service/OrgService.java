@@ -11,4 +11,5 @@ public interface OrgService {
 	public void updateOrg(Org entity);
 	public void deleteOrg(Org entity);
 	public Long countMenuGrou();
+	List<Org> findAll();
 }

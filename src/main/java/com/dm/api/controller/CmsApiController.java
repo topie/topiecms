@@ -1,6 +1,7 @@
 package com.dm.api.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -14,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.dm.cms.model.CmsComment;
 import com.dm.cms.service.CmsCommentService;
 import com.dm.platform.dao.CommonDAO;
@@ -29,6 +32,10 @@ import com.dm.platform.util.ResponseUtil;
 import com.dm.platform.util.SimpleCryptoUtil;
 import com.dm.platform.util.UUIDUtils;
 import com.dm.platform.util.UserAccountUtil;
+import com.dm.websurvey.model.Leader;
+import com.dm.websurvey.model.WebSurvey;
+import com.dm.websurvey.service.LeaderService;
+import com.dm.websurvey.service.WebSurveyService;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -41,6 +48,9 @@ import com.github.pagehelper.PageInfo;
     @Resource UserAttrService userAttrService;
    /* @Resource SynInfoService synInfoService;
     @Resource SynVisitService synVisitService;*/
+    @Autowired LeaderService leaderService;
+    
+    @Autowired WebSurveyService webSurveyService;
     
     private Logger log = LoggerFactory.getLogger(CmsApiController.class);
     private static final int EXPIRE_TIME = 60*60*24*7;
@@ -165,5 +175,5 @@ import com.github.pagehelper.PageInfo;
 		Object obj = session.getAttribute("validateCode");
 		return null == obj ? "" : obj.toString();
 	}
-    
+	
 }
