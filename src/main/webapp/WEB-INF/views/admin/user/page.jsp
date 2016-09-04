@@ -82,6 +82,60 @@
 	<%@include file="../../includejsps/js.jsp"%>
 	<%@include file="../../includejsps/plugin-js.jsp"%>
 	<script type="text/javascript">
+	
+	   var configForm = '<form id="configMailForm"><div style="float:left;margin-left:100px;">配置用户:<select id="leadIds" name="leadIds" multiple="multiple" class="form-control input-large">'
+        
+	   function loadLeaderAndOrg()
+	   {
+		$.ajax({
+			 url:'../api/leader/list',
+			 type:"post",
+			 success:function(data)
+			 {
+				 for(var i=0;i<data.length;i++)
+					 {
+				 configForm = configForm + '<option value="'+data[i].id+'">'+data[i].name+'</option>';
+					 }
+				 configForm = configForm +'</select></div>';
+		configForm = configForm+ '<div style="float:left;margin-left:100px;">配置部门:<select id="orgIds" name="orgIds" multiple="multiple" class="form-control input-large">';
+				 $.ajax({
+					 url:'../org/loadOrgs ',
+					 type:"post",
+					 success:function(data)
+					 {
+						 for(var i=0;i<data.length;i++)
+							 {
+						 configForm = configForm + '<option value="'+data[i].id+'">'+data[i].name+'</option>';
+							 }
+						 
+						 configForm = configForm +'</select></div>'
+						              +'<div class="form-actions" style="margin-left:50px;">'
+						              +'<button class="btn blue btn-lg" role="submit" type="button" onclick="configSave()">保存</button>'
+						              //+'<button class="btn default btn-lg" type="button">关闭</button>'
+						             + '<input type="hidden" name="userId" id="userId" />'
+						              +'</form></div>';
+						 
+					 }
+				 });
+			 }
+		 }); 
+	   }
+	
+	   function configSave()
+	   {
+		   
+		   $.ajax({
+			  url:"../email/config/addOrUpdate",
+			  type:"post",
+			  data:$("#configMailForm").serialize(),
+			  success:function(data)
+			  {
+				  alert(data.msg);
+				 modal.hide(); 
+			  }
+		   });
+	   }
+	   
 		var grid;
 		var options = {
 			url : "./ajaxList", // ajax地址
@@ -180,7 +234,14 @@
 						}
 					});
 				}
-			} ],
+			},{
+				text : "配置信箱",
+				cls : "red btn-sm",
+				handle : function(index, data) {
+					configMail(data.code);
+				}
+			}
+			],
 			tools : [
 			//工具属性
 			{
@@ -337,6 +398,8 @@
 			} ]
 		};
 
+		
+		
 		var addFormOpts = {
 			id : "useraccount_form2",//表单id
 			name : "useraccount_form2",//表单名
@@ -534,6 +597,33 @@
 			modal.$body.dmForm(addFormOpts);
 		}
 
+		
+		function configMail(id) {
+			modal = $.dmModal({
+				id : "configMail",
+				title : "信箱配置",
+				distroy : true
+			});
+			modal.show();
+			 modal.$body.html(configForm);
+			 $("#userId").val(id);
+			$.ajax({url:"../email/config/loadByUserId",
+				    data:{userId:id},
+					success:function(data){
+					if(data)
+						{
+						if(data.leaderId)
+				         {
+							$("#leadIds").val(data.leaderId.split(","));
+				         }
+						if(data.orgId)
+						 {
+				          $("#orgIds").val(data.orgId.split(","));
+						 }
+						}
+			         }
+		         });
+			}
 		function deleteItem(id) {
 			bootbox.confirm("确定删除吗？", function(result) {
 				if (result) {
@@ -629,6 +719,7 @@
 		}
 		jQuery(document).ready(function() {
 			grid = $("#useraccount_grid").dmGrid(options);
+			loadLeaderAndOrg();
 		});
 	</script>
 	<!-- END JAVASCRIPTS -->

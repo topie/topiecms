@@ -2,14 +2,20 @@ package com.dm.cms.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+
+
+
+
+
+
+
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +38,12 @@ import com.dm.cms.service.CmsNovelService;
 import com.dm.cms.service.CmsSiteService;
 import com.dm.cms.service.CmsTemplateService;
 import com.dm.cms.service.CmsVideoService;
+import com.dm.platform.model.Org;
+import com.dm.platform.service.OrgService;
+import com.dm.websurvey.model.Leader;
+import com.dm.websurvey.model.WebSurvey;
+import com.dm.websurvey.service.LeaderService;
+import com.dm.websurvey.service.WebSurveyService;
 
 /**
  * Created by cgj on 2015/11/23.
@@ -69,6 +81,11 @@ public class CmsPortalController {
 	protected CmsAttachmentService cmsAttachmentService;
 	@Autowired
 	protected CmsNovelService cmsNovelService;
+	@Autowired
+	WebSurveyService webSurveyService;
+	 @Autowired LeaderService leaderService;
+	 @Autowired
+	OrgService orgService;
 
 	private Logger log = LoggerFactory.getLogger(CmsPortalController.class);
 
@@ -83,7 +100,42 @@ public class CmsPortalController {
 		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		model.addAttribute("htmlFolder", htmlFolder);
 		return getTemplatePath(cmsSite.getTemplateId(), device.isMobile());
-
+	}
+	/**
+	 * 
+	 * @param model
+	 * @param code  1,县长，2书记,3镇或部门
+	 * @return
+	 */
+	@RequestMapping("/websurvey/form.htm")
+	public String form(Model model,String code)
+	{
+		
+		if(code.equals("1"))
+		{
+			List<Leader> leaders = leaderService.findAll("1");
+			model.addAttribute("leads", leaders);
+		}
+		else if(code.equals("2"))
+		{
+			List<Leader> leaders = leaderService.findAll("2");
+			model.addAttribute("leads", leaders);
+		}
+		else
+		{
+			List<Org> orgs = orgService.findAll();
+			model.addAttribute("orgs", orgs);
+		}
+		
+		model.addAttribute("code", code);
+		return templateFolder+"/websurvey";
+	}
+	
+	@RequestMapping("/websurvey/add")
+	public String add(Model model,WebSurvey webSurvey)
+	{
+		model.addAttribute("websurvey",webSurveyService.add(webSurvey));
+		return "/template/success";
 	}
 
 	@RequestMapping("/search.htm")
@@ -125,7 +177,7 @@ public class CmsPortalController {
 			return "404";
 		return getTemplatePath(cmsChannel.getTemplateId(), device.isMobile());
 	}
-
+	
 	@RequestMapping("/content/{contentId}.htm")
 	public String content(Model model, Device device,
 			@PathVariable("contentId") Integer contentId,
@@ -209,6 +261,14 @@ public class CmsPortalController {
 		}
 		return template;
 	}
+	
+	@RequestMapping("/websurvey/findOne")
+    public String getLeader(Model model,WebSurvey webSurvey)
+    {
+		WebSurvey webSur = webSurveyService.findOne(webSurvey.getId());
+		model.addAttribute("webSurvey", webSur);
+		return "/template/result";
+    }
 
 	/*
 	 * @RequestMapping("/channel/{enName}_{channelId}.htm") public String

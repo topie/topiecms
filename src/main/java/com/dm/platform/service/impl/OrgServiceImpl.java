@@ -52,4 +52,10 @@ public class OrgServiceImpl implements OrgService {
 		// TODO Auto-generated method stub
 		return commonDAO.findOne(Org.class, id);
 	}
+	
+	@Override
+	public List<Org> findAll() {
+		// TODO Auto-generated method stub
+        return commonDAO.findAll(Org.class);
+	}
 }
