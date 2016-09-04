@@ -88,7 +88,7 @@
 	   function loadLeaderAndOrg()
 	   {
 		$.ajax({
-			 url:'../api/leader/list',
+			 url:'../portal/leader/list?code=',
 			 type:"post",
 			 success:function(data)
 			 {

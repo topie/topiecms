@@ -11,6 +11,7 @@ import java.util.List;
 
 
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dm.cms.model.CmsAttachment;
@@ -129,6 +131,27 @@ public class CmsPortalController {
 		
 		model.addAttribute("code", code);
 		return templateFolder+"/websurvey";
+	}
+	
+	@RequestMapping("/leader/list")
+	@ResponseBody
+	public List<Leader> listLeader(Model model,String code)
+	{
+		if(code.equals("1"))
+		{
+			List<Leader> leaders = leaderService.findAll("1");
+			return leaders;
+		}
+		else if(code.equals("2"))
+		{
+			List<Leader> leaders = leaderService.findAll("2");
+			return leaders;
+		}
+		else
+		{
+			List<Leader> leaders = leaderService.findAll(null);
+			return leaders;
+		}
 	}
 	
 	@RequestMapping("/websurvey/add")
