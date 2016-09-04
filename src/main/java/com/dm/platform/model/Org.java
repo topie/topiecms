@@ -33,6 +33,10 @@ public class Org implements Serializable {
 	private Long seq;
 	
 	private Org parent;
+	
+	private String orgPerson;
+	
+	private String orgDuty;
 
 	private List<Org> children = new ArrayList<Org>();
 	
@@ -124,5 +128,22 @@ public class Org implements Serializable {
 		}
 	}
 
+	@Column(name="org_person")
+	public String getOrgPerson() {
+		return orgPerson;
+	}
+
+	public void setOrgPerson(String orgPerson) {
+		this.orgPerson = orgPerson;
+	}
+
+	@Column(name="org_duty")
+	public String getOrgDuty() {
+		return orgDuty;
+	}
+
+	public void setOrgDuty(String orgDuty) {
+		this.orgDuty = orgDuty;
+	}
 
 }
