@@ -304,6 +304,8 @@
 						return "小说频道";
 					if(c.channelType==8)
 						return "访谈频道";
+					if(c.channelType==9)
+						return "投票频道";
 					return "普通频道";
 				},
 				width : "10%"
@@ -437,6 +439,14 @@
 					icon : "fa fa-cubes",
 					handle : function(grid) {//按钮点击事件
 						showForm('8',"访谈频道");
+					}
+				},
+				{
+					text : "投票频道",//按钮文本
+					cls : "btn green btn-sm",//按钮样式
+					icon : "fa fa-cubes",
+					handle : function(grid) {//按钮点击事件
+						showForm('9',"投票频道");
 					}
 				},{
 					text : "音频频道",//按钮文本
@@ -660,6 +670,11 @@
  				items.push(templateType);
 			}
 			else if(channelType==8){//访谈频道
+				items.push(eName);
+				items.push(pageSize);
+ 				items.push(templateType);
+			}
+			else if(channelType==9){//访谈频道
 				items.push(eName);
 				items.push(pageSize);
  				items.push(templateType);

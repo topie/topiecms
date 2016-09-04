@@ -75,6 +75,10 @@ var channelSetting = {
 					grid.reload({
 						url : "../interview/list?channelId=" + currentChannelId
 					});
+				}else if (currentChannelType == '9') {
+					grid.reload({
+						url : "../vote/list?channelId=" + currentChannelId
+					});
 				}
 			} else {
 				currentChannelType = treeNode.type;
@@ -104,6 +108,12 @@ var channelSetting = {
 					interviewOptions.url = "../interview/list?channelId="
 							+ currentChannelId;
 					grid = $("#content_grid").dmGrid(interviewOptions);
+				}
+				else if (currentChannelType == '9') {
+					$("#content_grid").html("");
+					voteOptions.url = "../vote/list?channelId="
+							+ currentChannelId;
+					grid = $("#content_grid").dmGrid(voteOptions);
 				}
 			}
 		}

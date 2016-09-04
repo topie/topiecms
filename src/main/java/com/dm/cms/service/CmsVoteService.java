@@ -1,5 +1,6 @@
 package com.dm.cms.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.dm.cms.model.CmsVote;
@@ -26,4 +27,8 @@ public interface CmsVoteService {
 
 	void commitCheck(Integer voteId, String optionIds);
 
+	CmsVote findOne(Integer id);
+	CmsVoteOption findOneOpt(Integer id);
+
+	List<CmsVoteOption> loadOpt(Integer voteId);
 }

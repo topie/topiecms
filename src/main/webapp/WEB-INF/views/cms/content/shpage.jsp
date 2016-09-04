@@ -239,7 +239,17 @@
 							grid.reload({
 								url : "../novel/list?status=1&channelId=" + currentChannelId
 							});
-					  } 
+					  }
+						else if (currentChannelType == '8') {
+							grid.reload({
+								url : "../interview/list?status=1&channelId=" + currentChannelId
+							});
+					  }
+						else if (currentChannelType == '9') {
+							grid.reload({
+								url : "../vote/list?status=2&channelId=" + currentChannelId
+							});
+					  }
 					}else {
 						currentChannelType = treeNode.type;
 						if (currentChannelType == '0') {
@@ -263,6 +273,17 @@
 									+ currentChannelId;
 							grid = $("#content_grid").dmGrid(novelOptions);
 						}
+						else if (currentChannelType == '8') {
+							$("#content_grid").html("");
+							interviewOptions.url = "../interview/list?status=1&channelId=" + currentChannelId;
+							grid = $("#content_grid").dmGrid(interviewOptions);
+								
+					  }
+						else if (currentChannelType == '9') {
+							$("#content_grid").html("");
+							voteOptions.url =  "../vote/list?status=2&channelId=" + currentChannelId;
+							grid = $("#content_grid").dmGrid(voteOptions);
+					  }
 					}
 				}
 		}
