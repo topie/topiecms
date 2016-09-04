@@ -416,22 +416,31 @@
 		form.setValue("contentType",contentType);
 	} */
 	function showForm(contentType,title){
+		var formOption;
 		if(currentChannelType == '0')
-			{
-			formOption = getForm(contentType);
-			}
-		else if(currentChannelType == '5')
 		{
-		formOption = getVideoForm(contentType);
+		formOption = getForm(contentType);
 		}
-		else if(currentChannelType == '6')
+	else if(currentChannelType == '5')
+	{
+	formOption = getVideoForm(contentType);
+	}
+	else if(currentChannelType == '6')
+	{
+	formOption = getAudioForm(contentType);
+	}
+	else if(currentChannelType == '7')
 		{
-		formOption = getAudioForm(contentType);
+		formOption = getNovelForm(contentType);
 		}
-		else if(currentChannelType == '7')
-			{
-			formOption = getNovelForm(contentType);
-			}
+	else if(currentChannelType == '8')
+	{
+	formOption = getInterviewForm(contentType);
+	}
+	else if(currentChannelType == '9')
+	{
+	formOption = getVoteForm(contentType);
+	}
 		$("#content_grid").html("");
 		var form = $("#content_grid").dmForm(formOption);
 		form.setValue("channelId", currentChannelId);
