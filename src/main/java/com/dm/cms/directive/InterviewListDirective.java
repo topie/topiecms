@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.dm.cms.model.CmsChannel;
+import com.dm.cms.model.CmsInterview;
 import com.dm.cms.model.CmsNovel;
 import com.dm.cms.model.CmsVote;
 import com.dm.cms.service.CmsChannelService;
+import com.dm.cms.service.CmsInterviewService;
 import com.dm.cms.service.CmsVoteService;
 import com.dm.cms.util.PageUtil;
 import com.github.pagehelper.PageInfo;
@@ -36,7 +38,7 @@ public class InterviewListDirective implements TemplateDirectiveModel {
 	private Logger log = LoggerFactory.getLogger(InterviewListDirective.class);
 
 	@Autowired
-	private CmsVoteService cmsVoteService;
+	private CmsInterviewService cmsVoteService;
 	@Autowired
 	private CmsChannelService cmsChannelService;
 
@@ -65,13 +67,13 @@ public class InterviewListDirective implements TemplateDirectiveModel {
 		}
 		Map map = new HashMap();
 		map.put("order", orderby);
-		CmsVote novel = new CmsVote();
+		CmsInterview novel = new CmsInterview();
 		novel.setChannelId(channelId);
 		novel.setStatus("5");
 		map.put("model", novel);
-		PageInfo<CmsVote> page = this.cmsVoteService.findPage(pageNum, pageSize, map);
+		PageInfo<CmsInterview> page = this.cmsVoteService.findByPage(pageNum, pageSize, map);
 
-		List<CmsVote> novels = page.getList();
+		List<CmsInterview> novels = page.getList();
 		// long total = page.getTotal();
 		int titleLeft = 0;
 		if (params.get("titleLeft") != null) {
@@ -81,7 +83,7 @@ public class InterviewListDirective implements TemplateDirectiveModel {
 		if (params.get("descLeft") != null) {
 			descLeft = Integer.valueOf(params.get("descLeft").toString());
 		}
-			for (CmsVote ce : novels) {
+			for (CmsInterview ce : novels) {
 				if ( descLeft!= 0 && ce.getTitle().length() > descLeft) {
 					ce.setTitle(ce.getTitle()
 							.substring(0, descLeft) + "……");

@@ -79,14 +79,15 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		if(cmsContent.getPublishDate()==null){
 			cmsContent.setPublishDate(new Date());
 		}
-		cmsContent.setCreateTime(new Date());
 		cmsContentMapper.insertSelective(cmsContent);
 	}
 
 	@Override
 	public void updateCmsContent(CmsContent cmsContent) {
+		if(!cmsContent.getContentType().equals("10")){
 		String author = UserAccountUtil.getInstance().getCurrentUser();
 		cmsContent.setAuthor(author);
+		}
 		cmsContentMapper.updateByPrimaryKeySelective(cmsContent);
 	}
 

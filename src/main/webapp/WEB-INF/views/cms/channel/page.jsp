@@ -306,6 +306,8 @@
 						return "访谈频道";
 					if(c.channelType==9)
 						return "投票频道";
+					if(c.channelType==10)
+						return "公开文件";
 					return "普通频道";
 				},
 				width : "10%"
@@ -447,6 +449,13 @@
 					icon : "fa fa-cubes",
 					handle : function(grid) {//按钮点击事件
 						showForm('9',"投票频道");
+					}
+				},{
+					text : "文件频道",//按钮文本
+					cls : "btn green btn-sm",//按钮样式
+					icon : "fa fa-cubes",
+					handle : function(grid) {//按钮点击事件
+						showForm('10',"文件频道");
 					}
 				},{
 					text : "音频频道",//按钮文本
@@ -675,6 +684,11 @@
  				items.push(templateType);
 			}
 			else if(channelType==9){//访谈频道
+				items.push(eName);
+				items.push(pageSize);
+ 				items.push(templateType);
+			}
+			else if(channelType==10){//文件频道
 				items.push(eName);
 				items.push(pageSize);
  				items.push(templateType);

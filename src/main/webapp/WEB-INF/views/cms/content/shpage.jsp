@@ -249,6 +249,10 @@
 							grid.reload({
 								url : "../vote/list?status=2&channelId=" + currentChannelId
 							});
+					  }else if (currentChannelType == '10') {
+							grid.reload({
+								url : "./liszt?status=1&channelId=" + currentChannelId
+							});
 					  }
 					}else {
 						currentChannelType = treeNode.type;
@@ -283,6 +287,11 @@
 							$("#content_grid").html("");
 							voteOptions.url =  "../vote/list?status=2&channelId=" + currentChannelId;
 							grid = $("#content_grid").dmGrid(voteOptions);
+					  }
+						else if (currentChannelType == '10') {
+							$("#content_grid").html("");
+							voteOptions.url =  "../content/list?status=1&channelId=" + currentChannelId;
+							grid = $("#content_grid").dmGrid(fileoptions);
 					  }
 					}
 				}

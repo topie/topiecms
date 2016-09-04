@@ -104,7 +104,8 @@
 				<entry key="friendlinkDirective" value-ref="friendlinkDirective"></entry>
 				<entry key="advertisingListDirective" value-ref="advertisingListDirective"></entry>
 				<entry key="advertisingDirective" value-ref="advertisingDirective"></entry>
-				<entry key="voteListDirectiev" value-ref="voteListDirective"></entry>
+				<entry key="voteListDirective" value-ref="voteListDirective"></entry>
+				<entry key="interviewDirective" value-ref="interviewDirective"></entry>
 				
             </map>
         </property>
@@ -137,6 +138,7 @@
    <bean id="advertisingListDirective" class="com.dm.cms.directive.AdvertisingListDirective"></bean>
    <bean id="advertisingDirective" class="com.dm.cms.directive.AdvertisingDirective"></bean>
    <bean id="voteListDirective" class="com.dm.cms.directive.VoteListDirective"></bean>
+   <bean id="interviewDirective" class="com.dm.cms.directive.InterviewListDirective"/>
     <!-- 自定义标签结束 -->
 
     <!-- json格式设置 -->

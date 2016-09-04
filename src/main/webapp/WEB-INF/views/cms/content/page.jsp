@@ -411,6 +411,10 @@
 		{
 		formOption = getVoteForm(contentType);
 		}
+		else if(currentChannelType == '10')
+		{
+		formOption = getFileForm(contentType);
+		}
 		var form = modal.$body.dmForm(formOption);
 		form.setValue("channelId", currentChannelId);
 		form.setValue("contentType",contentType);
