@@ -256,47 +256,50 @@
 					  }
 					}else {
 						currentChannelType = treeNode.type;
-						if (currentChannelType == '0') {
-							$("#content_grid").html("");
-							options.url = "./list?status=1&channelId=" + currentChannelId;
-							grid = $("#content_grid").dmGrid(options);
-						} else if (currentChannelType == '5') {
-							$("#content_grid").html("");
-							videoOptions.url = "../video/list?status=1&channelId="
-									+ currentChannelId;
-							grid = $("#content_grid").dmGrid(videoOptions);
-						} else if (currentChannelType == '6') {
-							$("#content_grid").html("");
-							audioOptions.url = "../audio/list?status=1&channelId="
-									+ currentChannelId;
-							grid = $("#content_grid").dmGrid(audioOptions);
-						} 
-						else if (currentChannelType == '7') {
-							$("#content_grid").html("");
-							novelOptions.url = "../novel/list?status=1&channelId="
-									+ currentChannelId;
-							grid = $("#content_grid").dmGrid(novelOptions);
-						}
-						else if (currentChannelType == '8') {
-							$("#content_grid").html("");
-							interviewOptions.url = "../interview/list?status=1&channelId=" + currentChannelId;
-							grid = $("#content_grid").dmGrid(interviewOptions);
-								
-					  }
-						else if (currentChannelType == '9') {
-							$("#content_grid").html("");
-							voteOptions.url =  "../vote/list?status=2&channelId=" + currentChannelId;
-							grid = $("#content_grid").dmGrid(voteOptions);
-					  }
-						else if (currentChannelType == '10') {
-							$("#content_grid").html("");
-							voteOptions.url =  "../content/list?status=1&channelId=" + currentChannelId;
-							grid = $("#content_grid").dmGrid(fileoptions);
-					  }
+						reBulidGrid(currentChannelType);
 					}
 				}
 		}
 	};
+		function reBulidGrid(currentChannelType){
+			if (currentChannelType == '0') {
+				$("#content_grid").html("");
+				options.url = "./list?status=1&channelId=" + currentChannelId;
+				grid = $("#content_grid").dmGrid(options);
+			} else if (currentChannelType == '5') {
+				$("#content_grid").html("");
+				videoOptions.url = "../video/list?status=1&channelId="
+						+ currentChannelId;
+				grid = $("#content_grid").dmGrid(videoOptions);
+			} else if (currentChannelType == '6') {
+				$("#content_grid").html("");
+				audioOptions.url = "../audio/list?status=1&channelId="
+						+ currentChannelId;
+				grid = $("#content_grid").dmGrid(audioOptions);
+			} 
+			else if (currentChannelType == '7') {
+				$("#content_grid").html("");
+				novelOptions.url = "../novel/list?status=1&channelId="
+						+ currentChannelId;
+				grid = $("#content_grid").dmGrid(novelOptions);
+			}
+			else if (currentChannelType == '8') {
+				$("#content_grid").html("");
+				interviewOptions.url = "../interview/list?status=1&channelId=" + currentChannelId;
+				grid = $("#content_grid").dmGrid(interviewOptions);
+					
+		  }
+			else if (currentChannelType == '9') {
+				$("#content_grid").html("");
+				voteOptions.url =  "../vote/list?status=2&channelId=" + currentChannelId;
+				grid = $("#content_grid").dmGrid(voteOptions);
+		  }
+			else if (currentChannelType == '10') {
+				$("#content_grid").html("");
+				fileoptions.url =  "../content/list?status=1&channelId=" + currentChannelId;
+				grid = $("#content_grid").dmGrid(fileoptions);
+		  }
+		}
 		function initSelect2Site() {
 			$.ajax({
 				type : "POST",

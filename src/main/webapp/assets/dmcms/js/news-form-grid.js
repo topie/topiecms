@@ -165,7 +165,7 @@ var channelSetting = {
 					grid = $("#content_grid").dmGrid(fileoptions);
 				}
 			}
-			}
+			}*/
 		}
 	}
 };
@@ -781,8 +781,7 @@ function getFileForm(contentType) {
 
 		},
 		ajaxSuccess : function() {
-			modal.hide();
-			grid.reload();
+			flushGrid();
 		},
 		submitText : "保存",// 保存按钮的文本
 		showReset : true,// 是否显示重置按钮
@@ -792,7 +791,7 @@ function getFileForm(contentType) {
 			type : 'button',
 			text : '关闭',
 			handle : function() {
-				modal.hide();
+				flushGrid();
 			}
 		} ],
 		buttonsAlign : "center",
@@ -862,13 +861,16 @@ function getFileForm(contentType) {
 				handle : function(index, data) {
 					// index为点击操作的行数
 					// data为该行的数据
-					modal = $.dmModal({
+					/*modal = $.dmModal({
 						id : "siteForm",
 						title : "编辑内容信息-" + data.title,
 						distroy : true
 					});
 					modal.show();
-					var form = modal.$body.dmForm(getFileForm(data.contentType));
+					var form = modal.$body.dmForm(getFileForm(data.contentType));*/
+					$("#content_grid").html("");
+					var form = $("#content_grid").dmForm(getFileForm());
+					form.loadLocal({"channelId":currentChannelId});
 					form.loadRemote("./load?contentId=" + data.id);
 				}
 			}, {
@@ -885,8 +887,14 @@ function getFileForm(contentType) {
 				handle : function(grid) {// 按钮点击事件
 					if(currentChannelId==undefined)
 						bootbox.alert("请先选择频道");
-					else
-						showForm(0, "文本内容");
+					else{
+						$("#content_grid").html("");
+						var form = $("#content_grid").dmForm(getFileForm());
+						form.loadLocal({"channelId":currentChannelId,"contentType":"10"});
+					}
+						
+						$("#").dmForm()
+						//showForm(0, "文本内容");
 				}
 			},/* {
 				text : "移动",
@@ -913,7 +921,7 @@ function getFileForm(contentType) {
 							dataType : "json",
 							success : function(res) {
 								bootbox.alert(res.msg);
-								grid.reload();
+								//grid.reload();
 							},
 							error : function() {
 								bootbox.alert("请求异常！");

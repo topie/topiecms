@@ -33,7 +33,7 @@ public class CmsContentController {
 	CmsContentService cmsContentService;
 	@Autowired
 	CmsChannelService cmsChannelService;
-	
+
 	@Autowired
 	CmsSiteService cmsSiteService;
 
@@ -41,9 +41,9 @@ public class CmsContentController {
 	public String page(Model model) {
 		return "/cms/content/page";
 	}
-	
+
 	@RequestMapping("/addPage")
-	public String addPage(Model model,String channelType) {
+	public String addPage(Model model, String channelType) {
 		model.addAttribute("currentChannelType", channelType);
 		return "/cms/content/addPage";
 	}
@@ -54,8 +54,7 @@ public class CmsContentController {
 	}
 
 	@RequestMapping("/list")
-	public @ResponseBody
-	Object list(
+	public @ResponseBody Object list(
 			@RequestParam(value = "pageNum", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,
 			CmsContent cmsContent,
@@ -70,8 +69,7 @@ public class CmsContentController {
 	}
 
 	@RequestMapping("/load")
-	public @ResponseBody
-	Object load(
+	public @ResponseBody Object load(
 			@RequestParam(value = "contentId", required = true) Integer contentId) {
 		CmsContent cmsContent = cmsContentService.findOneById(contentId);
 		cmsContent.setAttachmentIds(cmsContentService
@@ -80,8 +78,7 @@ public class CmsContentController {
 	}
 
 	@RequestMapping("/insertOrUpdate")
-	public @ResponseBody
-	Object insertOrUpdate(
+	public @ResponseBody Object insertOrUpdate(
 			CmsContent cmsContent,
 			@RequestParam(value = "attachmentIds", required = false) String attachmentIds) {
 		if (cmsContent.getId() == null) {
@@ -102,8 +99,12 @@ public class CmsContentController {
 				.getChannelId());
 		cmsContent.setSiteDomain(cmsChannel.getSiteDomain());
 		cmsContent.setChannelEnName(cmsChannel.getEnName());
-		String titleStyleArray[] = cmsContent.getTitleStyle().split(","); 
-		cmsContent.setTitleStyle("font-size:"+titleStyleArray[1]+";color:"+titleStyleArray[0]);
+		if (cmsContent.getTitleStyle() != null
+				&& !cmsContent.getTitleStyle().equals("")) {
+			String titleStyleArray[] = cmsContent.getTitleStyle().split(",");
+			cmsContent.setTitleStyle("font-size:" + titleStyleArray[1]
+					+ ";color:" + titleStyleArray[0]);
+		}
 		cmsContentService.insertCmsContent(cmsContent);
 	}
 
@@ -117,94 +118,89 @@ public class CmsContentController {
 	}
 
 	@RequestMapping("/delete")
-	public @ResponseBody
-	Object delete(
-			@RequestParam(value = "contentId", required = true) String contentId,HttpServletRequest request) {
+	public @ResponseBody Object delete(
+			@RequestParam(value = "contentId", required = true) String contentId,
+			HttpServletRequest request) {
 		if (StringUtils.isBlank(contentId)) {
 			return ResponseUtil.success("请选择要删除的项！");
 		}
-			String[] id = contentId.split(",");
-			CmsContent content = cmsContentService.findOneById(Integer.valueOf(Integer.valueOf(id[0])));
-			for (String primaryKey : id) {
-				cmsContentService.deleteCmsContentById(Integer
-						.valueOf(primaryKey));
-			}
-			CmsChannel cmsChannel = cmsChannelService.findOneById(content.getChannelId());
-			cmsSiteService.generatorHtml(cmsChannel.getSiteId(), request);
-			return ResponseUtil.success("操作成功");
+		String[] id = contentId.split(",");
+		CmsContent content = cmsContentService.findOneById(Integer
+				.valueOf(Integer.valueOf(id[0])));
+		for (String primaryKey : id) {
+			cmsContentService.deleteCmsContentById(Integer.valueOf(primaryKey));
+		}
+		CmsChannel cmsChannel = cmsChannelService.findOneById(content
+				.getChannelId());
+		cmsSiteService.generatorHtml(cmsChannel.getSiteId(), request);
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/commit")
 	@ResponseBody
-	public Object commit(
-			HttpServletRequest request,
-			@RequestParam(value = "contentId", required = true)String contentId) {
-		if(StringUtils.isBlank(contentId)){
+	public Object commit(HttpServletRequest request,
+			@RequestParam(value = "contentId", required = true) String contentId) {
+		if (StringUtils.isBlank(contentId)) {
 			return ResponseUtil.error("请选择要提交的内容");
 		}
 		String[] id = contentId.split(",");
 		int count = 0;
-		for(String contid:id){
-			Integer contentid=Integer.valueOf(contid);
-			boolean succ=this.cmsContentService.updateContentState(request, contentid,
-					new Short("1"));
-			if(succ){
+		for (String contid : id) {
+			Integer contentid = Integer.valueOf(contid);
+			boolean succ = this.cmsContentService.updateContentState(request,
+					contentid, new Short("1"));
+			if (succ) {
 				count++;
 			}
 		}
-		return ResponseUtil.success("成功提交"+count+"条");
+		return ResponseUtil.success("成功提交" + count + "条");
 	}
 
 	@RequestMapping("/check")
 	@ResponseBody
-	public Object publish(
-			HttpServletRequest request,
-			@RequestParam(value = "ids", required = true)String contentId,
+	public Object publish(HttpServletRequest request,
+			@RequestParam(value = "ids", required = true) String contentId,
 			@RequestParam(value = "status", required = true) short status) {
-		if(StringUtils.isBlank(contentId)){
+		if (StringUtils.isBlank(contentId)) {
 			return ResponseUtil.error("请选择要通过的内容");
 		}
 		String[] id = contentId.split(",");
 		int count = 0;
-		for(String contid:id){
+		for (String contid : id) {
 			Integer contentid = Integer.valueOf(contid);
 			boolean succ = this.cmsContentService.updateContentState(request,
 					contentid, status);
-			if(succ){
+			if (succ) {
 				count++;
 			}
 		}
-		String result="";
-		if(status==2)
-		{
-			result="成功发布"+count+"条!";
-		}
-		else
-		{
-			result="已经驳回"+count+"条";
+		String result = "";
+		if (status == 2) {
+			result = "成功发布" + count + "条!";
+		} else {
+			result = "已经驳回" + count + "条";
 		}
 		return ResponseUtil.success(result);
 	}
 
 	@RequestMapping("/back")
 	@ResponseBody
-	public Object cancelStaticHtml(
-			HttpServletRequest request,
+	public Object cancelStaticHtml(HttpServletRequest request,
 			@RequestParam(value = "ids", required = true) String contentId) {
-		if(StringUtils.isBlank(contentId)){
+		if (StringUtils.isBlank(contentId)) {
 			return ResponseUtil.error("请选择要驳回的内容");
 		}
 		String[] id = contentId.split(",");
 		int count = 0;
-		for(String contid:id){
+		for (String contid : id) {
 			Integer contentid = Integer.valueOf(contid);
-			boolean succ = this.cmsContentService.updateContentState(request, contentid,
-					new Short("3"));
-			if(succ){
+			boolean succ = this.cmsContentService.updateContentState(request,
+					contentid, new Short("3"));
+			if (succ) {
 				count++;
 			}
 		}
-		return ResponseUtil.success("驳回"+count+"条!");
+		return ResponseUtil.success("驳回" + count + "条!");
 	}
 
 	@RequestMapping("sort")
@@ -217,19 +213,18 @@ public class CmsContentController {
 	}
 
 	@RequestMapping("/cutTo")
-	public @ResponseBody
-	Object cutTo(
+	public @ResponseBody Object cutTo(
 			@RequestParam(value = "ids", required = true) String contentId,
 			Long channelId) {
 		try {
 			if (contentId == null || contentId.trim().equals("")) {
 				return ResponseUtil.error("请选择要移动的内容！");
 			}
-			if(channelId==null){
+			if (channelId == null) {
 				return ResponseUtil.error("请选择频道！");
 			}
 			String[] id = contentId.split(",");
-			for (int i=id.length-1;i>=0;i--) {
+			for (int i = id.length - 1; i >= 0; i--) {
 				String contentid = id[i];
 				CmsContent content = this.cmsContentService.findOneById(Integer
 						.valueOf(contentid));
@@ -254,8 +249,7 @@ public class CmsContentController {
 	 * @return
 	 */
 	@RequestMapping("/copyTo")
-	public @ResponseBody
-	Object copyTo(
+	public @ResponseBody Object copyTo(
 			@RequestParam(value = "ids", required = true) String contentId,
 			String channelId) {
 		if (channelId == null || channelId.equals("")) {
@@ -265,7 +259,7 @@ public class CmsContentController {
 			return ResponseUtil.error("请选择要复制的内容！");
 		}
 		String[] contentids = contentId.split(",");
-		for (int i=contentids.length-1;i>=0;i--) {
+		for (int i = contentids.length - 1; i >= 0; i--) {
 			String contId = contentids[i];
 			CmsContent content = this.cmsContentService.findOneById(Integer
 					.valueOf(contId));
@@ -282,8 +276,9 @@ public class CmsContentController {
 						ce.setStatus(new Short("1"));
 						ce.setId(null);
 						this.cmsContentService.insertCmsContent(ce);
-						String s = cmsContentService.findCmsAttachementIdsByCmsContentId(Integer
-								.valueOf(contId));
+						String s = cmsContentService
+								.findCmsAttachementIdsByCmsContentId(Integer
+										.valueOf(contId));
 						this.cmsContentService.insertAttachment(ce.getId(), s);
 					}
 				} catch (Exception e) {

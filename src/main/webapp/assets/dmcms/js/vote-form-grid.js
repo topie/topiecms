@@ -65,13 +65,15 @@ var voteOptions = {
 		handle : function(index, data) {
 			// index为点击操作的行数
 			// data为该行的数据
-			modal = $.dmModal({
+			/*modal = $.dmModal({
 				id : "siteForm",
 				title : "编辑信息-" + data.title,
 				distroy : true
 			});
-			modal.show();
-			var form = modal.$body.dmForm(getVoteForm());
+			modal.show();*/
+			$("#content_grid").html("");
+			var form =$("#content_grid").dmForm(getVoteForm());
+			//var form = modal.$body.dmForm(getVoteForm());
 			form.loadRemote("../vote/load?id=" + data.id);
 		}
 	}
@@ -217,8 +219,7 @@ function getVoteForm() {
 
 		},
 		ajaxSuccess : function() {
-			modal.hide();
-			grid.reload();
+			flushGrid();
 		},
 		submitText : "保存",// 保存按钮的文本
 		showReset : true,// 是否显示重置按钮
@@ -228,7 +229,7 @@ function getVoteForm() {
 			type : 'button',
 			text : '关闭',
 			handle : function() {
-				modal.hide();
+				flushGrid();
 			}
 		} ],
 		buttonsAlign : "center",
@@ -321,7 +322,7 @@ function getoptions(id){
 				handle : function(index, data) {
 					// index为点击操作的行数
 					// data为该行的数据
-					in_modal = $.dmModal({
+					/*in_modal = $.dmModal({
 						id : "siteForm",
 						width:"500px",
 						title : "编辑-" + data.title,
@@ -329,7 +330,13 @@ function getoptions(id){
 					});
 					in_modal.show();
 					var form = in_modal.$body.dmForm(optFormOpt);
-						form.loadLocal(data);
+						form.loadLocal(data);*/
+					$("#content_grid").html("");
+					var form = $("#content_grid").dmForm(optFormOpt);//.load("../interview/page?id="+data.id);
+					form.loadLocal({voteId:id});
+					/*var form = modal.$body.load("../interview/page?id="+data.id);*/
+					/*var form = modal.$body.dmForm(getVideoForm(data.contentType));*/
+					form.loadLocal(data);
 				}
 			},{
 				text : "删除",
@@ -362,15 +369,20 @@ function getoptions(id){
 				text : "添加",
 				cls : "btn green btn-sm",
 				handle : function(grid) {// 按钮点击事件
-					in_modal = $.dmModal({
+					/*in_modal = $.dmModal({
 						id : "siteForm",
 						title : "添加",
 						width:"500px",
 						distroy : true
 					});
 					in_modal.show();
-					var form = in_modal.$body.dmForm(optFormOpt);
-						form.loadLocal({voteId:id});
+					var form = in_modal.$body.dmForm(optFormOpt);*/
+					$("#content_grid").html("");
+					var form = $("#content_grid").dmForm(optFormOpt);//.load("../interview/page?id="+data.id);
+					form.loadLocal({voteId:id});
+					/*var form = modal.$body.load("../interview/page?id="+data.id);*/
+					/*var form = modal.$body.dmForm(getVideoForm(data.contentType));
+					form.loadRemote("../video/load?videoId=" + data.id);*/
 					
 				}
 			}/*{

@@ -70,8 +70,10 @@ var interviewOptions = {
 				distroy : true
 			});
 			currentInterviewId=data.id;
-			setTimeout("modal.show();",500);
-			var form = modal.$body.load("../interview/page?id="+data.id);
+			/*setTimeout("modal.show();",500);*/
+			$("#content_grid").html("");
+			$("#content_grid").load("../interview/page?id="+data.id);
+			/*var form = modal.$body.load("../interview/page?id="+data.id);*/
 			/*var form = modal.$body.dmForm(getVideoForm(data.contentType));
 			form.loadRemote("../video/load?videoId=" + data.id);*/
 		}
@@ -92,13 +94,14 @@ var interviewOptions = {
 			if(currentChannelId==undefined)
 				bootbox.alert("请先选择频道");
 			else{
-				modal = $.dmModal({
+				/*modal = $.dmModal({
 					id : "mediaForm",
 					title : "添加",
 					distroy : true
 				});
-				setTimeout("modal.show();",500);
-				var form = modal.$body.load("../interview/add?channelId="+currentChannelId);
+				setTimeout("modal.show();",500);*/
+				/*var form = modal.$body*/$("#content_grid").html("");
+				$("#content_grid").load("../interview/add?channelId="+currentChannelId);
 				currentInterviewId='';
 			}
 		}

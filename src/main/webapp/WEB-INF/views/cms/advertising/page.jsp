@@ -171,6 +171,18 @@
 					}
 					return '<image src="'+c.imageUrl+'" title="'+c.name+'" style="width:90px;"/>';
 				}
+			},{
+				title : "位置",
+				field : "",
+				width : "10%",
+				format:function(i,c){
+					if(c.type=='AD1')
+						return "位置1";
+					if(c.type=='AD2')
+						return "位置2";
+					if(c.type=='AD3')
+						return "位置3";
+				}
 			}/* ,{
 				title : "是否展示",
 				field : "",
@@ -214,14 +226,14 @@
 								
 							}
 						}
-					}, */{
+					}, {
 						
 						text : "删除",
 						cls : "btn red btn-sm",//按钮样式
 						handle : function(i,c) {
 							deleteItem(c.id);
 						}
-					}
+					}*/
 					],
 			
 			 tools : [ {

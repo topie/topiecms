@@ -205,7 +205,10 @@
 					else if(currentChannelType=='9')
 					{
 					url = "../vote/delete?voteIds=" + ids;	
-					}
+					}else if(currentChannelType=='10')
+					{
+						url = "../content/delete?contentId="+ids;
+						}
 					$.ajax({
 						type : "POST",
 						dataType : "json",

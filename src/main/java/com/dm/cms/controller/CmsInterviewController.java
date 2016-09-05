@@ -197,7 +197,7 @@ public class CmsInterviewController {
 		List<Map> radios = new ArrayList<Map>();
 		for(CmsInterviewRole ro:roles){
 			Map m = new HashMap();
-			map.put("text", ro.getRoleName()+"["+role.getPersonName()+"]");
+			map.put("text", ro.getRoleName()+"["+ro.getPersonName()+"]");
 			map.put("value", ro.getId());
 			radios.add(map);
 		}
