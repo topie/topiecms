@@ -276,6 +276,7 @@ var options = {
 			$("#content_grid").html("");
 			var form = $("#content_grid").dmForm(getForm(data.contentType));
 			form.loadRemote("./load?contentId=" + data.id);
+			//$("")
 		}
 	}, {
 		text : "排序",
