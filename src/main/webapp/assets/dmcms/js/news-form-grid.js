@@ -275,8 +275,12 @@ var options = {
 			modal.show();*/
 			$("#content_grid").html("");
 			var form = $("#content_grid").dmForm(getForm(data.contentType));
-			form.loadRemote("./load?contentId=" + data.id);
-			//$("")
+			form.loadRemote("./load?contentId=" + data.id,function(){
+				var color = data.titleStyle.split(";");
+				$("#titleStyle").val((color[0].split(":"))[1]);
+				$("select[name='titleStyle']")[0].value = (color[1].split(":"))[1];
+			});
+			
 		}
 	}, {
 		text : "排序",

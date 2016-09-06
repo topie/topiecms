@@ -79,7 +79,7 @@
                          <a href="#" class="index-ton color-green col-md-3 fontSize30">政民互动</a>
                          <#if code??>
                          <#if code="1">
-                         <a href="/topiecms/portal/websurvey/form.htm?code=1" class="index-ton fontSize30">县领导信箱</a>
+                         <a href="/topiecms/portal/websurvey/form.htm?code=1" class="index-ton fontSize30">县长信箱</a>
                          
                           <#elseif code="2">
                          <a href="/topiecms/portal/websurvey/form.htm?code=2" class="index-ton fontSize30">书记信箱</a>
@@ -124,7 +124,7 @@
                <div class="space2"></div>
                           <div style="clear:both;">
            <table border="0" cellpadding="0" cellspacing="8" width="100%">
-                     <input name="tmp"  style="width:99%;" value="县领导信箱" type="hidden">
+                     <input name="tmp"  style="width:99%;" value="县长信箱" type="hidden">
             <tbody><tr>
              <td width="49%">
              <table border="0" cellpadding="0" cellspacing="8" width="100%">
@@ -170,12 +170,18 @@
                  <table align="center" border="0" cellpadding="0" cellspacing="8" width="100%">
                    <tbody>
                      <#if code??>
+                     <#if code=="1">
+                        <input type="hidden" name="codeId" value="${leader.id}"/>
+                         <#elseif code=="2">
+                       <input type="hidden" name="codeId" value="${leader.id}"/>
+                         </#if>
+                       
                      <#if code="3"><tr>
                       <td width="90">
                                                                                   选择部门：
                       </td>
                        <td><select name="codeId">
-                            <option>请选择...</option>
+                        <option>请选择...</option>
                            <#list orgs as org>
                                 <option value="${org.id}">${org.name}</option>
                            </#list>          
@@ -185,7 +191,7 @@
                      </#if>
                   
                    <tr>
-                     <td >意见类型：</td>
+                     <td width="90">意见类型：</td>
                      <td>
                  <input name="type" value="1" checked="" type="radio">咨询
                    &nbsp;&nbsp;<input name="type" value="2" type="radio">投诉
@@ -194,11 +200,11 @@
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="isopen" value="N" type="hidden"></td>
                    </tr>
                    <tr>
-                     <td>主　　题：</td>
+                     <td width="90">主　　题：</td>
                      <td><input name="title"  style="width:99%;" type="text"></td>
                    </tr>          
                    <tr>
-                     <td valign="top">内　　容：</td>
+                     <td width="90">内　　容：</td>
                      <td><textarea rows="6" name="content"  style="width:99%;"></textarea>(即1000字)</td>
                    </tr>
                    <tr>

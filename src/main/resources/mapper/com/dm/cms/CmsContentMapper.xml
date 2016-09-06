@@ -362,6 +362,15 @@
             <if test="seq!=null">
             	seq = #{seq},
             </if>
+            <if test="isComment!=null">
+             is_comment=#{isComment,jdbcType=BIT},
+              </if>
+              <if test="titleStyle!=null">
+             title_style=#{titleStyle,jdbcType=VARCHAR},
+             </if>
+             <if test="keywords!=null">
+              keywords=#{keywords,jdbcType=VARCHAR}
+              </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -415,7 +424,7 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
         status = #{status,jdbcType=SMALLINT},
         origin=#{origin},url=#{url},seq=#{seq},
-        is_comment=#{isComment,jdbcType=BIT},title=#{titleStyle,jdbcType=VARCHAR}
+        is_comment=#{isComment,jdbcType=BIT},title_style=#{titleStyle,jdbcType=VARCHAR}
         ,keywords=#{keywords,jdbcType=VARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>

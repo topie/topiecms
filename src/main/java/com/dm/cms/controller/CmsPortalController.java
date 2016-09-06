@@ -110,26 +110,39 @@ public class CmsPortalController {
 	 * @return
 	 */
 	@RequestMapping("/websurvey/form.htm")
-	public String form(Model model,String code)
+	public String form(Model model,String code,String leadId)
 	{
-		
+		if(!StringUtils.isEmpty(leadId))
+		{
+			Leader leader = leaderService.findOne(leadId);
+			model.addAttribute("code", leader.getType());
+			model.addAttribute("leader", leader);
+		}
+		if(!StringUtils.isEmpty(code))
+		{
 		if(code.equals("1"))
 		{
 			List<Leader> leaders = leaderService.findAll("1");
-			model.addAttribute("leads", leaders);
+			Leader leader = new Leader();
+			if(leaders.size()>0)
+				leader = leaders.get(0);
+			model.addAttribute("leader", leader);
 		}
 		else if(code.equals("2"))
 		{
 			List<Leader> leaders = leaderService.findAll("2");
-			model.addAttribute("leads", leaders);
+			Leader leader = new Leader();
+			if(leaders.size()>0)
+				leader = leaders.get(0);
+			model.addAttribute("leader", leader);
 		}
 		else
 		{
 			List<Org> orgs = orgService.findAll();
 			model.addAttribute("orgs", orgs);
 		}
-		
 		model.addAttribute("code", code);
+		}
 		return templateFolder+"/websurvey";
 	}
 	
@@ -297,9 +310,14 @@ public class CmsPortalController {
     public String leaderfront(Model model,String id)
     {
 		if(StringUtils.isEmpty(id))
-			id="1";
+		{
+			List<Leader> leaders = leaderService.findAll(null);
+			model.addAttribute("leader",leaders.get(0));
+		}
+		else{
          Leader leader = leaderService.findOne(id);
          model.addAttribute("leader",leader);
+		}
          return "/template/leader";
     }
 	
