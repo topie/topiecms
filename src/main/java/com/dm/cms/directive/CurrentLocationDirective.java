@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import com.dm.cms.model.CmsChannel;
 import com.dm.cms.model.CmsContent;
 import com.dm.cms.model.CmsSite;
+import com.dm.cms.model.CmsVideo;
 import com.dm.cms.service.CmsChannelService;
 import com.dm.cms.service.CmsContentService;
 import com.dm.cms.service.CmsSiteService;
+import com.dm.cms.service.CmsVideoService;
 
 import freemarker.core.Environment;
 import freemarker.template.ObjectWrapper;
@@ -32,6 +34,8 @@ public class CurrentLocationDirective implements TemplateDirectiveModel {
 	CmsContentService cmsContentService;
 	@Autowired
 	CmsChannelService cmsChannelService;
+	@Autowired
+	CmsVideoService CmsVideoService;
 	@Autowired
 	CmsSiteService cmsSiteService;
 	@Value("${projectName}")
@@ -81,6 +85,9 @@ public class CurrentLocationDirective implements TemplateDirectiveModel {
 					mstb.insert(0, channelEntity.getDisplayName());
 					CmsChannel parent = getParent(channelEntity.getPid(), stb,mstb, divider,
 							flag);
+					if(parent==null){
+						parent = channelEntity;
+					}
 					CmsSite siteEntity = cmsSiteService.findOneById(parent.getSiteId());
 					if (siteEntity.getIsHtml() != null && siteEntity.getIsHtml()) {
 						String str = "<a href='" + siteEntity.getUrl() + "'>"
@@ -97,6 +104,29 @@ public class CurrentLocationDirective implements TemplateDirectiveModel {
 						mstb.insert(0, str);
 					}
 				}
+			}
+		}
+		if (param.get("videoId") != null) {
+			Integer videoId = Integer.valueOf(param.get("videoId").toString());
+			CmsVideo video = this.CmsVideoService.findOne(videoId);
+			stb.insert(0, "视频");
+			mstb.insert(0, "视频");
+			CmsChannel parent = getParent(video.getChannelId(), stb,mstb,
+					divider, flag);
+			CmsSite siteEntity = cmsSiteService.findOneById(parent.getSiteId());
+			if (siteEntity.getIsHtml() != null && siteEntity.getIsHtml()) {
+				String str = "<a href='" + siteEntity.getUrl() + "'>"
+						+ homePage + "</a>" + divider;
+				String mstr = "<a href='" + siteEntity.getmUrl() + "'>"
+						+ homePage + "</a>" + divider;
+				stb.insert(0, str);
+				mstb.insert(0,mstr);
+			} else {
+				String str = "<a  href='/" + projectName
+						+ "/portal/" + siteEntity.getDomain() + "/index.htm'>"
+						+ homePage + "</a>" + divider;
+				stb.insert(0, str);
+				mstb.insert(0,str);
 			}
 		}
 		env.setVariable("current", ObjectWrapper.DEFAULT_WRAPPER.wrap(stb));

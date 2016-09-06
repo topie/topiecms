@@ -1,5 +1,6 @@
 package com.dm.platform.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,6 +16,17 @@ public class DmDateUtil {
 		SimpleDateFormat formatter = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss");
 		return formatter.format(date);
+	}
+	public static Date StrToDate(String date){
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				"yyyy-MM-dd HH:mm:ss");
+		try {
+			return formatter.parse(date);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			
+		}
+		return null;
 	}
 	public static String Current(){
 		SimpleDateFormat formatter = new SimpleDateFormat(

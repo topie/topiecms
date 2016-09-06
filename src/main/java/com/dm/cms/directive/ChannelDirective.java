@@ -39,9 +39,12 @@ public class ChannelDirective implements TemplateDirectiveModel {
 		// TODO Auto-generated method stub
 		Integer channelId = Integer.valueOf(getRequiredParam(params, "channelId"));
 		CmsChannel cmsChannel = channelService.findOneById(channelId);
+		if(cmsChannel==null){
+			
+		}else{
 		if(cmsChannel.getChannelType().equals("3")){//单页
 			cmsChannel.setContentText(cmsContentService.findOneById(cmsChannel.getPageSize()).getContentText());
-		}
+		}}
 		env.setVariable("channel",ObjectWrapper.DEFAULT_WRAPPER.wrap(cmsChannel));
 		body.render(env.getOut());  
 	}

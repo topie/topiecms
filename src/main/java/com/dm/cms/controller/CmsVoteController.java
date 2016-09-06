@@ -142,12 +142,7 @@ public class CmsVoteController {
 		this.cmsVoteService.deleteOpt(id);
 		return ResponseUtil.success();
 	}
-	@RequestMapping("/sub")
-	@ResponseBody
-	public Object sub(Integer voteId,String optionIds){
-		this.cmsVoteService.commitCheck(voteId,optionIds);
-		return ResponseUtil.success();
-	}
+	
 	@InitBinder
     public void initBinder(ServletRequestDataBinder binder){
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),

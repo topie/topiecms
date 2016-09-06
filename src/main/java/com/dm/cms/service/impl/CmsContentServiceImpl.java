@@ -215,6 +215,7 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		root.put("own", contentId);
 		root.put("site", site);
 		root.put("cmsContent", content);
+		root.put("superChannel", this.getSuperChannel(channel));
 		success = super.generatorHtmlPCAndModile(cmsTemplate.getTemplatePath(),
 				htmldir, htmlFile, root, request);
 		// success = FreeMarkertUtil.analysisTemplate(templatePath,
@@ -238,7 +239,13 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 
 		return content;
 	}
-
+	private CmsChannel getSuperChannel(CmsChannel channel) {
+		CmsChannel pChannel = this.cmsChannelMapper.selectByPrimaryKey(channel.getPid());
+		if(pChannel==null){
+			return channel;
+		}
+		return getSuperChannel(pChannel);
+	}
 	public StringBuffer getChannelenNameByIterator(Integer ChannelId,
 			StringBuffer channelEnNamedir) {
 		CmsChannel channel = cmsChannelMapper.selectByPrimaryKey(ChannelId);

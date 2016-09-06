@@ -12,11 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.dm.cms.model.CmsChannel;
-import com.dm.cms.model.CmsInterview;
-import com.dm.cms.model.CmsNovel;
 import com.dm.cms.model.CmsVote;
 import com.dm.cms.service.CmsChannelService;
-import com.dm.cms.service.CmsInterviewService;
 import com.dm.cms.service.CmsVoteService;
 import com.dm.cms.util.PageUtil;
 import com.github.pagehelper.PageInfo;
@@ -39,7 +36,7 @@ public class VoteListDirective implements TemplateDirectiveModel {
 	private Logger log = LoggerFactory.getLogger(VoteListDirective.class);
 
 	@Autowired
-	private CmsInterviewService cmsInterviewService;
+	private CmsVoteService cmsVoteService;
 	@Autowired
 	private CmsChannelService cmsChannelService;
 
@@ -72,26 +69,24 @@ public class VoteListDirective implements TemplateDirectiveModel {
 		novel.setChannelId(channelId);
 		novel.setStatus("5");
 		map.put("model", novel);
-		PageInfo<CmsInterview> page = this.cmsInterviewService.findByPage(pageNum, pageSize, map);
-
-		List<CmsInterview> novels = page.getList();
+		PageInfo<CmsVote> page = this.cmsVoteService.findPage(pageNum, pageSize, map);
+		
+		List<CmsVote> novels = page.getList();
 		// long total = page.getTotal();
 		int titleLeft = 0;
 		if (params.get("titleLeft") != null) {
 			titleLeft = Integer.valueOf(params.get("titleLeft").toString());
 		}
-		int descLeft = 0;
-		if (params.get("descLeft") != null) {
-			descLeft = Integer.valueOf(params.get("descLeft").toString());
-		}
-			for (CmsInterview ce : novels) {
-				if ( descLeft!= 0 && ce.getTitle().length() > descLeft) {
+			for (CmsVote ce : novels) {
+				if (  ce.getTitle().length() > titleLeft) {
 					ce.setTitle(ce.getTitle()
-							.substring(0, descLeft) + "……");
+							.substring(0, titleLeft) + "……");
 				}
 				
 		}
 		env.setVariable("cmsVotes", ObjectWrapper.DEFAULT_WRAPPER.wrap(novels));
+		System.out.println(novels.size());
+		System.out.print(channelId);
 		if(cmsChannel!=null){
 			env.setVariable("pagination", ObjectWrapper.DEFAULT_WRAPPER
 					.wrap(PageUtil.getInstance().channelPagination(cmsChannel,

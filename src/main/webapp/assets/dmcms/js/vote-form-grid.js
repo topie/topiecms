@@ -1,5 +1,6 @@
 /** ************grid表格************ */
 ;var in_grid;
+var in_modal;
 var voteOptions = {
 	url : "../vote/list", // ajax地址
 	pageNum : 1,// 当前页码
@@ -47,13 +48,8 @@ var voteOptions = {
 		text : "管理选项",
 		cls : "green btn-sm",
 		handle : function(index, data) {
-			modal = $.dmModal({
-				id : "siteForm",
-				title : "编辑-" + data.title,
-				distroy : true
-			});
-			modal.show();
-			in_grid = modal.$body.dmGrid(getoptions(data.id));
+			$("#content_grid").html("");
+			grid = $("#content_grid").dmGrid(getoptions(data.id));
 		}
 	},{
 
@@ -251,7 +247,7 @@ var optFormOpt = {
 		},
 		ajaxSuccess : function() {
 			in_modal.hide();
-			in_grid.reload();
+			grid.reload();
 		},
 		submitText : "保存",// 保存按钮的文本
 		showReset : true,// 是否显示重置按钮
@@ -322,17 +318,17 @@ function getoptions(id){
 				handle : function(index, data) {
 					// index为点击操作的行数
 					// data为该行的数据
-					/*in_modal = $.dmModal({
+					in_modal = $.dmModal({
 						id : "siteForm",
 						width:"500px",
-						title : "编辑-" + data.title,
+						title : "编辑",
 						distroy : true
 					});
 					in_modal.show();
 					var form = in_modal.$body.dmForm(optFormOpt);
-						form.loadLocal(data);*/
-					$("#content_grid").html("");
-					var form = $("#content_grid").dmForm(optFormOpt);//.load("../interview/page?id="+data.id);
+						form.loadLocal(data);
+					/*$("#content_grid").html("");
+					var form = $("#content_grid").dmForm(optFormOpt);*///.load("../interview/page?id="+data.id);
 					form.loadLocal({voteId:id});
 					/*var form = modal.$body.load("../interview/page?id="+data.id);*/
 					/*var form = modal.$body.dmForm(getVideoForm(data.contentType));*/
@@ -369,16 +365,16 @@ function getoptions(id){
 				text : "添加",
 				cls : "btn green btn-sm",
 				handle : function(grid) {// 按钮点击事件
-					/*in_modal = $.dmModal({
+					in_modal = $.dmModal({
 						id : "siteForm",
 						title : "添加",
 						width:"500px",
 						distroy : true
 					});
 					in_modal.show();
-					var form = in_modal.$body.dmForm(optFormOpt);*/
-					$("#content_grid").html("");
-					var form = $("#content_grid").dmForm(optFormOpt);//.load("../interview/page?id="+data.id);
+					var form = in_modal.$body.dmForm(optFormOpt);
+//					$("#content_grid").html("");
+//					var form = $("#content_grid").dmForm(optFormOpt);//.load("../interview/page?id="+data.id);
 					form.loadLocal({voteId:id});
 					/*var form = modal.$body.load("../interview/page?id="+data.id);*/
 					/*var form = modal.$body.dmForm(getVideoForm(data.contentType));

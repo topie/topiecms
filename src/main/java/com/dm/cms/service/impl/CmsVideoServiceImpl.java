@@ -319,6 +319,7 @@ public class CmsVideoServiceImpl extends generatorHtmlHandler implements CmsVide
 		root.put("own", cmsVideo.getId());
 		root.put("site", site);
 		root.put("cmsVideo", cmsVideo);
+		root.put("superChannel", getSuperChannel(cmsChannel));
 		boolean success = super.generatorHtmlPCAndModile(cmsTemplate.getTemplatePath(), htmldir, htmlFile, root, request);
 		if (success) {
 			log.info("内容静态化成功：[id=" + cmsVideo.getId() + ",title="
@@ -334,7 +335,13 @@ public class CmsVideoServiceImpl extends generatorHtmlHandler implements CmsVide
 		}
 		return success;
 	}
-
+	private CmsChannel getSuperChannel(CmsChannel channel) {
+		CmsChannel pChannel = this.cmsChannelMapper.selectByPrimaryKey(channel.getPid());
+		if(pChannel==null){
+			return channel;
+		}
+		return getSuperChannel(pChannel);
+	}
 	private StringBuffer getChannelenNameByIterator(Integer ChannelId,
 			StringBuffer channelEnNamedir) {
 		CmsChannel channel = cmsChannelMapper.selectByPrimaryKey(ChannelId);

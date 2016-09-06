@@ -13,7 +13,7 @@ public class CmsVote {
 
     private String description;
 
-    private String checkType;
+    private String checkType;//0单选 1多选
 
     private String status;
 
@@ -35,7 +35,7 @@ public class CmsVote {
 
     private String filed2;//模板
 
-    private String filed3;
+    private String filed3;//投票人数
 
     private String filed4;
 

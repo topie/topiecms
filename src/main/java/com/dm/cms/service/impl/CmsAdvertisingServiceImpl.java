@@ -28,7 +28,7 @@ public class CmsAdvertisingServiceImpl implements CmsAdvertisingService {
 
 	@Override
 	public void update(CmsAdvertising cmsAdvertising) {
-		this.cmsAdvertisingMapper.updateByPrimaryKey(cmsAdvertising);
+		this.cmsAdvertisingMapper.updateByPrimaryKeySelective(cmsAdvertising);
 
 	}
 
@@ -40,6 +40,7 @@ public class CmsAdvertisingServiceImpl implements CmsAdvertisingService {
 
 	private void init(CmsAdvertising cmsAdvertising) {
 		cmsAdvertising.setClickCount(0);
+		cmsAdvertising.setEnabled(true);
 		cmsAdvertising.setEnabled(cmsAdvertising.getEnabled()!=null?cmsAdvertising.getEnabled():true);
 		cmsAdvertising.setTarget(cmsAdvertising.getTarget()==null?"_blank":cmsAdvertising.getTarget());
 		

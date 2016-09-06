@@ -449,8 +449,8 @@ function getForm(contentType) {
 			},
 			{
 				type : 'datepicker',//类型
-				name : 'publishTime',//name
-				id : 'publishTime',//id
+				name : 'publishDate',//name
+				id : 'publishDate',//id
 				label : '发布时间',//左边label
 				cls : 'input-large'
 			},{
@@ -632,7 +632,7 @@ function getFileForm(contentType) {
 					maxlength : 64
 				},
 				message : {
-					required : "请输入内容信息标题",
+					required : "请输入",
 					maxlength : "最多输入64字节"
 				}
 			},{
@@ -642,6 +642,13 @@ function getFileForm(contentType) {
 				label : '文号',// 左边label
 				cls : 'input-large'
 				
+			},
+			{
+				type : 'text',// 类型
+				name : 'keywords',// name
+				id : 'keywords',// id
+				label : '关键字',// 左边label
+				cls : 'input-large'
 			},
 			{
 				type : 'textarea',// 类型
@@ -661,8 +668,8 @@ function getFileForm(contentType) {
 			},
 			{
 				type : 'datepicker',//类型
-				name : 'publishTime',//name
-				id : 'publishTime',//id
+				name : 'publishDate',//name
+				id : 'publishDate',//id
 				label : '发布时间',//左边label
 				cls : 'input-large'
 			},{
@@ -676,7 +683,7 @@ function getFileForm(contentType) {
 					maxlength : 12
 				},
 				message : {
-					required : "请输入来源信息",
+					required : "请输入发布机构信息",
 					maxlength : "最多输入12字节"
 				}
 			},
@@ -709,10 +716,10 @@ function getFileForm(contentType) {
 		label : '载体分类',// 左边label
 		cls : 'input-large',
 		rule : {
-			maxlength : 200
+			maxlength : 20
 		},
 		message : {
-			maxlength : "最多输入200字节"
+			maxlength : "最多输入20字节"
 		}
 	};
 	var titleImg1 = {

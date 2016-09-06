@@ -1,6 +1,10 @@
 package com.dm.cms.controller;
 
+import java.text.DecimalFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -38,6 +42,8 @@ import com.dm.cms.service.CmsVideoService;
 import com.dm.cms.service.CmsVoteService;
 import com.dm.platform.model.Org;
 import com.dm.platform.service.OrgService;
+import com.dm.platform.util.DmDateUtil;
+import com.dm.platform.util.ResponseUtil;
 import com.dm.websurvey.model.Leader;
 import com.dm.websurvey.model.WebSurvey;
 import com.dm.websurvey.service.LeaderService;
@@ -188,7 +194,10 @@ public class CmsPortalController {
 			@PathVariable("enName") String enName,
 			@PathVariable(value = "pageNum") Integer pageNum) {
 		CmsChannel cmsChannel = cmsChannelService.findOneById(channelId);
+		if (cmsChannel == null)
+			return "404";
 		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
+		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
 		model.addAttribute("own", channelId);
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("site", cmsSite);
@@ -196,11 +205,16 @@ public class CmsPortalController {
 		model.addAttribute("htmlFolder", htmlFolder);
 		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		model.addAttribute("projectName", projectName);
-		if (cmsChannel == null)
-			return "404";
 		return getTemplatePath(cmsChannel.getTemplateId(), device.isMobile());
 	}
 	
+	private CmsChannel getSuperChannel(CmsChannel channel) {
+		CmsChannel pChannel = this.cmsChannelService.findOneById(channel.getPid());
+		if(pChannel==null){
+			return channel;
+		}
+		return getSuperChannel(pChannel);
+	}
 	@RequestMapping("/content/{contentId}.htm")
 	public String content(Model model, Device device,
 			@PathVariable("contentId") Integer contentId,
@@ -208,8 +222,36 @@ public class CmsPortalController {
 		CmsContent cmsContent = cmsContentService.findOneById(contentId);
 		CmsChannel cmsChannel = cmsChannelService.findOneById(cmsContent
 				.getChannelId());
+		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
 		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
-		model.addAttribute("cmsContent", cmsContent);
+		if(cmsContent.getContentType()!=null && cmsContent.getContentType().equals("10")){
+			CmsContent ce =cmsContent;
+			Map doc = new HashMap();
+			doc.put("id", ce.getId());
+			doc.put("infoCode", ce.getAuthor());
+			doc.put("title", ce.getTitle());
+			doc.put("brief", ce.getBrief());
+			doc.put("publishTime", ce.getPublishDate());
+			doc.put("publishOrg", ce.getOrigin());
+			doc.put("keywords", ce.getKeywords());
+			doc.put("ztType", ce.getTitleImageIllustrate());
+			doc.put("zjType", ce.getTitleImageUrl());
+			doc.put("contentText", ce.getContentText());
+			doc.put("channelId", ce.getChannelId());
+			doc.put("channelEnName", ce.getChannelEnName());
+			doc.put("createTime", ce.getCreateTime());
+			doc.put("createUser", ce.getCreateUser());
+			doc.put("url", ce.getUrl());
+			doc.put("titleStyle", ce.getTitleStyle());
+			doc.put("templateId", ce.getTemplateId());
+			doc.put("isComment", ce.getIsComment());
+			doc.put("updateTime", ce.getUpdateTime());
+			doc.put("isHtml", ce.getIsHtml());
+			doc.put("mUrl", ce.getmUrl());
+			doc.put("contentType", ce.getContentType());
+			model.addAttribute("doc",cmsContent);
+	}else
+			model.addAttribute("cmsContent", cmsContent);
 		model.addAttribute("projectName", projectName);
 		model.addAttribute("site", cmsSite);
 		model.addAttribute("own", contentId);
@@ -234,6 +276,7 @@ public class CmsPortalController {
 		CmsVideo cmsVideo = cmsVideoService.findOne(videoId);
 		CmsChannel cmsChannel = cmsChannelService.findOneById(cmsVideo
 				.getChannelId());
+		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
 		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
 		model.addAttribute("cmsVideo", cmsVideo);
 		model.addAttribute("own", cmsVideo.getId());
@@ -250,6 +293,7 @@ public class CmsPortalController {
 		CmsAudio cmsAudio = cmsAudioService.findOne(audioId);
 		CmsChannel cmsChannel = cmsChannelService.findOneById(cmsAudio
 				.getChannelId());
+		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
 		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
 		model.addAttribute("cmsAudio", cmsAudio);
 		model.addAttribute("own", cmsAudio.getId());
@@ -269,6 +313,7 @@ public class CmsPortalController {
 		model.addAttribute("own", novelId);
 		CmsChannel cmsChannel = cmsChannelService.findOneById(novel
 				.getChannelId());
+		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
 		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
 		model.addAttribute("htmlFolder", htmlFolder);
 		model.addAttribute("site", cmsSite);
@@ -353,22 +398,61 @@ public class CmsPortalController {
 	}
 	@RequestMapping("/vote/{voteId}.htm")
     public String vote(Model model,@PathVariable("voteId") Integer voteId)
-    {
+    {	model.addAttribute("projectName", projectName);
+		model.addAttribute("htmlFolder", htmlFolder);
+		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		CmsVote webSur =this.cmsVoteService.findOne(voteId);
+		CmsChannel cmsChannel = cmsChannelService.findOneById(webSur.getChannelId());
+		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
+		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
+		model.addAttribute("site", cmsSite);
+		model.addAttribute("own",voteId);
 		model.addAttribute("cmsVote", webSur);
 		List<CmsVoteOption> potions = this.cmsVoteService.loadOpt(voteId);
+		model.addAttribute("voteTimes", webSur.getFiled3());
 		model.addAttribute("options",potions);
 		return  getTemplatePath(Integer.valueOf(webSur.getFiled2()), false);
     }
 	@RequestMapping("/vote/{voteId}r.htm")
     public String voter(Model model,@PathVariable("voteId") Integer voteId)
     {
+		model.addAttribute("projectName", projectName);
+		model.addAttribute("htmlFolder", htmlFolder);
+		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		CmsVote webSur =this.cmsVoteService.findOne(voteId);
+		CmsChannel cmsChannel = cmsChannelService.findOneById(webSur.getChannelId());
+		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
+		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
+		model.addAttribute("site", cmsSite);
+		model.addAttribute("own",voteId);
 		model.addAttribute("cmsVote", webSur);
 		List<CmsVoteOption> potions = this.cmsVoteService.loadOpt(voteId);
+		double count = 0;
+		for(CmsVoteOption o:potions){
+			count+= o.getClickTimes();
+		}
+		for(CmsVoteOption o:potions){
+			o.setFiled1(new DecimalFormat("0.00").format((double)o.getClickTimes()/count)+"%");
+		}
+		model.addAttribute("voteTimes", webSur.getFiled3());
 		model.addAttribute("options",potions);
-		return  getTemplatePath(Integer.valueOf(webSur.getFiled2()), false)+"_result";
+		return  getTemplatePath(Integer.valueOf(webSur.getFiled2()), false)+"-result";
     }
+	@RequestMapping("/vote/click.do")
+	@ResponseBody
+	public Object sub(Integer voteId,String optionIds){
+		CmsVote o = cmsVoteService.findOne(voteId);
+		Date start = DmDateUtil.StrToDate(o.getStartTime());
+		Date end =DmDateUtil.StrToDate(o.getEndTime());
+		Date now = new Date();
+		if(end!=null &&now.after(end)){
+			return ResponseUtil.error("投票时间已过!");
+		}if(start!=null && now.before(start)){
+			return ResponseUtil.error("投票未开始!");
+		}
+		this.cmsVoteService.commitCheck(voteId,optionIds);
+		return ResponseUtil.success("投票成功!");
+	}
 	/*
 	 * @RequestMapping("/channel/{enName}_{channelId}.htm") public String
 	 * channel(Model model, @PathVariable("channelId") Integer channelId,

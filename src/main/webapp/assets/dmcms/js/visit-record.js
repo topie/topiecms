@@ -19,7 +19,7 @@
     	url+="?contentId="+arr[1]+"&channelType=0";
     }else{
     	var arr = path.split('/');
-    	int i = arr.length-2;
+    	var i = arr.length-2;
     	if(i>0)
     		url+="?channelEnName="+arr[i];
     }

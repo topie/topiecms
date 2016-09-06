@@ -339,6 +339,7 @@ import com.github.pagehelper.PageInfo;
 			root.put("channel", channel);
 			root.put("site", site);
 			root.put("pageSize",channel.getPageSize());
+			root.put("superChannel", getSuperChannel(channel));
 			String htmlFile = serperator + channel.getEnName()+"_"+i+".html";
 			success = this.generatorHtmlPCAndModile(cmsTemplate.getTemplatePath(),htmldir,htmlFile, root, request);
 		    if(!success)
@@ -358,7 +359,13 @@ import com.github.pagehelper.PageInfo;
 		}
 		return success;
     }
-    
+    private CmsChannel getSuperChannel(CmsChannel channel) {
+		CmsChannel pChannel = this.cmsChannelMapper.selectByPrimaryKey(channel.getPid());
+		if(pChannel==null){
+			return channel;
+		}
+		return getSuperChannel(pChannel);
+	}
     @Override
     public boolean cancelGeneratorHtml(Integer channelId,HttpServletRequest request)
     {
