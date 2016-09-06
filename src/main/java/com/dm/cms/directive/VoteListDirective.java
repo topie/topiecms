@@ -76,17 +76,14 @@ public class VoteListDirective implements TemplateDirectiveModel {
 		int titleLeft = 0;
 		if (params.get("titleLeft") != null) {
 			titleLeft = Integer.valueOf(params.get("titleLeft").toString());
-		}
 			for (CmsVote ce : novels) {
 				if (  ce.getTitle().length() > titleLeft) {
 					ce.setTitle(ce.getTitle()
 							.substring(0, titleLeft) + "……");
 				}
-				
+			}
 		}
 		env.setVariable("cmsVotes", ObjectWrapper.DEFAULT_WRAPPER.wrap(novels));
-		System.out.println(novels.size());
-		System.out.print(channelId);
 		if(cmsChannel!=null){
 			env.setVariable("pagination", ObjectWrapper.DEFAULT_WRAPPER
 					.wrap(PageUtil.getInstance().channelPagination(cmsChannel,

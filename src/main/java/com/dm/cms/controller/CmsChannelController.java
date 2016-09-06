@@ -49,11 +49,13 @@ public class CmsChannelController {
 	public @ResponseBody
 	Object treeJsonBySiteId(
 			@RequestParam(value = "siteId", required = true) Integer siteId,
-			@RequestParam(value = "channelType", required = false) String channelType) {
+			@RequestParam(value = "channelType", required = false) String channelType,
+			@RequestParam(value = "filterContent" ,required = false) String isfilter) {
 		List<TreeNode> treeNodes = cmsChannelService
-				.findCmsChannelTreeNodeBySiteId(siteId,channelType);
+				.findCmsChannelTreeNodeBySiteId(siteId,channelType,isfilter);
 		return treeNodes;
 	}
+	
 
 	@RequestMapping("/load")
 	public @ResponseBody

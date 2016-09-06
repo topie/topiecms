@@ -509,7 +509,7 @@ var voteOptions = {
 			cls : "green btn-sm",
 			handle : function(i, data) {
 
-				var url = "../vote/pass?voteIds="+data.id;
+				var url = "../vote/publish?voteIds="+data.id;
 				check(url,data.id);
 			}
 		}, {

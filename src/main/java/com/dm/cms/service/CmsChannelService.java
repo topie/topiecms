@@ -39,9 +39,10 @@ public interface CmsChannelService {
      *
      * @param siteId
      * @param channelType null时 查询所有
+     * @param isfilter  是否过滤    在内容管理页面, 像url链接频道,单页频道 是需要过滤掉的 具体类型写死在sql
      * @return
      */
-    List<TreeNode> findCmsChannelTreeNodeBySiteId(int siteId, String channelType);
+    List<TreeNode> findCmsChannelTreeNodeBySiteId(int siteId, String channelType, String isfilter);
 
     /**
      * 包含站点节点的频道树

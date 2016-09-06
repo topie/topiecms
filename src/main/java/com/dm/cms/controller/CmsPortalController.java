@@ -450,7 +450,7 @@ public class CmsPortalController {
 			count+= o.getClickTimes();
 		}
 		for(CmsVoteOption o:potions){
-			o.setFiled1(new DecimalFormat("0.00").format((double)o.getClickTimes()/count)+"%");
+			o.setFiled1(new DecimalFormat("0.00").format((double)(o.getClickTimes()/count*100))+"%");
 		}
 		model.addAttribute("voteTimes", webSur.getFiled3());
 		model.addAttribute("options",potions);

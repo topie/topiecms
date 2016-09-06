@@ -147,11 +147,12 @@ import com.github.pagehelper.PageInfo;
         return page;
     }
 
-    @Override public List<TreeNode> findCmsChannelTreeNodeBySiteId(int siteId, String channelType) {
+    @Override public List<TreeNode> findCmsChannelTreeNodeBySiteId(int siteId, String channelType,String isfilter) {
         Map map = new HashMap();
-        CmsChannel model = new CmsChannel();
-        model.setSiteId(siteId);
-        model.setChannelType(channelType);
+        Map model = new HashMap();
+        model.put("siteId", siteId);
+        model.put("channelType", channelType);
+        model.put("isFilter", isfilter);
         map.put("model", model);
         String userId = UserAccountUtil.getInstance().getCurrentUserId();
     	map.put("uid", userId);

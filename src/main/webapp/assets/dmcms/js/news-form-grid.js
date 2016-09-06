@@ -10,7 +10,24 @@ function flushGrid()
 	if (currentChannelType == '0') {
 		options.url = "./list?channelId=" + currentChannelId;
 		grid = $("#content_grid").dmGrid(options);
-	} else if (currentChannelType == '5') {
+	}
+	if (currentChannelType == '2') {
+		$("#content_grid").html('<div class="note note-success note-bordered">'
+						+'<h4 class="block">提示</h4><p>'
+							+'链接频道无需添加内容'
+						+'</p></div>');
+	}
+	if (currentChannelType == '4') {
+		options.url = "./list?channelId=" + currentChannelId;
+		grid = $("#content_grid").dmGrid(options);
+	}
+	if (currentChannelType == '3') {
+		$("#content_grid").html('<div class="note note-success note-bordered">'
+						+'<h4 class="block">提示</h4><p>'
+							+'单页频道无需添加内容'
+						+'</p></div>');
+	}
+	else if (currentChannelType == '5') {
 		videoOptions.url = "../video/list?channelId="
 				+ currentChannelId;
 		grid = $("#content_grid").dmGrid(videoOptions);
@@ -208,7 +225,7 @@ function refreshSite() {
 		channelTree = $.fn.zTree.getZTreeObj("channel_tree");
 	}
 	currentSiteId = $("#select2_site").val();
-	channelTree.setting.async.url = "../channel/tree?siteId=" + currentSiteId;
+	channelTree.setting.async.url = "../channel/tree?siteId=" + currentSiteId +"&isfilter=1";
 	channelTree.reAsyncChildNodes(null, "refresh");
 }
 

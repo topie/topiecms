@@ -114,77 +114,8 @@
          		</@channelListDirective> 
                          </div> 
                        </div>
-                       <div class="col-md-8 pdTop1em">
-                           <div class="fontSize18 new-list2-t">部门主要负责人</div>
-                           <table class="table table1 text-center table-bordered-none">
-                               <thead>
-                               <tr>
-                                   <th>部门</th>
-                                   <th>职务</th>
-                                   <th>姓名</th>
-                               </tr>
-                               </thead>
-                               <tbody>
-                               <tr>
-                                   <td>市政府办公室</td>
-                                   <td>市政府秘书长</td>
-                                   <td>陈雄伟</td>
-                               </tr>
-                               <tr class="active">
-                                   <td>市发改委</td>
-                                   <td>市发改委主任</td>
-                                   <td>顾海东</td>
-                               </tr>
-                               <tr>
-                                   <td>市经信委</td>
-                                   <td>市经信委主任</td>
-                                   <td>周伟</td>
-                               </tr>
-                               <tr class="active">
-                                   <td>市教育局</td>
-                                   <td>市教育局局长</td>
-                                   <td>顾月华</td>
-                               </tr>
-                               <tr>
-                                   <td>市科技局</td>
-                                   <td>市科技局局长</td>
-                                   <td>（待任命）</td>
-                               </tr>
-                               <tr class="active">
-                                   <td>市公安局</td>
-                                   <td>市公安局局长</td>
-                                   <td>（待任命）</td>
-                               </tr>
-                               <tr>
-                                   <td>市监察局</td>
-                                   <td>市监察局局长</td>
-                                   <td>缪红梅</td>
-                               </tr>
-                               <tr class="active">
-                                   <td>市民政局</td>
-                                   <td>市民政局局长</td>
-                                   <td>李永根</td>
-                               </tr>
-                               <tr>
-                                   <td>市司法局</td>
-                                   <td>市司法局局长</td>
-                                   <td>朱正</td>
-                               </tr>
-                               <tr class="active">
-                                   <td>市财政局</td>
-                                   <td>市财政局局长</td>
-                                   <td>吴炜</td>
-                               </tr>
-                               </tbody>
-                           </table>
-                           <div class="text-right new-page">
-                               <span class="new-page-pd"><span class="color-green">1/1</span>&nbsp;页</span>
-                               <span class="new-page-pd">共&nbsp;<span class="color-green">10</span>&nbsp;条记录</span>
-                               <button class="btn btn-link">首页</button>
-                               <button class="btn btn-link">上一页</button>
-                               <button class="btn btn-link">下一页</button>
-                               <button class="btn btn-link">尾页</button>
-                           </div>
+                       <div class="col-md-8 pdTop1em" id="orgContent">
+                           
                        </div>
                    </div>
                </div>
@@ -198,6 +129,7 @@
            <script type="text/javascript" src="/html/jinhu-static/js/js.js"></script>
            <script type="text/javascript">
                $(function () {
+                $("#orgContent").load("../../org/orgList");
                    $('input, textarea').placeholder();
                    $('#navTab1 a').click(function (e) {
                        e.preventDefault();

@@ -402,6 +402,9 @@
 				and display_name like CONCAT(CONCAT('%',
 				#{model.displayName}),'%')
 			</if>
+			<if test="model.isFilter!=null">
+				and channel_type not in ('2','3','4')
+			</if>
 		</if>
 		order by t.seq
 	</select>

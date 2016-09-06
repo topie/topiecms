@@ -224,8 +224,8 @@
 											<div class="form-actions">
 												<div class="row">
 													<div class="col-md-offset-3 col-md-9">
-														<button type="button" onclick="subInterview();" class="btn green">提交</button><!--  
-														<button type="button" class="btn default"></button>-->
+														<button type="button" onclick="subInterview();" class="btn green">提交</button>
+														<button type="button" class="btn default" onclick="flushGrid();"> 返回</button>
 													</div>
 												</div>
 											</div>

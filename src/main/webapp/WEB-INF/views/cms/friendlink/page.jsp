@@ -327,11 +327,16 @@
 				label : '描述',//左边label
 				cls : 'input-large'
 			},{
-				type : 'text',//类型
+				type : 'redioGroup',//类型
 				name : 'type',//name
 				id : 'type',//id
 				label : '类型',//左边label
-				cls : 'input-large'
+				cls : 'input-large',
+				items:[{text:'中央部委网站',value:"link1"},
+				       {text:'省（区市）网站',value:"link2"},
+				       {text:'江苏省辖市网站',value:"link3"},
+				       {text:'淮安市辖县区网站',value:"link4"},
+				       {text:'本地网站 ',value:"link5"}]
 			}];
 			var formOpts = {
 				id : "channel_form",//表单id
