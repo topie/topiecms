@@ -265,6 +265,13 @@ function getVideoForm(typeId) {
 		showReset : true,// 是否显示重置按钮
 		resetText : "重置",// 重置按钮文本
 		isValidate : true,// 开启验证
+		buttons : [ {
+			type : 'button',
+			text : '关闭',
+			handle : function() {
+				flushGrid();
+			}
+		} ],
 		// 表单元素
 		items : items
 	};

@@ -53,6 +53,12 @@
 					#{item}
 				</foreach>
             </if>
+            <if test="type !=null and type !=''">
+              and type in
+				<foreach collection="type" item="item"  open="(" close=")" separator=",">
+					#{item}
+				</foreach>
+            </if>
         </where>
         <if test="order!=null and order!=''">
         	order by ${order}

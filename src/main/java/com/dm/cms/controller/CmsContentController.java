@@ -114,6 +114,11 @@ public class CmsContentController {
 		cmsContent.setSiteDomain(cmsChannel.getSiteDomain());
 		cmsContent.setChannelEnName(cmsChannel.getEnName());
 		cmsContent.setStatus(new Short("0"));
+		if(!StringUtils.isEmpty(cmsContent.getTitleStyle()))
+		{
+		String titleStyleArray[] = cmsContent.getTitleStyle().split(","); 
+		cmsContent.setTitleStyle("color:"+titleStyleArray[0]+";font-size:"+titleStyleArray[1]);
+		}
 		cmsContentService.updateCmsContent(cmsContent);
 	}
 

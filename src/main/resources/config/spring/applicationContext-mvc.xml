@@ -104,16 +104,15 @@
 				<entry key="friendlinkDirective" value-ref="friendlinkDirective"></entry>
 				<entry key="advertisingListDirective" value-ref="advertisingListDirective"></entry>
 				<entry key="advertisingDirective" value-ref="advertisingDirective"></entry>
-
 				<entry key="voteListDirective" value-ref="voteListDirective"></entry>
 				<entry key="interviewListDirective" value-ref="interviewListDirective"></entry>
-				
 				<entry key="leaderListDirective" value-ref="leaderListDirective"></entry>
 				<entry key="leaderDirective" value-ref="leaderDirective"></entry>
 				<entry key="orgListDirective" value-ref="orgListDirective"></entry>
-				<entry key="voteListDirective" value-ref="voteListDirective"></entry>
 				<entry key="pubDocDirective" value-ref="pubDocDirective"></entry>
 				<entry key="pubDocListDirective" value-ref="pubDocListDirective"></entry>
+				<entry key="websurveyListDirective" value-ref="websurveyListDirective"></entry>
+
             </map>
         </property>
         <property name="defaultEncoding">
@@ -151,6 +150,7 @@
    <bean id="interviewListDirective" class="com.dm.cms.directive.InterviewListDirective"/>
    <bean id="pubDocDirective" class="com.dm.cms.directive.PubDocDirective"></bean>
 	<bean id="pubDocListDirective" class="com.dm.cms.directive.PubDocListDirective"></bean>
+   <bean id="websurveyListDirective" class="com.dm.cms.directive.WebsurveyListDirective"/>
     <!-- 自定义标签结束 -->
 
     <!-- json格式设置 -->

@@ -275,7 +275,12 @@ var options = {
 			modal.show();*/
 			$("#content_grid").html("");
 			var form = $("#content_grid").dmForm(getForm(data.contentType));
-			form.loadRemote("./load?contentId=" + data.id);
+			form.loadRemote("./load?contentId=" + data.id,function(){
+				var color = data.titleStyle.split(";");
+				$("#titleStyle").val((color[0].split(":"))[1]);
+				$("select[name='titleStyle']")[0].value = (color[1].split(":"))[1];
+			});
+			
 		}
 	}, {
 		text : "排序",
@@ -586,6 +591,13 @@ function getForm(contentType) {
 		resetText : "重置",// 重置按钮文本
 		isValidate : true,// 开启验证
 		buttonsAlign : "center",
+		buttons : [ {
+			type : 'button',
+			text : '关闭',
+			handle : function() {
+				flushGrid();
+			}
+		} ],
 		// 表单元素
 		items : items
 	};
