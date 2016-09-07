@@ -428,6 +428,10 @@
 		{
 		formOption = getForm(contentType);
 		}
+		else if(contentType == '2')
+		{
+			formOption = getForm(contentType);
+		}
 	else if(currentChannelType == '5')
 	{
 	formOption = getVideoForm(contentType);

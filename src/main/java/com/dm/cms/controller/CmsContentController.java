@@ -102,8 +102,7 @@ public class CmsContentController {
 		if (cmsContent.getTitleStyle() != null
 				&& !cmsContent.getTitleStyle().equals("")) {
 			String titleStyleArray[] = cmsContent.getTitleStyle().split(",");
-			cmsContent.setTitleStyle("font-size:" + titleStyleArray[1]
-					+ ";color:" + titleStyleArray[0]);
+			cmsContent.setTitleStyle("color:"+titleStyleArray[0]+";font-size:"+titleStyleArray[1]);
 		}
 		cmsContentService.insertCmsContent(cmsContent);
 	}

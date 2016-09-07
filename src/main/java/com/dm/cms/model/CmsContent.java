@@ -553,7 +553,7 @@ public class CmsContent implements Serializable {
 	private String origin;
 
 	public String getUrl() {
-		if (isHtml == null || !isHtml) {
+		if ((isHtml == null || !isHtml) && contentType!=2) {
 			String projectName = ConfigUtil.getConfigContent("cms", "projectName");
 			return "/"+projectName+"/portal/content/" + id + ".htm";
 		}
