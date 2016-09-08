@@ -1,7 +1,11 @@
 package com.dm.cms.model;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.dm.platform.util.ConfigUtil;
 
@@ -321,7 +325,16 @@ public class CmsContent implements Serializable {
 	 * @mbggenerated
 	 */
 	public Date getPublishDate() {
-		return publishDate;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dateFor = format.format(publishDate);
+		Date date = null;
+		try {
+		 date = format.parse(dateFor);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return date;
 	}
 
 	/**
