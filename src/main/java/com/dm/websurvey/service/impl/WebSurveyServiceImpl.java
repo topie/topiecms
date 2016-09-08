@@ -31,6 +31,10 @@ public class WebSurveyServiceImpl implements WebSurveyService{
 		webSurvey.setId(UUIDUtils.getUUID16());
 		webSurvey.setInputDate(new Date());
 		Leader leader = leaderMapper.selectByPrimaryKey(webSurvey.getCodeId());
+		if(leader!=null)
+		{
+		webSurvey.setTouser(leader.getName());
+		}
 		webSurveyMapper.insertSelective(webSurvey);
 		return webSurvey;
 	}

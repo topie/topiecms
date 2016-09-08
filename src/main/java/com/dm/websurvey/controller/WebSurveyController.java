@@ -45,6 +45,12 @@ public class WebSurveyController {
 		return "/websurvey/page";
 	}
 	
+	@RequestMapping("/replyPage")
+	public String replyPage(Model model)
+	{
+		return "/websurvey/reply-page";
+	}
+	
 	@RequestMapping("/updateRecontent")
 	@ResponseBody
 	public Map update(Model model,String id,String recontent)
@@ -76,6 +82,15 @@ public class WebSurveyController {
 		 UserAccount user = UserAccountUtil.getInstance().getCurrentUserAccount();
 		 UserEmailConfig config =  userEmailConfigService.findByUserId(user.getCode());
 		 Map map = new SqlParam<WebSurvey>().autoParam(searchEntity,sort);
+		 if(searchEntity.getType().equals("5"))
+		 {
+			 List<String> types = new ArrayList<String>();
+			 types.add("5");
+			 map.put("type", types);
+		 PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMap(pageNum,pageSize,map);
+			return PageConvertUtil.grid(webSurveys);
+		 }
+		 else{
 		 if(config!=null)
 		 {
 			 List<String> toUsers = new ArrayList<String>();
@@ -87,14 +102,16 @@ public class WebSurveyController {
 			 {
 				 toUsers.addAll(Arrays.asList(config.getOrgId().split(",")));
 			 }
-			 
-			 map.put("toUsers", toUsers);
-		PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMap(pageNum,pageSize,map);
-		return PageConvertUtil.grid(webSurveys);
+				 String typeArray[] = searchEntity.getType().split(",");
+				 map.put("type",Arrays.asList(typeArray));
+			     map.put("codeId", toUsers);
+				PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMap(pageNum,pageSize,map);
+				return PageConvertUtil.grid(webSurveys);
 		 }
-		 else
-		 {
+			 else
+			 {
 				return PageConvertUtil.emptyGrid();
+			 }
 		 }
 	}
 	

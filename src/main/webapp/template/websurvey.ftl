@@ -1,5 +1,4 @@
-
-      <html><head lang="en">
+<html><head lang="en">
                                   <meta charset="UTF-8">
                                   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
                                   <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
@@ -78,14 +77,15 @@
                      <div class="index-toff border-gray1">
                          <a href="#" class="index-ton color-green col-md-3 fontSize30">政民互动</a>
                          <#if code??>
-                         <#if code="1">
-                         <a href="/topiecms/portal/websurvey/form.htm?code=1" class="index-ton fontSize30">县领导信箱</a>
-                         
-                          <#elseif code="2">
+                        <#if code=="1">
+                         <a href="/topiecms/portal/websurvey/form.htm?code=1" class="index-ton fontSize30">县长信箱</a>                     
+                          <#elseif code=="2">
                          <a href="/topiecms/portal/websurvey/form.htm?code=2" class="index-ton fontSize30">书记信箱</a>
                          
-                         <#else>
+                         <#elseif code =="3">
                          <a href="/topiecms/portal/websurvey/form.htm?code=3" class="index-ton fontSize30">镇或部门信箱</a>
+                         <#else>
+                         <a href="/topiecms/portal/websurvey/form.htm?code=3" class="index-ton fontSize30">留言</a>
                          </#if>
                          </#if>
                      </div>
@@ -170,28 +170,11 @@
                  <table align="center" border="0" cellpadding="0" cellspacing="8" width="100%">
                    <tbody><tr>
                      <#if code??>
-                      <#if code="1">
-                     <td width="90">
-                     选择领导：
-                     </td>
-                     <td><select name="codeId">
-                       <option>请选择...</option>
-                       <#list leads as lead>
-                       <option value="${lead.id}">${lead.name}</option>
-                       </#list>          
-                     </select><span class="link4"> *</span></td>
-                     <#elseif code="2">
-                     <td width="90">
-                      选择领导：
-                      </td>
-                       <td><select name="codeId">
-                            <option>请选择...</option>
-                           <#list leads as lead>
-                                <option value="${lead.id}">${lead.name}</option>
-                           </#list>          
-                           </select><span class="link4"> *</span>
-                         </td>
-                     <#else>
+                     <#if code=="1">
+                        <input type="hidden" name="codeId" value="${leader.id!}"/>
+                     <#elseif code=="2">
+                       <input type="hidden" name="codeId" value="${leader.id!}"/>
+                     <#elseif code=="3"><tr>
                       <td width="90">
                       选择部门：
                       </td>
@@ -201,20 +184,26 @@
                                 <option value="${org.id}">${org.name}</option>
                            </#list>          
                            </select><span class="link4"> *</span>
-                         </td>
-                      </#if>
-                     </#if>
-                   </tr>
-                   <tr>
-                     <td >意见类型：</td>
-                     <td>
-                 <input name="type" value="1" checked="" type="radio">咨询
-                   &nbsp;&nbsp;<input name="type" value="2" type="radio">投诉
-                   &nbsp;&nbsp;<input name="type" value="3" type="radio">建议
-                   &nbsp;&nbsp;<input name="type" value="4" type="radio">举报
-                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="isopen" value="N" type="hidden"></td>
-                   </tr>
-                   <tr>
+                        </td> </tr>
+                    <#else>
+                    <input name="type" value="5"  type="hidden"> 
+              
+                  </#if>
+		  </#if>
+                   <#if code!="4">  
+                     <tr>
+                       <td width="90">意见类型：</td>
+                       <td>
+                     <input name="type" value="1" checked="" type="radio">咨询
+                     &nbsp;&nbsp;<input name="type" value="2" type="radio">投诉
+                     &nbsp;&nbsp;<input name="type" value="3" type="radio">建议
+                     &nbsp;&nbsp;<input name="type" value="4" type="radio">举报
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="isopen" value="N" type="hidden">
+                     </td>
+                     </tr> 
+                   </#if>
+                  
+                <tr>
                      <td>主　　题：</td>
                      <td><input name="title"  style="width:99%;" type="text"></td>
                    </tr>          
@@ -325,12 +314,3 @@
          </script>
          </body>
          </html>
-         
-        
-       
-      
-     
-    
-   
-  
- 

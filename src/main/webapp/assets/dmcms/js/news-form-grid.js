@@ -306,8 +306,37 @@ var options = {
 			sortfun(i, c,c.title);
 		}
 	} ],
+	dropdowns:{
+	    text:"添加",     
+	    cls:"green btn-sm",
+	    items:[{
+			text : "普通内容",//按钮文本
+			cls : "btn green",//按钮样式
+			icon : "fa fa-cubes",
+			handle : function(grid) {//按钮点击事件
+				if(currentChannelId==undefined)
+					bootbox.alert("请先选择频道");
+				else{
+				showForm('0',"普通内容");
+				}
+			}
+		},
+		{
+			text : "引用内容",//按钮文本
+			cls : "btn green btn-sm",//按钮样式
+			icon : "fa fa-cubes",
+			handle : function(grid) {//按钮点击事件
+				if(currentChannelId==undefined)
+					bootbox.alert("请先选择频道");
+				else{
+				showForm('2',"引用内容");
+				}
+			}
+		}
+		]
+},
 	tools : [// 工具属性
-	{
+	/*{
 		text : "添加",
 		cls : "btn green btn-sm",
 		handle : function(grid) {// 按钮点击事件
@@ -316,7 +345,7 @@ var options = {
 			else
 				showForm(0, "文本内容");
 		}
-	}, {
+	},*/ {
 		text : "移动",
 		cls : "btn green btn-sm",
 		handle : function(grid) {
@@ -372,16 +401,148 @@ var options = {
 // form
 /** **************普通内容表单选项*************** */
 function getForm(contentType) {
+	
+	if(contentType=='2')
+	{
+	var formOpts = {
+			id : "site_form",// 表单id
+			name : "site_form",// 表单名
+			method : "post",// 表单method
+			action : "./insertOrUpdate",// 表单action
+			ajaxSubmit : true,// 是否使用ajax提交表单
+			labelInline : true,
+			rowEleNum : 1,
+			beforeSubmit : function() {
+
+			},
+			ajaxSuccess : function() {
+				flushGrid();
+			},
+			submitText : "保存",// 保存按钮的文本
+			showReset : true,// 是否显示重置按钮
+			resetText : "重置",// 重置按钮文本
+			isValidate : true,// 开启验证
+			buttons : [ {
+				type : 'button',
+				text : '关闭',
+				handle : function() {
+					flushGrid();
+				}
+			} ],
+			buttonsAlign : "center",
+			// 表单元素
+			items : [
+						{
+							type : "tree",
+							name : "channelId",
+							id : "channelId",
+							label : "所属频道",
+							url : "../channel/tree?siteId=" + currentSiteId,
+							autoParam : [ "id", "name", "pId" ],
+							expandAll : false,
+							beforeCheck : function(treeId, treeNode) {
+								if (treeNode.isParent) {
+									return false;
+								}
+							},
+							chkStyle : "radio"
+						},
+						{
+							type : 'hidden',
+							name : 'id',
+							id : 'id'
+						},
+						{
+							type : 'hidden',
+							name : 'contentType',
+							id : 'contentType'
+						},
+						{
+							type : 'text',// 类型
+							name : 'title',// name
+							id : 'title',// id
+							label : '标题',// 左边label
+							cls : 'input-large',
+							rule : {
+								required : true,
+								maxlength : 64
+							},
+							message : {
+								required : "请输入内容信息标题",
+								maxlength : "最多输入64字节"
+							}
+						},{
+							type : 'colorpicker',// 类型
+							name : 'titleStyle',// name
+							id : 'titleStyle',// id
+							label : '标题颜色',// 左边label
+							cls : 'input-large'
+						},
+						{
+							type : 'select',// 类型
+							name : 'titleStyle',// name
+							id : 'titleStyle',// id
+							label : '标题字体',// 左边label
+							cls : 'input-large',
+							items : [ {
+								value : "20px",
+								text : '20px'
+							},{
+								value : "25px",
+								text : '25px'
+							},{
+								value : "30px",
+								text : '30px'
+							}, {
+								value : "35px",
+								text : '35px'
+							}, {
+								value : "40px",
+								text : '40px'
+							}, {
+								value : "50px",
+								text : '50px'
+							}]
+						},{
+							type : 'text',// 类型
+							name : 'origin',// name
+							id : 'origin',// id
+							label : '来源',// 左边label
+							cls : 'input-large',
+							rule : {
+								required : true,
+								maxlength : 12
+							},
+							message : {
+								required : "请输入来源信息",
+								maxlength : "最多输入12字节"
+							}
+						},
+							{
+								type : 'text',// 类型
+								name : 'url',// name
+								id : 'url',// id
+								label : '链接',// 左边label
+								cls : 'input-large',
+								rule : {
+									required : true,
+									maxlength : 256
+								},
+								message : {
+									required : "请输入链接",
+									maxlength : "最多输入256字符"
+								}
+							}
+					]
+		};
+	return formOpts;
+	}
+	
 	var items = [
 			{
 				type : 'hidden',
 				name : 'id',
 				id : 'id'
-			},
-			{
-				type : 'hidden',
-				name : 'contentType',
-				id : 'contentType'
 			},
 			{
 				type : 'hidden',
@@ -509,6 +670,19 @@ function getForm(contentType) {
 					required : "请输入来源信息",
 					maxlength : "最多输入12字节"
 				}
+			},{
+				type : 'select',
+				name : 'contentType',
+				id : 'contentType',
+				label : '是否头条',
+				cls : 'input-large',
+				items : [ {
+					value : '0',
+					text : '否'
+				},{
+					value : '4',
+					text : '是'
+				}]
 			},
 			{
 				type : 'select',
@@ -534,8 +708,8 @@ function getForm(contentType) {
 				},{
 					value : true,
 					text : '是'
-				} ],
-			} ];
+				} ]
+			}];
 	var titleImg = {
 		type : 'image',
 		id : 'titleImageUrl',
@@ -636,6 +810,13 @@ function getForm(contentType) {
 			}
 		} ],
 		// 表单元素
+		buttons : [ {
+			type : 'button',
+			text : '关闭',
+			handle : function() {
+				flushGrid();
+			}
+		} ],
 		items : items
 	};
 	return formOpts;

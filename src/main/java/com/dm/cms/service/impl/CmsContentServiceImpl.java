@@ -188,6 +188,10 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		boolean success = false;
 		CmsContent content = this.cmsContentMapper
 				.selectByPrimaryKey(contentId);
+        if(content.getContentType()==2)
+        {
+        	return content;
+        }
 		content.setStatus(new Short("2"));
 		Date now = new Date();
 		if(content.getPublishDate()==null){
@@ -378,5 +382,20 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
         binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
                 true));
     }
+
+	@Override
+	public void selectTopOneAndUpdate() {
+		// TODO Auto-generated method stub
+		CmsContent cmsContent =  cmsContentMapper.selectTopOne().get(0);
+		cmsContent.setContentType(0);
+		cmsContentMapper.updateByPrimaryKey(cmsContent);
+	}
+	
+	@Override
+	public CmsContent selectTopOne() {
+		// TODO Auto-generated method stub
+		CmsContent cmsContent =  cmsContentMapper.selectTopOne().get(0);
+		return cmsContent;
+	}
 
 }

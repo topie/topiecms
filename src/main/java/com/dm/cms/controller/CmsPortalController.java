@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -142,11 +143,12 @@ public class CmsPortalController {
 				leader = leaders.get(0);
 			model.addAttribute("leader", leader);
 		}
-		else
+		else if(code.equals("3"))
 		{
 			List<Org> orgs = orgService.findAll();
 			model.addAttribute("orgs", orgs);
 		}
+		
 		model.addAttribute("code", code);
 		}
 		return templateFolder+"/websurvey";

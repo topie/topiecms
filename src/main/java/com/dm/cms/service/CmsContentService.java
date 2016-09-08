@@ -50,4 +50,8 @@ public interface CmsContentService {
 
 	PageInfo<CmsContent> findCmsContentByPage(Integer pageNum,
 			Integer pageSize, Map argMap);
+
+	void selectTopOneAndUpdate();
+
+	CmsContent selectTopOne();
 }
