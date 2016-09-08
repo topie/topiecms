@@ -1,6 +1,8 @@
 package com.dm.cms.model;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -596,7 +598,7 @@ public class CmsContent implements Serializable {
 	private String origin;
 
 	public String getUrl() {
-		if(contentType!=null && contentType!=2)
+		if(contentType!=null && contentType==2)
 		{
 			return url;
 		}

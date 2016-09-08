@@ -235,6 +235,9 @@
              <if test="keywords!=null">
             	keywords,
             </if>
+            <if test="titleStyle!=null">
+            	title_style,
+            </if>
              <if test="code!=null">
             	code,
             </if>
@@ -245,7 +248,7 @@
             	filed2,
             </if>
             <if test="filed3!=null">
-            	filed3,
+            	filed3
             </if>
             
             
@@ -333,7 +336,7 @@
             	#{filed2},
             </if>
             <if test="filed3!=null">
-            	#{filed3},
+            	#{filed3}
             </if>
         </trim>
     </insert>

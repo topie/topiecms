@@ -4,6 +4,14 @@ var channelTree;
 var currentSiteId;
 var currentChannelId;
 var currentChannelType;
+function dateTostr(utc)
+{
+	if(utc)
+		{
+     var date = new Date(utc);
+     return date.getFullYear()+"-"+((date.getMonth()+1)>10?date.getMonth()+1:"0"+(date.getMonth()+1))+"-"+(date.getDate()>10?date.getDate():"0"+date.getDate())+" "+(date.getHours()>10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>10?date.getMinutes():"0"+date.getMinutes())+":"+(date.getSeconds()>10?date.getSeconds():"0"+date.getSeconds());
+   }
+}
 function flushGrid()
 {
 	$("#content_grid").html("");
@@ -296,6 +304,7 @@ var options = {
 				var color = data.titleStyle.split(";");
 				$("#titleStyle").val((color[0].split(":"))[1]);
 				$("select[name='titleStyle']")[0].value = (color[1].split(":"))[1];
+				$("#publishDate").val(dateTostr(data.publishDate));
 			});
 			
 		}
@@ -1125,7 +1134,9 @@ function getFileForm(contentType) {
 					$("#content_grid").html("");
 					var form = $("#content_grid").dmForm(getFileForm());
 					form.loadLocal({"channelId":currentChannelId});
-					form.loadRemote("./load?contentId=" + data.id);
+					form.loadRemote("./load?contentId=" + data.id,function(){
+						$("#publishDate").val(dateTostr(data.publishDate));
+					});
 				}
 			}, {
 				text : "排序",
