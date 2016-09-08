@@ -104,10 +104,10 @@ var videoOptions = {
 	indexNumWidth : "5%",
 	pageSelect : [ 5, 15, 30, 50 ],
 	cloums : [ {
-		title : "片名",
+		title : "标题",
 		field : "name"
 	}, {
-		title : "导演",
+		title : "作者",
 		field : "director"
 	}, {
 		title : "状态",
@@ -174,14 +174,14 @@ var videoOptions = {
 		// 搜索栏元素
 		items : [ {
 			type : "text",
-			label : "片名",
+			label : "标题",
 			name : "name",
-			placeholder : "输入要搜索的影片名"
+			placeholder : "输入要搜索的标题名"
 		}, {
 			type : "text",
-			label : "导演",
+			label : "作者",
 			name : "actor",
-			placeholder : "输入要搜索的导演姓名"
+			placeholder : "输入要搜索的作者"
 		} ]
 	}
 };
@@ -413,7 +413,7 @@ var interviewOptions = {
 			cls : "green btn-sm",
 			icon : "fa fa-search",
 			handle : function(index, data) {
-				window.open(data.filed1);
+				window.open(data.url);
 			}
 		}, {
 

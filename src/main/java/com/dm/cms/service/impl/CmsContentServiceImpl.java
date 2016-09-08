@@ -85,13 +85,13 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 
 	@Override
 	public void updateCmsContent(CmsContent cmsContent) {
-		if(cmsContent.getContentType()!=null)
+		/*if(cmsContent.getContentType()!=null)
 				{
 		if(!cmsContent.getContentType().equals("10")){
 		String author = UserAccountUtil.getInstance().getCurrentUser();
 		cmsContent.setAuthor(author);
 		}
-				}
+				}*/
 		cmsContentMapper.updateByPrimaryKeySelective(cmsContent);
 	}
 
@@ -218,7 +218,11 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		}
 		root.put("own", contentId);
 		root.put("site", site);
-		root.put("cmsContent", content);
+		if(content.getContentType()!=null && content.getContentType().equals("10")){
+			root.put("doc",content.toDoc());
+		}else{
+			root.put("cmsContent", content);
+		}
 		root.put("superChannel", this.getSuperChannel(channel));
 		success = super.generatorHtmlPCAndModile(cmsTemplate.getTemplatePath(),
 				htmldir, htmlFile, root, request);

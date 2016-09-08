@@ -238,31 +238,8 @@ public class CmsPortalController {
 		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
 		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
 		if(cmsContent.getContentType()!=null && cmsContent.getContentType().equals("10")){
-			CmsContent ce =cmsContent;
-			Map doc = new HashMap();
-			doc.put("id", ce.getId());
-			doc.put("infoCode", ce.getAuthor());
-			doc.put("title", ce.getTitle());
-			doc.put("brief", ce.getBrief());
-			doc.put("publishTime", ce.getPublishDate());
-			doc.put("publishOrg", ce.getOrigin());
-			doc.put("keywords", ce.getKeywords());
-			doc.put("ztType", ce.getTitleImageIllustrate());
-			doc.put("zjType", ce.getTitleImageUrl());
-			doc.put("contentText", ce.getContentText());
-			doc.put("channelId", ce.getChannelId());
-			doc.put("channelEnName", ce.getChannelEnName());
-			doc.put("createTime", ce.getCreateTime());
-			doc.put("createUser", ce.getCreateUser());
-			doc.put("url", ce.getUrl());
-			doc.put("titleStyle", ce.getTitleStyle());
-			doc.put("templateId", ce.getTemplateId());
-			doc.put("isComment", ce.getIsComment());
-			doc.put("updateTime", ce.getUpdateTime());
-			doc.put("isHtml", ce.getIsHtml());
-			doc.put("mUrl", ce.getmUrl());
-			doc.put("contentType", ce.getContentType());
-			model.addAttribute("doc",cmsContent);
+			Map doc = cmsContent.toDoc();
+			model.addAttribute("doc",doc);
 	}else
 			model.addAttribute("cmsContent", cmsContent);
 		model.addAttribute("projectName", projectName);
@@ -410,9 +387,16 @@ public class CmsPortalController {
 	public String interiew(Model model,@PathVariable("inteviewId")Integer inteviewId)
 	{
 		CmsInterview c =this.cmsInterviewService.loadOne(inteviewId);
+		model.addAttribute("projectName", projectName);
+		model.addAttribute("htmlFolder", htmlFolder);
+		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		CmsChannel cmsChannel = cmsChannelService.findOneById(c.getChannelId());
+		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
+		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
+		model.addAttribute("site", cmsSite);
+		model.addAttribute("own",inteviewId);
 		model.addAttribute("cmsInterview", c);
-		
-		return  getTemplatePath(Integer.valueOf(c.getFiled2()), false);
+		return  "/template/jh-interview";
 	}
 	@RequestMapping("/vote/{voteId}.htm")
     public String vote(Model model,@PathVariable("voteId") Integer voteId)

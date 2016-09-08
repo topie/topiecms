@@ -40,7 +40,7 @@ public class CmsInterview {
 
     private String porposerOrg;
 
-    private String filed1;
+    private String url;
 
     private String filed2;
 
@@ -175,13 +175,13 @@ public class CmsInterview {
         this.porposerOrg = porposerOrg == null ? null : porposerOrg.trim();
     }
 
-    public String getFiled1() {
+    public String getUrl() {
     	String projectName = ConfigUtil.getConfigContent("cms","projectName");
 		return "/"+projectName+"/portal/interview/"+id+".htm";
     }
 
-    public void setFiled1(String filed1) {
-        this.filed1 = filed1 == null ? null : filed1.trim();
+    public void setUrl(String url) {
+        this.url = url == null ? null : url.trim();
     }
 
     public String getFiled2() {

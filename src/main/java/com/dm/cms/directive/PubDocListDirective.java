@@ -87,29 +87,7 @@ public class PubDocListDirective implements TemplateDirectiveModel{
 		}
 		List<Map> docs = new ArrayList<Map>();
 		for(CmsContent ce:contents)		{
-			Map doc = new HashMap();
-			doc.put("id", ce.getId());
-			doc.put("infoCode", ce.getAuthor());
-			doc.put("title", ce.getTitle());
-			doc.put("brief", ce.getBrief());
-			doc.put("publishTime", ce.getPublishDate());
-			doc.put("publishOrg", ce.getOrigin());
-			doc.put("keywords", ce.getKeywords());
-			doc.put("ztType", ce.getTitleImageIllustrate());
-			doc.put("zjType", ce.getTitleImageUrl());
-			doc.put("contentText", ce.getContentText());
-			doc.put("channelId", ce.getChannelId());
-			doc.put("channelEnName", ce.getChannelEnName());
-			doc.put("createTime", ce.getCreateTime());
-			doc.put("createUser", ce.getCreateUser());
-			doc.put("url", ce.getUrl());
-			doc.put("titleStyle", ce.getTitleStyle());
-			doc.put("templateId", ce.getTemplateId());
-			doc.put("isComment", ce.getIsComment());
-			doc.put("updateTime", ce.getUpdateTime());
-			doc.put("isHtml", ce.getIsHtml());
-			doc.put("mUrl", ce.getmUrl());
-			doc.put("contentType", ce.getContentType());
+			Map doc = ce.toDoc();
 			
 			if(fattitle &&ce.getTitle().length()>titleLeft)
 			{

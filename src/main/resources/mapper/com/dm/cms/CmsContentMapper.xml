@@ -30,6 +30,10 @@
         <result column="title_style" property="titleStyle" jdbcType="VARCHAR"/>
         <result column="keywords" property="keywords" jdbcType="VARCHAR"/>
         <result column="seq" property="seq" jdbcType="INTEGER"/>
+        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <result column="filed1" property="filed1" jdbcType="VARCHAR"/>
+        <result column="filed2" property="filed2" jdbcType="VARCHAR"/>
+        <result column="filed3" property="filed3" jdbcType="VARCHAR"/>
     </resultMap>
     <resultMap id="AttachmentMap" type="com.dm.cms.model.CmsAttachment">
         <!--
@@ -61,7 +65,7 @@
         id, title, title_image_url, title_image_illustrate, brief, content_type, author,
         publish_date, channel_id,channel_en_name,site_domain, template_id, is_html, create_time,
         create_user, update_time,url,origin,seq,is_comment,title_style,keywords,
-        status
+        status,code,filed1,filed2,filed3
     </sql>
     <sql id="Blob_Column_List">
         <!--
@@ -124,7 +128,7 @@
         author, publish_date, channel_id,channel_en_name,site_domain,
         template_id, is_html, create_time,
         create_user, update_time, status,content_text,origin,url,
-        seq,is_comment,title_style,keywords)
+        seq,is_comment,title_style,keywords,code,filed1,filed2,filed3)
         values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR},
         #{titleImageUrl,jdbcType=VARCHAR},
         #{titleImageIllustrate,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR},
@@ -137,7 +141,7 @@
         #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
         #{status,jdbcType=SMALLINT},
         #{contentText,jdbcType=LONGVARCHAR},#{origin},#{url},#{seq},#{isComment,jdbcType=BIT},#{titleStyle,jdbcType=VARCHAR}
-        ,#{keywords,jdbcType=VARCHAR})
+        ,#{keywords,jdbcType=VARCHAR},#{code},#{filed1},#{filed2},#{filed3})
     </insert>
     <insert id="insertSelective" parameterType="com.dm.cms.model.CmsContent" useGeneratedKeys="true"
             keyProperty="id">
@@ -216,9 +220,20 @@
              <if test="keywords!=null">
             	keywords,
             </if>
-             <if test="titleStyle!=null">
-            	title_style,
+             <if test="code!=null">
+            	code,
             </if>
+            <if test="filed1!=null">
+            	filed1,
+            </if>
+            <if test="filed2!=null">
+            	filed2,
+            </if>
+            <if test="filed3!=null">
+            	filed3,
+            </if>
+            
+            
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -292,6 +307,18 @@
             </if>
             <if test="titleStyle!=null">
             	#{titleStyle},
+            </if>
+             <if test="code!=null">
+            	#{code},
+            </if>
+            <if test="filed1!=null">
+            	#{filed1},
+            </if>
+            <if test="filed2!=null">
+            	#{filed2},
+            </if>
+            <if test="filed3!=null">
+            	#{filed3},
             </if>
         </trim>
     </insert>
@@ -369,8 +396,20 @@
              title_style=#{titleStyle,jdbcType=VARCHAR},
              </if>
              <if test="keywords!=null">
-              keywords=#{keywords,jdbcType=VARCHAR}
+              keywords=#{keywords,jdbcType=VARCHAR},
               </if>
+              <if test="code!=null">
+            	code = #{code},
+            </if>
+            <if test="filed1!=null">
+            	filed1=#{filed1},
+            </if>
+            <if test="filed2!=null">
+            	filed2=#{filed2},
+            </if>
+            <if test="filed3!=null">
+            	filed3=#{filed3},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -398,7 +437,11 @@
         status = #{status,jdbcType=SMALLINT},
         content_text = #{contentText,jdbcType=LONGVARCHAR},
         origin=#{origin},url=#{url},seq=#{seq},
-        keywords = #{keywords} 
+        keywords = #{keywords} ,
+        code = #{code},
+          	filed1=#{filed1},
+          	filed2=#{filed2},
+          	filed3=#{filed3}
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.dm.cms.model.CmsContent">
@@ -425,7 +468,11 @@
         status = #{status,jdbcType=SMALLINT},
         origin=#{origin},url=#{url},seq=#{seq},
         is_comment=#{isComment,jdbcType=BIT},title_style=#{titleStyle,jdbcType=VARCHAR}
-        ,keywords=#{keywords,jdbcType=VARCHAR}
+        ,keywords=#{keywords,jdbcType=VARCHAR},
+        code = #{code},
+        	filed1=#{filed1},
+        	filed2=#{filed2},
+        	filed3=#{filed3}
         where id = #{id,jdbcType=INTEGER}
     </update>
 

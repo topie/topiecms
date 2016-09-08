@@ -74,11 +74,14 @@ public class CmsVideoServiceImpl extends generatorHtmlHandler implements CmsVide
 	public void insertOrUpdate(CmsVideo cmsVideo) {
 		String attachmentIds = cmsVideo.getAttachmentIds();
 		String url = null;
-		if (attachmentIds != null && !attachmentIds.equals("")) {
+		/*if (attachmentIds != null && !attachmentIds.equals("")) {
 			String attachmentIdArray[] = attachmentIds.split(",");
 			CmsAttachmentOther cmsAttachmentOther = cmsAttachmentOtherService
 					.findOneById(Integer.valueOf(attachmentIdArray[0]));
 			url = cmsAttachmentOther.getAttachmentUrl();
+		}*/
+		if(cmsVideo.getVideoUrl()!=null){
+			url = cmsVideo.getVideoUrl();
 		}
 		if (cmsVideo.getId() != null) {
 			cmsVideoMapper.deleteAttachmentsByVideoId(cmsVideo.getId());

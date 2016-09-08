@@ -232,8 +232,8 @@ function getVideoForm(typeId) {
 	};
 	var videoUrl={
 			type : 'text',
-			name : 'origin',
-			id : 'origin',
+			name : 'videoUrl',
+			id : 'videoUrl',
 			label : '视频地址',
 			rule : {
 				required : true
@@ -241,11 +241,23 @@ function getVideoForm(typeId) {
 			message : {
 				required : "请填写视频地址",
 			}
+	};
+	var videoOrigen={
+			type : 'text',
+			name : 'origin',
+			id : 'origin',
+			label : '来源',
+			rule : {
+				required :true
+			},
+			message : {
+				required : "请填写来源",
+			}
 	}
-	items.push(titleImg);
-	items.push(contentText);
 	items.push(videoUrl);
-	//items.push(offic);
+	items.push(videoOrigen);
+	//items.push(titleImg);
+	items.push(contentText);
 	var formOpts = {
 		id : "media_form",// 表单id
 		name : "media_form",// 表单名

@@ -384,6 +384,12 @@ function getForm(contentType) {
 				id : 'contentType'
 			},
 			{
+				type : 'hidden',
+				name : 'channelId',
+				id : 'channelId'
+			},
+			/*
+			{
 				type : "tree",
 				name : "channelId",
 				id : "channelId",
@@ -397,7 +403,7 @@ function getForm(contentType) {
 					}
 				},
 				chkStyle : "radio"
-			},
+			},*/
 			{
 				type : 'text',// 类型
 				name : 'title',// name
@@ -475,6 +481,20 @@ function getForm(contentType) {
 				id : 'publishDate',//id
 				label : '发布时间',//左边label
 				cls : 'input-large'
+			},{
+				type : 'text',//类型
+				name : 'author',//name
+				id : 'author',//id
+				label : '作者',//左边label
+				cls : 'input-large',
+				rule : {
+					required : true,
+					maxlength : 12
+				},
+				message : {
+					required : "请输入作者信息",
+					maxlength : "最多输入12字节"
+				}
 			},{
 				type : 'text',// 类型
 				name : 'origin',// name
@@ -636,6 +656,11 @@ function getFileForm(contentType) {
 				id : 'contentType'
 			},
 			{
+				type : 'hidden',
+				name : 'channelId',
+				id : 'channelId'
+			},
+			/*{
 				type : "tree",
 				name : "channelId",
 				id : "channelId",
@@ -649,7 +674,7 @@ function getFileForm(contentType) {
 					}
 				},
 				chkStyle : "radio"
-			},
+			},*/
 			{
 				type : 'text',// 类型
 				name : 'title',// name
@@ -666,10 +691,33 @@ function getFileForm(contentType) {
 				}
 			},{
 				type : 'text',// 类型
-				name : 'author',// name
-				id : 'author',// id
+				name : 'code',// name
+				id : 'code',// id
 				label : '文号',// 左边label
-				cls : 'input-large'
+				cls : 'input-large',
+				rule : {
+					required : true,
+					maxlength : 100
+				},
+				message : {
+					required : "请输入文号",
+					maxlength : "最多输入100字节"
+				}
+				
+			},{
+				type : 'text',// 类型
+				name : 'filed1',// name
+				id : 'filed1',// id
+				label : '索引号',// 左边label
+				cls : 'input-large',
+				rule : {
+					required : true,
+					maxlength : 100
+				},
+				message : {
+					required : "请输入索引号",
+					maxlength : "最多输入100字节"
+				}
 				
 			},
 			{
@@ -729,14 +777,6 @@ function getFileForm(contentType) {
 				itemsUrl : "../template/selects?templateType=2&siteId="
 						+ currentSiteId
 			} ];
-	var titleImg = {
-			
-				type : 'text',// 类型
-				name : 'keywords',// name
-				id : 'keywords',// id
-				label : '关键字',// 左边label
-				cls : 'input-large'
-	};
 	var titleImgTitle = {
 		type : 'text',// 类型
 		row : 3,
@@ -771,13 +811,7 @@ function getFileForm(contentType) {
 		id : 'contentText',
 		label : '内容文本',
 		height : "300px",
-		width : "500px",
-		rule : {
-			required : true
-		},
-		message : {
-			required : "请输入内容文本"
-		}
+		width : "500px"
 	};
 	var offic = {
 		type : 'files',
@@ -799,7 +833,6 @@ function getFileForm(contentType) {
 		detail : "最多上传3个附件"
 	};
 	
-		items.push(titleImg);
 		items.push(titleImg1);
 		items.push(titleImgTitle);
 		items.push(contentText);
@@ -851,7 +884,11 @@ function getFileForm(contentType) {
 			pageSelect : [ 2, 15, 30, 50 ],
 			cloums : [ {
 				title : "文号",
-				field : "author",
+				field : "code",
+				sort : true
+			}, {
+				title : "索引号",
+				field : "filed1",
 				sort : true
 			},{
 				title : "名称",
@@ -929,7 +966,7 @@ function getFileForm(contentType) {
 						form.loadLocal({"channelId":currentChannelId,"contentType":"10"});
 					}
 						
-						$("#").dmForm()
+						//$("#").dmForm()
 						//showForm(0, "文本内容");
 				}
 			},/* {
@@ -979,9 +1016,9 @@ function getFileForm(contentType) {
 				// 搜索栏元素
 				items : [ {
 					type : "text",
-					label : "标题",
+					label : "名称",
 					name : "title",
-					placeholder : "输入要搜索的内容信息标题"
+					placeholder : "输入要搜索的文件的名称"
 				} ]
 			}
 		};
