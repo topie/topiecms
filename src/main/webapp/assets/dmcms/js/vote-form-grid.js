@@ -273,18 +273,18 @@ var optFormOpt = {
 			id : 'voteId'
 		},
 		{
-			type : 'text',// 类型
+			type : 'textarea',// 类型
 			name : 'option',// name
 			id : 'option',// id
 			label : '选项',// 左边label
 			cls : 'input-large',
 			rule : {
 				required : true,
-				maxlength : 20
+				maxlength : 80
 			},
 			message : {
 				required : "请输入",
-				maxlength : "最多输入20字符"
+				maxlength : "最多输入80字符"
 			}
 		}]
 	};
@@ -355,7 +355,7 @@ function getoptions(id){
 						}
 					});	
 						}
-					})
+					});
 				}
 			}
 			

@@ -13,12 +13,17 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -117,7 +122,11 @@ public class CmsContentController {
 		if(!StringUtils.isEmpty(cmsContent.getTitleStyle()))
 		{
 		String titleStyleArray[] = cmsContent.getTitleStyle().split(","); 
-		cmsContent.setTitleStyle("color:"+titleStyleArray[0]+";font-size:"+titleStyleArray[1]);
+		if(titleStyleArray.length==2){
+			cmsContent.setTitleStyle("color:"+titleStyleArray[0]+";font-size:"+titleStyleArray[1]);
+		}if(titleStyleArray.length==1){
+			cmsContent.setTitleStyle("color:"+titleStyleArray[0]+";font-size:"+titleStyleArray[0]);
+		}
 		}
 		cmsContentService.updateCmsContent(cmsContent);
 	}
@@ -294,4 +303,9 @@ public class CmsContentController {
 		}
 		return ResponseUtil.success("复制成功！");
 	}
+	@InitBinder
+    public void initBinder(ServletRequestDataBinder binder){
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
+                true));
+    }
 }

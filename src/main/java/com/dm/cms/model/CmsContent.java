@@ -3,6 +3,8 @@ package com.dm.cms.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.dm.platform.util.ConfigUtil;
 
 public class CmsContent implements Serializable {
@@ -68,6 +70,7 @@ public class CmsContent implements Serializable {
 	 * 
 	 * @mbggenerated
 	 */
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date publishDate;
 
 	/**

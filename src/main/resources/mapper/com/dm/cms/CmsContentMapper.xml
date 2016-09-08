@@ -398,7 +398,7 @@
         status = #{status,jdbcType=SMALLINT},
         content_text = #{contentText,jdbcType=LONGVARCHAR},
         origin=#{origin},url=#{url},seq=#{seq},
-        keywords
+        keywords = #{keywords} 
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.dm.cms.model.CmsContent">

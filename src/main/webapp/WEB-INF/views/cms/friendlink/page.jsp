@@ -182,6 +182,28 @@
 					return "否";
 				}
 			},{
+				title : "类型",
+				field : "",
+				width : "10%",
+				format:function(i,c){
+					if(c.type=="zybw"){
+						return "中央部委网站";
+					}
+					if(c.type=="sqs"){
+						return "省（区市）网站";
+					}
+					if(c.type=="jxs"){
+						return "江苏省辖市网站";
+					}
+					if(c.type=="hxx"){
+						return "淮安市辖县区网站";
+					}
+					if(c.type=="bdw"){
+						return "本地网站";
+					}
+					return "有误";
+				}
+			},{
 				title : "顺序",
 				field : "seq",
 				width : "10%"
@@ -327,16 +349,37 @@
 				label : '描述',//左边label
 				cls : 'input-large'
 			},{
-				type : 'redioGroup',//类型
+				type : 'radioGroup',//类型
 				name : 'type',//name
 				id : 'type',//id
 				label : '类型',//左边label
 				cls : 'input-large',
-				items:[{text:'中央部委网站',value:"link1"},
-				       {text:'省（区市）网站',value:"link2"},
-				       {text:'江苏省辖市网站',value:"link3"},
-				       {text:'淮安市辖县区网站',value:"link4"},
-				       {text:'本地网站 ',value:"link5"}]
+				items:[{text:'中央部委网站',value:"zybw"},
+				       {text:'省（区市）网站',value:"sqs"},
+				       {text:'江苏省辖市网站',value:"jxs"},
+				       {text:'淮安市辖县区网站',value:"hxx"},
+				       {text:'本地网站 ',value:"bdw"}],
+				       rule : {
+							required : true
+						},
+						message : {
+							required : "请选择"
+						}
+			},{
+				type : 'radioGroup',//类型
+				name : 'isShow',//name
+				id : 'isShow',//id
+				label : '是否展示',//左边label
+				cls : 'input-large',
+				items:[
+				       {text:'是',value:"1"},
+				       {text:'否',value:"0"}
+				       ],rule : {
+							required : true
+						},
+						message : {
+							required : "请选择"
+						}
 			}];
 			var formOpts = {
 				id : "channel_form",//表单id

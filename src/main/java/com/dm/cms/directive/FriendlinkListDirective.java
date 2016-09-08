@@ -58,7 +58,7 @@ public class FriendlinkListDirective implements TemplateDirectiveModel{
 		PageInfo<CmsFriendlink> page= cmsFriendlinkService.findCmsFriendlinkByPage(pageNum, pageSize, link);
 		List<CmsFriendlink> linkList = page.getList();
 		long total = page.getTotal();
-		env.setVariable("frindlinks",ObjectWrapper.DEFAULT_WRAPPER.wrap(linkList));
+		env.setVariable("friendlinks",ObjectWrapper.DEFAULT_WRAPPER.wrap(linkList));
 		body.render(env.getOut());  
 	}
 

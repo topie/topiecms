@@ -40,7 +40,7 @@
         rowTmpl: '<div data-row=${row_} class="row"></div>',
         eleTmpl: '<div class="col-md-${span_}"><div class="form-group"></div></div>',
         sectionTmpl: '<div class="col-md-12"><h3 class="form-section">${title_}</h3></div>',
-        labelTmpl: '<label class="control-label ${cls_}">${label_}</label>',
+        labelTmpl: '<label class="control-label ${cls_}"><font style="font-size: larger;color:red;">${redMsg_}</font>${label_}</label>',
         blockSpanTmpl: '<span class="help-block">${help_}</span>',
         buttonTmpl: '<button type="${type_}" class="btn ${cls_}" ${attribute_}>${text_}</button>'
     };
@@ -244,7 +244,8 @@
             var ele = this._formEles[item.type](item, this);
             var label = $.tmpl(Form.statics.labelTmpl, {
                 "cls_": that._labelInline ? "col-md-3" : "",
-                "label_": item.label == undefined ? "" : item.label
+                "label_": item.label == undefined ? "" : item.label,
+               "redMsg_":item.rule==undefined ?"":item.rule.required==undefined ? "" : "*",
             });
             wrapper.find(".form-group").append(label);
             var help;

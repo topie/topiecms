@@ -140,7 +140,7 @@
                                   <div class="tab-content navTab1-content navTab3-content pTextIndent">
                                       <div role="tabpanel" class="tab-pane active" id="zrdl">
                                           <ul class="panel2-list">
-              			     <@contentListDirective channelId=52 pageSize=5 pageNum=pageNum titleLeft=14 order=10>  
+              			     <@contentListDirective channelId=52 pageSize=5 pageNum=pageNum titleLeft=40 order=10>  
                  			    <#list contents as cmsContent>
                                                  <li><span class="jh-dotted">·</span><a href="${cmsContent.url}">${cmsContent.title}</a></li>
                  			</#list> 
@@ -149,7 +149,7 @@
                                       </div>
                                       <div role="tabpanel" class="tab-pane" id="xzqh">
                                           <ul class="panel2-list">
-                                             <@contentListDirective channelId=53 pageSize=5 pageNum=pageNum titleLeft=14 order=10>  
+                                             <@contentListDirective channelId=53 pageSize=5 pageNum=pageNum titleLeft=40 order=10>  
                  			    <#list contents as cmsContent>
                                                  <li><span class="jh-dotted">·</span><a href="${cmsContent.url}">${cmsContent.title}</a></li>
                  			</#list> 
@@ -158,7 +158,7 @@
                                       </div>
                                       <div role="tabpanel" class="tab-pane" id="lsyg">
                                           <ul class="panel2-list">
-              				<@contentListDirective channelId=54 pageSize=5 pageNum=pageNum titleLeft=14 order=10>  
+              				<@contentListDirective channelId=54 pageSize=5 pageNum=pageNum titleLeft=40 order=10>  
                  			    <#list contents as cmsContent>
                                                  <li><span class="jh-dotted">·</span><a href="${cmsContent.url}">${cmsContent.title}</a></li>
                  			</#list> 
