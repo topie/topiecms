@@ -232,8 +232,8 @@ function getVideoForm(typeId) {
 	};
 	var videoUrl={
 			type : 'text',
-			name : 'origin',
-			id : 'origin',
+			name : 'videoUrl',
+			id : 'videoUrl',
 			label : '视频地址',
 			rule : {
 				required : true
@@ -241,11 +241,23 @@ function getVideoForm(typeId) {
 			message : {
 				required : "请填写视频地址",
 			}
+	};
+	var videoOrigen={
+			type : 'text',
+			name : 'origin',
+			id : 'origin',
+			label : '来源',
+			rule : {
+				required :true
+			},
+			message : {
+				required : "请填写来源",
+			}
 	}
-	items.push(titleImg);
-	items.push(contentText);
 	items.push(videoUrl);
-	//items.push(offic);
+	items.push(videoOrigen);
+	//items.push(titleImg);
+	items.push(contentText);
 	var formOpts = {
 		id : "media_form",// 表单id
 		name : "media_form",// 表单名
@@ -265,6 +277,13 @@ function getVideoForm(typeId) {
 		showReset : true,// 是否显示重置按钮
 		resetText : "重置",// 重置按钮文本
 		isValidate : true,// 开启验证
+		buttons : [ {
+			type : 'button',
+			text : '关闭',
+			handle : function() {
+				flushGrid();
+			}
+		} ],
 		// 表单元素
 		items : items
 	};

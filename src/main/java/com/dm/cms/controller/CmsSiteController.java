@@ -109,7 +109,7 @@ public class CmsSiteController {
 			for (String cmsSiteId : id) {
 				Integer siteid = Integer.valueOf(cmsSiteId);
 				List<TreeNode> list = this.cmsChannelService
-						.findCmsChannelTreeNodeBySiteId(siteid, null);
+						.findCmsChannelTreeNodeBySiteId(siteid, null,null);
 				if (list.size() > 0)
 					return ResponseUtil.error("删除失败，请先删除该站点下的所有频道！");
 				cmsSiteService.deleteCmsSite(siteid);

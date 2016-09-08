@@ -200,7 +200,7 @@
 					}
 					else if(currentChannelType=='8')
 					{
-					url = "../novel/delete?novelIds=" + ids;	
+					//url = "../novel/delete?novelIds=" + ids;	
 					}
 					else if(currentChannelType=='9')
 					{

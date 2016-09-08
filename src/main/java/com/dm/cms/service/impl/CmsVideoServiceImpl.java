@@ -74,11 +74,14 @@ public class CmsVideoServiceImpl extends generatorHtmlHandler implements CmsVide
 	public void insertOrUpdate(CmsVideo cmsVideo) {
 		String attachmentIds = cmsVideo.getAttachmentIds();
 		String url = null;
-		if (attachmentIds != null && !attachmentIds.equals("")) {
+		/*if (attachmentIds != null && !attachmentIds.equals("")) {
 			String attachmentIdArray[] = attachmentIds.split(",");
 			CmsAttachmentOther cmsAttachmentOther = cmsAttachmentOtherService
 					.findOneById(Integer.valueOf(attachmentIdArray[0]));
 			url = cmsAttachmentOther.getAttachmentUrl();
+		}*/
+		if(cmsVideo.getVideoUrl()!=null){
+			url = cmsVideo.getVideoUrl();
 		}
 		if (cmsVideo.getId() != null) {
 			cmsVideoMapper.deleteAttachmentsByVideoId(cmsVideo.getId());
@@ -319,6 +322,7 @@ public class CmsVideoServiceImpl extends generatorHtmlHandler implements CmsVide
 		root.put("own", cmsVideo.getId());
 		root.put("site", site);
 		root.put("cmsVideo", cmsVideo);
+		root.put("superChannel", getSuperChannel(cmsChannel));
 		boolean success = super.generatorHtmlPCAndModile(cmsTemplate.getTemplatePath(), htmldir, htmlFile, root, request);
 		if (success) {
 			log.info("内容静态化成功：[id=" + cmsVideo.getId() + ",title="
@@ -334,7 +338,13 @@ public class CmsVideoServiceImpl extends generatorHtmlHandler implements CmsVide
 		}
 		return success;
 	}
-
+	private CmsChannel getSuperChannel(CmsChannel channel) {
+		CmsChannel pChannel = this.cmsChannelMapper.selectByPrimaryKey(channel.getPid());
+		if(pChannel==null){
+			return channel;
+		}
+		return getSuperChannel(pChannel);
+	}
 	private StringBuffer getChannelenNameByIterator(Integer ChannelId,
 			StringBuffer channelEnNamedir) {
 		CmsChannel channel = cmsChannelMapper.selectByPrimaryKey(ChannelId);

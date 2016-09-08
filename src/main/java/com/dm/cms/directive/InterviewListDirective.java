@@ -38,40 +38,49 @@ public class InterviewListDirective implements TemplateDirectiveModel {
 	private Logger log = LoggerFactory.getLogger(InterviewListDirective.class);
 
 	@Autowired
-	private CmsInterviewService cmsVoteService;
+	private CmsInterviewService cmsInterviewService;
 	@Autowired
 	private CmsChannelService cmsChannelService;
 
 	@Override
 	public void execute(Environment env, Map params, TemplateModel[] loopVars,
 			TemplateDirectiveBody body) throws TemplateException, IOException {
-		// Integer channelId = Integer.valueOf(getRequiredParam(params, "channelId"));
+		// Integer channelId = Integer.valueOf(getRequiredParam(params,
+		// "channelId"));
 		Integer channelId = params.get("channelId") == null ? null : Integer
 				.valueOf(params.get("channelId").toString());
 		Integer pageSize = params.get("pageSize") == null ? 5 : Integer
 				.valueOf(params.get("pageSize").toString());
 		Integer pageNum = params.get("pageNum") == null ? 1 : Integer
 				.valueOf(params.get("pageNum").toString());
-		CmsChannel cmsChannel =null;
-		if(channelId!=null)
+		String finish = params.get("finish") == null ? null : "11";
+		CmsChannel cmsChannel = null;
+		if (channelId != null)
 			cmsChannel = cmsChannelService.findOneById(channelId);
 		Integer order = Integer.valueOf(params.get("order") != null ? params
 				.get("order").toString() : "1");
 		String orderby = "";
-		if (order == 1) {//最新更新
-			orderby = "publish_date desc";
-		} else if (order == 2) {//最新发布
-			orderby = "publish_date desc";
-		} else {//新作
+		if (order == 1) {// 最新更新
+			orderby = "update_time desc";
+		} else if (order == 2) {// 最新发布
+			orderby = "update_time desc";
+		} else {// 新作
 			orderby = "create_time desc";
 		}
+
 		Map map = new HashMap();
-		map.put("order", orderby);
 		CmsInterview novel = new CmsInterview();
 		novel.setChannelId(channelId);
-		novel.setStatus("5");
+		if (finish == null){
+			novel.setStatus("5");
+			orderby = "update_time asc";
+		}else {
+			novel.setStatus("6");
+		}
+		map.put("order", orderby);
 		map.put("model", novel);
-		PageInfo<CmsInterview> page = this.cmsVoteService.findByPage(pageNum, pageSize, map);
+		PageInfo<CmsInterview> page = this.cmsInterviewService.findByPage(
+				pageNum, pageSize, map);
 
 		List<CmsInterview> novels = page.getList();
 		// long total = page.getTotal();
@@ -83,23 +92,24 @@ public class InterviewListDirective implements TemplateDirectiveModel {
 		if (params.get("descLeft") != null) {
 			descLeft = Integer.valueOf(params.get("descLeft").toString());
 		}
-			for (CmsInterview ce : novels) {
-				if ( descLeft!= 0 && ce.getTitle().length() > descLeft) {
-					ce.setTitle(ce.getTitle()
-							.substring(0, descLeft) + "……");
-				}
-				
+		for (CmsInterview ce : novels) {
+			if (descLeft != 0 && ce.getTitle().length() > descLeft) {
+				ce.setTitle(ce.getTitle().substring(0, descLeft) + "……");
+			}
+
 		}
-		env.setVariable("cmsVotes", ObjectWrapper.DEFAULT_WRAPPER.wrap(novels));
-		if(cmsChannel!=null){
+		env.setVariable("cmsInterviews",
+				ObjectWrapper.DEFAULT_WRAPPER.wrap(novels));
+		if (cmsChannel != null) {
 			env.setVariable("pagination", ObjectWrapper.DEFAULT_WRAPPER
 					.wrap(PageUtil.getInstance().channelPagination(cmsChannel,
 							pageNum, page.getTotal(), pageSize)));
-			 env.setVariable("paginationMobile", ObjectWrapper.DEFAULT_WRAPPER
-						.wrap(PageUtil.getInstance().channelMobilePagination(cmsChannel,
-								pageNum, page.getTotal(), pageSize)));
-			env.setVariable("paginationlist",
-			        ObjectWrapper.DEFAULT_WRAPPER.wrap(PageUtil.getInstance().channelPaginationList(cmsChannel,pageNum,page.getTotal(),pageSize)));
+			env.setVariable("paginationMobile", ObjectWrapper.DEFAULT_WRAPPER
+					.wrap(PageUtil.getInstance().channelMobilePagination(
+							cmsChannel, pageNum, page.getTotal(), pageSize)));
+			env.setVariable("paginationlist", ObjectWrapper.DEFAULT_WRAPPER
+					.wrap(PageUtil.getInstance().channelPaginationList(
+							cmsChannel, pageNum, page.getTotal(), pageSize)));
 		}
 		body.render(env.getOut());
 	}

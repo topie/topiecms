@@ -192,6 +192,7 @@ public class CmsNovelServiceImp extends generatorHtmlHandler  implements CmsNove
 		root.put("own", novelId);
 		root.put("cmsNovel", cmsNovel);
 		root.put("site", site);
+		root.put("superChannel", getSuperChannel(channel));
 		String htmlFile = "";
 		htmlFile =  serperator + novelId + ".html";
 		success = super.generatorHtmlPCAndModile(cmsTemplate.getTemplatePath(), htmldir, htmlFile, root, request);
@@ -222,7 +223,13 @@ public class CmsNovelServiceImp extends generatorHtmlHandler  implements CmsNove
 		}
 		return true;
 	}
-
+	private CmsChannel getSuperChannel(CmsChannel channel) {
+		CmsChannel pChannel = this.cmsChannelMapper.selectByPrimaryKey(channel.getPid());
+		if(pChannel==null){
+			return channel;
+		}
+		return getSuperChannel(pChannel);
+	}
 	public StringBuffer getChannelenNameByIterator(Integer ChannelId,
 			StringBuffer channelEnNamedir) {
 		CmsChannel channel = cmsChannelMapper.selectByPrimaryKey(ChannelId);

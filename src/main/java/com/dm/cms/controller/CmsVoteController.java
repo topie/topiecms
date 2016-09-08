@@ -23,135 +23,150 @@ import com.dm.platform.util.SqlParam;
 @Controller
 @RequestMapping("/cms/vote")
 public class CmsVoteController {
-	
+
 	@Autowired
 	private CmsVoteService cmsVoteService;
+
 	@RequestMapping("/list")
 	@ResponseBody
 	public Object list(
 			@RequestParam(value = "pageNum", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,
 			CmsVote record,
-			@RequestParam(value = "sort", required = false) String sort){
-		if(record.getChannelId()==null){
+			@RequestParam(value = "sort", required = false) String sort) {
+		if (record.getChannelId() == null) {
 			return PageConvertUtil.emptyGrid();
 		}
 		Map map = new SqlParam<CmsVote>().autoParam(record, sort);
-		return PageConvertUtil.grid(this.cmsVoteService.findPage(pageNum,pageSize,map));
+		return PageConvertUtil.grid(this.cmsVoteService.findPage(pageNum,
+				pageSize, map));
 	}
+
 	@RequestMapping("/insertOrUpdate")
 	@ResponseBody
-	public Object insertOrUpdate(CmsVote record){
-		if(record.getId()==null){
+	public Object insertOrUpdate(CmsVote record) {
+		if (record.getId() == null) {
 			this.cmsVoteService.insert(record);
-		}else{
+		} else {
 			this.cmsVoteService.update(record);
 		}
 		return ResponseUtil.success();
 	}
+
 	@RequestMapping("/delete")
 	@ResponseBody
-	public Object delete(Integer id){
-		this.cmsVoteService.updateStatus(id,"9");
+	public Object delete(String voteIds) {
+		if (voteIds == null || voteIds.equals("")) {
+			return ResponseUtil.error("操作失败,请选择要删除的项!");
+		}
+		for (String index : voteIds.split(",")) {
+			Integer id = Integer.valueOf(index);
+			this.cmsVoteService.updateStatus(id, "9");
+		}
 		return ResponseUtil.success();
 	}
+
 	@RequestMapping("/load")
 	@ResponseBody
-	public Object load(Integer id){
+	public Object load(Integer id) {
 		return this.cmsVoteService.findOne(id);
 	}
+
 	@RequestMapping("/loadOpt")
 	@ResponseBody
-	public Object loadOpt(Integer id){
+	public Object loadOpt(Integer id) {
 		return this.cmsVoteService.findOneOpt(id);
 	}
+
 	@RequestMapping("/check")
 	@ResponseBody
-	public Object check(String voteIds){
-		if(voteIds==null && voteIds.equals("")){
+	public Object check(String voteIds) {
+		if (voteIds == null && voteIds.equals("")) {
 			return ResponseUtil.error();
 		}
-		for(String i:voteIds.split(",")){
+		for (String i : voteIds.split(",")) {
 			Integer id = Integer.valueOf(i);
-			this.cmsVoteService.updateStatus(id,"2");
+			this.cmsVoteService.updateStatus(id, "2");
 		}
 		return ResponseUtil.success();
 	}
+
 	@RequestMapping("/back")
 	@ResponseBody
-	public Object back(String  voteIds){
-		if(voteIds==null && voteIds.equals("")){
+	public Object back(String voteIds) {
+		if (voteIds == null && voteIds.equals("")) {
 			return ResponseUtil.error();
 		}
-		for(String i:voteIds.split(",")){
+		for (String i : voteIds.split(",")) {
 			Integer id = Integer.valueOf(i);
-			this.cmsVoteService.updateStatus(id,"3");
+			this.cmsVoteService.updateStatus(id, "3");
 		}
 		return ResponseUtil.success();
 	}
+
 	@RequestMapping("/pass")
 	@ResponseBody
-	public Object pass(String  voteIds){
-		if(voteIds==null && voteIds.equals("")){
+	public Object pass(String voteIds) {
+		if (voteIds == null && voteIds.equals("")) {
 			return ResponseUtil.error();
 		}
-		for(String i:voteIds.split(",")){
+		for (String i : voteIds.split(",")) {
 			Integer id = Integer.valueOf(i);
-			this.cmsVoteService.updateStatus(id,"4");
+			this.cmsVoteService.updateStatus(id, "4");
 		}
 		return ResponseUtil.success();
 	}
+
 	@RequestMapping("/publish")
 	@ResponseBody
-	public Object publish(String  voteIds){
-		if(voteIds==null && voteIds.equals("")){
+	public Object publish(String voteIds) {
+		if (voteIds == null && voteIds.equals("")) {
 			return ResponseUtil.error();
 		}
-		for(String i:voteIds.split(",")){
+		for (String i : voteIds.split(",")) {
 			Integer id = Integer.valueOf(i);
-			this.cmsVoteService.updateStatus(id,"5");
+			this.cmsVoteService.updateStatus(id, "5");
 		}
 		return ResponseUtil.success();
 	}
+
 	@RequestMapping("/listOpt")
 	@ResponseBody
 	public Object listOpt(
 			@RequestParam(value = "pageNum", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,
 			CmsVoteOption record,
-			@RequestParam(value = "sort", required = false) String sort){
-		if(record.getVoteId()==null){
+			@RequestParam(value = "sort", required = false) String sort) {
+		if (record.getVoteId() == null) {
 			return PageConvertUtil.emptyGrid();
 		}
 		Map map = new SqlParam<CmsVoteOption>().autoParam(record, sort);
-		return PageConvertUtil.grid(this.cmsVoteService.findOptPage(pageNum,pageSize,map));
+		return PageConvertUtil.grid(this.cmsVoteService.findOptPage(pageNum,
+				pageSize, map));
 	}
+
 	@RequestMapping("/insertOrUpdateOpt")
 	@ResponseBody
-	public Object insertOrUpdateOpt(CmsVoteOption record){
-		if(record.getId()==null)
-		cmsVoteService.insertOpt(record);
-		else{
+	public Object insertOrUpdateOpt(CmsVoteOption record) {
+		if (record.getId() == null)
+			cmsVoteService.insertOpt(record);
+		else {
 			cmsVoteService.updateOpt(record);
 		}
 		return ResponseUtil.success();
 	}
+
 	@RequestMapping("/deleteOpt")
 	@ResponseBody
-	public Object deleteOpt(Integer id){
+	public Object deleteOpt(Integer id) {
 		this.cmsVoteService.deleteOpt(id);
 		return ResponseUtil.success();
 	}
-	@RequestMapping("/sub")
-	@ResponseBody
-	public Object sub(Integer voteId,String optionIds){
-		this.cmsVoteService.commitCheck(voteId,optionIds);
-		return ResponseUtil.success();
-	}
+
 	@InitBinder
-    public void initBinder(ServletRequestDataBinder binder){
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
-                true));
-    }
-	
+	public void initBinder(ServletRequestDataBinder binder) {
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(
+				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
+	}
+
 }

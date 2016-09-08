@@ -40,7 +40,7 @@
         rowTmpl: '<div data-row=${row_} class="row"></div>',
         eleTmpl: '<div class="col-md-${span_}"><div class="form-group"></div></div>',
         sectionTmpl: '<div class="col-md-12"><h3 class="form-section">${title_}</h3></div>',
-        labelTmpl: '<label class="control-label ${cls_}">${label_}</label>',
+        labelTmpl: '<label class="control-label ${cls_}"><font style="font-size: larger;color:red;">${redMsg_}</font>${label_}</label>',
         blockSpanTmpl: '<span class="help-block">${help_}</span>',
         buttonTmpl: '<button type="${type_}" class="btn ${cls_}" ${attribute_}>${text_}</button>'
     };
@@ -52,14 +52,17 @@
             this._reset();
         },
         setValue: function (name, value) {
-            this._loadValue(name, value)
+            this._loadValue(name, value);
         },
-        loadLocal: function (data) {
+        loadLocal: function (data, callback) {
             var that = this;
             this._data = data;
             $.each(this._data, function (i, value) {
                 that._loadValue(i, value);
             });
+            if (callback != undefined) {
+                callback(this._data);
+            }
         },
         loadRemote: function (ajaxUrl, callback) {
             var that = this;
@@ -76,7 +79,7 @@
                         that._loadValue(i, item);
                     });
                     if (callback != undefined) {
-                        callback();
+                        callback(this._data);
                     }
                 },
                 error: function (e) {
@@ -244,7 +247,8 @@
             var ele = this._formEles[item.type](item, this);
             var label = $.tmpl(Form.statics.labelTmpl, {
                 "cls_": that._labelInline ? "col-md-3" : "",
-                "label_": item.label == undefined ? "" : item.label
+                "label_": item.label == undefined ? "" : item.label,
+               "redMsg_":item.rule==undefined ?"":item.rule.required==undefined ? "" : "*",
             });
             wrapper.find(".form-group").append(label);
             var help;
@@ -1287,6 +1291,9 @@
             }
         },
         _loadValue: function (name, value) {
+        	if(value instanceof Date){
+        		value= value.Format();
+        	}
             var ele = this.$form.find("[name='" + name + "']");
             if (ele.is('input[type="text"]')) {
                 if (ele.attr("data-type") == "tree-input") {
@@ -1520,3 +1527,25 @@
         'dmForm': form
     });
 })(jQuery, window, document);
+//例子： 
+//(new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
+//(new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+	if(fmt==undefined){
+		fmt="yyyy-MM-dd hh:mm:ss";
+	}
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};

@@ -4,13 +4,38 @@ var channelTree;
 var currentSiteId;
 var currentChannelId;
 var currentChannelType;
+function dateTostr(utc)
+{
+	if(utc)
+		{
+     var date = new Date(utc);
+     return date.getFullYear()+"-"+((date.getMonth()+1)>10?date.getMonth()+1:"0"+(date.getMonth()+1))+"-"+(date.getDate()>10?date.getDate():"0"+date.getDate())+" "+(date.getHours()>10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>10?date.getMinutes():"0"+date.getMinutes())+":"+(date.getSeconds()>10?date.getSeconds():"0"+date.getSeconds());
+   }
+}
 function flushGrid()
 {
 	$("#content_grid").html("");
 	if (currentChannelType == '0') {
 		options.url = "./list?channelId=" + currentChannelId;
 		grid = $("#content_grid").dmGrid(options);
-	} else if (currentChannelType == '5') {
+	}
+	if (currentChannelType == '2') {
+		$("#content_grid").html('<div class="note note-success note-bordered">'
+						+'<h4 class="block">提示</h4><p>'
+							+'链接频道无需添加内容'
+						+'</p></div>');
+	}
+	if (currentChannelType == '4') {
+		options.url = "./list?channelId=" + currentChannelId;
+		grid = $("#content_grid").dmGrid(options);
+	}
+	if (currentChannelType == '3') {
+		$("#content_grid").html('<div class="note note-success note-bordered">'
+						+'<h4 class="block">提示</h4><p>'
+							+'单页频道无需添加内容'
+						+'</p></div>');
+	}
+	else if (currentChannelType == '5') {
 		videoOptions.url = "../video/list?channelId="
 				+ currentChannelId;
 		grid = $("#content_grid").dmGrid(videoOptions);
@@ -208,7 +233,7 @@ function refreshSite() {
 		channelTree = $.fn.zTree.getZTreeObj("channel_tree");
 	}
 	currentSiteId = $("#select2_site").val();
-	channelTree.setting.async.url = "../channel/tree?siteId=" + currentSiteId;
+	channelTree.setting.async.url = "../channel/tree?siteId=" + currentSiteId +"&isfilter=1";
 	channelTree.reAsyncChildNodes(null, "refresh");
 }
 
@@ -279,6 +304,7 @@ var options = {
 				var color = data.titleStyle.split(";");
 				$("#titleStyle").val((color[0].split(":"))[1]);
 				$("select[name='titleStyle']")[0].value = (color[1].split(":"))[1];
+				$("#publishDate").val(dateTostr(data.publishDate));
 			});
 			
 		}
@@ -528,6 +554,12 @@ function getForm(contentType) {
 				id : 'id'
 			},
 			{
+				type : 'hidden',
+				name : 'channelId',
+				id : 'channelId'
+			},
+			/*
+			{
 				type : "tree",
 				name : "channelId",
 				id : "channelId",
@@ -541,7 +573,7 @@ function getForm(contentType) {
 					}
 				},
 				chkStyle : "radio"
-			},
+			},*/
 			{
 				type : 'text',// 类型
 				name : 'title',// name
@@ -615,10 +647,24 @@ function getForm(contentType) {
 			},
 			{
 				type : 'datepicker',//类型
-				name : 'publishTime',//name
-				id : 'publishTime',//id
+				name : 'publishDate',//name
+				id : 'publishDate',//id
 				label : '发布时间',//左边label
 				cls : 'input-large'
+			},{
+				type : 'text',//类型
+				name : 'author',//name
+				id : 'author',//id
+				label : '作者',//左边label
+				cls : 'input-large',
+				rule : {
+					required : true,
+					maxlength : 12
+				},
+				message : {
+					required : "请输入作者信息",
+					maxlength : "最多输入12字节"
+				}
 			},{
 				type : 'text',// 类型
 				name : 'origin',// name
@@ -765,6 +811,13 @@ function getForm(contentType) {
 		resetText : "重置",// 重置按钮文本
 		isValidate : true,// 开启验证
 		buttonsAlign : "center",
+		buttons : [ {
+			type : 'button',
+			text : '关闭',
+			handle : function() {
+				flushGrid();
+			}
+		} ],
 		// 表单元素
 		buttons : [ {
 			type : 'button',
@@ -793,6 +846,11 @@ function getFileForm(contentType) {
 				id : 'contentType'
 			},
 			{
+				type : 'hidden',
+				name : 'channelId',
+				id : 'channelId'
+			},
+			/*{
 				type : "tree",
 				name : "channelId",
 				id : "channelId",
@@ -806,7 +864,7 @@ function getFileForm(contentType) {
 					}
 				},
 				chkStyle : "radio"
-			},
+			},*/
 			{
 				type : 'text',// 类型
 				name : 'title',// name
@@ -818,16 +876,46 @@ function getFileForm(contentType) {
 					maxlength : 64
 				},
 				message : {
-					required : "请输入内容信息标题",
+					required : "请输入",
 					maxlength : "最多输入64字节"
 				}
 			},{
 				type : 'text',// 类型
-				name : 'author',// name
-				id : 'author',// id
+				name : 'code',// name
+				id : 'code',// id
 				label : '文号',// 左边label
-				cls : 'input-large'
+				cls : 'input-large',
+				rule : {
+					required : true,
+					maxlength : 100
+				},
+				message : {
+					required : "请输入文号",
+					maxlength : "最多输入100字节"
+				}
 				
+			},{
+				type : 'text',// 类型
+				name : 'filed1',// name
+				id : 'filed1',// id
+				label : '索引号',// 左边label
+				cls : 'input-large',
+				rule : {
+					required : true,
+					maxlength : 100
+				},
+				message : {
+					required : "请输入索引号",
+					maxlength : "最多输入100字节"
+				}
+				
+			},
+			{
+				type : 'text',// 类型
+				name : 'keywords',// name
+				id : 'keywords',// id
+				label : '关键字',// 左边label
+				cls : 'input-large'
 			},
 			{
 				type : 'textarea',// 类型
@@ -847,8 +935,8 @@ function getFileForm(contentType) {
 			},
 			{
 				type : 'datepicker',//类型
-				name : 'publishTime',//name
-				id : 'publishTime',//id
+				name : 'publishDate',//name
+				id : 'publishDate',//id
 				label : '发布时间',//左边label
 				cls : 'input-large'
 			},{
@@ -862,7 +950,7 @@ function getFileForm(contentType) {
 					maxlength : 12
 				},
 				message : {
-					required : "请输入来源信息",
+					required : "请输入发布机构信息",
 					maxlength : "最多输入12字节"
 				}
 			},
@@ -879,14 +967,6 @@ function getFileForm(contentType) {
 				itemsUrl : "../template/selects?templateType=2&siteId="
 						+ currentSiteId
 			} ];
-	var titleImg = {
-			
-				type : 'text',// 类型
-				name : 'keywords',// name
-				id : 'keywords',// id
-				label : '关键字',// 左边label
-				cls : 'input-large'
-	};
 	var titleImgTitle = {
 		type : 'text',// 类型
 		row : 3,
@@ -895,10 +975,10 @@ function getFileForm(contentType) {
 		label : '载体分类',// 左边label
 		cls : 'input-large',
 		rule : {
-			maxlength : 200
+			maxlength : 20
 		},
 		message : {
-			maxlength : "最多输入200字节"
+			maxlength : "最多输入20字节"
 		}
 	};
 	var titleImg1 = {
@@ -921,13 +1001,7 @@ function getFileForm(contentType) {
 		id : 'contentText',
 		label : '内容文本',
 		height : "300px",
-		width : "500px",
-		rule : {
-			required : true
-		},
-		message : {
-			required : "请输入内容文本"
-		}
+		width : "500px"
 	};
 	var offic = {
 		type : 'files',
@@ -949,7 +1023,6 @@ function getFileForm(contentType) {
 		detail : "最多上传3个附件"
 	};
 	
-		items.push(titleImg);
 		items.push(titleImg1);
 		items.push(titleImgTitle);
 		items.push(contentText);
@@ -1001,7 +1074,11 @@ function getFileForm(contentType) {
 			pageSelect : [ 2, 15, 30, 50 ],
 			cloums : [ {
 				title : "文号",
-				field : "author",
+				field : "code",
+				sort : true
+			}, {
+				title : "索引号",
+				field : "filed1",
 				sort : true
 			},{
 				title : "名称",
@@ -1057,7 +1134,9 @@ function getFileForm(contentType) {
 					$("#content_grid").html("");
 					var form = $("#content_grid").dmForm(getFileForm());
 					form.loadLocal({"channelId":currentChannelId});
-					form.loadRemote("./load?contentId=" + data.id);
+					form.loadRemote("./load?contentId=" + data.id,function(){
+						$("#publishDate").val(dateTostr(data.publishDate));
+					});
 				}
 			}, {
 				text : "排序",
@@ -1129,9 +1208,9 @@ function getFileForm(contentType) {
 				// 搜索栏元素
 				items : [ {
 					type : "text",
-					label : "标题",
+					label : "名称",
 					name : "title",
-					placeholder : "输入要搜索的内容信息标题"
+					placeholder : "输入要搜索的文件的名称"
 				} ]
 			}
 		};

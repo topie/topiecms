@@ -15,7 +15,7 @@ var interviewOptions = {
 		field : "title"
 	}, {
 		title : "嘉宾",
-		field : "gusts"
+		field : "guests"
 	},
 	 {
 		title : "类型",
@@ -41,6 +41,8 @@ var interviewOptions = {
 				return "已核实";
 			if (c.status == "5")
 				return "已发布";
+			if (c.status == "6")
+				return "已完成";
 			return "--";
 		}
 	} ],
@@ -58,7 +60,12 @@ var interviewOptions = {
 		text : "编辑",
 		cls : "green btn-sm",
 		visable : function(i, c) {
-			
+			if(c.status=="1"){
+				return false;
+			}
+			if(c.status=="6"){
+				return false;
+			}
 			return true;
 		},
 		handle : function(index, data) {
@@ -79,10 +86,31 @@ var interviewOptions = {
 		}
 	}
 	, {
-		text : "排序",
+		text : "访谈完成",
 		cls : "yellow btn-sm",
+		visable : function(i, c) {
+			if(c.status=="5"){
+				return true;
+			}
+			return false;
+		},
 		handle : function(i, c) {
-			sortfun(i, c,c.name);
+			bootbox.confirm("确定已完成?",function(res){
+				if(res){
+					$.ajax({
+						url:"../interview/check?status=6&ids="+c.id,
+						type:"POST",
+						success:function(res){
+							if(res.status=="1"){
+								grid.reload();
+							}
+							else{
+								bootbox.alert(res.msg);
+							}
+						}
+					});
+				}
+			})
 		}
 	}
 	],

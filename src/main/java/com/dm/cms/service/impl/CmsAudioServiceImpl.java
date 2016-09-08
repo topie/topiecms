@@ -292,6 +292,7 @@ public class CmsAudioServiceImpl extends generatorHtmlHandler implements CmsAudi
 		Date now = new Date();
 		cmsAudio.setUpdateTime(now);
 		cmsAudio.setPublishDate(now);
+		root.put("superChannel", this.getSuperChannel(cmsChannel));
 		boolean success = this.generatorHtmlPCAndModile(cmsTemplate.getTemplatePath(),htmldir,htmlFile, root, request);
 		if (success) {
 			log.info("内容静态化成功：[id=" + cmsAudio.getId() + ",title="
@@ -325,7 +326,13 @@ public class CmsAudioServiceImpl extends generatorHtmlHandler implements CmsAudi
 		}
 		return channelEnNamedir;
 	}
-
+	private CmsChannel getSuperChannel(CmsChannel channel) {
+		CmsChannel pChannel = this.cmsChannelMapper.selectByPrimaryKey(channel.getPid());
+		if(pChannel==null){
+			return channel;
+		}
+		return getSuperChannel(pChannel);
+	}
 	@Override
 	public List<CmsAudio> selectPageListByMap(Map argMap) {
 		// TODO Auto-generated method stub
