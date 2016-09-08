@@ -90,6 +90,10 @@ public class CmsContentController {
 			cmsContentService.updateAttachment(cmsContent.getId(),
 					attachmentIds);
 		}
+		if(cmsContent.getContentType()!=null && cmsContent.getContentType()==4)
+		{
+			cmsContentService.selectTopOneAndUpdate();
+		}
 
 		return ResponseUtil.success("操作成功");
 	}

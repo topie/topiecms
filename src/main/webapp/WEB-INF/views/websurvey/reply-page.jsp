@@ -276,19 +276,6 @@
 									return "";
 									}
 							}
-						},{
-							type : 'display',
-							name : 'toUser',
-							label : '领导或部门',
-							format : function(c) {
-								if (c) {
-									return c;
-								}
-								else
-									{
-									return "";
-									}
-							}
 						},
 						{
 							type : 'display',
@@ -365,7 +352,7 @@
 	
 	/** **********普通新闻表格选项*************** */
 	var options = {
-		url : "./list?type=1,2,3,4", // ajax地址
+		url : "./list?type=5", // ajax地址
 		pageNum : 1,// 当前页码
 		pageSize : 5,// 每页显示条数
 		idFiled : "id",// id域指定
@@ -379,12 +366,9 @@
 			field : "title",
 			sort : true
 		}, {
-			title : "发件人",
+			title : "留言人",
 			field : "username",
 			sort : true
-		}, {
-			title : "收件人",
-			field : "touser",
 		}],
 		actionCloumText : "操作",// 操作列文本
 		actionCloumWidth : "30%",

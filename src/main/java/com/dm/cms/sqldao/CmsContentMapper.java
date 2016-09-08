@@ -94,4 +94,6 @@ public interface CmsContentMapper {
 
 	String selectContentIdsByAttachmentId(Integer id);
 
+	List<CmsContent> selectTopOne();
+
 }

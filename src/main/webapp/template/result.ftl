@@ -30,12 +30,11 @@
     </script>
 </head>
 <body>
-  <#if webSurvey??>
 <table class="text_gray2" style="border:#DDDDDD 1px solid;margin-top:100px;" bgcolor="#EEF8ED" border="0" cellpadding="4" cellspacing="5" width="100%">
               <tbody><tr>
                 <td style="padding:12px;" align="center" bgcolor="#FFFFFF" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%">
                   <tbody><tr>
-                    <td class="link2" align="center">${webSurvey.title!}</td>
+                    <td class="link2" align="center">${webSurvey.title!}1</td>
                   </tr>
                   <tr>
                     <td align="center">&nbsp;</td>
@@ -60,21 +59,9 @@
                       <td align="center">&nbsp;</td>
                     </tr>
           <tr>
-            <td class="text_gray2" align="center"><input value="关闭" onclick="closewin()" type="button"></td>
+            <td class="text_gray2" align="center"><input value="关闭" onclick="window.close()" type="button"></td>
             </tr>
                   </tbody></table></td>
               </tr>
           </tbody></table>
-          <#else>
-          <table class="text_gray2" style="border:#DDDDDD 1px solid;margin-top:100px;" bgcolor="#EEF8ED" border="0" cellpadding="4" cellspacing="5" width="100%">
-              <tbody><tr>
-                <td style="padding:12px;" align="center" bgcolor="#FFFFFF" valign="top"><table border="0" cellpadding="0" cellspacing="0" width="100%">
-                  <tbody><tr>
-                    <td class="link2" align="center">未找到您的信箱</td>
-                  </tr>
-                  <tr>
-                    <td align="center">&nbsp;</td>
-                  </tr>
-                </tbody></table>
-          </#if>
 </body>

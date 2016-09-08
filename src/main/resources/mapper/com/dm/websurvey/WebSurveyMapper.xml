@@ -30,7 +30,7 @@
     <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, phone, postcode, address, type, content, reply, redept, code, recontent, 
+    id, username, phone,title, postcode, address, type, content, reply, redept, code, recontent, 
     effect, is_on_page, input_date, reply_date, email, update_date, seq_id, touser, code_id, 
     ip, mac, sex, is_open, state
   </sql>
@@ -47,13 +47,13 @@
         <include refid="Base_Column_List"/>
         from web_survey
         <where>
-            <if test="toUsers !=null and toUsers !=''">
+            <if test="codeId !=null">
               code_id in
-				<foreach collection="toUsers" item="item"  open="(" close=")" separator=",">
+				<foreach collection="codeId" item="item"  open="(" close=")" separator=",">
 					#{item}
 				</foreach>
             </if>
-            <if test="type !=null and type !=''">
+            <if test="type !=null">
               and type in
 				<foreach collection="type" item="item"  open="(" close=")" separator=",">
 					#{item}
@@ -70,7 +70,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.dm.websurvey.model.WebSurvey" >
-    insert into web_survey (id, username, phone, 
+    insert into web_survey (id, username, phone,title, 
       postcode, address, type, 
       content, reply, redept, 
       code, recontent, effect, 
@@ -80,7 +80,7 @@
       mac, sex, is_open, state
       )
     values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{postcode,jdbcType=DECIMAL}, #{address,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR},#{postcode,jdbcType=DECIMAL}, #{address,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{reply,jdbcType=VARCHAR}, #{redept,jdbcType=VARCHAR}, 
       #{code,jdbcType=VARCHAR}, #{recontent,jdbcType=VARCHAR}, #{effect,jdbcType=VARCHAR}, 
       #{isOnPage,jdbcType=VARCHAR}, #{inputDate,jdbcType=TIMESTAMP}, #{replyDate,jdbcType=TIMESTAMP}, 
@@ -100,6 +100,9 @@
       </if>
       <if test="phone != null" >
         phone,
+      </if>
+      <if test="title != null" >
+        title,
       </if>
       <if test="postcode != null" >
         postcode,
@@ -177,6 +180,9 @@
       </if>
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
       </if>
       <if test="postcode != null" >
         #{postcode,jdbcType=DECIMAL},

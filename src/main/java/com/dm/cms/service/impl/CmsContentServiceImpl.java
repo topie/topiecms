@@ -372,4 +372,19 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
                 true));
     }
 
+	@Override
+	public void selectTopOneAndUpdate() {
+		// TODO Auto-generated method stub
+		CmsContent cmsContent =  cmsContentMapper.selectTopOne().get(0);
+		cmsContent.setContentType(0);
+		cmsContentMapper.updateByPrimaryKey(cmsContent);
+	}
+	
+	@Override
+	public CmsContent selectTopOne() {
+		// TODO Auto-generated method stub
+		CmsContent cmsContent =  cmsContentMapper.selectTopOne().get(0);
+		return cmsContent;
+	}
+
 }

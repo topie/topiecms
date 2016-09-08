@@ -107,7 +107,7 @@
 
 				<entry key="voteListDirective" value-ref="voteListDirective"></entry>
 				<entry key="interviewListDirective" value-ref="interviewListDirective"></entry>
-				
+				<entry key="topOneDirective" value-ref="topOneDirective"></entry>
 				<entry key="leaderListDirective" value-ref="leaderListDirective"></entry>
 				<entry key="leaderDirective" value-ref="leaderDirective"></entry>
 				<entry key="orgListDirective" value-ref="orgListDirective"></entry>
@@ -149,6 +149,7 @@
    <bean id="voteListDirective" class="com.dm.cms.directive.VoteListDirective"></bean>
    <bean id="interviewListDirective" class="com.dm.cms.directive.InterviewListDirective"/>
    <bean id="websurveyListDirective" class="com.dm.cms.directive.WebsurveyListDirective"/>
+   <bean id="topOneDirective" class="com.dm.cms.directive.TopOneDirective"/>
     <!-- 自定义标签结束 -->
 
     <!-- json格式设置 -->

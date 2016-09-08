@@ -528,11 +528,6 @@ function getForm(contentType) {
 				id : 'id'
 			},
 			{
-				type : 'hidden',
-				name : 'contentType',
-				id : 'contentType'
-			},
-			{
 				type : "tree",
 				name : "channelId",
 				id : "channelId",
@@ -638,6 +633,19 @@ function getForm(contentType) {
 					required : "请输入来源信息",
 					maxlength : "最多输入12字节"
 				}
+			},{
+				type : 'select',
+				name : 'contentType',
+				id : 'contentType',
+				label : '是否头条',
+				cls : 'input-large',
+				items : [ {
+					value : '0',
+					text : '否'
+				},{
+					value : '4',
+					text : '是'
+				}]
 			},
 			{
 				type : 'select',
@@ -663,8 +671,8 @@ function getForm(contentType) {
 				},{
 					value : true,
 					text : '是'
-				} ],
-			} ];
+				} ]
+			}];
 	var titleImg = {
 		type : 'image',
 		id : 'titleImageUrl',
