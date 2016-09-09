@@ -397,16 +397,23 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	@Override
 	public void selectTopOneAndUpdate() {
 		// TODO Auto-generated method stub
-		CmsContent cmsContent =  cmsContentMapper.selectTopOne().get(0);
-		cmsContent.setContentType(0);
-		cmsContentMapper.updateByPrimaryKey(cmsContent);
+		List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
+		if(cmsContents.size()>0)
+		{
+			cmsContents.get(0).setContentType(0);
+		   cmsContentMapper.updateByPrimaryKey(cmsContents.get(0));
+		 }
 	}
 	
 	@Override
 	public CmsContent selectTopOne() {
 		// TODO Auto-generated method stub
-		CmsContent cmsContent =  cmsContentMapper.selectTopOne().get(0);
-		return cmsContent;
+		List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
+		if(cmsContents.size()>0)
+		{
+			return cmsContents.get(0);
+		}
+		return new CmsContent();
 	}
 
 }

@@ -86,6 +86,10 @@ public class CmsContentController {
 	public @ResponseBody Object insertOrUpdate(
 			CmsContent cmsContent,
 			@RequestParam(value = "attachmentIds", required = false) String attachmentIds) {
+		if(cmsContent.getContentType()!=null && cmsContent.getContentType()==4)
+		{
+			cmsContentService.selectTopOneAndUpdate();
+		}
 		if (cmsContent.getId() == null) {
 			insert(cmsContent);
 			cmsContentService.insertAttachment(cmsContent.getId(),
@@ -95,11 +99,6 @@ public class CmsContentController {
 			cmsContentService.updateAttachment(cmsContent.getId(),
 					attachmentIds);
 		}
-		if(cmsContent.getContentType()!=null && cmsContent.getContentType()==4)
-		{
-			cmsContentService.selectTopOneAndUpdate();
-		}
-
 		return ResponseUtil.success("操作成功");
 	}
 
