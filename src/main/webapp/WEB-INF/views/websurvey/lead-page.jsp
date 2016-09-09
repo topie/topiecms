@@ -206,6 +206,12 @@
 						cls : 'input-large'
 					},
 					{
+						type : 'text',//类型
+						name : 'seq',
+						label : '排序号',//左边label
+						cls : 'input-large'
+					},
+					{
 						type : 'select',
 						name : 'type',
 						id : 'type',

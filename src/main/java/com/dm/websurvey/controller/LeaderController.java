@@ -28,7 +28,8 @@ public class LeaderController {
 	@ResponseBody
 	public Map list(Integer pageNum,Integer pageSize,Leader leader,String sort)
 	{
-		sort = StringUtils.isEmpty(sort)?"name":sort;
+		
+		sort = StringUtils.isEmpty(sort)?"seq_asc":sort;
 		Map map = new SqlParam<Leader>().autoParam(leader,sort);
 		PageInfo<Leader> pageinfo = leaderService.findByPage(pageNum, pageSize, map);
 		return PageConvertUtil.grid(pageinfo);

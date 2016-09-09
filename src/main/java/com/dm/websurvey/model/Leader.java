@@ -10,6 +10,8 @@ public class Leader {
     private String division;
     
     private String type;
+    
+    private int seq;
 
     public String getId() {
         return id;
@@ -50,5 +52,13 @@ public class Leader {
 	public void setType(String type) {
 		this.type = type;
 	}
-    
+
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+
 }
