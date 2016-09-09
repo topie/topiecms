@@ -52,11 +52,11 @@
                   <table bgcolor="#AAC1A7" border="1" cellpadding="6" cellspacing="1" width="60%">
                     <tbody><tr style="height:40px;">
                       <td align="center" bgcolor="#F4FEF1" width="15%">查询编号：</td>
-                      <td align="center" bgcolor="#F4FEF1">${webSurvey.id}</td>
+                      <td align="center" bgcolor="#F4FEF1">${websurvey.id!}</td>
                       </tr>
                     <tr style="height:40px;">
                       <td align="center" bgcolor="#F4FEF1" width="15%">查询密码：</td>
-                      <td class="text_gray2" align="center" bgcolor="#F4FEF1">${webSurvey.phone}</td>
+                      <td class="text_gray2" align="center" bgcolor="#F4FEF1">${websurvey.phone!}</td>
                       </tr>                    
                   </tbody></table>
                   <table border="0" cellpadding="0" cellspacing="0" width="100%">

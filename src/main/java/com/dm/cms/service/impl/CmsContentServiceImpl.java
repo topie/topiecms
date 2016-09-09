@@ -289,15 +289,26 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 			return false;
 		}
 		if (2 == status) {
-			CmsContent c = this.generateHtml(request, contentId);
-			if (c != null) {
+			if(cmsContent.getContentType()!=null &&cmsContent.getContentType()==2){
+				succ = true;
+				cmsContent.setStatus(status);
+				cmsContent.setIsHtml(true);
+				this.cmsContentMapper.updateByPrimaryKeySelective(cmsContent);	
 				CmsChannel cms = cmsChannelMapper.selectByPrimaryKey(cmsContent
 						.getChannelId());
 				succ = cmsSiteService.generatorHtml(cms.getSiteId(), request);
 			}
-			else
-			{
-				succ=false;
+			else{
+				CmsContent c = this.generateHtml(request, contentId);
+				if (c != null) {
+					CmsChannel cms = cmsChannelMapper.selectByPrimaryKey(cmsContent
+							.getChannelId());
+					succ = cmsSiteService.generatorHtml(cms.getSiteId(), request);
+				}
+				else
+				{
+					succ=false;
+				}
 			}
 		} else {
 			cmsContent.setStatus(status);
