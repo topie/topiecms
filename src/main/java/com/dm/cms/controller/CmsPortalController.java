@@ -326,6 +326,10 @@ public class CmsPortalController {
     public String getLeader(Model model,WebSurvey webSurvey)
     {
 		WebSurvey webSur = webSurveyService.findOne(webSurvey.getId());
+		if(webSur==null){
+			webSur= new WebSurvey();
+			webSur.setTitle("查询编号有误!");
+		}
 		model.addAttribute("webSurvey", webSur);
 		return "/template/result";
     }
