@@ -679,8 +679,8 @@ function getForm(contentType) {
 					required : "请输入来源信息",
 					maxlength : "最多输入12字节"
 				}
-			},{
-				type : 'select',
+			},/*{
+				type : '',
 				name : 'contentType',
 				id : 'contentType',
 				label : '是否头条',
@@ -692,7 +692,7 @@ function getForm(contentType) {
 					value : '4',
 					text : '是'
 				}]
-			},
+			},*/
 			{
 				type : 'select',
 				name : 'templateId',
