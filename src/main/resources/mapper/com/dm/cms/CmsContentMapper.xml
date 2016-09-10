@@ -2,6 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dm.cms.sqldao.CmsContentMapper">
+
+<resultMap id="BaseViewResultMap" type="com.dm.cms.model.CmsCheck">
+   <result column="id" property="id" jdbcType="INTEGER"/>
+   <result column="channel_id" property="channelId" jdbcType="INTEGER"/>
+   <result column="title" property="title" jdbcType="VARCHAR"/>
+   <result column="channel_type" property="channelType" jdbcType="VARCHAR"/>
+   <result column="display_name" property="displayName" jdbcType="VARCHAR"/>
+   <result column="url" property="url" jdbcType="VARCHAR"/>
+   <result column="status" property="status" jdbcType="VARCHAR"/>
+</resultMap>
     <resultMap id="BaseResultMap" type="com.dm.cms.model.CmsContent">
         <!--
           WARNING - @mbggenerated
@@ -525,6 +535,27 @@
         	order by ${order}
         </if>
     </select>
+    
+    <select id="selectViewByReord" resultMap="BaseViewResultMap"
+            parameterType="java.util.Map">
+        select
+        id,channel_id,title,channel_type,display_name,url,status
+        from check_view
+        <where>
+            <if test="model != null">
+                <if test="model.title != null">
+                    and title like CONCAT(CONCAT('%', #{model.title}),'%')
+                </if>
+                <if test="model.status !=null">
+                	and status = #{model.status}
+                </if>
+            </if>
+        </where>
+        <if test="sort!=null and sort!=''">
+        	order by ${sort}
+        </if>
+    </select>
+    
 	<select id="selectRecordByPage" resultMap="ResultMapWithBLOBs"
             parameterType="java.util.Map">
         select

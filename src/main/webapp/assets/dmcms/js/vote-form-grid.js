@@ -21,15 +21,13 @@ var voteOptions = {
 		title : "状态",
 		field : "status",
 		format : function(i, c) {
-			if (c.status == "1")
+			if (c.status == "0")
 				return "新建";
-			if (c.status == "2")
+			if (c.status == "1")
 				return "待审核";
 			if (c.status == "3")
-				return "退回";
-			if (c.status == "4")
-				return "通过";
-			if (c.status == "5")
+				return "已驳回";
+			if (c.status == "2")
 				return "已发布";
 			return "--";
 		}

@@ -247,7 +247,7 @@
 					  }
 						else if (currentChannelType == '9') {
 							grid.reload({
-								url : "../vote/list?status=2&channelId=" + currentChannelId
+								url : "../vote/list?status=1&channelId=" + currentChannelId
 							});
 					  }else if (currentChannelType == '10') {
 							grid.reload({
@@ -291,7 +291,7 @@
 		  }
 			else if (currentChannelType == '9') {
 				$("#content_grid").html("");
-				voteOptions.url =  "../vote/list?status=2&channelId=" + currentChannelId;
+				voteOptions.url =  "../vote/list?status=1&channelId=" + currentChannelId;
 				grid = $("#content_grid").dmGrid(voteOptions);
 		  }
 			else if (currentChannelType == '10') {
@@ -369,7 +369,7 @@
 		}
 		jQuery(document).ready(function() {
 			initSelect2Site();
-			grid = $("#content_grid").dmGrid(options);
+			grid = $("#content_grid").dmGrid(allOptions);
 		});
 	</script>
 	<!-- END JAVASCRIPTS -->

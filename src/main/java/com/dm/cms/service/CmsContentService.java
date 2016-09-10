@@ -1,6 +1,7 @@
 package com.dm.cms.service;
 
 import com.dm.cms.model.CmsAttachment;
+import com.dm.cms.model.CmsCheck;
 import com.dm.cms.model.CmsContent;
 import com.github.pagehelper.PageInfo;
 
@@ -54,4 +55,8 @@ public interface CmsContentService {
 	void selectTopOneAndUpdate();
 
 	CmsContent selectTopOne();
+	
+	PageInfo<CmsCheck> findCmsContentByViewPage(Integer pageNum,
+			Integer pageSize, Map argMap);
+	
 }

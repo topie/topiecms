@@ -41,19 +41,21 @@ public class CmsVoteServiceImpl implements CmsVoteService {
 		if (user != null)
 			record.setCreateUser(user.getCode());
 		record.setCreateTime(new Date());
+		record.setStatus("0");
 		record.setFiled3("0");
 		this.cmsVoteMapper.insertSelective(record);
 	}
 
 	@Override
 	public void update(CmsVote record) {
+		record.setStatus("0");
 		this.cmsVoteMapper.updateByPrimaryKeySelective(record);
 
 	}
 
 	@Override
 	public void updateStatus(Integer id, String state) {
-		if (state.equals("5")) {
+		if (state.equals("2")) {
 			pulish(id);
 		} else {
 			CmsVote record = new CmsVote();
@@ -68,7 +70,7 @@ public class CmsVoteServiceImpl implements CmsVoteService {
 		// TODO Auto-generated method stub
 		CmsVote record = new CmsVote();
 		record.setId(id);
-		record.setStatus("5");
+		record.setStatus("2");
 		cmsVoteMapper.updateByPrimaryKeySelective(record);
 	}
 

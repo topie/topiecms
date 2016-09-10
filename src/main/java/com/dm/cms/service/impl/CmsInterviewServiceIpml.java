@@ -43,6 +43,7 @@ public class CmsInterviewServiceIpml implements CmsInterviewService {
 	public Map update(CmsInterview interview) {
 		Date now = new Date();
 		interview.setUpdateTime(now);
+		interview.setStatus("0");
 		this.cmsInterviewMapper.updateByPrimaryKeySelective(interview);
 		return ResponseUtil.success();
 	}
@@ -109,7 +110,7 @@ public class CmsInterviewServiceIpml implements CmsInterviewService {
 	public Map publish(Integer id) {
 		CmsInterview record = this.cmsInterviewMapper.selectByPrimaryKey(id);
 		record.setUpdateTime(new Date());
-		record.setStatus("5");
+		record.setStatus("2");
 		this.cmsInterviewMapper.updateByPrimaryKeySelective(record);
 		return ResponseUtil.success();
 	}

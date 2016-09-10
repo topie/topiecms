@@ -37,12 +37,14 @@ var interviewOptions = {
 				return "待审核";
 			if (c.status == "0")
 				return "新建";
-			if (c.status == "2")
+			if (c.status == "4")
 				return "已核实";
-			if (c.status == "5")
+			if (c.status == "2")
 				return "已发布";
-			if (c.status == "6")
+			if (c.status == "5")
 				return "已完成";
+			if (c.status == "3")
+				return "已驳回";
 			return "--";
 		}
 	} ],
@@ -89,7 +91,7 @@ var interviewOptions = {
 		text : "访谈完成",
 		cls : "yellow btn-sm",
 		visable : function(i, c) {
-			if(c.status=="5"){
+			if(c.status=="2"){
 				return true;
 			}
 			return false;
@@ -98,7 +100,7 @@ var interviewOptions = {
 			bootbox.confirm("确定已完成?",function(res){
 				if(res){
 					$.ajax({
-						url:"../interview/check?status=6&ids="+c.id,
+						url:"../interview/check?status=5&ids="+c.id,
 						type:"POST",
 						success:function(res){
 							if(res.status=="1"){

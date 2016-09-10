@@ -1,6 +1,7 @@
 package com.dm.cms.sqldao;
 
 import com.dm.cms.model.CmsAttachment;
+import com.dm.cms.model.CmsCheck;
 import com.dm.cms.model.CmsContent;
 
 import org.apache.ibatis.annotations.Param;
@@ -95,5 +96,7 @@ public interface CmsContentMapper {
 	String selectContentIdsByAttachmentId(Integer id);
 
 	List<CmsContent> selectTopOne();
+	
+	List<CmsCheck> selectViewByReord(Map map);
 
 }

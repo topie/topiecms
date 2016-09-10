@@ -52,13 +52,8 @@ var videoOptions = {
 		handle : function(index, data) {
 			// index为点击操作的行数
 			// data为该行的数据
-			modal = $.dmModal({
-				id : "mediaForm",
-				title : "编辑视频信息-" + data.name,
-				distroy : true
-			});
-			modal.show();
-			var form = modal.$body.dmForm(getVideoForm(data.contentType));
+			$("#content_grid").html("");
+			var form = $("#content_grid").dmForm(getVideoForm(data.contentType));
 			form.loadRemote("../video/load?videoId=" + data.id);
 		}
 	}
@@ -270,8 +265,7 @@ function getVideoForm(typeId) {
 
 		},
 		ajaxSuccess : function() {
-			$("#content_grid").html("");
-			grid.reload();
+			flushGrid();
 		},
 		submitText : "保存",// 保存按钮的文本
 		showReset : true,// 是否显示重置按钮
@@ -284,6 +278,7 @@ function getVideoForm(typeId) {
 				flushGrid();
 			}
 		} ],
+		buttonsAlign : "center",
 		// 表单元素
 		items : items
 	};

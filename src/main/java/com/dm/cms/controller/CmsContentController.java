@@ -1,10 +1,14 @@
 package com.dm.cms.controller;
 
 import com.dm.cms.model.CmsChannel;
+import com.dm.cms.model.CmsCheck;
 import com.dm.cms.model.CmsContent;
 import com.dm.cms.service.CmsChannelService;
 import com.dm.cms.service.CmsContentService;
+import com.dm.cms.service.CmsInterviewService;
 import com.dm.cms.service.CmsSiteService;
+import com.dm.cms.service.CmsVideoService;
+import com.dm.cms.service.CmsVoteService;
 import com.dm.platform.util.PageConvertUtil;
 import com.dm.platform.util.ResponseUtil;
 import com.dm.platform.util.SqlParam;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,10 +43,14 @@ public class CmsContentController {
 	CmsContentService cmsContentService;
 	@Autowired
 	CmsChannelService cmsChannelService;
-
+	@Autowired
+	CmsVideoService cmsVideoService;
+	@Autowired
+	CmsVoteService cmsVoteService;
 	@Autowired
 	CmsSiteService cmsSiteService;
-
+	@Autowired
+	CmsInterviewService cmsInterviewService;
 	@RequestMapping("/page")
 	public String page(Model model) {
 		return "/cms/content/page";
@@ -57,7 +66,52 @@ public class CmsContentController {
 	public String shpage(Model model) {
 		return "/cms/content/shpage";
 	}
+	
+	@RequestMapping("/checkList")
+	public @ResponseBody Object checkLlist(
+			@RequestParam(value = "pageNum", required = false) Integer pageNum,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize,
+			CmsCheck cmsCheck,
+			@RequestParam(value = "sort", required = false) String sort) {
+		if(StringUtils.isEmpty(sort))
+		{
+		  sort = "channel_id_asc";
+		}
+		Map map = new SqlParam<CmsCheck>().autoParam(cmsCheck, sort);
+		PageInfo<CmsCheck> page = cmsContentService.findCmsContentByViewPage(pageNum, pageSize, map);
+		return PageConvertUtil.grid(page);
+	}
 
+	@RequestMapping("/checkAllType")
+	public @ResponseBody Map checkAllType(HttpServletRequest request,
+			Short status,String channelType,Integer id) {
+		if(channelType.equals("0"))
+		{
+			boolean succ = this.cmsContentService.updateContentState(request,
+					id, status);
+			if(succ)
+			{
+				return ResponseUtil.error("操作成功！！");
+			}
+		}else if(channelType.equals("5"))
+		{
+
+			cmsVideoService.updateStatus(Integer.valueOf(status),id.toString(),request);
+			return ResponseUtil.error("操作成功！！");
+		}
+		else if(channelType.equals("9"))
+		{
+			cmsVoteService.updateStatus(id, status.toString());
+			return ResponseUtil.error("操作成功！！");
+		}
+		else if(channelType.equals("8"))
+		{
+			cmsInterviewService.checke(id.toString(),String.valueOf(status));
+			return ResponseUtil.error("操作成功！！");
+		}
+		return ResponseUtil.error("操作失败！");
+	}
+	
 	@RequestMapping("/list")
 	public @ResponseBody Object list(
 			@RequestParam(value = "pageNum", required = false) Integer pageNum,

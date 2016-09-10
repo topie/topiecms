@@ -86,7 +86,7 @@ public class CmsVoteController {
 		}
 		for (String i : voteIds.split(",")) {
 			Integer id = Integer.valueOf(i);
-			this.cmsVoteService.updateStatus(id, "2");
+			this.cmsVoteService.updateStatus(id, "1");
 		}
 		return ResponseUtil.success();
 	}
@@ -125,7 +125,7 @@ public class CmsVoteController {
 		}
 		for (String i : voteIds.split(",")) {
 			Integer id = Integer.valueOf(i);
-			this.cmsVoteService.updateStatus(id, "5");
+			this.cmsVoteService.updateStatus(id, "2");
 		}
 		return ResponseUtil.success();
 	}

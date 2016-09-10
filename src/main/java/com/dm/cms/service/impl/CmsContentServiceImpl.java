@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import com.dm.cms.handler.generatorHtmlHandler;
 import com.dm.cms.model.CmsAttachment;
 import com.dm.cms.model.CmsChannel;
+import com.dm.cms.model.CmsCheck;
 import com.dm.cms.model.CmsContent;
 import com.dm.cms.model.CmsSite;
 import com.dm.cms.model.CmsTemplate;
@@ -414,6 +415,15 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 			return cmsContents.get(0);
 		}
 		return new CmsContent();
+	}
+
+	@Override
+	public PageInfo<CmsCheck> findCmsContentByViewPage(Integer pageNum,
+			Integer pageSize, Map argMap) {
+		// TODO Auto-generated method stub
+		PageHelper.startPage(pageNum, pageSize);
+		List<CmsCheck> CmsChecks = cmsContentMapper.selectViewByReord(argMap);
+		return new PageInfo<CmsCheck>(CmsChecks);
 	}
 
 }
