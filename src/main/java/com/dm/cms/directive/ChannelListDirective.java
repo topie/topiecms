@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dm.cms.model.CmsChannel;
+import com.dm.cms.model.CmsContent;
 import com.dm.cms.service.CmsChannelService;
 import com.dm.cms.service.CmsContentService;
 
@@ -77,8 +78,10 @@ public class ChannelListDirective implements TemplateDirectiveModel{
 		log.debug("-------params------{}",params);
 		log.debug("-------channelIds------{}",cmsChannels.size());
 		for(CmsChannel c:cmsChannels){
-			if(c.getChannelType().equals("3")){//单页
-				c.setContentText(cmsContentService.findOneById(c.getPageSize()).getContentText());
+			if(c!=null && c.getChannelType().equals("3")){//单页
+				CmsContent content = cmsContentService.findOneById(c.getPageSize());
+				if(content!=null)
+					c.setContentText(content.getContentText());
 			}
 		}
 		env.setVariable("channels",ObjectWrapper.DEFAULT_WRAPPER.wrap(cmsChannels));

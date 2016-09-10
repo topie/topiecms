@@ -97,8 +97,21 @@ import com.github.pagehelper.PageInfo;
         	cmsChannel = cmsChannelMapper.selectByPrimaryKey(cmsChannel.getId());
         	Integer contentId = cmsChannel.getPageSize();
         	CmsContent con = cmsContentMapper.selectByPrimaryKey(contentId);
+        	if(con!=null){
         	con.setContentText(contentText);
         	cmsContentMapper.updateByPrimaryKeyWithBLOBs(con);
+        	}else{
+        		CmsContent content = new CmsContent();
+        		content.setChannelId(cmsChannel.getId());
+    			content.setTitle("单页频道内容");
+    			content.setSiteDomain(cmsChannel.getSiteDomain());
+    			content.setChannelEnName(cmsChannel.getEnName());
+    			content.setContentText(cmsChannel.getContentText());
+    			content.setContentType(3);
+    			cmsContentMapper.insertSelective(content);
+    			cmsChannel.setPageSize(content.getId());
+    			cmsChannelMapper.updateByPrimaryKeySelective(cmsChannel);
+        	}
 		}
         return result;
     }

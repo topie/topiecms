@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.dm.cms.model.CmsChannel;
+import com.dm.cms.model.CmsContent;
 import com.dm.cms.service.CmsChannelService;
 import com.dm.cms.service.CmsContentService;
 
@@ -42,9 +43,12 @@ public class ChannelDirective implements TemplateDirectiveModel {
 		if(cmsChannel==null){
 			
 		}else{
-		if(cmsChannel.getChannelType().equals("3")){//单页
-			cmsChannel.setContentText(cmsContentService.findOneById(cmsChannel.getPageSize()).getContentText());
-		}}
+			if(cmsChannel.getChannelType().equals("3")){//单页
+				CmsContent content = cmsContentService.findOneById(cmsChannel.getPageSize());
+				if(content!=null)
+					cmsChannel.setContentText(content.getContentText());
+			}
+		}
 		env.setVariable("channel",ObjectWrapper.DEFAULT_WRAPPER.wrap(cmsChannel));
 		body.render(env.getOut());  
 	}
