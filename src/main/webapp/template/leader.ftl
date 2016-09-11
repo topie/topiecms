@@ -6,7 +6,8 @@
                 </div>
                 <div class="fontSize16 pd4 color-green">相关新闻</div>
                 <ul class="panel2-list panel2-list-pd news-list2">
-                    <li><a href="#"><span class="panel2-list-content">春到三河滩</span><span class="panel2-list-time">2016-08-08</span></a></li>
-                    <li><a href="#"><span class="panel2-list-content">金湖县大佛寺首场大型佛七法会圆满结束</span><span class="panel2-list-time">2016-08-06</span></a></li>
-                    <li><a href="#"><span class="panel2-list-content">醉美的金湖 最美的马拉松</span><span class="panel2-list-time">2016-08-05</span></a></li>
+		<#list news as ne>
+                    <li><a href="${ne.url}"><span class="panel2-list-content">${ne.title}</span><span class="panel2-list-time">${ne.publishDate}</span></a></li>
+		</#list>
+                   
                 </ul>

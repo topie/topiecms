@@ -1,6 +1,7 @@
 package com.dm.cms.controller;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +49,7 @@ import com.dm.platform.model.Org;
 import com.dm.platform.service.OrgService;
 import com.dm.platform.util.DmDateUtil;
 import com.dm.platform.util.ResponseUtil;
+import com.dm.search.model.SearchResult;
 import com.dm.search.service.SearchConfigService;
 import com.dm.websurvey.model.Leader;
 import com.dm.websurvey.model.WebSurvey;
@@ -344,15 +345,26 @@ public class CmsPortalController {
 	@RequestMapping("/leader/leaderfront")
     public String leaderfront(Model model,String id)
     {
+		Leader leader = new Leader();
 		if(StringUtils.isEmpty(id))
 		{
 			List<Leader> leaders = leaderService.findAll(null);
-			model.addAttribute("leader",leaders.get(0));
+			leader = leaders.get(0);
+			
 		}
 		else{
-         Leader leader = leaderService.findOne(id);
-         model.addAttribute("leader",leader);
+         leader = leaderService.findOne(id);
 		}
+		List<SearchResult> news = new ArrayList<SearchResult>();
+		if(leader.getId()!=null){
+			try{
+				Map m = this.searchConfigService.searchResults(leader.getName(), 1, 10, null, null, null, null);
+				news = (List<SearchResult>)m.get("list");
+			}catch(RuntimeException e){
+			}
+		}
+		model.addAttribute("news", news);
+		model.addAttribute("leader",leader);
          return "/template/leader";
     }
 	

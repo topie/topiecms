@@ -135,6 +135,9 @@ import com.github.pagehelper.PageInfo;
     			return channel;
     		}
         	CmsContent con = cmsContentMapper.selectByPrimaryKey(contentId);
+        	if(con==null){
+        		return channel;
+        	}
         	channel.setContentText(con.getContentText());
     	}
     	return channel;
