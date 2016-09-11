@@ -90,9 +90,9 @@
 					    #{item}  
 					 </foreach>
 			    </if>
-			    <if test="cludeIds != null">
+			    <if test="includeIds != null">
                   and id in
-	                 <foreach item="item" index="index" collection="cludeIds" open="(" separator="," close=")">  
+	                 <foreach item="item" index="index" collection="includeIds" open="(" separator="," close=")">  
 					    #{item}  
 					 </foreach>
 			    </if>
