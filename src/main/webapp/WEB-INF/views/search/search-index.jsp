@@ -73,8 +73,9 @@
 			                           </div>
 			                           <label class="control-label">搜索服务器地址</label>
 			                       </div>
-			                       <div class="form-group"><div class="col-md-3"><input  type="checkbox" <c:if test="${searchConfig.cmsContent==true}">checked="checked"</c:if> name="cmsContent" value=true />检索cms内容 </div>
-			                       <div class="col-md-3"><input  type="checkbox" <c:if test="${searchConfig.attachment==true}">checked="checked"</c:if> name="attachment" value=true />检索附件文档 </div></div>
+			                       <div class="form-group">
+			                       <div class="col-md-3"><input  type="checkbox" <c:if test="${searchConfig.cmsContent==true}">checked="checked"</c:if> name="cmsContent" value=true />检索cms内容 </div>
+			                       <!-- <div class="col-md-3"><input  type="checkbox" <c:if test="${searchConfig.attachment==true}">checked="checked"</c:if> name="attachment" value=true />检索附件文档 </div></div> -->
 			                       <div class="form-group"><div class="col-md-3"><input  type="checkbox" name="highlight" <c:if test="${searchConfig.highlight==true}">checked="checked"</c:if> value=true />高亮显示 </div>
 			                       </div>
 			                       <input type="hidden" name="id" value="${searchConfig.id}"/>
@@ -99,7 +100,7 @@
 			                       </div>
 			                       <div class="form-group">
 			                          <div class="col-md-3"><input id="onekeyBtn"  type="button" class="btn green" value="一键配置"/>
-			                          <input id="frontView"  type="button" class="btn green" onclick="window.open('../portal/search.htm?text=')" value="前台预览"/></div>
+			                          <input id="frontView"  type="button" class="btn green" onclick="window.open('../portal/jinhu/index.htm')" value="前台预览"/></div>
 			                       </div>
 	                       </form>
 	                    </div>   

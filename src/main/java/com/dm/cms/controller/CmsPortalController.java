@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -45,6 +49,7 @@ import com.dm.platform.model.Org;
 import com.dm.platform.service.OrgService;
 import com.dm.platform.util.DmDateUtil;
 import com.dm.platform.util.ResponseUtil;
+import com.dm.search.service.SearchConfigService;
 import com.dm.websurvey.model.Leader;
 import com.dm.websurvey.model.WebSurvey;
 import com.dm.websurvey.service.LeaderService;
@@ -86,6 +91,8 @@ public class CmsPortalController {
 	protected CmsAttachmentService cmsAttachmentService;
 	@Autowired
 	protected CmsNovelService cmsNovelService;
+	@Autowired
+	SearchConfigService searchConfigService;
 	@Autowired
 	WebSurveyService webSurveyService;
 	 @Autowired LeaderService leaderService;
@@ -461,6 +468,40 @@ public class CmsPortalController {
 		this.cmsVoteService.commitCheck(voteId,optionIds);
 		return ResponseUtil.success("投票成功!");
 	}
+	@RequestMapping(value="/search",produces={"text/html;charset=UTF-8;","application/json;"})
+	@ResponseBody
+	public Object search(
+			@RequestParam(required=true,value="text")String textValue,
+			@RequestParam(required=false,value="pageNum",defaultValue="1")Integer pageNum,
+			@RequestParam(required=false,value="pageSize",defaultValue="5")Integer pageSize,
+			@RequestParam(required=false,value="days")Integer days,
+			@RequestParam(required=false,value="sortField")String sortField,
+			@RequestParam(required=false,value="entity")String entity,String callback, 
+			Device device)
+    {
+		Map map = new HashMap();
+		
+		if(textValue==null || textValue.equals(""))
+		{	
+			
+			map.put("status",0);
+			map.put("mes", "请输入搜索关键词！");
+			map.put("list", ListUtils.EMPTY_LIST);
+			map.put("pageNum",pageNum);
+			
+			//return map;
+			JSONObject jsonObject = JSONObject.fromObject(map);
+			return callback+"("+jsonObject.toString()+")";
+			//return callback+":({'status':'0','mes', '请输入搜索关键词！'})";
+		}
+		 map = searchConfigService.searchResults(textValue, pageNum, pageSize,sortField,entity,days,device);
+		 map.put("pageNum",pageNum);
+		//return map;
+		JSONObject jsonObject = JSONObject.fromObject(map);
+//		return callback+":({'status':'0','mes', '请输入搜索关键词！'})";
+		System.out.println(jsonObject.toString());
+		return callback+"("+jsonObject.toString()+")";
+    }
 	/*
 	 * @RequestMapping("/channel/{enName}_{channelId}.htm") public String
 	 * channel(Model model, @PathVariable("channelId") Integer channelId,

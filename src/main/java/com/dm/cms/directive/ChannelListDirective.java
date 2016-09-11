@@ -59,7 +59,7 @@ public class ChannelListDirective implements TemplateDirectiveModel{
 		String[] excludeIds = params.get("excludeIds").toString().split(",");
 		params.put("excludeIds", excludeIds);
 		}
-		if(params.get("pagesize")!=null)
+		if(params.get("pageSize")!=null)
 		{
 			String pagesize = params.get("pageSize").toString();
 			params.put("pageSize", pagesize);
@@ -67,9 +67,9 @@ public class ChannelListDirective implements TemplateDirectiveModel{
 		if(params.get("pageNum")!=null)
 		{
 			String pagenum = params.get("pageNum").toString();
-			params.put("pagenum", pagenum);
+			params.put("pageNum", pagenum);
 		}
-		if(params.get("cludeIds")!=null)
+		if(params.get("includeIds")!=null)
 		{
 		String[] cludeIds = params.get("includeIds").toString().split(",");
 		params.put("includeIds", cludeIds);
