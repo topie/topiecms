@@ -499,7 +499,7 @@ public class CmsPortalController {
 		//return map;
 		JSONObject jsonObject = JSONObject.fromObject(map);
 //		return callback+":({'status':'0','mes', '请输入搜索关键词！'})";
-		System.out.println(jsonObject.toString());
+		//System.out.println(jsonObject.toString());
 		return callback+"("+jsonObject.toString()+")";
     }
 	/*
