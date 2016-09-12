@@ -23,7 +23,7 @@
                                     <div class="col-md-4">
                                         <div class="panel panel-default panel2">
                                           <@channelDirective channelId=20>
-                                            <div class="panel-heading panel2-t fontSize18"><a href="${channel.url!}">领导信息</a></div></@channelDirective>
+                                            <div class="panel-heading panel2-t fontSize18"><a href="${channel.url!}" target="_blank"> 领导信息</a></div></@channelDirective>
                                             <div class="panel-body">
                                                 <ul class="list-group zwgk-list-group fontSize12">
                                                     <a href="javascript:void(0);" class="color-green fontSize16 pd2 dis-b">县政府</a>
@@ -36,20 +36,23 @@
                                                     <li class="list-group-item"><div class="zwgk-list-c"><span class="zwgk-list-name">黄永清</span>县政府副县长（挂职）</div></li>
                                                     <li class="list-group-item"><div class="zwgk-list-c"><span class="zwgk-list-name">邵&nbsp;&nbsp;&nbsp;钧</span>县政府副县长、党组成员，县公安局局长</div></li>
                                                     <li class="list-group-item"><div class="zwgk-list-c"><span class="zwgk-list-name">高昌萍</span>县政府副县长</div></li>-->
-                                                  <@leaderListDirective pageNum=1 pageSize=20>
+                                                  <@channelDirective channelId=20>
+						  <@leaderListDirective pageNum=1 pageSize=20>
                                                     <#list leaders as leader>
                                                       
-                                                      <li class="list-group-item"><div class="zwgk-list-c"><span class="zwgk-list-name">
+                                                     <li class="list-group-item"><div class="zwgk-list-c">
+						     <a href="${channel.url!}?leader=${leader.id}" target="_blank"><span class="zwgk-list-name">
                                                         <#if leader.name?length ==2>
                                                         ${leader.name?substring(0,1)}&nbsp;&nbsp;&nbsp;${leader.name?substring(1,2)}
                                                           </#if>
                                                          <#if leader.name?length !=2>
                                                         ${leader.name}
                                                           </#if>
-                                                        </span>${leader.occupation}</div></li>
+                                                        </span></a>${leader.occupation}</div></li>
                                                    
                                                       </#list>
                                                     </@leaderListDirective>
+						    </@channelDirective>
                                                 </ul>
                                                 <div class="thumbnail thumbnails">
                                                   <@channelDirective channelId=21>

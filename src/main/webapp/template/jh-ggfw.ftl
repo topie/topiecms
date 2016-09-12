@@ -222,44 +222,11 @@
                                                                                </div>
                                                                                <div class="col-sm-10 ggfw-cycx2">
                                                                                    <div class="row ggfw-btn-pd ggfw-btn-pd1 text-center">
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a href="/html/jinhu/ggfw/cycx/content/456.html" target="_blank" class="ggfw-btn">便民电话</a>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a href="http://www.hagjj.com/main.asp" title="公积金查询" target="_blank" class="ggfw-btn">公积金查询</a>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a href="http://www.ip138.com/weizhang.htm" title="车辆违章" target="_blank" class="ggfw-btn">车辆违章</a>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                         <@channelDirective channelId=43>
-                                                                                           <a href="${channel.url}" target="_blank" class="ggfw-btn">供电信息</a>
-                                                                                           </@channelDirective>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a href="http://ggfw.jshrss.gov.cn/gzcx/sys/viewCard.action" target="_blank" class="ggfw-btn">城乡养老</a>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a href="http://www.ip138.com/" title="IP归属" target="_blank" class="ggfw-btn">IP专属</a>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a href="http://life.hao123.com/shfw" title="话费查询" target="_blank" class="ggfw-btn">话费查询</a>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a href="/html/jinhu/ggfw/cycx/content/457.html" class="ggfw-btn" target="_blank">公路客运</a>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a href="http://www.jinhurc.com" title="金湖人才网" target="_blank" class="ggfw-btn">人才招牌</a>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a  href="http://218.2.15.138:8090/socialSecurity/login.jsp" title="社保查询" target="_blank" class="ggfw-btn">社会保障</a>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a href="http://www.hao123.com/ss/lccx.htm" title="火车时刻" target="_blank" class="ggfw-btn">火车时刻</a>
-                                                                                       </div>
-                                                                                       <div class="col-xs-4 col-md-2">
-                                                                                           <a href="http://www.weather.com.cn/html/weather/101190902.shtml" title="天气预报" target="_blank" class="ggfw-btn">天气预报</a>
-                                                                                       </div>
+                                                                                       <@contentListDirective channelId=44 pageSize=12 pageNum=1><#list contents as content><div class="col-xs-4 col-md-2">
+                                                                                                      <a href="${content.url!}" target="_blank" class="ggfw-btn">${content.title!}</a>
+                                                                                                  </div>
+                                                                                                    	
+                                                                                                    </#list></@contentListDirective>
                                             <!-- <div><span class="ggfw-cycx1-circle"><span class="glyphicon glyphicon-search"></span></span> <span>常用查询</span></div>
                                          </div>
                                          <div class="col-sm-10 ggfw-cycx2">

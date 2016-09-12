@@ -16,7 +16,7 @@ var interviewOptions = {
 	}, {
 		title : "嘉宾",
 		field : "guests"
-	},
+	}/*,
 	 {
 		title : "类型",
 		field : "",
@@ -29,7 +29,7 @@ var interviewOptions = {
 			}
 			return '--';
 		}
-	},{
+	}*/,{
 		title : "状态",
 		field : "status",
 		format : function(i, c) {
@@ -123,6 +123,8 @@ var interviewOptions = {
 		handle : function(grid) {// 按钮点击事件
 			if(currentChannelId==undefined)
 				bootbox.alert("请先选择频道");
+			else if(currentChannelIsParent)
+				bootbox.alert("请选择子频道进行添加!");
 			else{
 				/*modal = $.dmModal({
 					id : "mediaForm",

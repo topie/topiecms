@@ -7,7 +7,9 @@
                 <div class="fontSize16 pd4 color-green">相关新闻</div>
                 <ul class="panel2-list panel2-list-pd news-list2">
 		<#list news as ne>
+			<#if ne_index lt 4>
                     <li><a href="${ne.url}"><span class="panel2-list-content">${ne.title}</span><span class="panel2-list-time">${ne.publishDate}</span></a></li>
+		    </#if>
 		</#list>
                    
                 </ul>

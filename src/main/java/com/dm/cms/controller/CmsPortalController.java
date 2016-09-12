@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.ListUtils;
@@ -215,7 +217,8 @@ public class CmsPortalController {
 	public String channel(Model model, Device device,
 			@PathVariable("channelId") Integer channelId,
 			@PathVariable("enName") String enName,
-			@PathVariable(value = "pageNum") Integer pageNum) {
+			@PathVariable(value = "pageNum") Integer pageNum,
+			@RequestParam(value="param",required=false) String param) {
 		CmsChannel cmsChannel = cmsChannelService.findOneById(channelId);
 		if (cmsChannel == null)
 			return "404";
@@ -228,6 +231,7 @@ public class CmsPortalController {
 		model.addAttribute("htmlFolder", htmlFolder);
 		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		model.addAttribute("projectName", projectName);
+		model.addAttribute("param", param);
 		return getTemplatePath(cmsChannel.getTemplateId(), device.isMobile());
 	}
 	

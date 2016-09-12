@@ -24,6 +24,7 @@
 			<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=10>  				                              		<#list contents as cmsContent>
 			<a href="${cmsContent.url}" class="borderBottom">
                 <p class="fontSize18 color-green">${cmsContent.title}</p>
+		
                 <p>${cmsContent.brief?default("")}…<span class="color-green">【详细】</span></p>
                 <p class="color-gray">${cmsContent.publishDate?string("yyyy年MM月dd日")}</p>
             </a>

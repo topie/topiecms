@@ -4,6 +4,7 @@ var channelTree;
 var currentSiteId;
 var currentChannelId;
 var currentChannelType;
+var currentChannelIsParent;
 function dateTostr(utc)
 {
 	if(utc)
@@ -114,6 +115,7 @@ var channelSetting = {
 		onClick : function(event, treeId, treeNode) {
 			currentChannelId = treeNode.id;
 			currentChannelType = treeNode.type;
+			currentChannelIsParent=treeNode.isParent;
 			flushGrid();
 			/*
 			currentChannelId = treeNode.id;
@@ -301,10 +303,13 @@ var options = {
 			$("#content_grid").html("");
 			var form = $("#content_grid").dmForm(getForm(data.contentType));
 			form.loadRemote("./load?contentId=" + data.id,function(){
-				var color = data.titleStyle.split(";");
-				$("#titleStyle").val((color[0].split(":"))[1]);
-				$("select[name='titleStyle']")[0].value = (color[1].split(":"))[1];
-				$("#publishDate").val(dateTostr(data.publishDate));
+				if(data.titleStyle){
+					var color = data.titleStyle.split(";");
+					$("#titleStyle").val((color[0].split(":"))[1]);
+					$("select[name='titleStyle']")[0].value = (color[1].split(":"))[1];
+				}
+				var l = dateTostr(data.publishDate);
+				$("#publishDate").val(l);
 			});
 			
 		}
@@ -325,6 +330,8 @@ var options = {
 			handle : function(grid) {//按钮点击事件
 				if(currentChannelId==undefined)
 					bootbox.alert("请先选择频道");
+				else if(currentChannelIsParent)
+					bootbox.alert("请选择子频道进行添加!");
 				else{
 				showForm('0',"普通内容");
 				}
@@ -337,6 +344,8 @@ var options = {
 			handle : function(grid) {//按钮点击事件
 				if(currentChannelId==undefined)
 					bootbox.alert("请先选择频道");
+				else if(currentChannelIsParent)
+					bootbox.alert("请选择子频道进行添加!");
 				else{
 				showForm('2',"引用内容");
 				}
@@ -1152,6 +1161,8 @@ function getFileForm(contentType) {
 				handle : function(grid) {// 按钮点击事件
 					if(currentChannelId==undefined)
 						bootbox.alert("请先选择频道");
+					else if(currentChannelIsParent)
+						bootbox.alert("请选择子频道进行添加!");
 					else{
 						$("#content_grid").html("");
 						var form = $("#content_grid").dmForm(getFileForm());

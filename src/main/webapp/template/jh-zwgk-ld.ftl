@@ -66,7 +66,7 @@
              e.preventDefault();
              $(this).tab('show');
          });
-          $("#leader").load("../../leader/leaderfront");
+          $("#leader").load("../../leader/leaderfront?id=${param!}");
     });
      
  </script>
