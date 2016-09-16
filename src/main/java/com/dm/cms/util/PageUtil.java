@@ -29,6 +29,7 @@ public class PageUtil {
 		{
 			extendName = ".html";
 		}
+		String lastUrl = url.substring(0, url.indexOf(extendName)-1)+totalpage+extendName;
 		StringBuffer sb = new StringBuffer();
 		sb.append("<div class=\"text-right new-page\"><span class=\"new-page-pd\"><span class=\"color-green\">");
 		
@@ -54,7 +55,7 @@ public class PageUtil {
 				 href = url.substring(0, url.indexOf(extendName)-1);
 				 href = href + newPage+extendName;
 			}
-			sb.append("<a class='btn btn-link' href='"+href+"'>首页</a>");
+			sb.append("<a class='btn btn-link' href='"+url+"'>首页</a>");
 			sb.append("<a class='btn btn-link' href="+href+">上一页</a>");
 		}
 		//sb = getChannelPaginationLis(cId,isHtml,htmlDir,sb,thispage,totalpage);
@@ -71,7 +72,7 @@ public class PageUtil {
 				href = href +newPage+extendName;
 			}
 			sb.append("<a class='btn btn-link' href="+href+">下一页</a>");
-			sb.append("<a class='btn btn-link' href="+href+">尾页</a>");
+			sb.append("<a class='btn btn-link' href="+lastUrl+">尾页</a>");
 		}
 		sb.append("</div>");
 		return sb.toString();
@@ -90,6 +91,7 @@ public class PageUtil {
 		{
 			extendName = ".html";
 		}
+		String lastUrl = url.substring(0, url.indexOf(extendName)-1)+totalpage+extendName;
 		StringBuffer sb = new StringBuffer();
 		if(thispage==1){
 			sb.append("<a href='javascript:;' class='page_disable'>首页</a>");
@@ -106,7 +108,7 @@ public class PageUtil {
 				 href = href + newPage+extendName;
 			}
 			sb.append("<a  href='"+href+"'>首页</a>");
-			sb.append("<a  href="+href+">上一页</a>");
+			sb.append("<a  href="+url+">上一页</a>");
 		}
 		//sb = getChannelPaginationLis(cId,isHtml,htmlDir,sb,thispage,totalpage);
 		if((thispage==totalpage)||(totalpage==0)){
@@ -122,7 +124,7 @@ public class PageUtil {
 				href = href +newPage+extendName;
 			}
 			sb.append("<a href="+href+">下一页</a>");
-			sb.append("<a href="+href+">尾页</a>");
+			sb.append("<a href="+lastUrl+">尾页</a>");
 		}
 		return sb.toString();
 	}

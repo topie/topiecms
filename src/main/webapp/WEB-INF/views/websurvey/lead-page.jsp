@@ -346,11 +346,13 @@
 					else if(d.type=="2")
 						return "书记";
 						return "";
-			},
-			sort : true
+			}
+		}, {
+			title : "排序",
+			field : "seq"
 		}],
 		actionCloumText : "操作",// 操作列文本
-		actionCloumWidth : "30%",
+		actionCloumWidth : "15%",
 		actionCloums : [ {
 			text : "编辑",
 			cls : "green btn-sm",
@@ -381,7 +383,7 @@
 		tools : [// 工具属性
 		 {
 			text : "添加",
-			cls : "btn red btn-sm",// 按钮样式
+			cls : "btn green btn-sm",// 按钮样式
 			handle : function(grid) {
 				showForm();
 			}

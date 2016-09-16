@@ -77,6 +77,8 @@ var audioOptions = {
 		handle : function(grid) {// 按钮点击事件
 			if(currentChannelId==undefined)
 				bootbox.alert("请先选择频道");
+			else if(currentChannelIsParent)
+				bootbox.alert("请选择子频道进行添加!");
 			else
 				showForm(6, "音乐内容");
 		}
