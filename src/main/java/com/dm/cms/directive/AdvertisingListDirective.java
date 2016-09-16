@@ -53,14 +53,12 @@ public class AdvertisingListDirective implements TemplateDirectiveModel {
 		if (params.get("type") != null) {
 			ad.setType(params.get("type").toString());
 		}
-		System.out.println(ad.getType());
 		Map map = new HashMap();
 		map.put("model", ad);
 		PageInfo<CmsAdvertising> page = this.cmsAdvertisingService.findCmsAdvertisingByPage(1, pageSize, map);
 		List<CmsAdvertising> ads = page.getList();
 		env.setVariable("advertisings",
 				ObjectWrapper.DEFAULT_WRAPPER.wrap(ads));
-		System.out.println(ads.size());
 		body.render(env.getOut());
 	}
 }

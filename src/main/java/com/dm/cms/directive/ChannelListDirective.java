@@ -59,20 +59,20 @@ public class ChannelListDirective implements TemplateDirectiveModel{
 		String[] excludeIds = params.get("excludeIds").toString().split(",");
 		params.put("excludeIds", excludeIds);
 		}
-		if(params.get("pagesize")!=null)
+		if(params.get("pageSize")!=null)
 		{
-			String pagesize = params.get("pagesize").toString();
-			params.put("pagesize", pagesize);
+			String pagesize = params.get("pageSize").toString();
+			params.put("pageSize", pagesize);
 		}
-		if(params.get("pagenum")!=null)
+		if(params.get("pageNum")!=null)
 		{
-			String pagenum = params.get("pagenum").toString();
-			params.put("pagenum", pagenum);
+			String pagenum = params.get("pageNum").toString();
+			params.put("pageNum", pagenum);
 		}
-		if(params.get("cludeIds")!=null)
+		if(params.get("includeIds")!=null)
 		{
-		String[] cludeIds = params.get("cludeIds").toString().split(",");
-		params.put("cludeIds", cludeIds);
+		String[] cludeIds = params.get("includeIds").toString().split(",");
+		params.put("includeIds", cludeIds);
 		}
 		List<CmsChannel> cmsChannels = cmsChannelService.findByRoot(params);
 		log.debug("-------params------{}",params);

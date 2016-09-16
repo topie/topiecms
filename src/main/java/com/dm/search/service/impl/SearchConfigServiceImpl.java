@@ -181,8 +181,175 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		String dateStr = sdf.format(date);
 		return sdf.parse(dateStr);
 	}
-
 	@Override
+	public Map searchResults(String textValue, Integer pageNum,
+			Integer pageSize, String sortField, String entity, Integer days,
+			Device device) {
+		/*if (!StringUtils.hasText(entity)) {
+			entity = "cmsContent";
+		}*/
+		/*if (entity.length() < 3)
+			entity = "cmsContent";*/
+		SearchConfig searchConfig = searchConfigMapper
+				.selectByPrimaryKey("123");
+//		SearchConfig searchConfig =new SearchConfig();
+//		searchConfig.setIpAddress("102.200.234.44:8983");
+		SolrClient solrClient = new HttpSolrClient(searchConfig.getIpAddress()
+				+ "/solr/cms_core");
+		if (!connectSolr(solrClient)) {
+			Map map = ResponseUtil.error();
+			map.put("list", ListUtils.EMPTY_LIST);
+			map.put("totalPage", 1);
+			map.put("pageNum", 1);
+			map.put("perPage", 1);
+			map.put("nextPage", 1);
+			map.put("total", 0);
+			map.put("status",0);
+			return map;
+		}
+		String highlightTitle = "title";
+		String highlightContent = "content";
+		String highlightActor = "origin";
+		/*if (entity.equals("cmsContent")) {
+			highlightTitle = "title";
+			highlightContent = "content";
+			highlightActor = "origin";
+		}
+		if (entity.equals("cmsAudio")) {
+			highlightActor = "singer";
+		}
+		if (entity.equals("cmsVideo")) {
+			highlightActor = "director";
+		}*/
+		SolrQuery query = new SolrQuery();
+		String[] field = { "id", highlightTitle, highlightContent,
+				highlightActor, "publishDate", "displayName", "url",
+				"image_url" };
+		query.setFields(field);
+		String ent = "*";
+		if(entity!=null&&!entity.equals(""))
+			ent = entity;
+		if (days != null)
+			query.addFilterQuery("id:" + "*_" + ent
+					+ " AND publishDate:[NOW/DAY-" + days + "DAY TO *]");
+		else
+			query.addFilterQuery("id:" + "*_" + ent);
+		query.setQuery("text:" + textValue);
+		query.setStart((pageNum - 1) * pageSize);
+		if (sortField != null) {
+			String[] order = sortField.split("_");
+			if (order.length == 2) {
+				if (order[1].equals("asc")) {
+					query.setSort(order[0], ORDER.asc);
+				} else {
+					query.setSort(order[0], ORDER.desc);
+				}
+			}
+		}
+		query.setRows(pageSize);
+		query.setHighlight(searchConfig.getHighlight() == null ? false
+				: searchConfig.getHighlight());
+		if (!query.getHighlight()) {
+			// return ;
+		}
+
+		query.addHighlightField(highlightTitle);
+		query.addHighlightField(highlightContent);
+		query.addHighlightField(highlightActor);
+
+		query.setHighlightSimplePre("<font color='"
+				+ searchConfig.getHighlightcolor() + "'>");
+		query.setHighlightSimplePost("</font>");
+
+		query.setHighlightSnippets(searchConfig.getSnippets());// 结果分片数，默认为1
+		query.setHighlightFragsize(searchConfig.getSnippetsNum());
+		// query.set("defType", "edismax");
+
+		QueryResponse response = null;
+		try {
+
+			response = solrClient.query(query);
+		} catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			log.debug(e.getMessage());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		SolrDocumentList results = response.getResults();
+
+		List<SearchResult> list = new ArrayList<SearchResult>();
+		Map<String, Map<String, List<String>>> highlightMap = response
+				.getHighlighting();
+
+		for (SolrDocument solrDocument : results) {
+			SearchResult searchResult = new SearchResult();
+			String idOrAttachmentId = solrDocument.getFieldValue("id")
+					.toString();
+			searchResult.setId(Integer.valueOf(idOrAttachmentId.split("_")[0]));
+			searchResult.setChannel((String) solrDocument
+					.getFieldValue("displayName"));
+			Date datestr = (Date) solrDocument.getFieldValue("publishDate");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+			searchResult.setPublishDate(sdf.format(datestr));
+			searchResult.setTitle((String) solrDocument
+					.getFieldValue(highlightTitle));
+			searchResult.setUrl(solrDocument.getFieldValue("url").toString());
+			List<String> contents = highlightMap.get(idOrAttachmentId).get(
+					highlightContent);
+			List<String> titles = highlightMap.get(idOrAttachmentId).get(
+					highlightTitle);
+			List<String> actors = highlightMap.get(idOrAttachmentId).get(
+					highlightActor);
+			searchResult.setContent(formatValue(contents, searchConfig,
+					solrDocument, highlightContent));
+			searchResult.setTitle(formatValue(titles, searchConfig,
+					solrDocument, highlightTitle));
+			searchResult.setActor(formatValue(actors, searchConfig,
+					solrDocument, highlightActor));
+			list.add(searchResult);
+		}
+		long num = results.getNumFound();
+		Map map = ResponseUtil.success();
+		long totalPage = num / pageSize;
+		if (totalPage == 0) {
+			totalPage = 1;
+		} else if ((num % pageSize) > 0) {
+			totalPage += 1;
+		}
+		if (device != null) {
+			if (device.isMobile()) {
+				String PCFolder = ConfigUtil.getConfigContent("cms", "htmlDir");
+				String mobileFolder = ConfigUtil.getConfigContent("cms",
+						"htmlMobileDir");
+				for (SearchResult s : list) {
+					s.setUrl(s.getUrl().replace(PCFolder,
+							PCFolder + mobileFolder));
+				}
+			}
+		}
+		long perPage=1l;
+		if(pageNum-1>1){
+			perPage = pageNum-1;
+		}
+		long nextPage=1l;
+		if(pageNum+1 <= totalPage){
+			nextPage = pageNum+1;
+		}
+		map.put("totalPage", totalPage);
+		map.put("pageNum", pageNum);
+		map.put("perPage", perPage);
+		map.put("nextPage", nextPage);
+		map.put("total", num);
+		map.put("status",1);
+		map.put("list", list);
+		log.debug("{}--list", list);
+		
+		return map;
+	}
+
+	/*@Override
 	public Map searchResults(String textValue, Integer pageNum,
 			Integer pageSize, String sortField, String entity, Integer days,
 			Device device) {
@@ -329,7 +496,7 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		map.put("list", list);
 		log.debug("{}--list", list);
 		return map;
-	}
+	}*/
 
 	private String formatValue(List<String> contents,
 			SearchConfig searchConfig, SolrDocument solrDocument, String key) {
