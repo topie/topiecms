@@ -82,12 +82,4 @@
             });
         </script>
         </body>
-        </html>
-        
-       
-      
-     
-    
-   
-  
- 
+</html>

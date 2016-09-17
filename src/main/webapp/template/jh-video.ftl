@@ -19,11 +19,7 @@
            <#include "/template/jh-head.ftl"/>
            <#include "/template/jh-daohang.ftl"/>
            <div class="container bg-white">
-               <ol class="breadcrumb fontSize16 jh-breadcrumb">
-                   <span class="jh-dotted">·</span>
-                   
-               </ol>
-           	
+              
                <div class="jh-main jh-article">
                    <div class="jh-article-title fontSize22 text-center"><span style="">${cmsVideo.name?default("")}</span></div>
                    <div class="jh-article-info text-center">
@@ -145,8 +141,4 @@
                });
            </script>
            </body>
-           </html>
-  
-            
-  
- 
+</html>

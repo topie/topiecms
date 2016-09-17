@@ -377,7 +377,7 @@ public class CmsPortalController {
     {
 		pageNum = pageNum==null?1:pageNum;
 		pageSize = pageSize==null?15:pageSize;
-        List<Org> orgs = orgService.listOrg(pageNum-1, pageSize);
+        List<Org> orgs = orgService.listOrg(pageNum-1, pageSize,"where parent is not null");
         Long total = orgService.countMenuGrou();
         long totalPage = total/pageSize;
         long nextPage = 0;

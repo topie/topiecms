@@ -1,5 +1,4 @@
 <div class="ft">
-
              <div class="ft-bg" style="margin: 2.5em 0 3em 0;background-color: #55a421;height: 1em;border-bottom: 3px solid #487e24;"></div>
              <div class="container">
                  <div class="row">
@@ -33,6 +32,7 @@
          </div>
         <script type="text/javascript" src="/html/jinhu-static/js/visit-record.js"></script>  
 <script type="text/javascript" src="/html/jinhu-static/js/search-jinhu.js"></script>  
+         
         
        
       

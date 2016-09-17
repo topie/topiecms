@@ -34,7 +34,7 @@
 				<#list cmsInterview.info.images as image>
 				<div class="col-xs-6">
 				    <div class="thumbnail thumbnails">
-					<img src="${image.imgUrl!}" title="${image.title!}" class="thumbnail-border-gray">
+					<img src="${image.imgUrl!}" class="thumbnail-border-gray">
 				    </div>
 				</div>
 				</#list>

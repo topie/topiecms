@@ -22,6 +22,12 @@ public class OrgServiceImpl implements OrgService {
 		String hql = "from  Org ";
 		return commonDAO.findByPage(hql, thispage, pagesize);
 	}
+	@Override
+	public List<Org> listOrg(int thispage,int pagesize,String whereSql) {
+		// TODO Auto-generated method stub
+		String hql = "from  Org "+ whereSql;
+		return commonDAO.findByPage(hql, thispage, pagesize);
+	}
 
 	@Override
 	public void insertOrg(Org entity) {

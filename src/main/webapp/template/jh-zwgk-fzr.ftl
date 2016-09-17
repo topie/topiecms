@@ -27,7 +27,7 @@
                                    <div class="zwgk-alink-c">
                                        <div class="col-xs-6 col-md-12 col-lg-6">
                                            <@channelDirective channelId=22>
-                                             <a href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开指南-->
+                                             <a target="_blank" href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开指南-->
    
 </@channelDirective>
 
@@ -35,48 +35,48 @@
                                        </div>
                                        <div class="col-xs-6 col-md-12 col-lg-6">
                                          <@channelDirective channelId=23>
-                                             <a href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开制度-->
+                                             <a target="_blank" href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开制度-->
    
 </@channelDirective>
                                        </div>
                                        <div class="col-xs-6 col-md-12 col-lg-6">
                                          <@channelDirective channelId=24>
-                                             <a href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开年报-->
+                                             <a target="_blank" href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开年报-->
    
 </@channelDirective>
                                        </div>
                                        <div class="col-xs-6 col-md-12 col-lg-6">
                                          <@channelDirective channelId=25>
-                                             <a href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--依申请公开-->
+                                             <a target="_blank" href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--依申请公开-->
    
 </@channelDirective>
                                        </div>
                                        <div class="col-xs-12">
                                          <@channelDirective channelId=27>
-                                             <a href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开工作意见箱-->
+                                             <a target="_blank" href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开工作意见箱-->
    
 </@channelDirective>
                                        </div>
                                    </div>
                                    <div class="clearfix">
                                      <@channelDirective channelId=26>
-                                             <a href="${channel.url}" class="color-green fontSize16 pd2 dis-b">${channel.displayName}</a><!--政府信息公开目录-->
+                                             <a target="_blank" href="${channel.url}" class="color-green fontSize16 pd2 dis-b">${channel.displayName}</a><!--政府信息公开目录-->
    
 </@channelDirective>
                                      
                                        <ul class="panel2-list">
                                          <@channelDirective channelId=85>
-                                           <li><span class="jh-dotted">·</span><a href="${channel.url}">${channel.displayName}</a></li>  
+                                           <li><span class="jh-dotted">·</span><a  target="_blank" href="${channel.url}">${channel.displayName}</a></li>  
                                            <!--县政府信息公开目录-->
    
 </@channelDirective>
                                          <@channelDirective channelId=86>
-                                           <li><span class="jh-dotted">·</span><a href="${channel.url}">${channel.displayName}</a></li>  
+                                           <li><span class="jh-dotted">·</span><a target="_blank" href="${channel.url}">${channel.displayName}</a></li>  
                                            <!--县级部门政府信息公开目录-->
    
 </@channelDirective>
                                          <@channelDirective channelId=87>
-                                           <li><span class="jh-dotted">·</span><a href="${channel.url}">${channel.displayName}</a></li>  
+                                           <li><span class="jh-dotted">·</span><a target="_blank" href="${channel.url}">${channel.displayName}</a></li>  
                                            <!--镇信息公开目录-->
    
 </@channelDirective>
@@ -91,10 +91,10 @@
            		<#list channels as channel>
                                <div class="col-xs-3">
                                  <#if channel.displayName?length lt 5>
-                                   <a href="${channel.url}" class="ggfw-btn">${channel.displayName}</a>
+                                   <a target="_blank" href="${channel.url}" class="ggfw-btn">${channel.displayName}</a>
                                   </#if>
                                  <#if channel.displayName?length gt 4>
-                                   <a href="${channel.url}" class="ggfw-btn ">${channel.displayName?substring(0,2)}<span class="fontSmall2">${channel.displayName?substring(2)}</span></a>
+                                   <a target="_blank" href="${channel.url}" class="ggfw-btn ">${channel.displayName?substring(0,2)}<span class="fontSmall2">${channel.displayName?substring(2)}</span></a>
                                   </#if>
                                </div>
            		</#list >
@@ -105,7 +105,7 @@
          		<@channelListDirective channelId=5 order=1 excludeIds="20,21,22,23,24,25,26,27,28,29">
          		<#list channels as channel>
          		     <div class="col-xs-3">
-                                 <a href="${channel.url}" class="thumbnail thumbnails text-center">
+                                 <a target="_blank" href="${channel.url}" class="thumbnail thumbnails text-center">
                                      <img src="${channel.channelIcon!}">
                                      <p>${channel.displayName}</p>
                                  </a>

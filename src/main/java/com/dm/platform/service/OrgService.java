@@ -5,6 +5,7 @@ import java.util.List;
 import com.dm.platform.model.Org;
 
 public interface OrgService {
+	public List<Org> listOrg(int thispage,int pagesize,String whereSql);
 	public List<Org> listOrg(int thispage,int pagesize);
 	public Org findOne(Long id);
 	public void insertOrg(Org entity);
