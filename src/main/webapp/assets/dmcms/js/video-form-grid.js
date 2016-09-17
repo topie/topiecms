@@ -183,6 +183,19 @@ function getVideoForm(typeId) {
 		height : "300px",
 		width : "400px"
 	};
+	var fileUrl = {
+			type : 'fileEditor',
+			name : 'videoUrl',
+			id : 'videoUrl',
+			label : '视频地址',
+			text:"选择视频",
+			rule : {
+				required : true
+			},
+			message : {
+				required : "上传视频"
+			}
+		};
 	var titleImg = {
 		type : 'image',
 		id : 'imageUrl',
@@ -251,7 +264,8 @@ function getVideoForm(typeId) {
 				required : "请填写来源",
 			}
 	}
-	items.push(videoUrl);
+	//items.push(videoUrl);
+	items.push(fileUrl);
 	items.push(videoOrigen);
 	//items.push(titleImg);
 	items.push(contentText);

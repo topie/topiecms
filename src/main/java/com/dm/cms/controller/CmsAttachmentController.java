@@ -54,9 +54,9 @@ import java.util.Map;
 
         String baseDir = System.getProperty("web.root");
         String path =
-            baseDir.substring(0, baseDir.indexOf(projectName) - 1) + htmlFolder + resourceBasePath;
+            baseDir.substring(0, baseDir.indexOf(projectName) - 1) + htmlFolder + resourceBasePath +"/singleUpload";
         String newFileName = FileUtil.saveFileFromMultipartFileCreateNewName(multipartFile, path);
-        String url =htmlFolder + resourceBasePath + "/" + newFileName;
+        String url =htmlFolder + resourceBasePath +"/singleUpload"+ "/" + newFileName;
         CmsAttachment cmsAttachment = new CmsAttachment();
         cmsAttachment.setAttachmentName(multipartFile.getOriginalFilename());
         cmsAttachment.setAttachmentUrl(url);
@@ -74,7 +74,7 @@ import java.util.Map;
     public void MultipleUpload(@RequestParam(value = "files[]") MultipartFile[] multipartFiles,
         HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
         throws IOException {
-    	this.uploadFiles(multipartFiles, httpServletRequest, httpServletResponse, htmlFolder+resourceBasePath);
+    	this.uploadFiles(multipartFiles, httpServletRequest, httpServletResponse, htmlFolder+resourceBasePath+"/multipleUpload");
     }
     private void uploadFiles(MultipartFile[] multipartFiles,
             HttpServletRequest httpServletRequest,

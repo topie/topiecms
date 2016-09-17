@@ -41,7 +41,7 @@
                                                     <#list leaders as leader>
                                                       
                                                      <li class="list-group-item"><div class="zwgk-list-c">
-						     <a href="${channel.url!}?leader=${leader.id}" target="_blank"><span class="zwgk-list-name">
+						     <a href="${channel.url!}?param=${leader.id}" target="_blank"><span class="zwgk-list-name">
                                                         <#if leader.name?length ==2>
                                                         ${leader.name?substring(0,1)}&nbsp;&nbsp;&nbsp;${leader.name?substring(1,2)}
                                                           </#if>
@@ -68,7 +68,7 @@
                                                     <div class="zwgk-alink-c">
                                                         <div class="col-xs-6 col-md-12 col-lg-6">
                                                             <@channelDirective channelId=22>
-                                                              <a href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开指南-->
+                                                              <a target="_blank" href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开指南-->
                     
                  </@channelDirective>
                  
@@ -76,48 +76,48 @@
                                                         </div>
                                                         <div class="col-xs-6 col-md-12 col-lg-6">
                                                           <@channelDirective channelId=23>
-                                                              <a href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开制度-->
+                                                              <a target="_blank" href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开制度-->
                     
                  </@channelDirective>
                                                         </div>
                                                         <div class="col-xs-6 col-md-12 col-lg-6">
                                                           <@channelDirective channelId=24>
-                                                              <a href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开年报-->
+                                                              <a target="_blank" href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开年报-->
                     
                  </@channelDirective>
                                                         </div>
                                                         <div class="col-xs-6 col-md-12 col-lg-6">
                                                           <@channelDirective channelId=25>
-                                                              <a href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--依申请公开-->
+                                                              <a target="_blank" href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--依申请公开-->
                     
                  </@channelDirective>
                                                         </div>
                                                         <div class="col-xs-12">
                                                           <@channelDirective channelId=27>
-                                                              <a href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开工作意见箱-->
+                                                              <a target="_blank" href="${channel.url}" class="zwgk-alink">${channel.displayName}</a><!--政府信息公开工作意见箱-->
                     
                  </@channelDirective>
                                                         </div>
                                                     </div>
                                                     <div class="clearfix">
                                                       <@channelDirective channelId=26>
-                                                              <a href="${channel.url}" class="color-green fontSize16 pd2 dis-b">${channel.displayName}</a><!--政府信息公开目录-->
+                                                              <a target="_blank" href="${channel.url}" class="color-green fontSize16 pd2 dis-b">${channel.displayName}</a><!--政府信息公开目录-->
                     
                  </@channelDirective>
                                                       
                                                         <ul class="panel2-list">
                                                           <@channelDirective channelId=85>
-                                                            <li><span class="jh-dotted">·</span><a href="${channel.url}">${channel.displayName}</a></li>  
+                                                            <li><span class="jh-dotted">·</span><a target="_blank" href="${channel.url}">${channel.displayName}</a></li>  
                                                             <!--县政府信息公开目录-->
                     
                  </@channelDirective>
                                                           <@channelDirective channelId=86>
-                                                            <li><span class="jh-dotted">·</span><a href="${channel.url}">${channel.displayName}</a></li>  
+                                                            <li><span class="jh-dotted">·</span><a target="_blank" href="${channel.url}">${channel.displayName}</a></li>  
                                                             <!--县级部门政府信息公开目录-->
                     
                  </@channelDirective>
                                                           <@channelDirective channelId=87>
-                                                            <li><span class="jh-dotted">·</span><a href="${channel.url}">${channel.displayName}</a></li>  
+                                                            <li><span class="jh-dotted">·</span><a target="_blank" href="${channel.url}">${channel.displayName}</a></li>  
                                                             <!--镇信息公开目录-->
                     
                  </@channelDirective>
@@ -135,7 +135,7 @@
                                              </#if>
                           		     <div class="col-xs-3 col-md-6 col-lg-3">
                                         
-                                                  <a href="${channel.url}" class="btn btn-link <#if channel.displayName?length gt 5> fontSmall2</#if>">
+                                                  <a href="${channel.url}" target="_blank" class="btn btn-link <#if channel.displayName?length gt 5> fontSmall2</#if>">
                                                      ${channel.displayName}
                                                   </a>
                                               </div>
@@ -178,18 +178,18 @@
                         		<@channelListDirective channelId=channel.id order=1 excludeIds="211" >
                                         <ul class="nav nav-tabs navTab2 navTab4 text-center" role="tablist" id="navTab1">
                         			<#list channels as channel>
-                                            <li role="presentation" class="${(channel_index==0)?string('active','')}"><a href="#zd${channel_index}" aria-controls="zd${channel_index}" role="tab" data-toggle="tab">${channel.displayName}</a></li>
+                                            <li role="presentation" class="${(channel_index==0)?string('active','')}"><a target="_blank" href="#zd${channel_index}" aria-controls="zd${channel_index}" role="tab" data-toggle="tab">${channel.displayName}</a></li>
                         		    </#list>
                                         </ul>
                                         <!-- Tab panes -->
                                         <div class="tab-content zwgk-navTab1-content">
                         		<#list channels as channel>
                                             <div role="tabpanel" class="tab-pane ${(channel_index==0)?string('active','')}" id="zd${channel_index}">
-                                                <a href="${channel.url}" class="color-green fontSize16 pd2 dis-b">${channel.displayName}</a>
+                                                <a href="${channel.url}" target="_blank" class="color-green fontSize16 pd2 dis-b">${channel.displayName}</a>
                                                 <ul class="panel2-list panel2-list-pds">
                         			<@contentListDirective channelId=channel.id pageSize=6 pageNum=1 titleLeft=32 order=10>  
                         			<#list contents as cmsContent>
-                        				<li><span class="jh-dotted">·</span><a href="${cmsContent.url}">
+                        				<li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">
                         				<span class="panel2-list-content">${cmsContent.title}</span>
                         				<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>
                         			</#list> 

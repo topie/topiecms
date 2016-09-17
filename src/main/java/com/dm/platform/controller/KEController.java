@@ -80,10 +80,10 @@ import com.dm.platform.util.UserAccountUtil;
             extMap.put("image", "gif,jpg,jpeg,png,bmp");
             extMap.put("flash", "swf,flv");
             extMap.put("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
-            extMap.put("file", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");
+            extMap.put("file", "flv,mp4,doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");
 
             // 最大文件大小
-            long maxSize = 400000000;
+            long maxSize = 40000000000000l;
 
             response.reset();
             response.setCharacterEncoding("UTF-8");

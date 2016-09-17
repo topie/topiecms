@@ -632,7 +632,7 @@
                 return ele;
             },
             'colorpicker': function (data, form) {
-                var colorTmpl = '<input type="text" role="color" id="${id_}" name=${name_} class="form-control input-medium ${cls_}" data-position="bottom left" value="#0088cc">';
+                var colorTmpl = '<input type="text" role="color" id="${id_}" name=${name_} class="form-control input-medium ${cls_}" data-position="bottom left" value="#000000">';
                 var ele = $.tmpl(colorTmpl, {
                     "id_": (data.id == undefined ? data.name : data.id),
                     "name_": data.name,
@@ -948,7 +948,7 @@
                 return ele;
             },
             'kindEditor': function (data, form) {
-                var kindeditorTmpl = '<textarea role="kindEditor" class="class="form-control" id="${id_}" name="${name_}"></textarea>';
+                var kindeditorTmpl = '<textarea role="kindEditor" class="form-control" id="${id_}" name="${name_}"></textarea>';
                 var ele = $.tmpl(kindeditorTmpl, {
                     "id_": (data.id == undefined ? data.name : data.id),
                     "name_": data.name
@@ -958,6 +958,15 @@
                 ele.data("height", data.height == undefined ? "400px"
                     : data.height);
                 return ele;
+            },
+            'fileEditor': function (data, form) {
+                var kindeditorTmpl = '<input role="fileEditor" class="form-control" id="${id_}" name="${name_}"></input><input type="button" id="${id_}insertfile" value="${text_}" />';
+                var ele = $.tmpl(kindeditorTmpl, {
+                    "id_": (data.id == undefined ? data.name : data.id),
+                    "name_": data.name,
+                    "text_":(data.text == undefined ?"选择文件" :data.text )
+                });
+                return ele;
             }
         },
         _regiestEvents: function () {
@@ -966,6 +975,7 @@
             this._minicolors();
             this._initTree();
             this._initKindEditor();
+            this._initFileEditor();
             this._initSubmit();
             this._initShowIconText();
             this._initMultiFileUpload();
@@ -1061,6 +1071,34 @@
                                 resizeType: 1
                             });
                         that._editor[ele.attr("id")] = editor;
+                    });
+            }
+        },
+        _initFileEditor: function () {
+            var that = this;
+            if (KE) {
+                $('[role="fileEditor"]')
+                    .each(
+                    function () {
+                        var ele = $(this);
+                        var editor = KE.editor({
+        					allowFileManager : true,
+        					 uploadJson: dm_root
+                             + '/KE/file_upload',
+                             fileManagerJson: dm_root
+                             + '/KE/file_manager'
+        				});
+        				KE('#'+ele.attr("id")+'insertfile').click(function() {
+        					editor.loadPlugin('insertfile', function() {
+    							editor.plugin.fileDialog({
+    								fileUrl : KE('#'+ele.attr("id")).val(),
+    								clickFn : function(url, title) {
+    									KE('#'+ele.attr("id")).val(url);
+    									editor.hideDialog();
+    								}
+    							});
+        					});
+        				});
                     });
             }
         },

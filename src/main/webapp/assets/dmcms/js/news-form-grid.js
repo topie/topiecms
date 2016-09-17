@@ -647,11 +647,11 @@ function getForm(contentType) {
 				cls : 'input-large',
 				rule : {
 					required : true,
-					maxlength : 256
+					maxlength : 100
 				},
 				message : {
 					required : "请输入内容信息摘要",
-					maxlength : "最多输入256字节"
+					maxlength : "最多输入100个字"
 				}
 			},
 			{
