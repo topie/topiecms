@@ -59,7 +59,7 @@ public class CmsInterviewController {
 			cmsInterviewService.update(interview);
 		else
 			cmsInterviewService.insert(interview);
-		Map map =  ResponseUtil.success();
+		Map map =  ResponseUtil.success("操作成功!");
 		map.put("interviewId", interview.getId());
 		return map;
 	}
@@ -67,7 +67,7 @@ public class CmsInterviewController {
 	@ResponseBody
 	public Object insertOrUpdate(String ids,String status){
 		 this.cmsInterviewService.checke(ids,status);
-		 return ResponseUtil.success();
+		 return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/list")
 	@ResponseBody
@@ -86,12 +86,15 @@ public class CmsInterviewController {
 	//逻辑删除
 	@RequestMapping("/delete")
 	@ResponseBody
-	public Object delete(Integer id){
-		if(id==null){
+	public Object delete(String ids){
+		if(ids==null){
 			return ResponseUtil.error("请输入key");
 		}
-		this.cmsInterviewService.updateStatusToDelete(id);
-		return ResponseUtil.success();
+		for(String s:ids.split(",")){
+			Integer id = Integer.valueOf(s);
+			this.cmsInterviewService.updateStatusToDelete(id);
+		}
+		return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/load")
 	@ResponseBody
@@ -102,7 +105,7 @@ public class CmsInterviewController {
 	@ResponseBody
 	public Object publish(Integer id){
 		this.cmsInterviewService.publish(id);
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/loadRecords")
 	@ResponseBody
@@ -212,19 +215,19 @@ public class CmsInterviewController {
 		}else{
 			this.cmsInterviewService.updateRole(role);
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/deleteRole")
 	@ResponseBody
 	public Object deleteRole(Integer roleId){
 		this.cmsInterviewService.deleteRole(roleId);
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/loadRole")
 	@ResponseBody
 	public Object loadRole(Integer roleId){
 		return this.cmsInterviewService.findRoleById(roleId);
-		//return ResponseUtil.success();
+		//return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/insertOrUpdateRecord")
 	@ResponseBody
@@ -234,13 +237,13 @@ public class CmsInterviewController {
 		}else{
 			this.cmsInterviewService.insertRecord(interviewRecord);
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/deleteRecord")
 	@ResponseBody
 	public Object deleteRecord(Integer recordId){
 		this.cmsInterviewService.updateRecordToDelete(recordId);
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/loadRecord")
 	@ResponseBody
@@ -256,13 +259,13 @@ public class CmsInterviewController {
 		else{
 			this.cmsInterviewService.updateAbout(about);
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/deleteAbout")
 	@ResponseBody
 	public Object deleteAbout(Integer aboutId){
 		this.cmsInterviewService.updateAboutTodelete(aboutId);
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/loadAbout")
 	@ResponseBody
@@ -278,13 +281,13 @@ public class CmsInterviewController {
 		}else{
 			this.cmsInterviewService.updateImage(image);
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/deleteImage")
 	@ResponseBody
 	public Object deleteImage(Integer imageId){
 		this.cmsInterviewService.updateImageToDelete(imageId);
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功!");
 	}
 	@RequestMapping("/loadImage")
 	@ResponseBody

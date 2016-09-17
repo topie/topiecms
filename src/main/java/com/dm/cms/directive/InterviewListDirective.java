@@ -53,7 +53,7 @@ public class InterviewListDirective implements TemplateDirectiveModel {
 				.valueOf(params.get("pageSize").toString());
 		Integer pageNum = params.get("pageNum") == null ? 1 : Integer
 				.valueOf(params.get("pageNum").toString());
-		String finish = params.get("finish") == null ? null : "11";
+		String finish = params.get("finish") == null ? null : String.valueOf(params.get("finish"));
 		CmsChannel cmsChannel = null;
 		if (channelId != null)
 			cmsChannel = cmsChannelService.findOneById(channelId);
@@ -73,9 +73,9 @@ public class InterviewListDirective implements TemplateDirectiveModel {
 		novel.setChannelId(channelId);
 		if (finish == null){
 			novel.setStatus("5");
-			orderby = "update_time asc";
 		}else {
-			novel.setStatus("6");
+			novel.setStatus("2");
+			orderby = "publish_time asc";
 		}
 		map.put("order", orderby);
 		map.put("model", novel);

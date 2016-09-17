@@ -156,10 +156,10 @@
 														 </span>
 													</div>
 												</div>
-												<c:if test="${empty model.filed2}">
+												<!--<c:if test="${empty model.filed2}">
 													<input type="hidden" value="0" name="filed2"/>
 												</c:if>
-												<c:if test="${model.filed2=='0'}"><!-- 录入 -->
+												<c:if test="${model.filed2=='0'}">-- 录入 --
 												<div class="form-group last">
 													<label class="col-md-3 control-label">类型</label>
 													<div class="col-md-6">
@@ -169,7 +169,7 @@
 													</div>
 												</div>
 												</c:if>
-												<c:if test="${model.filed2=='1'}" ><!-- 申请 -->
+												<c:if test="${model.filed2=='1'}" >-- 申请 --
 												<div class="form-group last">
 													<label class="col-md-3 control-label">申请单位</label>
 													<div class="col-md-6">
@@ -219,7 +219,7 @@
 														</p>
 													</div>
 												</div>
-												</c:if>
+												</c:if>-->
 											</div>
 											<div class="form-actions">
 												<div class="row">
@@ -808,7 +808,7 @@
 								type:'POST',
 								success:function(res){
 									if(res.status==1)
-										role_grid.reload();
+										record_grid.reload();
 									else{
 										bootbox.alert("操作失败");
 									}
@@ -881,19 +881,7 @@
 						type : 'hidden',
 						name : 'interviewId',
 						id : 'interviewId'
-					},{
-							type : 'text',//类型
-							name : 'content',//name
-							id : 'content',//id
-							label : '内容',//左边label
-							cls : 'input-large',
-							rule : {
-								required : true
-							},
-							message : {
-								required : "请输入"
-							}
-						}
+					}
 					,{
 						type : 'radioGroup',//类型
 						name : 'roleId',//name
@@ -920,6 +908,18 @@
 						message : {
 							required : "请输入"
 						}
+						},{
+							type : 'textarea',//类型
+							name : 'content',//name
+							id : 'content',//id
+							label : '内容',//左边label
+							cls : 'input-large',
+							rule : {
+								required : true
+							},
+							message : {
+								required : "请输入"
+							}
 						}]
 				};
 		return opt;

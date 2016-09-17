@@ -200,7 +200,7 @@
 					}
 					else if(currentChannelType=='8')
 					{
-					//url = "../novel/delete?novelIds=" + ids;	
+					url = "../interview/delete?ids=" + ids;	
 					}
 					else if(currentChannelType=='9')
 					{
@@ -208,7 +208,7 @@
 					}else if(currentChannelType=='10')
 					{
 						url = "../content/delete?contentId="+ids;
-						}
+					}
 					$.ajax({
 						type : "POST",
 						dataType : "json",

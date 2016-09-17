@@ -37,14 +37,14 @@ var interviewOptions = {
 				return "待审核";
 			if (c.status == "0")
 				return "新建";
-			if (c.status == "4")
-				return "已核实";
 			if (c.status == "2")
 				return "已发布";
-			if (c.status == "5")
-				return "已完成";
 			if (c.status == "3")
 				return "已驳回";
+			if (c.status == "4")
+				return "已核实";
+			if (c.status == "5")
+				return "已完成";
 			return "--";
 		}
 	} ],
@@ -65,7 +65,7 @@ var interviewOptions = {
 			if(c.status=="1"){
 				return false;
 			}
-			if(c.status=="6"){
+			if(c.status=="5"){
 				return false;
 			}
 			return true;
@@ -88,7 +88,7 @@ var interviewOptions = {
 		}
 	}
 	, {
-		text : "访谈完成",
+		text : "完成访谈",
 		cls : "yellow btn-sm",
 		visable : function(i, c) {
 			if(c.status=="2"){
