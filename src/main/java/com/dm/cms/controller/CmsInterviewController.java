@@ -123,7 +123,8 @@ public class CmsInterviewController {
 		}
 		Map map  = new HashMap();
 		map.put("model", record);
-		return PageConvertUtil.grid(this.cmsInterviewService.listRecord(pageNum,pageSize,map));
+		PageInfo page = this.cmsInterviewService.listRecord(pageNum,pageSize,map);
+		return PageConvertUtil.grid(page);
 	}
 	@RequestMapping("/listAbout")
 	@ResponseBody
@@ -197,9 +198,9 @@ public class CmsInterviewController {
 		List<Map> radios = new ArrayList<Map>();
 		for(CmsInterviewRole ro:roles){
 			Map m = new HashMap();
-			map.put("text", ro.getRoleName()+"["+ro.getPersonName()+"]");
-			map.put("value", ro.getId());
-			radios.add(map);
+			m.put("text", ro.getRoleName()+"["+ro.getPersonName()+"]");
+			m.put("value", ro.getId());
+			radios.add(m);
 		}
 		return radios;
 	}

@@ -93,7 +93,9 @@ public class CmsInterviewServiceIpml implements CmsInterviewService {
 	private void loadInfo(CmsInterview record) {
 		Integer pid = record.getId();
 		Map map = new HashMap();
-		map.put("interviewId", pid);
+		Map model = new HashMap();
+		model.put("interviewId", pid);
+		map.put("model", model);
 		List<CmsInterviewAbout> abouts = this.cmsInterviewAboutMapper
 				.findList(map);
 		List<CmsInterviewImage> images = this.cmsInterviewImageMapper
@@ -175,7 +177,7 @@ public class CmsInterviewServiceIpml implements CmsInterviewService {
 	@Override
 	public void insertRecord(CmsInterviewRecord interviewRecord) {
 		interviewRecord.setCreateTime(new Date());
-		interviewRecord.setPublishTime(new Date());
+		//interviewRecord.setPublishTime(new Date());
 		interviewRecord.setCreateUser(this.getcurrentUserId());
 		interviewRecord.setWorker(this.getcurrentUser().getName());
 		interviewRecord.setStatus("0");
@@ -280,7 +282,8 @@ public class CmsInterviewServiceIpml implements CmsInterviewService {
 	public PageInfo<CmsInterviewRecord> listRecord(Integer pageNum,
 			Integer pageSize, Map map) {
 		PageHelper.startPage(pageNum, pageSize);
-		return new PageInfo<CmsInterviewRecord>(this.cmsInterviewRecordMapper.findList(map));
+		List<CmsInterviewRecord> list = this.cmsInterviewRecordMapper.findList(map);
+		return new PageInfo<CmsInterviewRecord>(list);
 	}
 
 	@Override

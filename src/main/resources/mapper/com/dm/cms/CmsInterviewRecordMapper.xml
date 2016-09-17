@@ -8,10 +8,10 @@
     <result column="seq" property="seq" jdbcType="INTEGER" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="DATE" />
-    <result column="publish_time" property="publishTime" jdbcType="DATE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
-    <result column="update_time" property="updateTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="checker" property="checker" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="filed1" property="filed1" jdbcType="VARCHAR" />
@@ -48,8 +48,8 @@
       )
     values (#{id,jdbcType=INTEGER}, #{interviewId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
       #{seq,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=DATE}, #{publishTime,jdbcType=DATE}, #{createUser,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=DATE}, #{checker,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{publishTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{checker,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{filed1,jdbcType=VARCHAR}, #{filed2,jdbcType=VARCHAR}, #{worker,jdbcType=VARCHAR}
       )
   </insert>
@@ -122,16 +122,16 @@
         #{roleId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=DATE},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="publishTime != null" >
-        #{publishTime,jdbcType=DATE},
+        #{publishTime,jdbcType=TIMESTAMP},
       </if>
       <if test="createUser != null" >
         #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=DATE},
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="checker != null" >
         #{checker,jdbcType=VARCHAR},
@@ -169,16 +169,16 @@
         role_id = #{roleId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=DATE},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="publishTime != null" >
-        publish_time = #{publishTime,jdbcType=DATE},
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
       </if>
       <if test="createUser != null" >
         create_user = #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=DATE},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="checker != null" >
         checker = #{checker,jdbcType=VARCHAR},
@@ -205,10 +205,10 @@
       seq = #{seq,jdbcType=INTEGER},
       role_name = #{roleName,jdbcType=VARCHAR},
       role_id = #{roleId,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=DATE},
-      publish_time = #{publishTime,jdbcType=DATE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
       create_user = #{createUser,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
       checker = #{checker,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR},
       filed1 = #{filed1,jdbcType=VARCHAR},
