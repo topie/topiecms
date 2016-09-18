@@ -61,7 +61,7 @@ public class InterviewListDirective implements TemplateDirectiveModel {
 				.get("order").toString() : "1");
 		String orderby = "";
 		if (order == 1) {// 最新更新
-			orderby = "update_time desc";
+			orderby = "start_time desc";
 		} else if (order == 2) {// 最新发布
 			orderby = "update_time desc";
 		} else {// 新作
@@ -75,7 +75,7 @@ public class InterviewListDirective implements TemplateDirectiveModel {
 			novel.setStatus("5");
 		}else {
 			novel.setStatus("2");
-			orderby = "publish_time asc";
+			orderby = "start_time asc";
 		}
 		map.put("order", orderby);
 		map.put("model", novel);

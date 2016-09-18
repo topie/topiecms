@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dm.cms.model.CmsAttachment;
@@ -31,6 +32,7 @@ import com.dm.cms.model.CmsAudio;
 import com.dm.cms.model.CmsChannel;
 import com.dm.cms.model.CmsContent;
 import com.dm.cms.model.CmsInterview;
+import com.dm.cms.model.CmsInterviewQuestions;
 import com.dm.cms.model.CmsNovel;
 import com.dm.cms.model.CmsSite;
 import com.dm.cms.model.CmsTemplate;
@@ -41,6 +43,7 @@ import com.dm.cms.service.CmsAttachmentService;
 import com.dm.cms.service.CmsAudioService;
 import com.dm.cms.service.CmsChannelService;
 import com.dm.cms.service.CmsContentService;
+import com.dm.cms.service.CmsInterviewQuestionsService;
 import com.dm.cms.service.CmsInterviewService;
 import com.dm.cms.service.CmsNovelService;
 import com.dm.cms.service.CmsSiteService;
@@ -105,6 +108,8 @@ public class CmsPortalController {
 	 private CmsVoteService cmsVoteService;
 	 @Autowired
 	 private CmsInterviewService cmsInterviewService;
+	 @Autowired
+	 private CmsInterviewQuestionsService cmsInterviewQServie;
 
 	private Logger log = LoggerFactory.getLogger(CmsPortalController.class);
 
@@ -518,6 +523,62 @@ public class CmsPortalController {
 		//System.out.println(jsonObject.toString());
 		return callback+"("+jsonObject.toString()+")";
     }
+	@RequestMapping("/searchText")
+	public ModelAndView searchText(
+			@RequestParam(required=false,value="textValue")String textValue,
+			@RequestParam(required=false,value="pageNum",defaultValue="1")Integer pageNum,
+			@RequestParam(required=false,value="pageSize",defaultValue="10")Integer pageSize,
+			@RequestParam(required=false,value="sortField",defaultValue="publishDate")String sortField,
+			@RequestParam(required=false,value="days")Integer days,
+			@RequestParam(required=false,value="contentValue")String contentValue,
+			@RequestParam(required=false,value="entity")String entity,Device device,
+			ModelAndView model)
+    {
+		pageNum = pageNum==null?1:pageNum;
+		pageSize = pageSize==null?10:pageSize;
+		long totalPage = 0L;
+		if(textValue==null || textValue.equals(""))
+		{	
+			Map map = new HashMap();
+			map.put("list", ListUtils.EMPTY_LIST);
+			map.put("totalPage", 1);
+			map.put("pageNum", 1);
+			map.put("perPage", 1);
+			map.put("nextPage", 1);
+			map.put("total", 0);
+			map.put("status",0);
+			map.put("textValue", textValue);
+			model.addObject("result",map);
+			model.setViewName("/template/jh-search");
+			return model; 
+		}
+		/*map.put("list", ListUtils.EMPTY_LIST);
+		map.put("totalPage", 1);
+		map.put("pageNum", 1);
+		map.put("perPage", 1);
+		map.put("nextPage", 1);
+		map.put("total", 0);
+		map.put("status",0);*/
+		Map map = searchConfigService.searchResults(textValue, pageNum, pageSize,sortField,entity,days,device);
+		model.addObject("result",map);
+		model.setViewName("/template/jh-search");
+		log.debug("{}--contents",map.get("contents"));
+		return model;
+    }
+	@RequestMapping("/interview/insertQ")
+	@ResponseBody
+	public Object insertQuestions(CmsInterviewQuestions record){
+		cmsInterviewQServie.insert(record);
+		return ResponseUtil.success("谢谢参与!");
+	}
+	@RequestMapping("/interview/question")
+	@ResponseBody
+	public Object insertQuestions(CmsInterview record,ModelAndView model){
+		record = this.cmsInterviewService.loadOne(record.getId());
+		model.addObject("cmsInterview",record);
+		model.setViewName("template/jh-interview-question");
+		return model;
+	}
 	/*
 	 * @RequestMapping("/channel/{enName}_{channelId}.htm") public String
 	 * channel(Model model, @PathVariable("channelId") Integer channelId,

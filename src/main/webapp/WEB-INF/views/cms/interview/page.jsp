@@ -103,6 +103,10 @@
 										<a href="#tab_6_5" data-toggle="tab">
 										访谈实录 </a>
 									</li>
+									<li>
+										<a href="#tab_6_6" data-toggle="tab">
+										预约提问 </a>
+									</li>
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tab_6_1"><!-- 基本信息 -->
@@ -264,6 +268,14 @@
 
 										</p>
 									</div>
+									<div class="tab-pane fade" id="tab_6_6">
+										<p>
+										<div class="portlet light">
+											<div class="portlet-body" id="questions_grid"></div>
+										</div>
+
+										</p>
+									</div>
 								</div>
 							</div>
 						
@@ -318,6 +330,7 @@
 		image_grid = $("#image_grid").dmGrid(imageoptions(currentInterviewId));
 		role_grid = $("#role_grid").dmGrid(roleoptions(currentInterviewId));
 		record_grid = $("#record_grid").dmGrid(recordoptions(currentInterviewId));
+		questions_grid = $("#questions_grid").dmGrid(questionsoptions(currentInterviewId));
 	});
 	
 	function aboutoptions(id){
@@ -926,6 +939,114 @@
 	}
 	//var in_model;
 	var record_grid;
+	function questionsoptions(id){
+		var op={
+		url : "../interview/listQuestions?interviewId="+id, // ajax地址
+		pageNum : 1,//当前页码
+		pageSize : 5,//每页显示条数
+		idFiled : "id",//id域指定
+		showCheckbox : true,//是否显示checkbox
+		checkboxWidth : "3%",
+		showIndexNum : false,
+		indexNumWidth : "5%",
+		pageSelect : [ 2, 15, 30, 50 ],
+		cloums : [ 
+		{
+			title : "联系人",
+			field : "name",
+			width : "15%"
+		},{
+			title : "联系电话",
+			field : "phone",
+			width : "20%"
+		},{
+			title:"内容",
+			field :"content",
+			width:"40%"
+			
+		},{
+			title : "状态",
+			field : "",
+			width : "5%",
+			format:function(index,content){
+				if(content.status=='0')
+					return "<font color='red'>未处理</font>";
+				if(content.status=='2')
+					return "<font color='green'>已采纳</font>";
+				if(content.status=='3')
+					return "已忽略";
+				return '--';
+			}
+		}
+		 ],
+		actionCloumText : "操作",//操作列文本
+		actionCloumWidth : "20%",
+		actionCloums : [
+				 {
+					 visable : function(i, c) {
+							if (c.status == "0")
+								return true;
+							return false;
+						},
+					text : "采纳",
+					cls : "btn green btn-sm",//按钮样式
+					handle : function(i,c) {
+						bootbox.confirm("确定标记为采纳?",function(r){
+							if(r){
+						$.ajax({
+							url:"../interview/updateQS?id="+c.id+"&status=2",
+							type:'POST',
+							success:function(res){
+								if(res.status==1)
+									questions_grid.reload();
+								else{
+									bootbox.alert("操作失败");
+								}
+							},
+							error:function(){
+								bootbox.alert('异常');
+							}
+						})
+							}
+						})
+					}
+				},{
+					 visable : function(i, c) {
+							if (c.status == "0")
+								return true;
+							return false;
+						},
+					text : "忽略",
+					cls : "btn red btn-sm",//按钮样式
+					handle : function(i,c) {
+						bootbox.confirm("确定标记为忽略?",function(r){
+							if(r){
+						$.ajax({
+							url:"../interview/updateQS?id="+c.id+"&status=3",
+							type:'POST',
+							success:function(res){
+								if(res.status==1)
+									questions_grid.reload();
+								else{
+									bootbox.alert("操作失败");
+								}
+							},
+							error:function(){
+								bootbox.alert('异常');
+							}
+						})
+							}
+						})
+					}
+				}
+				]
+		
+		 
+		
+};
+		return op;
+}
+	var questions_grid;
 
 	</script>
 						

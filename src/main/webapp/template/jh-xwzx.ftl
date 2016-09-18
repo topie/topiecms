@@ -124,7 +124,7 @@
                                 <div class="ggfw-list-bg text-center">
                 		<@channelDirective channelId=19><!-- 热点专题-->
                                     <div class="ggfw-list-bg2">
-                                       ${channel.displayName}
+                                       <a href="${channel.url!}" target="_blank" style="color: white;">${channel.displayName!}</a>
                                     </div>
                                     <div class="row ggfw-list-pd1">
                 			<@channelListDirective channelId=channel.id order=4 pageSize=6>

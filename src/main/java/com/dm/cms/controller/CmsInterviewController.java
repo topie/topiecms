@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dm.cms.model.CmsInterview;
 import com.dm.cms.model.CmsInterviewAbout;
 import com.dm.cms.model.CmsInterviewImage;
+import com.dm.cms.model.CmsInterviewQuestions;
 import com.dm.cms.model.CmsInterviewRecord;
 import com.dm.cms.model.CmsInterviewRole;
+import com.dm.cms.service.CmsInterviewQuestionsService;
 import com.dm.cms.service.CmsInterviewService;
 import com.dm.platform.util.PageConvertUtil;
 import com.dm.platform.util.ResponseUtil;
@@ -34,6 +36,8 @@ public class CmsInterviewController {
 	
 	@Autowired
 	private CmsInterviewService cmsInterviewService;
+	@Autowired
+	private CmsInterviewQuestionsService cmsInterviewQueService;
 	
 	@InitBinder
     public void initBinder(ServletRequestDataBinder binder){
@@ -293,5 +297,29 @@ public class CmsInterviewController {
 	@ResponseBody
 	public Object loadImage(Integer imageId){
 		return this.cmsInterviewService.loadImage(imageId);
+	}
+	@RequestMapping("/listQuestions")
+	@ResponseBody
+	public Object listQuestions(
+			@RequestParam(value = "pageNum", required = false,defaultValue="1") Integer pageNum,
+			@RequestParam(value = "pageSize", required = false,defaultValue="5") Integer pageSize,
+			CmsInterviewQuestions record){
+		if(record.getInterviewId()==null){
+			return PageConvertUtil.emptyGrid();
+		}
+		Map map  = new HashMap();
+		map.put("model", record);
+		PageInfo page = this.cmsInterviewService.listQuestions(pageNum,pageSize,map);
+		return PageConvertUtil.grid(page);
+	}
+	@RequestMapping("/updateQS")
+	@ResponseBody
+	public Object updateQuestionsStatus(
+			CmsInterviewQuestions record){
+		CmsInterviewQuestions temp = new CmsInterviewQuestions();
+		temp.setId(record.getId());
+		temp.setStatus(record.getStatus());
+		this.cmsInterviewQueService.updateSelective(temp);
+		return ResponseUtil.success("操作成功!");
 	}
 }

@@ -47,10 +47,14 @@
                                      <div class="borderTop clearfix"> <a href="javascript:void(0);" class="color-green fontSize18 pd2 dis-b">下期预告</a>
                                        <ul class="panel2-list panel2-list-sm">
                                          <@interviewListDirective channelId=51 pageSize=1 pageNum=1 finish='true'>
-                  	<#list cmsInterviews as  v>
-                     <li><span class="jh-dotted">·</span><a href="${v.url!}" target="_blank">${v.title!}</a></li>
-                  	   
-                  	</#list>
+					 <#if cmsInterviews?length gt 0>
+						<#list cmsInterviews as  v>
+					     <li><span class="jh-dotted">·</span><a href="${v.url!}" target="_blank">${v.title!}</a></li>
+						   
+						</#list>
+						<#else>
+						<li><span class="jh-dotted">·</span>[暂无下期]</li>
+						</#if>
                   </@interviewListDirective>
                                          
                                        </ul>
@@ -79,7 +83,14 @@
                                <!-- Tab panes -->
                                <div class="tab-content navTab1-content navTab3-content1 pTextIndent">
                                  <div role="tabpanel" class="tab-pane active" id="blqk">
-                                   <table class="table table-bordered table-hover table1">
+				 <@contentListDirective channelId=49 pageSize=5 pageNum=pageNum titleLeft=40 order=10>  
+				 <ul>
+                            			    <#list contents as cmsContent>
+                                                            <li><span class="jh-dotted">·</span><a href="${cmsContent.url}">${cmsContent.title}</a></li>
+                            			</#list> 
+						</ul>
+                            			</@contentListDirective>
+                                    <#-- <table class="table table-bordered table-hover table1">
                                      <thead>
                                        <tr>
                                          <th>姓名</th>
@@ -89,7 +100,7 @@
                                        </tr>
                                      </thead>
                                      <tbody>
-                                       <@websurveyListDirective pageNum=1 pageSize=5 type="1,3">
+                                     <@websurveyListDirective pageNum=1 pageSize=5 type="1,3">
                                       <#list websurveys as websurvey>
                                        <tr>
                                          <td>${websurvey.username!}</td>
@@ -100,7 +111,7 @@
                                        </#list>
                                        </@websurveyListDirective>
                                      </tbody>
-                                   </table>
+                                   </table>-->
                                  </div>
                                  <div role="tabpanel" class="tab-pane" id="lxhf">
                                    <table class="table table-bordered table-hover table1">

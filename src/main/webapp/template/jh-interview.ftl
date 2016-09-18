@@ -23,12 +23,15 @@
                 <div class="jh-main">
 			<div class="fontSize18 new-list2-t">在线访谈</div>
 			<div class="zmhd-zxft-article fontSize18">
-			    <div class="jh-article-title fontSize22 text-center color-green pdt10 mgb30"><span>${cmsInterview.title!}</span></div>
-			    <p>访谈时间：${cmsInterview.startTime!}</p>
-					 <p>访谈嘉宾：${cmsInterview.guests!}</p>
+			    <div class="jh-article-title fontSize22 text-center color-green pdt10 mgb30">
+			    <span>${cmsInterview.title!}</span></div>
+			    <p><span>访谈主题：${cmsInterview.title!}</span><#if cmsInterview.status=='2'><span><a href="./question?id=${cmsInterview.id}" style="color:red;margin-left:10px;" target="_blank">[预约提问]</a></span></#if></p>
+			    <p>访谈时间：${cmsInterview.startTime!}-${cmsInterview.endTime!}</p>
+			    <p>访谈嘉宾：${cmsInterview.guests!}</p>
 					 
 			    <p>访谈摘要： ${cmsInterview.desc!}</p>
 			    <div class="border-green"></div>
+			    <#if (cmsInterview.info.images?size gt 0)>
 			    <div><span class="zmhd-zxft-bg mgb30">访谈图片</span></div>
 			    <div class="row">
 				<#list cmsInterview.info.images as image>
@@ -40,12 +43,15 @@
 				</#list>
 				
 			    </div>
-			    <div class="border-dotted-gray"></div>
+			     <div class="border-dotted-gray"></div>
+			    </#if>
+			    <#--<#if (cmsInterview.info.records?size gt 0)>-->
+			   
 			    <div><span class="zmhd-zxft-bg mgb30">文字直播</span></div>
 			    <#list cmsInterview.info.records as record>
 				<p><span class="color-green">${record.roleName!}：</span>${record.content!}</p>				
 			    </#list>
-			   
+			   <#--</#if>-->
 			</div>
 		    </div>
          

@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 import com.dm.cms.model.CmsInterview;
 import com.dm.cms.model.CmsInterviewAbout;
 import com.dm.cms.model.CmsInterviewImage;
+import com.dm.cms.model.CmsInterviewQuestions;
 import com.dm.cms.model.CmsInterviewRecord;
 import com.dm.cms.model.CmsInterviewRole;
 import com.dm.cms.service.CmsInterviewService;
 import com.dm.cms.sqldao.CmsInterviewAboutMapper;
 import com.dm.cms.sqldao.CmsInterviewImageMapper;
 import com.dm.cms.sqldao.CmsInterviewMapper;
+import com.dm.cms.sqldao.CmsInterviewQuestionsMapper;
 import com.dm.cms.sqldao.CmsInterviewRecordMapper;
 import com.dm.cms.sqldao.CmsInterviewRoleMapper;
 import com.dm.platform.model.UserAccount;
@@ -38,6 +40,9 @@ public class CmsInterviewServiceIpml implements CmsInterviewService {
 	private CmsInterviewRecordMapper cmsInterviewRecordMapper;
 	@Autowired
 	private CmsInterviewRoleMapper cmsInterviewRoleMapper;
+	@Autowired
+	private CmsInterviewQuestionsMapper cmsInterviewQmapper;
+	
 
 	@Override
 	public Map update(CmsInterview interview) {
@@ -104,8 +109,10 @@ public class CmsInterviewServiceIpml implements CmsInterviewService {
 				.findList(map);
 		List<CmsInterviewRole> roles = this.cmsInterviewRoleMapper
 				.findList(map);
+		List<CmsInterviewQuestions> questions = this.cmsInterviewQmapper.findList(map);
 		record.put("abouts", abouts).put("images", images)
-				.put("records", records).put("roles", roles);
+				.put("records", records).put("roles", roles)
+				.put("questions", questions);
 	}
 
 	@Override
@@ -323,6 +330,15 @@ public class CmsInterviewServiceIpml implements CmsInterviewService {
 				
 		}
 		
+	}
+
+	@Override
+	public PageInfo<CmsInterviewQuestions> listQuestions(Integer pageNum,
+			Integer pageSize, Map map) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<CmsInterviewQuestions> list = this.cmsInterviewQmapper.findList(map);
+		PageInfo<CmsInterviewQuestions> page = new PageInfo<CmsInterviewQuestions>(list);
+		return page;
 	}
 
 }

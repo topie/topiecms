@@ -6,6 +6,7 @@ import java.util.Map;
 import com.dm.cms.model.CmsInterview;
 import com.dm.cms.model.CmsInterviewAbout;
 import com.dm.cms.model.CmsInterviewImage;
+import com.dm.cms.model.CmsInterviewQuestions;
 import com.dm.cms.model.CmsInterviewRecord;
 import com.dm.cms.model.CmsInterviewRole;
 import com.github.pagehelper.PageInfo;
@@ -73,5 +74,7 @@ public interface CmsInterviewService {
 	CmsInterviewImage loadImage(Integer imageId);
 
 	void checke(String ids, String status);
+
+	PageInfo<CmsInterviewQuestions> listQuestions(Integer pageNum, Integer pageSize, Map map);
 
 }

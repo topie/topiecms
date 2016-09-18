@@ -81,33 +81,37 @@ public class SearchController {
 			@RequestParam(required=false,value="pageNum",defaultValue="1")Integer pageNum,
 			@RequestParam(required=false,value="pageSize",defaultValue="10")Integer pageSize,
 			@RequestParam(required=false,value="sortField",defaultValue="publishDate")String sortField,
-			@RequestParam(required=false,value="titleValue")String titleValue,
+			@RequestParam(required=false,value="days")Integer days,
 			@RequestParam(required=false,value="contentValue")String contentValue,
-			@RequestParam(required=false,value="entity",defaultValue="cmsContent")String entity,
+			@RequestParam(required=false,value="entity")String entity,Device device,
 			ModelAndView model)
     {
 		pageNum = pageNum==null?1:pageNum;
 		pageSize = pageSize==null?10:pageSize;
 		long totalPage = 0L;
 		if(textValue==null || textValue.equals(""))
-		{
-			model.setViewName("/search/search-view");
+		{	
+			Map map = new HashMap();
+			map.put("list", ListUtils.EMPTY_LIST);
+			map.put("totalPage", 1);
+			map.put("pageNum", 1);
+			map.put("perPage", 1);
+			map.put("nextPage", 1);
+			map.put("total", 0);
+			map.put("status",0);
+			model.addObject(map);
+			model.setViewName("/template/jh-search");
 			return model; 
 		}
-		Map map = searchConfigService.searchResults(textValue, pageNum, pageSize,sortField,titleValue,contentValue,entity);
-		model.addObject("contents", map.get("contents"));
-		model.addObject("total", map.get("total"));
-		totalPage = (Long)map.get("total")/pageSize;
-		if(totalPage==0)
-		{
-			totalPage=1;
-		}
-		else if(((Long)map.get("total")%pageSize)>0)
-		{
-			totalPage+=1;
-		}
-		model.addObject("totalPage", totalPage);
-		model.addObject("pageNum", pageNum);
+		map.put("list", ListUtils.EMPTY_LIST);
+		map.put("totalPage", 1);
+		map.put("pageNum", 1);
+		map.put("perPage", 1);
+		map.put("nextPage", 1);
+		map.put("total", 0);
+		map.put("status",0);
+		Map map = searchConfigService.searchResults(textValue, pageNum, pageSize,sortField,entity,days,device);
+		model.addObject(map);
 		model.setViewName("/search/search-view");
 		log.debug("{}--contents",map.get("contents"));
 		return model;
@@ -120,12 +124,13 @@ public class SearchController {
 			@RequestParam(required=false,value="pageSize",defaultValue="5")Integer pageSize,
 			@RequestParam(required=false,value="days")Integer days,
 			@RequestParam(required=false,value="sortField")String sortField,
-			@RequestParam(required=false,value="entity",defaultValue="cmsContent")String entity,
+			@RequestParam(required=false,value="entity")String entity,
 			Device device)
     {
 		Map map = new HashMap();
 		if(textValue==null || textValue.equals(""))
-		{
+		{	
+			
 			map.put("status",0);
 			map.put("mes", "请输入搜索关键词！");
 			map.put("list", ListUtils.EMPTY_LIST);

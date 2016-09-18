@@ -205,6 +205,7 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 			map.put("nextPage", 1);
 			map.put("total", 0);
 			map.put("status",0);
+			map.put("textValue", textValue);
 			return map;
 		}
 		String highlightTitle = "title";
@@ -344,6 +345,7 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		map.put("total", num);
 		map.put("status",1);
 		map.put("list", list);
+		map.put("textValue", textValue);
 		log.debug("{}--list", list);
 		
 		return map;
