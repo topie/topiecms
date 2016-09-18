@@ -47,7 +47,7 @@
                                      <div class="borderTop clearfix"> <a href="javascript:void(0);" class="color-green fontSize18 pd2 dis-b">下期预告</a>
                                        <ul class="panel2-list panel2-list-sm">
                                          <@interviewListDirective channelId=51 pageSize=1 pageNum=1 finish='true'>
-					 <#if cmsInterviews?length gt 0>
+					 <#if (cmsInterviews?size gt 0)>
 						<#list cmsInterviews as  v>
 					     <li><span class="jh-dotted">·</span><a href="${v.url!}" target="_blank">${v.title!}</a></li>
 						   
