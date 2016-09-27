@@ -34,15 +34,12 @@
             text-align: center;
             padding: 2px;
         }
-
         div#context-menu ul li {
             cursor: pointer;
         }
-
         ul.ztree {
             height: 290px;
         }
-
         .ztree li span.button.add {
             margin-left: 2px;
             margin-right: -1px;
@@ -50,7 +47,6 @@
             vertical-align: top;
             *vertical-align: middle
         }
-
         .ztree li span.button2 {
             line-height: 0;
             margin: 0;
@@ -65,27 +61,21 @@
             background-repeat: no-repeat;
             background-attachment: scroll;
         }
-
         .ztree li span.button2.up {
             background-image: url("<%=basePath%>assets/dmcms/plugins/zTree/css/zTreeStyle/img/diy/arrow_up.png");
         }
-
         .ztree li span.button2.down {
             background-image: url("<%=basePath%>assets/dmcms/plugins/zTree/css/zTreeStyle/img/diy/arrow_down.png");
         }
-
         .ztree li span.button2.edit {
             background-image: url("<%=basePath%>assets/dmcms/plugins/zTree/css/zTreeStyle/img/diy/page_edit.png");
         }
-
         .ztree li span.button2.add {
             background-image: url("<%=basePath%>assets/dmcms/plugins/zTree/css/zTreeStyle/img/diy/page_add.png");
         }
-
         .ztree li span.button2.delete {
             background-image: url("<%=basePath%>assets/dmcms/plugins/zTree/css/zTreeStyle/img/diy/page_delete.png");
         }
-
         .ztree li span.button2.view {
             background-image: url("<%=basePath%>assets/dmcms/plugins/zTree/css/zTreeStyle/img/diy/page.png");
         }
@@ -233,12 +223,10 @@
             }
         }
     };
-
     function changeGrag() {
         var fl = document.getElementById("isdrag").checked;
         zTree.setting.edit.enable = fl;
     }
-
     function addHoverDom(treeId, treeNode) {
         var sObj = $("#" + treeNode.tId + "_span");
         if (treeNode.editNameFlag || $("#addBtn_" + treeNode.tId).length > 0) return;
@@ -300,7 +288,6 @@
         $("#upBtn_" + treeNode.tId).unbind().remove();
         $("#downBtn_" + treeNode.tId).unbind().remove();
     }
-
     function beforeDrag(treeId, treeNodes) {
         for (var i = 0, l = treeNodes.length; i < l; i++) {
             if (treeNodes[i].drag === false) {
@@ -323,7 +310,6 @@
             moveMode = "diffrent";
         }
         return targetNode ? targetNode.drop !== false : true;
-
     }
     function moveUp() {
         var Node = zTree.getSelectedNodes()[0];
@@ -345,8 +331,6 @@
             }
         }
     }
-
-
     function moveDown() {
         var Node = zTree.getSelectedNodes()[0];
         if (Node) {
@@ -367,7 +351,6 @@
             }
         }
     }
-
     function onDrop(event, treeId, treeNodes, targetNode, moveType, isCopy) {
         if (targetNode != null) {
             $.ajax({
@@ -383,7 +366,6 @@
             });
         }
     }
-
     function OnRightClick(event, treeId, treeNode) {
         var x = event.pageX || (event.clientX + (document.documentElement.scrollLeft || document.body.scrollLeft));
         var y = event.pageY || (event.clientY + (document.documentElement.scrollTop || document.body.scrollTop));
@@ -430,8 +412,6 @@
             });
         }
     }
-
-
     var modal;
     var formOpts = {
         id: "menu_form",//表单id
@@ -442,7 +422,6 @@
         labelInline: true,
         rowEleNum: 1,
         beforeSubmit: function () {
-
         },
         ajaxSuccess: function () {
             modal.hide();

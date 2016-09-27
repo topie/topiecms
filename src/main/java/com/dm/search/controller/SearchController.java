@@ -54,6 +54,7 @@ public class SearchController {
 	@ResponseBody
 	public Object insertOrUpdate(SearchConfig searchConfig)
     {
+		    searchConfig.setId("123");
 			boolean success = searchConfigService.insertOrUpdate(searchConfig);
 			if(success)
 			{

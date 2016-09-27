@@ -166,7 +166,6 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		if (searchConfig.getId() != null && !searchConfig.getId().equals("")) {
 			searchConfigMapper.updateByPrimaryKey(searchConfig);
 		} else {
-			searchConfig.setId("123");
 			searchConfigMapper.insertSelective(searchConfig);
 		}
 		return true;

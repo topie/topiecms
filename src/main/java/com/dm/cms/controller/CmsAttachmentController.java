@@ -64,6 +64,7 @@ import java.util.Map;
         cmsAttachment.setIsActive(true);
         cmsAttachmentService.insertCmsAttachment(cmsAttachment);
         Map map = ResponseUtil.success();
+        map.put("fileUrl",path+"/"+newFileName);
         map.put("attachment", cmsAttachment);
         JSONObject jsonList = JSONObject.fromObject(map);
         out.write(jsonList.toString());
