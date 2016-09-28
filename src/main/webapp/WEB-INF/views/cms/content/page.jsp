@@ -187,6 +187,10 @@
 					{
 					url = "../content/delete?contentId="+ids;
 					}
+					else if(currentChannelType=='11')
+					{
+					url = "../content/delete?contentId="+ids;
+					}
 					else if(currentChannelType=='5')
 					{
 					url = "../video/delete?videoIds=" + ids;	

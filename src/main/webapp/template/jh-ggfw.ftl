@@ -144,9 +144,9 @@
                                          <div class="panel-heading panel2-t fontSize18"><a href="${channel.url}" target="_blank" >${channel.displayName}</a></div>
                                          <div class="panel-body">
                                              <ul class="panel2-list panel2-list-sm">
-                     			<@contentListDirective channelId=channel.id pageSize=5 titleLeft=13>
+                     			<@contentListDirective channelId=channel.id pageSize=5 titleLeft=18>
                      			<#list contents as content>
-                                                 <li><a target="_blank" href="${content.url}" target="_blank" >${content.title}</a></li> 
+                                                 <li><a target="_blank" href="${content.url}" target="_blank" title="${content.title!}" >${content.title}</a></li> 
                      			</#list>
                      			</@contentListDirective>
                                              </ul>

@@ -63,7 +63,7 @@
                                                                                                          <a target="_blank" style="color:white" href="${channel.url}">${channel.displayName!}</a>
                                                                                                      </div>
                                                                                                  </div>
-                                                                                                  <@channelListDirective channelId=channel.id order=4 >
+                                                                                                  <@channelListDirective channelId=channel.id order=1 pageSize=6>
                                                                  				 <div class="col-xs-9 fontSize14">
                                                                                                      <div class="row ggfw-list-pd ggfw-list-pd2">
                                                                                                     <#list channels as cmschannel>
@@ -588,7 +588,7 @@
 										</td>
 									    </tr>
 									    <tr>
-										<td bgcolor="#cccccc" align="right">
+										<td align="right">
 											<div onclick="closeDL(&quot;gg${ad.id!}&quot;)" style="cursor:pointer;" align="right"><font color="black" style="font-size:12px;">关闭</font>
 											</div>
 										</td>

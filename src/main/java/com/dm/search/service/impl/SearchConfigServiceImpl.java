@@ -259,7 +259,7 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		query.setQuery(q);
 		
 		query.setStart((pageNum - 1) * pageSize);
-		if (sortField != null) {
+		/*if (sortField != null) {
 			String[] order = sortField.split("_");
 			if (order.length == 2) {
 				if (order[1].equals("asc")) {
@@ -268,7 +268,8 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 					query.setSort(order[0], ORDER.desc);
 				}
 			}
-		}
+		}*/
+		query.setSort("publishDate", ORDER.desc);
 		query.setRows(pageSize);
 		query.setHighlight(searchConfig.getHighlight() == null ? false
 				: searchConfig.getHighlight());

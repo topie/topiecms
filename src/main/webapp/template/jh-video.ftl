@@ -15,6 +15,7 @@
 			width:60%;
 			margin-left: auto;
 			margin-right: auto;
+			margin-top:30px;
 		}
 	       </style>
            </head>
@@ -44,8 +45,11 @@
 			
 		</div></div>
  <div class="jh-article-p">
-                  <div class="thumbnail ">
-           		<div class="mgt30 jhvideo" >
+                  <div class=" ">
+           		<div class=" jhvideo mgt30" >
+			<#if cmsVideo.actor??>
+				
+			<#else>
 <div id="jp_container_1" class="jp-video jp-video-360p" role="application" aria-label="media player">
                                             <div class="jp-type-single">
                                               <div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -90,13 +94,7 @@
                                             </div>
                                           </div>
 
-  				<!--<video  width="100%" height="" controls="controls">
-  				  <source src="http://www.w3school.com.cn/i/movie.ogg" type="video/ogg">
-  				  <source src="http://www.w3school.com.cn/i/movie.mp4" type="video/mp4">
-  				  <source src="${cmsVideo.videoUrl!}" type="video/mp4">
-  				  <source src="${cmsVideo.videoUrl!}" type="video/ogg">
-  				  
-  				</video>-->
+  				</#if>
   			</div>
                     </div>
                   </br>
@@ -116,7 +114,7 @@
            <script type="text/javascript">
                $(function () {
                    $('input, textarea').placeholder();
-                                    
+                                    if($("#jquery_jplayer_1")){
                                       $("#jquery_jplayer_1").jPlayer({
                                       ready: function () {
                                         $(this).jPlayer("setMedia", {
@@ -124,7 +122,7 @@
                                           m4v: "${cmsVideo.videoUrl!}",
                                           ogv: "${cmsVideo.videoUrl!}",
                                           webmv: "${cmsVideo.videoUrl!}"
-                                        });
+                                        }).jPlayer("play");;
                                       },
                                       swfPath: "/html/jinhu-static/plugins/jPlayer-2.9.1/dist/jplayer/jquery.jplayer.swf",
                                       supplied: "webmv, ogv, m4v,mp4,avi,flv",
@@ -140,6 +138,7 @@
                                       remainingDuration: true,
                                       toggleDuration: true
                                     });
+				    }
                });
            </script>
            </body>

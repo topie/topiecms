@@ -288,26 +288,30 @@
 				format:function(i,c){
 					if(c.channelType==0)
 						return "普通频道";
+					if(c.channelType==11)
+						return "可发布头条频道";
 					if(c.channelType==1)
 						return "图片频道";
 					if(c.channelType==2)
 						return "链接频道";
 					if(c.channelType==3)
 						return "单页频道";
-					if(c.channelType==4)
-						return "下载频道";
+					/* if(c.channelType==4)
+						return "下载频道"; */
 					if(c.channelType==5)
 						return "视频频道";
-					if(c.channelType==6)
+					/* if(c.channelType==6)
 						return "音频频道";
 					if(c.channelType==7)
-						return "小说频道";
+						return "小说频道"; */
 					if(c.channelType==8)
 						return "访谈频道";
 					if(c.channelType==9)
 						return "投票频道";
 					if(c.channelType==10)
 						return "公开文件";
+					if(c.channelType==11)
+						return "可发布头条频道";
 					return "普通频道";
 				},
 				width : "10%"
@@ -413,6 +417,14 @@
 					}
 				},
 				{
+					text : "可发布头条频道",//按钮文本
+					cls : "btn green",//按钮样式
+					icon : "fa fa-cubes",
+					handle : function(grid) {//按钮点击事件
+						showForm('11',"普通频道");
+					}
+				},
+				{
 					text : "链接频道",//按钮文本
 					cls : "btn green btn-sm",//按钮样式
 					icon : "fa fa-cubes",
@@ -457,7 +469,7 @@
 					handle : function(grid) {//按钮点击事件
 						showForm('10',"文件频道");
 					}
-				},{
+				}/* ,{
 					text : "音频频道",//按钮文本
 					cls : "btn green btn-sm",//按钮样式
 					icon : "fa fa-cubes",
@@ -471,7 +483,7 @@
 					handle : function(grid) {//按钮点击事件
 						showForm('7',"小说频道");
 					}
-				}
+				} */
 				]
 			},
 			tools : [ {
@@ -651,6 +663,10 @@
 				items.push(eName);
 				items.push(pageSize);
 				items.push(templateType);
+			}else if(channelType==11){//发布头条频道
+				items.push(eName);
+				items.push(pageSize);
+				items.push(templateType);
 			}else if(channelType==1){//视频频道
 				items.push(eName);
 				items.push(pageSize);
@@ -708,7 +724,7 @@
 				ajaxSuccess : function() {
 					modal.hide();
 					grid.reload();
-					channelTree.reAsyncChildNodes(null, "refresh");
+					//channelTree.reAsyncChildNodes(null, "refresh");
 				},
 				submitText : "保存",//保存按钮的文本
 				showReset : true,//是否显示重置按钮
@@ -719,7 +735,7 @@
 					text : '关闭',
 					handle : function() {
 						modal.hide();
-						channelTree.reAsyncChildNodes(null, "refresh");
+						//channelTree.reAsyncChildNodes(null, "refresh");
 					}
 				} ],
 				buttonsAlign : "center",

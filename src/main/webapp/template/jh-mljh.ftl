@@ -25,7 +25,7 @@
                               <div class="row">
                                   <div class="col-md-5">
                                       <span class="thumbnail thumbnails thumbnailb">
-                                          <img src="${channel.channelIcon!}">
+                                          <img src="${channel.channelIcon!}" height="180px">
                                       </span>
                                   </div>
                                   <div class="col-md-7">
@@ -39,8 +39,8 @@
               							  <!-- Tab panes -->
               							<div class="tab-content navTab1-content pTextIndent">
               								<#list channels as channel>
-              									<div role="tabpanel" class="tab-pane ${(channel_index==0)?string('active','')}" id="chgk${channel.id}">
-              										${channel.contentText!}
+              									<div role="tabpanel"   class="tab-pane ${(channel_index==0)?string('active','')}" id="chgk${channel.id}">
+              										<div style="overflow: hidden;height: 162px;">${channel.contentText!}</div>
                                                   <a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>
               									</div>
               								</#list>
@@ -94,9 +94,10 @@
               										</div>
               									</div>
               									<div class="col-xs-7">
-              										${channel.contentText!}
-              										<!--${channel.displayName}-->
-              										<a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>
+										<div style="overflow: hidden;height: 147px;">${channel.contentText!}</div>
+                                                  <a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>
+              										<!--${channel.contentText!}
+              										<a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>-->
               									</div>
               								</div>
               							</div>
@@ -169,9 +170,10 @@
               										</div>
               									</div>
               									<div class="col-xs-7">
-              										${cmsContent.brief!}
-              										<!--${channel.displayName}-->
-              										<a href="${cmsContent.url}" target="_blank" class="navTab2-detail">【详细】</a>
+										
+										<div style="overflow: hidden;height:161px;">${cmsContent.brief!}</div>
+                                                  <a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>
+              										
               									</div>
                                                  </#list>
                                                </@contentListDirective>

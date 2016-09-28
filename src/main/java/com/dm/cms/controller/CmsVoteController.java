@@ -42,6 +42,7 @@ public class CmsVoteController {
 			return PageConvertUtil.emptyGrid();
 		}
 		Map map = new SqlParam<CmsVote>().autoParam(record, sort);
+		record.setStatus("9");
 		return PageConvertUtil.grid(this.cmsVoteService.findPage(pageNum,
 				pageSize, map));
 	}
@@ -62,7 +63,7 @@ public class CmsVoteController {
 			record.setStatus("0");
 			this.cmsVoteService.update(record);
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/delete")
@@ -75,7 +76,7 @@ public class CmsVoteController {
 			Integer id = Integer.valueOf(index);
 			this.cmsVoteService.updateStatus(id, "9");
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/load")
@@ -123,7 +124,7 @@ public class CmsVoteController {
 			Integer id = Integer.valueOf(i);
 			this.cmsVoteService.updateStatus(id, "1");
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/back")
@@ -136,7 +137,7 @@ public class CmsVoteController {
 			Integer id = Integer.valueOf(i);
 			this.cmsVoteService.updateStatus(id, "3");
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/pass")
@@ -149,7 +150,7 @@ public class CmsVoteController {
 			Integer id = Integer.valueOf(i);
 			this.cmsVoteService.updateStatus(id, "4");
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/publish")
@@ -162,7 +163,7 @@ public class CmsVoteController {
 			Integer id = Integer.valueOf(i);
 			this.cmsVoteService.updateStatus(id, "2");
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/listOpt")
@@ -188,14 +189,14 @@ public class CmsVoteController {
 		else {
 			cmsVoteService.updateOpt(record);
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/deleteOpt")
 	@ResponseBody
 	public Object deleteOpt(Integer id) {
 		this.cmsVoteService.deleteOpt(id);
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@InitBinder

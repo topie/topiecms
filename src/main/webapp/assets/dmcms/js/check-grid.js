@@ -299,6 +299,15 @@ var options = {
 			field : "origin",
 			sort : true
 		}, {
+			title : "发布时间",
+			field : "origin",
+			format:function(i,c){
+				if(c.publishDate){
+					return dateTostr(c.publishDate);
+				}
+				return '';
+			}
+		}, {
 			title : "状态",
 			field : "status",
 			format : function(i, c) {
@@ -387,6 +396,15 @@ var allOptions = {
 			title : "频道",
 			field : "displayName",
 			sort : true
+		},{
+			title : "发布时间",
+			field : "origin",
+			format:function(i,c){
+				if(c.publishDate){
+					return dateTostr(c.publishDate);
+				}
+				return '';
+			}
 		}, {
 			title : "状态",
 			field : "status",

@@ -17,14 +17,18 @@ function flushGrid()
 {
 	$("#content_grid").html("");
 	if(currentChannelIsParent){
-		currentChannelId="";
+		$("#content_grid").html('<div class="note note-success note-bordered">'
+				+'<h4 class="block">提示</h4><p>'
+					+'管理内容请点击子栏目'
+				+'</p></div>');
+		return ;
 	}
 	if (currentChannelType == '0') {
-		 var action = "./list?channelId=" + currentChannelId;
+		 var action = "./list?status=1&channelId=" + currentChannelId;
 		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,currentChannelType));
 	} 
 	if (currentChannelType == '11') {
-		 var action = "./list?channelId=" + currentChannelId;
+		 var action = "./list?status=1&channelId=" + currentChannelId;
 		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,currentChannelType));
 	}
 	if (currentChannelType == '2') {
@@ -34,7 +38,7 @@ function flushGrid()
 						+'</p></div>');
 	}
 	if (currentChannelType == '4') {
-		var action= "./list?channelId=" + currentChannelId;
+		var action= "./list?status=1&channelId=" + currentChannelId;
 		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,currentChannelType));
 	}
 	if (currentChannelType == '3') {
@@ -44,33 +48,33 @@ function flushGrid()
 						+'</p></div>');
 	}
 	else if (currentChannelType == '5') {
-		var action = "../video/list?channelId="
+		var action = "../video/list?status=1&channelId="
 				+ currentChannelId;
 		grid = $("#content_grid").dmGrid(getvideoOptions(action,hasPublishRole));
 	} else if (currentChannelType == '6') {
-		audioOptions.url = "../audio/list?channelId="
+		audioOptions.url = "../audio/list?status=1&channelId="
 				+ currentChannelId;
 		grid = $("#content_grid").dmGrid(audioOptions);
 	} 
 	else if (currentChannelType == '7') {
-		novelOptions.url = "../novel/list?channelId="
+		novelOptions.url = "../novel/list?status=1&channelId="
 				+ currentChannelId;
 		grid = $("#content_grid").dmGrid(novelOptions);
 	}
 	else if (currentChannelType == '8') {
 		$("#content_grid").html("");
-		interviewOptions.url = "../interview/list?channelId="
+		interviewOptions.url = "../interview/list?status=1&channelId="
 				+ currentChannelId;
 		grid = $("#content_grid").dmGrid(interviewOptions);
 	}
 	else if (currentChannelType == '9') {
 		$("#content_grid").html("");
-		voteOptions.url = "../vote/list?channelId="
+		voteOptions.url = "../vote/list?status=1&channelId="
 				+ currentChannelId;
 		grid = $("#content_grid").dmGrid(voteOptions);
 	}else if (currentChannelType == '10') {
 		$("#content_grid").html("");
-		var action = "./list?channelId=" + currentChannelId;
+		var action = "./list?status=1&channelId=" + currentChannelId;
 		grid = $("#content_grid").dmGrid(getfileoptions(action,hasPublishRole));
 	}
 }
@@ -124,82 +128,6 @@ var channelSetting = {
 			currentChannelType = treeNode.type;
 			currentChannelIsParent=treeNode.isParent;
 			flushGrid();
-			/*
-			currentChannelId = treeNode.id;
-			if (currentChannelType == treeNode.type) {
-				if (currentChannelType == '0') {
-					grid.reload({
-						url : "./list?channelId=" + currentChannelId
-					});
-				} else if (currentChannelType == '5') {
-					grid.reload({
-						url : "../video/list?channelId=" + currentChannelId
-					});
-				} else if (currentChannelType == '6') {
-					grid.reload({
-						url : "../audio/list?channelId=" + currentChannelId
-					}); 
-				}
-				else if (currentChannelType == '7') {
-					grid.reload({
-						url : "../novel/list?channelId=" + currentChannelId
-					});
-				}
-				else if (currentChannelType == '8') {
-					grid.reload({
-						url : "../interview/list?channelId=" + currentChannelId
-					});
-				}else if (currentChannelType == '9') {
-					grid.reload({
-						url : "../vote/list?channelId=" + currentChannelId
-					});
-				}
-				else if (currentChannelType == '10') {
-					grid.reload({
-						url : "./list?channelId=" + currentChannelId
-					});
-				}
-			} else {
-				currentChannelType = treeNode.type;
-				if (currentChannelType == '0') {
-					$("#content_grid").html("");
-					options.url = "./list?channelId=" + currentChannelId;
-					grid = $("#content_grid").dmGrid(options);
-				} else if (currentChannelType == '5') {
-					$("#content_grid").html("");
-					videoOptions.url = "../video/list?channelId="
-							+ currentChannelId;
-					grid = $("#content_grid").dmGrid(videoOptions);
-				} else if (currentChannelType == '6') {
-					$("#content_grid").html("");
-					audioOptions.url = "../audio/list?channelId="
-							+ currentChannelId;
-					grid = $("#content_grid").dmGrid(audioOptions);
-				} 
-				else if (currentChannelType == '7') {
-					$("#content_grid").html("");
-					novelOptions.url = "../novel/list?channelId="
-							+ currentChannelId;
-					grid = $("#content_grid").dmGrid(novelOptions);
-				}
-				else if (currentChannelType == '8') {
-					$("#content_grid").html("");
-					interviewOptions.url = "../interview/list?channelId="
-							+ currentChannelId;
-					grid = $("#content_grid").dmGrid(interviewOptions);
-				}
-				else if (currentChannelType == '9') {
-					$("#content_grid").html("");
-					voteOptions.url = "../vote/list?channelId="
-							+ currentChannelId;
-					grid = $("#content_grid").dmGrid(voteOptions);
-				}else if (currentChannelType == '10') {
-					$("#content_grid").html("");
-					fileoptions.url = "./list?channelId=" + currentChannelId;
-					grid = $("#content_grid").dmGrid(fileoptions);
-				}
-			}
-			}*/
 		}
 	}
 };
@@ -248,128 +176,7 @@ function refreshSite() {
 
 /** **********普通新闻表格选项*************** */
 function getnewsoption(action,hasPublishRole,currentChannelType){
-var actionColoums =[{
-	text : "预览",
-	cls : "green btn-sm",
-	icon : "fa fa-search",
-	handle : function(index, data) {
-		window.open(data.url);
-	}
-}, {
 
-	text : "编辑",
-	cls : "green btn-sm",
-	visable : function(i, c) {
-		/*if (c.status == "1")
-			return false;*/
-		return true;
-	},
-	handle : function(index, data) {
-		// index为点击操作的行数
-		// data为该行的数据
-		/*modal = $.dmModal({
-			id : "siteForm",
-			title : "编辑内容信息-" + data.title,
-			distroy : true
-		});
-		modal.show();*/
-		$("#content_grid").html("");
-		form = $("#content_grid").dmForm(getForm(data.contentType,hasPublishRole,currentChannelType));
-		form.loadRemote("./load?contentId=" + data.id,function(){
-			if(data.titleStyle){
-				var color = data.titleStyle.split(";");
-				$("#titleStyle").val((color[0].split(":"))[1]);
-				$("select[name='titleStyle']")[0].value = (color[1].split(":"))[1];
-			}
-			var l = dateTostr(data.publishDate);
-			$("#publishDate").val(l);
-		});
-		
-	}
-}, {
-	text : "排序",
-	cls : "yellow btn-sm",
-	handle : function(i, c) {
-		sortfun(i, c,c.title);
-	}
-} ];
-
-if(hasPublishRole){
-actionColoums.push({
-	text:"发布",
-	cls:"green btn-sm",
-	handle : function(i, data) {
-		bootbox.confirm("确定发布?",function(res){
-			if(res){
-		var url = "./check?status=2&ids="+data.id;
-		$.ajax({
-			url:url,
-			type:'POST',
-			success:function(res){
-				bootbox.alert(res.msg);
-				flushGrid();
-			}
-		});
-			}
-		});
-	}
-});
-}
-var tools=[// 工具属性
-       	/*{
-   		text : "添加",
-   		cls : "btn green btn-sm",
-   		handle : function(grid) {// 按钮点击事件
-   			if(currentChannelId==undefined)
-   				bootbox.alert("请先选择频道");
-   			else
-   				showForm(0, "文本内容");
-   		}
-   	},*/ {
-   		text : "移动",
-   		cls : "btn green btn-sm",
-   		handle : function(grid) {
-   			cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../content/cutTo");
-   		}
-   	}, {
-   		text : "复制",
-   		cls : "btn green btn-sm",
-   		handle : function(grid) {
-   			cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../content/copyTo");
-   		}
-   	},{
-   		text : " 删 除",
-   		cls : "btn red btn-sm",// 按钮样式
-   		handle : function(grid) {
-   			deleteItems(grid.getSelectIds());
-   		}
-   	} ];
-if(!hasPublishRole){
-	tools.push( {
-	   		text : "提交",
-	   		cls : "btn green btn-sm",
-	   		handle : function(grid) {
-	   			var ids = grid.getSelectIds();
-	   			if (ids.length > 0) {
-	   				var url = "./commit?contentId=" + ids;
-	   				$.ajax({
-	   					url : url,
-	   					type : "POST",
-	   					dataType : "json",
-	   					success : function(res) {
-	   						bootbox.alert(res.msg);
-	   						grid.reload();
-	   					},
-	   					error : function() {
-	   						bootbox.alert("请求异常！");
-	   					}
-	   				});
-	   			} else {
-	   				bootbox.alert("请选择要提交的项");
-	   			}
-	   		}
-	   	});
-}
 var options = {
 	url : action, // ajax地址
 	pageNum : 1,// 当前页码
@@ -409,44 +216,47 @@ var options = {
 	} ],
 	actionCloumText : "操作",// 操作列文本
 	actionCloumWidth : "30%",
-	actionCloums : actionColoums,
-	dropdowns:{
-	    text:"添加",     
-	    cls:"green btn-sm",
-	    items:[{
-			text : "普通内容",//按钮文本
-			cls : "btn green",//按钮样式
-			icon : "fa fa-cubes",
-			handle : function(grid) {//按钮点击事件
-				if(currentChannelId==undefined)
-					bootbox.alert("请先选择频道");
-				else if(currentChannelIsParent)
-					bootbox.alert("请选择子频道进行添加!");
-				else{
-					$("#content_grid").html("");
-					form = $("#content_grid").dmForm(getForm('0',hasPublishRole,currentChannelType));
-					form.loadLocal({"channelId":currentChannelId,"contentType":"10"});
-				//showForm('0',"普通内容");
-				}
-			}
-		},
-		{
-			text : "引用内容",//按钮文本
-			cls : "btn green btn-sm",//按钮样式
-			icon : "fa fa-cubes",
-			handle : function(grid) {//按钮点击事件
-				if(currentChannelId==undefined)
-					bootbox.alert("请先选择频道");
-				else if(currentChannelIsParent)
-					bootbox.alert("请选择子频道进行添加!");
-				else{
-				showForm('2',"引用内容");
-				}
-			}
+	actionCloums : [ {
+		text : "预览",
+		cls : "green btn-sm",
+		icon : "fa fa-search",
+		handle : function(index, data) {
+			window.open(data.url);
 		}
-		]
-},
-	tools :tools ,
+	}, {
+
+		text : "发布",
+		cls : "green btn-sm",
+		handle : function(i, data) {
+			var url = "./check?status=2&ids="+data.id
+			check(url,data.id);
+		}
+	}, {
+		text : "驳回",
+		cls : "yellow btn-sm",
+		handle : function(i, data) {
+			var url = "./check?status=3&ids="+data.id
+			check(url,data.id);
+		}
+	} ],
+	tools : [// 工具属性
+	{
+		text : "批量发布",
+		cls : "btn green btn-sm",
+		handle : function(i, data) {
+			var ids = grid.getSelectIds();
+			var url = "./check?status=2&ids="+ids;
+			check(url,ids);
+		}
+	}, {
+		text : "批量驳回",
+		cls : "btn green btn-sm",
+		handle : function(i, data) {
+			var ids = grid.getSelectIds();
+			var url = "./check?status=3&ids="+ids;
+			check(url,ids);
+		}
+	}],
 	search : {
 		rowEleNum : 2,
 		// 搜索栏元素
@@ -463,29 +273,18 @@ return options;
 // form
 /** **************普通内容表单选项*************** */
 function getForm(contentType,hasPublishRole,currentChannelType) {
-	var buttons = [];
-	if(hasPublishRole){
+	var buttons = []; 
 		buttons.push(
 		{
 			type : 'submit',
 			attribute:'role=submit',
 			cls:'blue btn-lg',
-			text : '直接发布',
+			text : '发布',
 			handle : function() {
 				form.setAction("./saveAndPublish");
 			}
-		});
-	}else{
-		buttons.push( {
-			type : 'submit',
-			attribute:'role=submit',
-			cls:'blue btn-lg',
-			text : '提交审核',
-			handle : function() {
-				form.setAction("./saveAndCommit");
-			}
-		} );
-	}
+		}); 
+		
 	buttons.push({
 		type : 'button',
 		text : '关闭',
@@ -499,7 +298,7 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 			id : "site_form",// 表单id
 			name : "site_form",// 表单名
 			method : "post",// 表单method
-			action : "./insertOrUpdate",// 表单action
+			action : "./saveAndCommit",// 表单action
 			ajaxSubmit : true,// 是否使用ajax提交表单
 			labelInline : true,
 			rowEleNum : 1,
@@ -741,10 +540,10 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 				label : '作者',//左边label
 				cls : 'input-large',
 				rule : {
-					maxlength : 30
+					maxlength : 12
 				},
 				message : {
-					maxlength : "最多输入30字节"
+					maxlength : "最多输入12字节"
 				}
 			},{
 				type : 'text',// 类型
@@ -753,10 +552,10 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 				label : '来源',// 左边label
 				cls : 'input-large',
 				rule : {
-					maxlength : 20
+					maxlength : 12
 				},
 				message : {
-					maxlength : "最多输入20字节"
+					maxlength : "最多输入12字节"
 				}
 			},
 			{
@@ -870,7 +669,7 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 		id : "site_form",// 表单id
 		name : "site_form",// 表单名
 		method : "post",// 表单method
-		action : "./insertOrUpdate",// 表单action
+		action : "./saveAndCommit",// 表单action
 		ajaxSubmit : true,// 是否使用ajax提交表单
 		labelInline : true,
 		rowEleNum : 1,
@@ -909,7 +708,7 @@ function getFileForm(contentType,hasPublishRole) {
 			type : 'submit',
 			attribute:'role=submit',
 			cls:'blue btn-lg',
-			text : '直接发布',
+			text : '发布',
 			handle : function() {
 				form.setAction("./saveAndPublish");
 			}
@@ -1118,7 +917,7 @@ function getFileForm(contentType,hasPublishRole) {
 		id : "site_form",// 表单id
 		name : "site_form",// 表单名
 		method : "post",// 表单method
-		action : "./insertOrUpdate",// 表单action
+		action : "./saveAndCommit",// 表单action
 		ajaxSubmit : true,// 是否使用ajax提交表单
 		labelInline : true,
 		rowEleNum : 1,
@@ -1142,154 +941,7 @@ function getFileForm(contentType,hasPublishRole) {
 	
 	/**最新政府文件**/
 	function getfileoptions(action,hasPublishRole){
-		var actionColoums =[{
-			text : "预览",
-			cls : "green btn-sm",
-			icon : "fa fa-search",
-			handle : function(index, data) {
-				window.open(data.url);
-			}
-		}, {
-
-			text : "编辑",
-			cls : "green btn-sm",
-			visable : function(i, c) {
-				/*if (c.status == "1")
-					return false;*/
-				return true;
-			},
-			handle : function(index, data) {
-				// index为点击操作的行数
-				// data为该行的数据
-				/*modal = $.dmModal({
-					id : "siteForm",
-					title : "编辑内容信息-" + data.title,
-					distroy : true
-				});
-				modal.show();*/
-				$("#content_grid").html("");
-				form = $("#content_grid").dmForm(getFileForm(data.contentType,hasPublishRole));
-				form.loadLocal({"channelId":currentChannelId});
-				form.loadRemote("./load?contentId=" + data.id,function(){
-					$("#publishDate").val(dateTostr(data.publishDate));
-				}); 
-			}
-		}, {
-			text : "排序",
-			cls : "yellow btn-sm",
-			handle : function(i, c) {
-				sortfun(i, c,c.title);
-			}
-		} ];
-
-		if(hasPublishRole){
-		actionColoums.push({
-			text:"发布",
-			cls:"green btn-sm",
-			handle : function(i, data) {
-				bootbox.confirm("确定发布?",function(res){
-					if(res){
-						var url = "./check?status=2&ids="+data.id;
-						$.ajax({
-							url:url,
-							type:'POST',
-							success:function(res){
-								bootbox.alert(res.msg);
-								flushGrid();
-							}
-						});
-						
-					}
-				});
-			}
-		});
-		}
-		var tools=[// 工具属性
-					{
-						text : "添加",
-						cls : "btn green btn-sm",
-						handle : function(grid) {// 按钮点击事件
-							if(currentChannelId==undefined)
-								bootbox.alert("请先选择频道");
-							else if(currentChannelIsParent)
-								bootbox.alert("请选择子频道进行添加!");
-							else{
-								$("#content_grid").html("");
-								var form = $("#content_grid").dmForm(getFileForm('10',hasPublishRole));
-								form.loadLocal({"channelId":currentChannelId,"contentType":"10"});
-							}
-								
-								//$("#").dmForm()
-								//showForm(0, "文本内容");
-						}
-					},/* {
-						text : "移动",
-						cls : "btn green btn-sm",
-						handle : function(grid) {
-							cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../content/cutTo");
-						}
-					}, {
-						text : "复制",
-						cls : "btn green btn-sm",
-						handle : function(grid) {
-							cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../content/copyTo");
-						}
-					},*/ /*--{
-						text : "提交",
-						cls : "btn green btn-sm",
-						handle : function(grid) {
-							var ids = grid.getSelectIds();
-							if (ids.length > 0) {
-								var url = "./commit?contentId=" + ids;
-								$.ajax({
-									url : url,
-									type : "POST",
-									dataType : "json",
-									success : function(res) {
-										bootbox.alert(res.msg);
-										//grid.reload();
-									},
-									error : function() {
-										bootbox.alert("请求异常！");
-									}
-								});
-							} else {
-								bootbox.alert("请选择要提交的项");
-							}
-						}
-					}, */{
-						text : " 删 除",
-						cls : "btn red btn-sm",// 按钮样式
-						handle : function(grid) {
-							deleteItems(grid.getSelectIds());
-						}
-					}];
-		if(!hasPublishRole){
-			tools.push( {
-			   		text : "提交",
-			   		cls : "btn green btn-sm",
-			   		handle : function(grid) {
-			   			var ids = grid.getSelectIds();
-			   			if (ids.length > 0) {
-			   				var url = "./commit?contentId=" + ids;
-			   				$.ajax({
-			   					url : url,
-			   					type : "POST",
-			   					dataType : "json",
-			   					success : function(res) {
-			   						bootbox.alert(res.msg);
-			   						grid.reload();
-			   					},
-			   					error : function() {
-			   						bootbox.alert("请求异常！");
-			   					}
-			   				});
-			   			} else {
-			   				bootbox.alert("请选择要提交的项");
-			   			}
-			   		}
-			   	});
-		}
+		
 	var fileoptions = {
 			url : action, // ajax地址
 			pageNum : 1,// 当前页码
@@ -1333,8 +985,47 @@ function getFileForm(contentType,hasPublishRole) {
 			} ],
 			actionCloumText : "操作",// 操作列文本
 			actionCloumWidth : "30%",
-			actionCloums : actionColoums,
-			tools : tools,
+			actionCloums : [ {
+				text : "预览",
+				cls : "green btn-sm",
+				icon : "fa fa-search",
+				handle : function(index, data) {
+					window.open(data.url);
+				}
+			}, {
+
+				text : "发布",
+				cls : "green btn-sm",
+				handle : function(i, data) {
+					var url = "./check?status=2&ids="+data.id
+					check(url,data.id);
+				}
+			}, {
+				text : "驳回",
+				cls : "yellow btn-sm",
+				handle : function(i, data) {
+					var url = "./check?status=3&ids="+data.id
+					check(url,data.id);
+				}
+			} ],
+			tools : [// 工具属性
+			{
+				text : "批量发布",
+				cls : "btn green btn-sm",
+				handle : function(i, data) {
+					var ids = grid.getSelectIds();
+					var url = "./check?status=2&ids="+ids;
+					check(url,ids);
+				}
+			}, {
+				text : "批量驳回",
+				cls : "btn green btn-sm",
+				handle : function(i, data) {
+					var ids = grid.getSelectIds();
+					var url = "./check?status=3&ids="+ids;
+					check(url,ids);
+				}
+			}],
 			search : {
 				rowEleNum : 2,
 				// 搜索栏元素

@@ -568,9 +568,9 @@
                 title: "添加子组织机构",
                 distroy: true
             });
-            modal.show();
             var form = modal.$body.dmForm(formOpts, function () {
                 $("#pId").val(pId);
+            setTimeout("modal.show();",500);
             });
         } else {
             alert("请选中父组织机构节点");
@@ -593,9 +593,9 @@
                 title: "编辑组织机构",
                 distroy: true
             });
-            modal.show();
             var form = modal.$body.dmForm(formOpts);
             form.loadRemote("./ajaxLoad?orgId=" + orgId);
+            modal.show();
         }
     }
     function viewOrg() {
@@ -606,9 +606,9 @@
                 title: "查看组织机构",
                 distroy: true
             });
-            modal.show();
             var form = modal.$body.dmForm(viewFormOpts);
             form.loadRemote("./ajaxLoad?orgId=" + orgId);
+            modal.show();
         }
     }
     function refreshorgtree() {

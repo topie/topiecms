@@ -28,6 +28,18 @@
 	href="<%=basePath%>assets/global/plugins/select2/select2.css" />
 <%@include file="../../includejsps/style.jsp"%>
 <%@include file="../../includejsps/plugin-style.jsp"%>
+<script src="<%=basePath%>assets/dmcms/js/news-form-grid.js"
+	     type="text/javascript"></script>
+	<script src="<%=basePath%>assets/dmcms/js/video-form-grid.js"
+	     type="text/javascript"></script>
+	<script src="<%=basePath%>assets/dmcms/js/novel-form-grid.js"
+     type="text/javascript"></script>
+     <script src="<%=basePath%>assets/dmcms/js/audio-form-grid.js"
+     type="text/javascript"></script>
+      <script src="<%=basePath%>assets/dmcms/js/interview-form-grid.js"
+     type="text/javascript"></script>
+      <script src="<%=basePath%>assets/dmcms/js/vote-form-grid.js"
+     type="text/javascript"></script>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -226,6 +238,10 @@
 							grid.reload({
 								url : "./list?status=1&channelId=" + currentChannelId
 							});
+						}else if (currentChannelType == '11') {
+							grid.reload({
+								url : "./list?status=1&channelId=" + currentChannelId
+							});
 						} else if (currentChannelType == '5') {
 							grid.reload({
 								url : "../video/list?status=1&channelId=" + currentChannelId
@@ -263,6 +279,10 @@
 	};
 		function reBulidGrid(currentChannelType){
 			if (currentChannelType == '0') {
+				$("#content_grid").html("");
+				options.url = "./list?status=1&channelId=" + currentChannelId;
+				grid = $("#content_grid").dmGrid(options);
+			} else if (currentChannelType == '11') {
 				$("#content_grid").html("");
 				options.url = "./list?status=1&channelId=" + currentChannelId;
 				grid = $("#content_grid").dmGrid(options);
@@ -371,6 +391,14 @@
 			initSelect2Site();
 			grid = $("#content_grid").dmGrid(allOptions);
 		});
+		function dateTostr(utc)
+		{
+			if(utc)
+				{
+		     var date = new Date(utc);
+		     return date.getFullYear()+"-"+((date.getMonth()+1)>10?date.getMonth()+1:"0"+(date.getMonth()+1))+"-"+(date.getDate()>10?date.getDate():"0"+date.getDate())+" "+(date.getHours()>10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>10?date.getMinutes():"0"+date.getMinutes())+":"+(date.getSeconds()>10?date.getSeconds():"0"+date.getSeconds());
+		   }
+		}
 	</script>
 	<!-- END JAVASCRIPTS -->
 </body>

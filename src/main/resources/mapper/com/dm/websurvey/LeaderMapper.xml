@@ -28,7 +28,7 @@
         type=#{type,jdbcType=VARCHAR}
       </if>
    </where>    
-      <if test="sort!=null and order!=''">
+      <if test="sort!=null and sort!=''">
         	order by ${sort}
       </if>
   </select>

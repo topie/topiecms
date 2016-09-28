@@ -45,7 +45,9 @@
 							 <div class="row ggfw-btn-pd2 text-center fontSize18">
 								<#list contents as cmsContent>
 								    <div class="col-xs-4">
-									<a target="_blank" href="${cmsContent.url}" class="ggfw-btn">${cmsContent.title}</a>
+									<a target="_blank" href="${cmsContent.url}" class="ggfw-btn">
+									 ${cmsContent.title} 
+									</a>
 								    </div>
 								</#list>
 							  </div>
@@ -54,8 +56,9 @@
 						       <div class="wxqd-panel-c wxqd-panel-cpd1 bg-gray">
 							<ul class="panel2-list panel2-list-pds">
 							  <#list contents as cmsContent>
-								<li><span class="jh-dotted">·</span><a target="_blank" href="${cmsContent.url}"> ${cmsContent.title} 
-								<!--<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span>--></a></li>	
+								<li><span class="jh-dotted">·</span><a target="_blank" href="${cmsContent.url}">
+								<span class="panel2-list-content">${cmsContent.title} </span>
+								<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>	
 							  </#list>
 							 </ul>
 							</div>

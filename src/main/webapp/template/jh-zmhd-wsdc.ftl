@@ -23,6 +23,9 @@
                       <span>共有&nbsp;&nbsp;&nbsp;&nbsp;${voteTimes!}&nbsp;&nbsp;&nbsp;&nbsp;人投票</span>
                   </div>
                   <div class="pd6 row">
+		  <div class="row text-center mgb20">
+			 投票时间为&nbsp;&nbsp;:&nbsp;&nbsp;${startTime!} &nbsp;&nbsp;-&nbsp;&nbsp;  ${endTime!}
+		 </div>
                       <div class="col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10">
   		    <form id="toupiao">
   			<input type="hidden" value="${cmsVote.id}" name="voteId">
@@ -95,6 +98,7 @@
   						result=false;
   					}
   					alert(res.msg);
+					window.location.htef=voteId+"r.htm";
   					
   				}
   			})

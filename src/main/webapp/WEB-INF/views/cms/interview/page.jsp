@@ -319,12 +319,7 @@
                 format: 'YYYY-MM-DD hh:mm:ss'
             });
         });
-		$('input[role="date-picker1"]').on("click", function () {
-            laydate({
-                istime: true,
-                format: 'YYYY-MM-DD hh:mm:ss'
-            });
-        });
+		
 		currentInterviewId='${model.id}';
 		about_grid = $("#about_grid").dmGrid(aboutoptions(currentInterviewId));
 		image_grid = $("#image_grid").dmGrid(imageoptions(currentInterviewId));

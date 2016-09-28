@@ -85,7 +85,7 @@
                                       <div class="panel-body">
                                           <ul class="panel2-list panel2-list-pd">
 					  <#if channel.id==16>
-                                          <@videoListDirective channelId=16 pageSize=8 pageNum=1 order=1 titleLeft=20 >
+                                          <@videoListDirective channelId=16 pageSize=7 pageNum=1 titleLeft=36 >
                    	<#list cmsVideos as video>
                          <li> <a href="${video.url!}" target="_blank"><span class="panel2-list-content">${video.name!}</span>
                            <span class="panel2-list-time">${video.publishDate?string("yyyy-MM-dd")}</span></a></li>
@@ -95,7 +95,7 @@
                    </@videoListDirective>
                    
                                                                                                          </#if>
-                  			<@contentListDirective channelId=channel.id pageSize=7 titleLeft=30 order=4>
+                  			<@contentListDirective channelId=channel.id pageSize=7 titleLeft=36 order=2>
                   			  <#list contents as cmsContent>
                   				<li><a target="_blank" href="${cmsContent.url}"><span class="panel2-list-content">${cmsContent.title}</span><span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>	
                   			  </#list>
@@ -118,7 +118,7 @@
                   			<@channelListDirective channelId=channel.id order=4 pageSize=6>
                   			<#list channels as channel>
                   				<div class="col-xs-6">
-                  				    <a href="${channel.url}">${channel.displayName}</a>
+                  				    <a href="${channel.url}"  target="_blank">${channel.displayName}</a>
                   				</div>
                   			</#list>
                   			</@channelListDirective>

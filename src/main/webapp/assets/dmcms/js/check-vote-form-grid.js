@@ -41,8 +41,7 @@ var voteOptions = {
 		handle : function(index, data) {
 			window.open(data.filed1);
 		}
-	},
-	{
+	},{
 		text : "管理选项",
 		cls : "green btn-sm",
 		handle : function(index, data) {
@@ -70,115 +69,56 @@ var voteOptions = {
 			//var form = modal.$body.dmForm(getVoteForm());
 			form.loadRemote("../vote/load?id=" + data.id);
 		}
-	},{
-		text:"发布",
-		cls:"btn green btn-sm",
-		handle:function(i,c){
+	}, {
 
-			var url = "../vote/publish?voteIds="+c.id;
-			bootbox.confirm("确认发布!",function(res){
-				if(res){
-					$.ajax({
-					url : url,
-					type : "POST",
-					dataType : "json",
-					success : function(res) { 
-						grid.reload();
-					},
-					error : function() {
-						bootbox.alert("请求异常！");
-					}
-				});
-				}
-			})
-		}
-	}
-	
-	],
-	tools : [// 工具属性
-	{
-		text : "添加",
-		cls : "btn green btn-sm",
-		handle : function(grid) {// 按钮点击事件
-			if(currentChannelId==undefined)
-				bootbox.alert("请先选择频道");
-			else if(currentChannelIsParent)
-				bootbox.alert("请选择子频道进行添加!");
-			else{
-				showForm(9,"投票信息")
-				//form.loadRemote("../vote/load?videoId=" + data.id);
-				
-			}
-		}
-	},/*{
-		text : "移动",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../video/cutTo");
+		text : "发布",
+		cls : "green btn-sm",
+		handle : function(i, data) {
+
+			var url = "../vote/publish?voteIds="+data.id;
+			check(url,data.id);
 		}
 	}, {
-		text : "复制",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../video/copyTo");
+		text : "驳回",
+		cls : "yellow btn-sm",
+		handle : function(i, data) {
+			var url = "./back?voteIds="+data.id;
+			check(url,data.id);
 		}
-	},{
-		text : "提交",
+	} ],
+	tools : [// 工具属性
+	{
+		text : "批量发布",
 		cls : "btn green btn-sm",
-		handle : function(grid) {
+		handle : function(i, data) {
 			var ids = grid.getSelectIds();
-			if (ids.length > 0) {
-				var url = "../vote/check?voteIds=" + ids;
-				$.ajax({
-					url : url,
-					type : "POST",
-					dataType : "json",
-					success : function(res) {
-						bootbox.alert(res.msg);
-						grid.reload();
-					},
-					error : function() {
-						bootbox.alert("请求异常！");
-					}
-				});
-			} else {
-				bootbox.alert("请选择要提交的项");
-			}
+			var url = "../vote/publish?voteIds="+ids;
+			check(url,ids);
 		}
-	}, */ {
-		text : " 删 除",
-		cls : "btn red btn-sm",// 按钮样式
-		handle : function(grid) {
-			deleteItems(grid.getSelectIds());
+	}, {
+		text : "批量驳回",
+		cls : "btn green btn-sm",
+		handle : function(i, data) {
+			var ids = grid.getSelectIds();
+			var url = "./back?voteIds="+ids;
+			check(url,ids);
 		}
-	} ]
+	}]
 	
 };
 
 function getVoteForm(type,hasPublishRole) {
-	var buttons = [];
-	if(hasPublishRole){
-		buttons.push(
+	var buttons = [
 		{
 			type : 'submit',
 			attribute:'role=submit',
 			cls:'blue btn-lg',
-			text : '直接发布',
+			text : '发布',
 			handle : function() {
 				form.setAction("../vote/saveAndPublish");
 			}
-		});
-	}else{
-		buttons.push({
-			type : 'submit',
-			attribute:'role=submit',
-			cls:'blue btn-lg',
-			text : '提交审核',
-			handle : function() {
-				form.setAction("../vote/saveAndCommit");
-			}
-		});
-	}
+		}];
+	
 	buttons.push({
 		type : 'button',
 		text : '关闭',
@@ -217,20 +157,6 @@ function getVoteForm(type,hasPublishRole) {
 				name : 'description',// name
 				id : 'description',// id
 				label : '说明',// 左边label
-				cls : 'input-large'
-			},
-			{
-				type : 'datepicker',// 类型
-				name : 'startTime',// name
-				id : 'startTime',// id
-				label : '开始时间',// 左边label
-				cls : 'input-large'
-			},
-			{
-				type : 'datepicker',// 类型
-				name : 'endTime',// name
-				id : 'endTime',// id
-				label : '结束时间',// 左边label
 				cls : 'input-large'
 			},{
 				type : 'radioGroup',// 类型
@@ -273,7 +199,7 @@ function getVoteForm(type,hasPublishRole) {
 		id : "media_form",// 表单id
 		name : "media_form",// 表单名
 		method : "post",// 表单method
-		action : "../vote/insertOrUpdate",// 表单action
+		action : "../vote/saveAndCommit",// 表单action
 		ajaxSubmit : true,// 是否使用ajax提交表单
 		labelInline : true,
 		rowEleNum : 1,
@@ -392,7 +318,7 @@ function getoptions(id){
 					form.loadLocal({voteId:id});
 					/*var form = modal.$body.load("../interview/page?id="+data.id);*/
 					/*var form = modal.$body.dmForm(getVideoForm(data.contentType));*/
-					//form.loadLocal(data);
+					form.loadLocal(data);
 				}
 			},{
 				text : "删除",
@@ -404,16 +330,16 @@ function getoptions(id){
 					bootbox.confirm("确定删除?",function(r){
 						if(r){
 						
-						$.ajax({
-							url:"../vote/deleteOpt?id="+data.id,
-							type:"POST",
-							success:function(res){
-								grid.reload();
-							} ,
-							error:function(){
-								alert("错误");
-							}
-						});	
+					$.ajax({
+						url:"../vote/deleteOpt?id="+data.id,
+						type:"POST",
+						success:function(res){
+							in_grid.relaod();
+						} ,
+						error:function(){
+							alert("错误");
+						}
+					});	
 						}
 					});
 				}
@@ -441,13 +367,19 @@ function getoptions(id){
 					form.loadRemote("../video/load?videoId=" + data.id);*/
 					
 				}
-			},{
-				text : "返回",
-				cls : "btn btn-sm",
+			}/*{
+				text : "移动",
+				cls : "btn green btn-sm",
 				handle : function(grid) {
-					flushGrid();
+					cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../video/cutTo");
 				}
-			}  ]
+			}, {
+				text : "复制",
+				cls : "btn green btn-sm",
+				handle : function(grid) {
+					cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../video/copyTo");
+				}
+			},*/  ]
 			
 	};
 	return opt;

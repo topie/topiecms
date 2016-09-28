@@ -114,7 +114,9 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	@Override
 	public PageInfo<CmsContent> findCmsContentByPage(Integer pageNum,
 			Integer pageSize, Map argMap) {
-		argMap.put("sort", "seq desc,publish_date desc");
+		if(argMap.get("sort")==null){
+			argMap.put("sort", "seq desc,publish_date desc");
+		}
 		if (argMap.get("model") != null) {
 			Integer channelId = ((CmsContent) argMap.get("model"))
 					.getChannelId();

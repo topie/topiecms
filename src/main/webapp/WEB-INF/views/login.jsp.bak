@@ -183,6 +183,65 @@
         </div>
     </form>
     <!-- END FORGOT PASSWORD FORM -->
+    <!-- BEGIN REGISTRATION FORM -->
+    <form class="register-form" action="<%=basePath%>saveRegiest" method="post">
+        <div class="form-title">
+            <span class="form-title">注 册</span>
+        </div>
+        <p class="hint">请输入个人详细信息:</p>
+
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">姓名全称</label>
+            <input class="form-control placeholder-no-fix" type="text"
+                   placeholder="姓名全称" name="fullname"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">电子邮箱</label> <input
+                class="form-control placeholder-no-fix" type="text"
+                placeholder="电子邮箱" name="email"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">手机</label> <input
+                class="form-control placeholder-no-fix" type="text"
+                placeholder="手机" name="mobile"/>
+        </div>
+
+        <p class="hint">请填写账号信息:</p>
+
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">用户名</label>
+            <input class="form-control placeholder-no-fix" type="text"
+                   autocomplete="off" placeholder="用户名" id="username" name="username"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">密码</label>
+            <input class="form-control placeholder-no-fix" type="password"
+                   autocomplete="off" id="register_password" placeholder="密码"
+                   name="password"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">再次输入密码
+                Your Password</label> <input class="form-control placeholder-no-fix"
+                                             type="password" autocomplete="off"
+                                             placeholder="再次输入密码" name="rpassword"/>
+        </div>
+        <div class="form-group margin-top-20 margin-bottom-20">
+            <label class="check"> <input type="checkbox" name="tnc"/> <span
+                    class="loginblue-font">我同意 </span> <a href="#"
+                                                          class="loginblue-link">服务协议</a> <span
+                    class="loginblue-font">和</span> <a href="#"
+                                                       class="loginblue-link">隐私政策 </a> </label>
+
+            <div id="register_tnc_error"></div>
+        </div>
+        <div class="form-actions">
+            <button type="button" id="register-back-btn" class="btn btn-default">返回</button>
+            <button type="submit" id="register-submit-btn"
+                    class="btn btn-primary uppercase pull-right">完成注册
+            </button>
+        </div>
+    </form>
+    <!-- END REGISTRATION FORM -->
 </div>
 <div class="copyright hide">2015 © 中国. 金湖.
 </div>

@@ -9,119 +9,6 @@ function dateTostr(utc)
 }
 function getvideoOptions(action,hasPublishRole){
 
-	var actionCloums=[ {
-		text : "预览",
-		cls : "green btn-sm",
-		icon : "fa fa-search",
-		handle : function(index, data) {
-			window.open(data.url);
-		}
-	}, {
-
-		text : "编辑",
-		cls : "green btn-sm",
-		visable : function(i, c) {
-			/*if (c.status == "1")
-				return false;*/
-			return true;
-		},
-		handle : function(index, data) {
-			// index为点击操作的行数
-			// data为该行的数据
-			$("#content_grid").html("");
-			 form = $("#content_grid").dmForm(getVideoForm(data.contentType,hasPublishRole));
-			form.loadRemote("../video/load?videoId=" + data.id,function(){
-				if(data.publishDate){
-				var l = dateTostr(data.publishDate);
-				$("#publishDate").val(l);
-				}
-			});
-		}
-	}
-	, {
-		text : "排序",
-		cls : "yellow btn-sm",
-		handle : function(i, c) {
-			sortfun(i, c,c.name);
-		}
-	}
-	];
-	var tools=[// 工具属性
-	       	{
-	    		text : "添加",
-	    		cls : "btn green btn-sm",
-	    		handle : function(grid) {// 按钮点击事件
-	    			if(currentChannelId==undefined)
-	    				bootbox.alert("请先选择频道");
-	    			else if(currentChannelIsParent)
-	    				bootbox.alert("请选择子频道进行添加!");
-	    			else
-	    				showForm(5, "视频内容");
-	    		}
-	    	},{
-	    		text : "移动",
-	    		cls : "btn green btn-sm",
-	    		handle : function(grid) {
-	    			cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../video/cutTo");
-	    		}
-	    	}, {
-	    		text : "复制",
-	    		cls : "btn green btn-sm",
-	    		handle : function(grid) {
-	    			cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../video/copyTo");
-	    		}
-	    	}, {
-	    		text : " 删 除",
-	    		cls : "btn red btn-sm",// 按钮样式
-	    		handle : function(grid) {
-	    			deleteItems(grid.getSelectIds());
-	    		}
-	    	} ];
-	if(hasPublishRole){
-		actionCloums.push(
-				{
-					text : "发布",
-					cls : "green btn-sm",
-					handle : function(i, data) {
-						var url = "../video/check?status=2&videoIds="+data.id;
-						$.ajax({
-							url:url,
-							type:'POST',
-							success:function(res){
-								bootbox.alert(res.msg);
-								flushGrid();
-							}
-						});
-						}
-					}
-		);
-	}else{
-		tools.push({
-    		text : "提交",
-    		cls : "btn green btn-sm",
-    		handle : function(grid) {
-    			var ids = grid.getSelectIds();
-    			if (ids.length > 0) {
-    				var url = "../video/commit?videoIds=" + ids;
-    				$.ajax({
-    					url : url,
-    					type : "POST",
-    					dataType : "json",
-    					success : function(res) {
-    						bootbox.alert(res.msg);
-    						grid.reload();
-    					},
-    					error : function() {
-    						bootbox.alert("请求异常！");
-    					}
-    				});
-    			} else {
-    				bootbox.alert("请选择要提交的项");
-    			}
-    		}
-    	});
-	}
-
 var videoOptions = {
 	url : action, // ajax地址
 	pageNum : 1,// 当前页码
@@ -155,8 +42,49 @@ var videoOptions = {
 	} ],
 	actionCloumText : "操作",// 操作列文本
 	actionCloumWidth : "30%",
-	actionCloums : actionCloums,
-	tools : tools
+	actionCloums : [ {
+		text : "预览",
+		cls : "green btn-sm",
+		icon : "fa fa-search",
+		handle : function(index, data) {
+			window.open(data.url);
+		}
+	}, {
+
+		text : "发布",
+		cls : "green btn-sm",
+		handle : function(i, data) {
+			var url = "../video/check?status=2&videoIds="+data.id;
+			check(url,data.id);
+		}
+	}
+	, {
+		text : "驳回",
+		cls : "yellow btn-sm",
+		handle : function(i, data) {
+			var url = "../video/check?status=3&videoIds="+data.id;
+			check(url,data.id);
+		}
+	}
+	],
+	tools : [// 工具属性
+	{
+		text : "批量发布",
+		cls : "btn green btn-sm",
+		handle : function(i, data) {
+			var ids = grid.getSelectIds();
+			var url = "../video/check?status=2&videoIds="+ids;
+			check(url,ids);
+		}
+	},{
+		text : "批量驳回",
+		cls : "btn green btn-sm",
+		handle : function(i, data) {
+			var ids = grid.getSelectIds();
+			var url = "../video/check?status=3&videoIds="+ids;
+			check(url,ids);
+		}
+	} ]
 	
 };
 return videoOptions;
@@ -165,28 +93,18 @@ return videoOptions;
 /** *************视频表单*************** */
 function getVideoForm(typeId,hasPublishRole) {
 	var buttons = [];
-	if(hasPublishRole){
+	
 		buttons.push(
 		{
 			type : 'submit',
 			attribute:'role=submit',
 			cls:'blue btn-lg',
-			text : '直接发布',
+			text : '发布',
 			handle : function() {
 				form.setAction("../video/saveAndPublish");
 			}
 		});
-	}else{
-		buttons.push({
-			type : 'submit',
-			attribute:'role=submit',
-			cls:'blue btn-lg',
-			text : '提交审核',
-			handle : function() {
-				form.setAction("../video/saveAndCommit");
-			}
-		});
-	}
+		
 	buttons.push({
 		type : 'button',
 		text : '关闭',
@@ -344,7 +262,7 @@ function getVideoForm(typeId,hasPublishRole) {
 		id : "media_form",// 表单id
 		name : "media_form",// 表单名
 		method : "post",// 表单method
-		action : "../video/insertOrUpdate",// 表单action
+		action : "../video/saveAndCommit",// 表单action
 		ajaxSubmit : true,// 是否使用ajax提交表单
 		labelInline : true,
 		rowEleNum : 1,

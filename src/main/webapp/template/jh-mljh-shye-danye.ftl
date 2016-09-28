@@ -35,9 +35,9 @@
               </div>
                 <div class="col-md-8">
 			<@contentListDirective channelId =own pageSize=1 pageNum=1>
-			<@channelDirecitve channelId=own>
+			<@channelDirective channelId=own>
                       <div class="fontSize18 new-list2-t">${channel.displayName!}</div>
-		      </@channelDirecitve>
+		      </@channelDirective>
 			<#list contents as cmsContent>
                       <#if cmsContent.titleImageUrl?length gt 0>
                              <div class="thumbnail jh-article-thumbnail">

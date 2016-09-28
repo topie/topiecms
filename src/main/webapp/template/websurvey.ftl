@@ -40,7 +40,7 @@
            									value="1d14616d7163b7e9c56edc7e996394e3">
                         <td style="width: 100px;">姓名<span class="color-green">*</span></td>
                         <td><input type="text" name="username" class="form-control" placeholder="请输入您的名字" datatype="*"></td>
-                        <td style="width: 100px;">年龄<span class="color-green">*</span></td>
+                        <td style="width: 100px;">年龄 </td>
                         <td><input type="number" name="age"  class="form-control" placeholder="请输入您的年龄" datatype="n"></td>
                     </tr>
                     <tr>
@@ -57,13 +57,13 @@
                     <tr>
                         <td>联系电话<span class="color-green">*</span></td>
                         <td><input type="tel" name="phone" class="form-control" placeholder="请输入您的联系电话" datatype="m"></td>
-                        <td>电子邮箱<span class="color-green">*</span></td>
+                        <td>电子邮箱 </td>
                         <td><input type="email" name="email" class="form-control" placeholder="请输入您的电子邮箱" datatype="e"></td>
                     </tr>
                     <tr>
-                        <td>联系地址<span class="color-green">*</span></td>
+                        <td>联系地址 </td>
                         <td><input type="text" name="address" class="form-control" placeholder="请输入您的联系地址" datatype="*"></td>
-                        <td>邮政编码<span class="color-green">*</span></td>
+                        <td>邮政编码 </td>
                         <td><input type="text" name="postcode" class="form-control" placeholder="请输入您的邮政编码" datatype="p"></td>
                     </tr>
 		    <#if code??> <#if code=="1">
@@ -124,7 +124,7 @@
                         </td>
                     </tr>
                     <!--<tr>
-                        <td valign="top">添加附件<span class="color-green">*</span></td>
+                        <td valign="top">添加附件 </td>
                         <td colspan="4">
                             <input type="file" name="fileUpdata" rows="10" placeholder="选择需要上传的附件" datatype="*">
                            

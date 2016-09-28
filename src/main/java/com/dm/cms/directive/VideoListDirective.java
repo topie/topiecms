@@ -47,15 +47,15 @@ public class VideoListDirective implements TemplateDirectiveModel{
 			return;
 		}
 		Integer order = Integer.valueOf(params.get("order")==null?"1":params.get("order").toString());
-		params.put("order", "seq asc,publish_date desc");
+		params.put("order", "publish_date desc");
 		if(order==2)
 		{
-			params.put("order", "publish_date desc");
+			params.put("order", "seq asc,publish_date desc");
 		}
-		else
+		/*else
 		{
 			params.put("order", "create_time desc");
-		}
+		}*/
 		Integer pageSize = params.get("pageSize") == null ? 12 : Integer.valueOf(params.get("pageSize")
 				.toString());
 		Integer pageNum = params.get("pageNum") == null ? 1 : Integer

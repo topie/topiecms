@@ -62,7 +62,7 @@
 			<div class="row">
 			    <div class="clearfix" id="hidepic" style="display:none;">
 				<#list cmsInterview.info.images as image>
-				<#if image_index gt 4>
+				<#if image_index gt 3>
 				<div class="col-xs-3" style="margin-top:18px;">
 				    <div class="thumbnail thumbnails">
 					<img src="${image.imgUrl!}" class="thumbnail-border-gray" style="width:100%; height:147px;">

@@ -35,9 +35,10 @@
     <include refid="Base_Column_List" />
     from cms_vote
     where channel_id = #{model.channelId}
-    <if test="model.status!=null and model.status!=''">
+    <!-- <if test="model.status!=null and model.status!=''">
     	and status = #{model.status}
-    </if>
+    </if> -->
+    and status !='9'
     <if test="model.title!=null and model.title!=''">
     	and title like concat('%',#{model.title},'%')
     </if>
