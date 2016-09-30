@@ -45,7 +45,7 @@
        			${pagination}
                    </@videoListDirective>
                     <#else>
-       		   <@contentListDirective channelId=channel.id pageSize=channel.pageSize pageNum=pageNum titleLeft=50 order=4>
+       		   <@contentListDirective channelId=channel.id pageSize=channel.pageSize pageNum=pageNum titleLeft=50 order=2>
                        <ul class="panel2-list panel2-list-pd news-list2">
 			  <#list contents as cmsContent>
 				<li><a target="_blank" href="${cmsContent.url}">

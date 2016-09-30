@@ -40,7 +40,7 @@
               							<div class="tab-content navTab1-content pTextIndent">
               								<#list channels as channel>
               									<div role="tabpanel"   class="tab-pane ${(channel_index==0)?string('active','')}" id="chgk${channel.id}">
-              										<div style="overflow: hidden;height: 162px;">${channel.contentText!}</div>
+              										<div style="overflow: hidden;height: 146px;">${channel.contentText!}</div>
                                                   <a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>
               									</div>
               								</#list>

@@ -34,7 +34,7 @@
                   	    <li><span class="jh-dotted">·</span>主题： <a href="${v.url!}">${v.title!}</a></li>
                   	    <li><span class="jh-dotted">·</span>嘉宾：   ${v.guests!}</li>
                   	    <li><span class="jh-dotted">·</span>时间：   ${v.startTime!}—${v.endTime}</li>
-                       <li class="htAuto"><span class="jh-dotted">·</span>${v.desc!}</li>
+                       <li class="htAuto"><span class="jh-dotted">·</span>${v.desc?substring(0,130)!}</li>
                   	</#list>
                   </@interviewListDirective>
                                         
@@ -110,7 +110,7 @@
                                      </tbody>
                                    </table>-->
                                  </div>
-                                 <div role="tabpanel active" class="tab-pane" id="lxhf">
+                                 <div role="tabpanel " class="tab-pane active" id="lxhf">
                                    <table class="table table-bordered table-hover table1">
                                      <thead>
                                        <tr>

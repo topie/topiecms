@@ -445,24 +445,36 @@ var allOptions = {
 				check(url,data.id);
 			}
 		} ],
-		/*tools : [// 工具属性
+		tools : [// 工具属性
 		{
 			text : "批量发布",
 			cls : "btn green btn-sm",
 			handle : function(i, data) {
-				var ids = grid.getSelectIds();
-				var url = "./check?status=2&ids="+ids;
+				var datas = grid.getSelectDatas();
+				var ids=[];
+				var types=[];
+				for(var i=0;i<datas.length;i++){
+					ids.push(datas.id);
+					types.push(datas.channelType);
+				}
+				var url = "./checkAll?status=2&ids="+ids+"&channelTypes="+data.channelType;
 				check(url,ids);
 			}
 		}, {
 			text : "批量驳回",
 			cls : "btn green btn-sm",
 			handle : function(i, data) {
-				var ids = grid.getSelectIds();
-				var url = "./check?status=3&ids="+ids;
+				var datas = grid.getSelectDatas();
+				var ids=[];
+				var types=[];
+				for(var i=0;i<datas.length;i++){
+					ids.push(datas.id);
+					types.push(datas.channelType);
+				}
+				var url = "./checkAll?status=3&ids="+ids+"&channelTypes="+data.channelType;
 				check(url,ids);
 			}
-		}],*/
+		}],
 		search : {
 			rowEleNum : 2,
 			// 搜索栏元素

@@ -35,30 +35,13 @@
          
                                  <div class="ztrd4-tbg fontSize18 mgb10"><a href="${channel.url}" target="_blank">${channel.displayName}</a> </div>
          						<@contentListDirective channelId=channel.id pageSize=6 pageNum=1 titleLeft=28 order=2>  
-         							<#list contents as cmsContent>
-         							<#if cmsContent_index == 0>
          							
-                                 <div class="ztrd4-pd borderBottom clearfix">
-                                     <div class="col-xs-6">
-                                         <a href="${cmsContent.url}" target="_blank" class="thumbnail thumbnails">
-                                             <img src="${cmsContent.titleImageUrl}">
-                                         </a>
-                                     </div>
-                                     <div class="col-xs-6">
-                                         <a href="${cmsContent.url}" target="_blank" class="ztrd4-line-height">${cmsContent.brief!}<span class="color-green">【 详细 】</span></a>
-                                     </div>
-         							 
-                                 </div>
-         						</#if>
-         						 </#list> 
                                  <div class="ztrd4-pd clearfix">
                                      <ul class="panel2-list">
          							<#list contents as cmsContent>
-         								<#if cmsContent_index &gt; 0>
          									<li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">
          	${cmsContent.title}
          </a></li>
-         								</#if>
          							</#list>
                                      </ul>
                                  </div>

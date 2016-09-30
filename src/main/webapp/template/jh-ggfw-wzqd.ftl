@@ -29,7 +29,7 @@
         </span>
     </div>
     <div class="container text-center fontSize18">
-	  <@channelListDirective channelId=channel.pid>
+	  <@channelListDirective channelId=39>
         <div class="row wxqd-red mgb20">
             <div class="col-md-11">
                 <div class="row">
@@ -59,31 +59,65 @@
     <div class="jh-main">
         <div class="row">
             <div class="col-md-4">
-			<@channelDirective channelId=channel.pid>
-                <div class="fontSize18 pd3 color-red">${channel.displayName!}</div>
-                <ul class="news-list1 news-list1-sm wxqd-red fontSize16 clearfix">
-					<@channelListDirective channelId=channel.id >
+		<@channelListDirective channelId=own>
+			<#if channels?size gt 0>
+				<div class="fontSize18 pd3 color-red">${channel.displayName!}</div>
+				<ul class="news-list1 news-list1-sm wxqd-red fontSize16 clearfix">
 					<#list channels as cha>
-                    <li class="${(cha.id==own)?string('active','')}"><a href="${cha.url!}"><span class="glyphicon glyphicon-play-circle"></span>${cha.displayName!}</a> </li>
-                    </#list>
-					</@channelListDirective>
-                </ul>
-			</@channelDirective>
+				    <li class="${(cha.id_index==0)?string('active','')}"><a href="${cha.url!}"><span class="glyphicon glyphicon-play-circle"></span>${cha.displayName!}</a> </li>
+				    </#list>
+				</ul>
+			<#else>
+				<@channelDirective channelId=channel.pid>
+				<div class="fontSize18 pd3 color-red">${channel.displayName!}</div>
+				<ul class="news-list1 news-list1-sm wxqd-red fontSize16 clearfix">
+							<@channelListDirective channelId=channel.id >
+							<#list channels as cha>
+				    <li class="${(cha.id==own)?string('active','')}"><a href="${cha.url!}"><span class="glyphicon glyphicon-play-circle"></span>${cha.displayName!}</a> </li>
+				    </#list>
+				</@channelListDirective>
+			</ul>
+				</@channelDirective>
+			</#if>
+		</@channelListDirective>
+			
             </div>
             <div class="col-md-8 pdTop1em">
-			<@channelDirective channelId=own>
-                <div class="fontSize18 new-list2-t wxqd-red">${channel.displayName!}</div>
-				<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=channel.pageNum titleLeft=37>
-				<#list contents as cont>
-                <ul class="panel2-list panel2-list-pd news-list2 wxqd-red">
-                    <li><a href="${cont.url!}" target="_blank">
-					<span class="panel2-list-content">${cont.title!}</span><span class="panel2-list-time">${cont.publishDate?string('yyyy-MM-dd')}</span>
-					</a></li>
-                </ul>
+	    <@channelListDirective channelId=own>
+			<#if channels?size gt 0>
+				<#list channels as ch>
+					<#if ch_index==0>
+					<@channelDirective channelId=ch.id>
+				<div class="fontSize18 new-list2-t wxqd-red">${channel.displayName!}</div>
+						<@contentListDirective channelId=ch.id pageSize=channel.pageSize pageNum=channel.pageNum titleLeft=37>
+						<#list contents as cont>
+				<ul class="panel2-list panel2-list-pd news-list2 wxqd-red">
+				    <li><a href="${cont.url!}" target="_blank">
+							<span class="panel2-list-content">${cont.title!}</span><span class="panel2-list-time">${cont.publishDate?string('yyyy-MM-dd')}</span>
+							</a></li>
+				</ul>
+						</#list>
+				${pagination!}
+						</@contentListDirective>
+					</@channelDirective>
+					</#if>
 				</#list>
-                ${pagination!}
-				</@contentListDirective>
-			</@channelDirective>
+			<#else>
+				<@channelDirective channelId=own>
+				<div class="fontSize18 new-list2-t wxqd-red">${channel.displayName!}</div>
+						<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=channel.pageNum titleLeft=37>
+						<#list contents as cont>
+				<ul class="panel2-list panel2-list-pd news-list2 wxqd-red">
+				    <li><a href="${cont.url!}" target="_blank">
+							<span class="panel2-list-content">${cont.title!}</span><span class="panel2-list-time">${cont.publishDate?string('yyyy-MM-dd')}</span>
+							</a></li>
+				</ul>
+						</#list>
+				${pagination!}
+						</@contentListDirective>
+					</@channelDirective>
+			</#if>
+			</@channelListDirective>
             </div>
         </div>
     </div>
