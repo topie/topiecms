@@ -454,10 +454,10 @@ var allOptions = {
 				var ids=[];
 				var types=[];
 				for(var i=0;i<datas.length;i++){
-					ids.push(datas.id);
-					types.push(datas.channelType);
+					ids.push(datas[i].id);
+					types.push(datas[i].channelType);
 				}
-				var url = "./checkAll?status=2&ids="+ids+"&channelTypes="+data.channelType;
+				var url = "./checkAll?status=2&ids="+ids+"&channelTypes="+types;
 				check(url,ids);
 			}
 		}, {

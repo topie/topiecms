@@ -130,33 +130,32 @@ public class CmsContentController {
 	@RequestMapping("/checkAll")
 	public @ResponseBody Map checkAll(HttpServletRequest request, Short status,
 			String channelTypes, String ids) {
-		if (channelTypes != null && channelTypes.equals("")) {
+		if (channelTypes != null && !channelTypes.equals("")) {
 			int i = 0;
 			String[] idArray = ids.split(",");
 			for (String channelType : channelTypes.split(",")) {
+				System.out.println(channelType);
 				Integer id = Integer.valueOf(idArray[i++]);
 				if (channelType.equals("0")) {
 					boolean succ = this.cmsContentService.updateContentState(
 							request, id, status);
-					if (succ) {
-						return ResponseUtil.error("操作成功！！");
-					}
 				} else if (channelType.equals("5")) {
 
 					cmsVideoService.updateStatus(Integer.valueOf(status),
 							id.toString(), request);
-					return ResponseUtil.error("操作成功！！");
 				} else if (channelType.equals("9")) {
 					cmsVoteService.updateStatus(id, status.toString());
-					return ResponseUtil.error("操作成功！！");
 				} else if (channelType.equals("8")) {
 					cmsInterviewService.checke(id.toString(),
 							String.valueOf(status));
-					return ResponseUtil.error("操作成功！！");
 				}
+			 }
+			return ResponseUtil.success("操作成功！");
 			}
-		}
-		return ResponseUtil.error("操作失败！");
+			else
+			{
+				return ResponseUtil.error("操作失败！");
+			}
 	}
 
 	@RequestMapping("/rlist")
