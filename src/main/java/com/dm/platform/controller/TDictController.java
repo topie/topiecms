@@ -1,12 +1,15 @@
 package com.dm.platform.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,6 +125,9 @@ public class TDictController {
 	@ResponseBody
 	public Object getLocal(String code){
 		List<TDictItem> list =TDictUtil.itemList(code);
+		if(list==null){
+			return Collections.emptyList();
+		}
 		List<Map> ls = new ArrayList<Map>();
 		for(TDictItem item:list){
 			Map mp = new HashMap();

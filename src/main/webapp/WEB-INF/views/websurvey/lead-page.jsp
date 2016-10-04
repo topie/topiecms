@@ -225,6 +225,33 @@
 							value : '2',
 							text : '书记'
 						}]
+					},{
+						type : 'image',
+						id : 'headImg',
+						name : 'headImg',
+						label : '头像',
+						isAjaxUpload : true,
+						autoUpload : true,
+						uploadUrl : '../cms/attachment/singleUpload',
+						onSuccess : function(data) {
+							if (data.status == "1") {
+								$("#headImg")
+										.attr("value", data.attachment.attachmentUrl);
+							} else {
+								alert(data.msg);
+							}
+						},
+						deleteHandle : function() {
+							$("#headImg").attr("value", "");
+						}
+					} ,{
+						type:'select',
+						name:'org',
+						id:'org',
+						label:'分类',
+						cls:'input-large',
+						items:[],
+						itemsUrl:'../dict/getItems?code=C01'
 					}
 					]
 	}
@@ -347,6 +374,9 @@
 						return "书记";
 						return "";
 			}
+		},{
+			title:'分类',
+			field:'org'
 		}, {
 			title : "排序",
 			field : "seq"
@@ -390,12 +420,15 @@
 		} ],
 		search : {
 			rowEleNum : 2,
+			hide:false,
 			// 搜索栏元素
 			items : [ {
-				type : "text",
-				label : "标题",
-				name : "title",
-				placeholder : "输入要搜索的内容信息标题"
+				type : "select",
+				label : "分类",
+				name : "org",
+				id:'sorg',
+				items:[{text:'全部',value:''}],
+				itemsUrl:'../dict/getItems?code=C01'
 			} ]
 		}
 	};

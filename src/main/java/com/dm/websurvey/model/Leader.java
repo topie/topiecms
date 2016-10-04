@@ -8,10 +8,14 @@ public class Leader {
     private String occupation;
 
     private String division;
-    
+
     private String type;
-    
-    private int seq;
+
+    private Integer seq;
+
+    private String org;
+
+    private String headImg;
 
     public String getId() {
         return id;
@@ -45,20 +49,35 @@ public class Leader {
         this.division = division == null ? null : division.trim();
     }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
 
-	public int getSeq() {
-		return seq;
-	}
+    public Integer getSeq() {
+        return seq;
+    }
 
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
+    public void setSeq(Integer seq) {
+        this.seq = seq;
+    }
 
+    public String getOrg() {
+        return org;
+    }
+
+    public void setOrg(String org) {
+        this.org = org == null ? null : org.trim();
+    }
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg == null ? null : headImg.trim();
+    }
 }
