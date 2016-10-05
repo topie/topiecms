@@ -63,7 +63,7 @@
                <if test="state !=null">
                  and state = #{model.state}
                </if>
-            <if test="isOpen!=null">
+            <if test="isOpen!=null and isOpen!=''">
              and is_open = #{isOpen}
              </if>
              <if test="isSatisfied!=null">

@@ -38,7 +38,7 @@
         </div>
         <div class="fontSize18 color-green mgb20">专题服务 - ${channel.displayName!}</div>
 	<div class="row">
-	<@channelListDirective channelId=own >
+	<@channelListDirective channelId=own channelType='0'>
 		<#if (channels?size gt 2)>
 			<#if (channels?size == 4)>
 				<#list channels as channel>
@@ -116,6 +116,15 @@
 		</#if>
 	</@channelListDirective>
         </div>
+	<@channelListDirective channelId=own channelType='2'>
+		<div class="row" style="text-align: center;">
+			<#list channels as ch>
+			<div class="col-md-2">
+				<a href="${ch.url!}" target="_blank" class="index-jbzw-btn index-jbzw-btns">${ch.displayName!}</a>
+			</div>
+			</#list>
+		</div>
+	</@channelListDirective>
     </div>
             <#include "/template/jh-links.ftl">
         </div>

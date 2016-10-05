@@ -31,17 +31,17 @@
                                        <ul class="panel2-list">
                                          <@interviewListDirective channelId=51 pageSize=1 pageNum=1 >
                   	<#list cmsInterviews as  v>
-                  	    <li><span class="jh-dotted">·</span>主题： <a href="${v.url!}">${v.title!}</a></li>
-                  	    <li><span class="jh-dotted">·</span>嘉宾：   ${v.guests!}</li>
+                  	    <li><span class="jh-dotted">·</span>主题： <a href="${v.url!}" title="${v.title!}"><#if v.title?length gt 22>${v.title?substring(0,20)!}...<#else>${v.title!}</#if></a></li>
+                  	    <li><span class="jh-dotted">·</span title="${v.guests!}">嘉宾：<#if v.guests?length gt 22>${v.guests?substring(0,20)!}...<#else>${v.guests!}</#if>   </li>
                   	    <li><span class="jh-dotted">·</span>时间：   ${v.startTime!}—${v.endTime}</li>
-                       <li class="htAuto"><span class="jh-dotted">·</span>${v.desc?substring(0,130)!}</li>
+                       <li class="htAuto"><span class="jh-dotted">·</span><#if v.desc?length gt 90>${v.desc?substring(0,87)!}...<#else>${v.desc!}</#if></li>
                   	</#list>
                   </@interviewListDirective>
                                         
                                          
                                        </ul>
                                      </div>
-                                     <div class="borderTop clearfix"> <a href="javascript:void(0);" class="color-green fontSize18 pd2 dis-b">下期预告</a>
+                                     <div class="borderTop clearfix"> <span  class="color-green fontSize18 pd2 dis-b">下期预告</span>
                                        <ul class="panel2-list panel2-list-sm">
                                          <@interviewListDirective channelId=51 pageSize=1 pageNum=1 finish='true'>
 					 <#if (cmsInterviews?size gt 0)>
@@ -80,7 +80,7 @@
                                <!-- Tab panes -->
                                <div class="tab-content navTab1-content navTab3-content1 pTextIndent">
                                  <div role="tabpanel" class="tab-pane" id="blqk">
-				 <@contentListDirective channelId=49 pageSize=5 pageNum=pageNum titleLeft=40 order=10>  
+				 <@contentListDirective channelId=49 pageSize=5 pageNum=pageNum titleLeft=40 order=2>  
 				 <ul class="panel2-list">
                             			    <#list contents as cmsContent>
                                                             <li><span class="jh-dotted">·</span><a href="${cmsContent.url}">${cmsContent.title}</a></li>
@@ -121,7 +121,7 @@
                                        </tr>
                                      </thead>
                                      <tbody>
-                                       <@websurveyListDirective pageNum=1 pageSize=5 type="2,4">
+                                       <@websurveyListDirective pageNum=1 pageSize=5 type="1,2,3,4" isOpen='1'>
                                       <#list websurveys as websurvey>
                                        <tr>
                                          <td>${websurvey.username!}</td>

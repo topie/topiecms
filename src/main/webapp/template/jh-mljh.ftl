@@ -123,7 +123,10 @@
                                         	<td class="paddClass">
                                             	<table cellpadding="0" cellspacing="0" width="100%" align="center"; border="0">
                                                 	<tbody>
-							<@contentListDirective channelId=10 pageSize=9 pageNum=1 titleLeft=20 order=1> 
+							<@contentListDirective channelId=10 pageSize=9 pageNum=1 titleLeft=20 order=1>
+								<tr>
+									<td class="tdClass panel2-list" style="line-height: 10px;"><span class="jh-dotted"> </span> </td>
+								</tr>
 								<#list contents as cmsContent>
 								<tr>
 									<td class="tdClass panel2-list"><span class="jh-dotted">·</span>${cmsContent.title}</td>

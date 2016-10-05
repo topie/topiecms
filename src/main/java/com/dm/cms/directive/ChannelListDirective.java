@@ -72,6 +72,10 @@ public class ChannelListDirective implements TemplateDirectiveModel{
 		String[] cludeIds = params.get("includeIds").toString().split(",");
 		params.put("includeIds", cludeIds);
 		}
+		if(params.get("channelType")!=null)
+		{ 
+		params.put("channelType", String.valueOf(params.get("channelType")));
+		}
 		List<CmsChannel> cmsChannels = cmsChannelService.findByRoot(params);
 		log.debug("-------params------{}",params);
 		log.debug("-------channelIds------{}",cmsChannels.size());

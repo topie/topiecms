@@ -83,7 +83,7 @@
                                                                                      <div class="col-md-5 pdTop1em">
                                                                                        <@topOneDirective titleLeft=20>
                                                                                 			
-                                                                                				<p class="fontSize22 color-green"><a href="${cmsContent.url!}" style="${cmsContent.titleStyle!}" target="_blank">${cmsContent.title!}</a></p>
+                                                                                				<p class="fontSize22 color-green" style="text-align: center;"><a href="${cmsContent.url!}" style="${cmsContent.titleStyle!}" target="_blank">${cmsContent.title!}</a></p>
         
                                                                  				</@topOneDirective >
                                                                                        

@@ -557,6 +557,25 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 								maxlength : "最多输入64字节"
 							}
 						},{
+							type : 'image',
+							id : 'titleImageUrl',
+							name : 'titleImageUrl',
+							label : '标题图',
+							isAjaxUpload : true,
+							autoUpload : true,
+							uploadUrl : '../attachment/singleUpload',
+							onSuccess : function(data) {
+								if (data.status == "1") {
+									$("#titleImageUrl")
+											.attr("value", data.attachment.attachmentUrl);
+								} else {
+									alert(data.msg);
+								}
+							},
+							deleteHandle : function() {
+								$("#titleImageUrl").attr("value", "");
+							}
+						},{
 							type : 'colorpicker',// 类型
 							name : 'titleStyle',// name
 							id : 'titleStyle',// id
@@ -858,8 +877,8 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 			}*/]
 		});  
 	}
+	items.push(titleImg);
 	if (contentType == 0) {
-		items.push(titleImg);
 		items.push(titleImgTitle);
 		items.push(contentText);
 		items.push(offic);

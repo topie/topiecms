@@ -369,9 +369,12 @@ public class CmsPortalController {
 		if(webSur==null){
 			return ResponseUtil.error();
 		}
+		if(webSur.getIsSatisfied()!=null ){ 
+			return ResponseUtil.success("已评价!");
+		}
 		webSur.setIsSatisfied(isSatisfied);
 		this.webSurveyService.update(webSur);
-		return ResponseUtil.success();
+		return ResponseUtil.success("评价成功!");
     }
 	
 	@RequestMapping("/leader/leaderfront")

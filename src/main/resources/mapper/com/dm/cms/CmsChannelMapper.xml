@@ -99,6 +99,9 @@
 			    <if test="forbidden!=null">
 			    	and forbidden = #{forbidden}
 			    </if>
+			    <if test="channelType!=null and channelType!=''">
+			    	and channel_type =#{channelType}
+			    </if>
 			     order by ${order}
         </where>
 	</select>

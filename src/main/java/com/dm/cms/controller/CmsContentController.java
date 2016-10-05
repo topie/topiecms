@@ -130,13 +130,13 @@ public class CmsContentController {
 	@RequestMapping("/checkAll")
 	public @ResponseBody Map checkAll(HttpServletRequest request, Short status,
 			String channelTypes, String ids) {
+		try{
 		if (channelTypes != null && !channelTypes.equals("")) {
 			int i = 0;
 			String[] idArray = ids.split(",");
 			for (String channelType : channelTypes.split(",")) {
-				System.out.println(channelType);
 				Integer id = Integer.valueOf(idArray[i++]);
-				if (channelType.equals("0")) {
+				if (channelType.equals("0")||channelType.equals("11")||channelType.equals("10")) {
 					boolean succ = this.cmsContentService.updateContentState(
 							request, id, status);
 				} else if (channelType.equals("5")) {
@@ -156,6 +156,9 @@ public class CmsContentController {
 			{
 				return ResponseUtil.error("操作失败！");
 			}
+		}catch(Exception e){
+			return ResponseUtil.error("操作失败！");
+		}
 	}
 
 	@RequestMapping("/rlist")

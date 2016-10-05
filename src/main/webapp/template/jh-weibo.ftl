@@ -24,7 +24,7 @@
 			<#list microcobols as micr>
 			<div class="col-md-1 col-sm-1 col-xs-2 add-edage">
 			    <div class="thumbnail thumbnails">
-				<a href="${micr.link!}" target="_blank"><img title="${micr.name!}" alt="${micr.name!}" src="${micr.logo!}" class="thumbnail-border-gray" style="width:100%;"></a>
+				<a href="${micr.link!}" target="_blank"><img title="${micr.name!}" alt="${micr.name!}" src="${micr.logo!}" height="77.7px" class="thumbnail-border-gray" style="width:100%;"></a>
 				<p style="white-space: nowrap;overflow: hidden;text-align: center;" title="${micr.name!}">${micr.name!}</p>
 			    </div>
 			</div> 

@@ -57,7 +57,7 @@
         		   <div class="jh-article-download">
         				   <#list cmsAttachments as cmsAttachment>
         				  
-        				   <a href='${cmsAttachment.attachmentUrl}'><div class="btn btn-default btn-lg btn-download">
+        				   <a href='/jinhuadmin/cms/attachment/download/${cmsAttachment.id}'><div class="btn btn-default btn-lg btn-download">
         				   <span class="glyphicon glyphicon-save-file"></span><span style="font-size: 1.3ex;">&nbsp; 
         				   ${cmsAttachment.attachmentName?default("未命名")}
         				   &nbsp;</span>

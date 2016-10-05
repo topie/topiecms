@@ -5,6 +5,7 @@
            <title>${site.displayName}-${channel.displayName}</title>
            <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
            <link href="/html/jinhu-static/css/style.ts.css" rel="stylesheet">
+	   <link href="/html/jinhu-static/css/style.wq1.css" rel="stylesheet">
            <!--[if lt IE 9]>
            <script src="/html/jinhu-static/js/html5shiv.min.js"></script>
            <script src="/html/jinhu-static/js/respond.min.js"></script>
@@ -17,18 +18,19 @@
            <#include "/template/jh-current.ftl">
            <div class="jh-main">
               <div class="clearfix refer">
-		    <div class="color-green mgb20"><img src="/html/jinhu-static/img/green.png" style="margin-right:10px;">${channel.displayName!}</div>
+		    <div class="color-green mgb20 font-weight20"><img src="/html/jinhu-static/img/green.png" style="margin-right:10px;">${channel.displayName!}</div> 
 		    <div class="row pdt10"> 
 		    <@contentListDirective channelId=own>
 		    <#list contents as content>
-			<div class="col-xs-12 col-sm-4">
-			    <ul class="panel2-list panel2-list-sm">
-				<li><span class="jh-dotted">·</span><a href="${content.url!}" target="_blank">${content.title!}</a></li>
-			    </ul>
-			</div>
+			<div class="col-md-2 col-sm-2 col-xs-2 add-edage">
+			    <div class="thumbnail thumbnails">
+				<a href="${content.url!}" target="_blank"><img src="${content.titleImageUrl!}"  height="117px" style="width:100%;">
+				<p>${content.title!}</p></a>
+			    </div>
+			</div> 
 		    </#list>
 		    </@contentListDirective>
-		   </div>
+		   </div> 
 	      </div>
 	      </div>
        </div>

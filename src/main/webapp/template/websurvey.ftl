@@ -107,7 +107,7 @@
                                 <input type="radio" name="isOpen" value="1"> 公开
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="isOpen" value="0"> 不公开
+                                <input type="radio" name="isOpen" value="0" checked=true> 不公开
                             </label>
                         </td>
                     </tr>

@@ -34,9 +34,11 @@ public class WebsurveyListDirective implements TemplateDirectiveModel{
 				.toString());
 		Integer pageNum = params.get("pageNum") == null ? 1 : Integer
 				.valueOf(params.get("pageNum").toString());
+		String isOpen = params.get("isOpen")==null?null:String.valueOf(params.get("isOpen"));
 		String type =  params.get("type")==null?"1":params.get("type").toString();
 		String[] typeArray = type.split(",");
 		Map map = new HashMap();
+		map.put("isOpen", isOpen);
 		map.put("type", Arrays.asList(typeArray));
 		List<WebSurvey> websureys = websurveyService.selectRecordByArgMap(pageNum, pageSize, map).getList();
 		env.setVariable("websurveys",ObjectWrapper.DEFAULT_WRAPPER.wrap(websureys));
