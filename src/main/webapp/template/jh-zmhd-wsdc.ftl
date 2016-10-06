@@ -74,7 +74,7 @@
           });
   	}
   	$('#result').click(function(){
-  		window.location.htef=voteId+"r.htm";
+  		window.location.href=voteId+"r.htm";
   
   	});
           $('#clickbut').click(function(){
@@ -98,12 +98,13 @@
   						result=false;
   					}
   					alert(res.msg);
-					window.location.htef=voteId+"r.htm";
+					window.location.href=voteId+"r.htm";
   					
   				}
   			})
   		}else{
   			alert("您已经投票成功!");
+			window.location.href=voteId+"r.htm";
   		}
   	});
       });

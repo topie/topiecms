@@ -297,7 +297,7 @@
 						<@advertisingListDirective siteId=6 type='AD2' checkDate='ture'>
 							<#if advertisings?size gt 0>
 							<div class="row mgt10" style="margin-bottom:20px; padding:0 14px 0 14px;">
-								<div id="AD1"> </div> 
+								<div id="AD2"> </div> 
 							</div>
 							</#if>
 							<script type="text/javascript">
@@ -412,7 +412,7 @@
 						<@advertisingListDirective siteId=6 type='AD3' checkDate='ture'>
 							<#if advertisings?size gt 0>
 							<div class="row mgt10" style="margin-bottom:20px; padding:0 14px 0 14px;">
-								<div id="AD1"> </div> 
+								<div id="AD3"> </div> 
 							</div>
 							</#if>
 							<script type="text/javascript">

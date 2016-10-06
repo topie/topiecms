@@ -997,8 +997,8 @@
 								bootbox.alert('异常');
 							}
 						})
-							}
-						})
+							 }
+						}) 
 					}
 				},{
 					 visable : function(i, c) {
@@ -1037,6 +1037,81 @@
 		return op;
 }
 	var questions_grid;
+	
+	function recordFormOpt (id) {
+		var url="../interview/updateQS?id="+id+"&status=2";
+		var opt ={
+					id : "channel_form",//表单id
+					name : "channel_form",//表单名
+					method : "post",//表单method
+					action : url,//表单action
+					ajaxSubmit : true,//是否使用ajax提交表单
+					labelInline : true,
+					rowEleNum : 1,
+					beforeSubmit : function() {
+
+					},
+					ajaxSuccess : function() {
+						in_modal.hide();
+						record_grid.reload();
+					},
+					submitText : "回复",//保存按钮的文本
+					isValidate : true,//开启验证
+					buttons : [ {
+						type : 'button',
+						text : '关闭',
+						handle : function() {
+							in_modal.hide();
+						}
+					} ],
+					buttonsAlign : "center",
+					//表单元素
+					items : [ {
+						type : 'hidden',
+						name : 'id',
+						id : 'id'
+					},{
+						type : 'hidden',
+						name : 'interviewId',
+						id : 'interviewId'
+					}
+					,{
+						type : 'radioGroup',//类型
+						name : 'roleId',//name
+						id : 'roleId',//id
+						label : '发言人',//左边label
+						cls : 'input-large',
+						items:[],
+						itemsUrl:"../interview/loadRolesRadio?interviewId="+id,
+						rule : {
+							required : true
+						},
+						message : {
+							required : "请选择"
+						}
+					}
+					,{	type : 'datepicker',//类型
+						name : 'publishTime',//name
+						id : 'publishTime',//id
+						label : '发言时间',//左边label
+						cls : 'input-large',
+						placeholder:"不填写默认为当前时间"
+						},{
+							type : 'textarea',//类型
+							name : 'content',//name
+							id : 'content',//id
+							label : '内容',//左边label
+							cls : 'input-large',
+							rule : {
+								required : true
+							},
+							message : {
+								required : "请输入"
+							}
+						}]
+				};
+		return opt;
+	}
 
 	</script>
 						

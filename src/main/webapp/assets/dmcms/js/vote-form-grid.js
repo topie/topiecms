@@ -1,8 +1,10 @@
 /** ************grid表格************ */
 ;var in_grid;
 var in_modal;
+var currentvoteId;
+function getVoteOptions(id){
 var voteOptions = {
-	url : "../vote/list", // ajax地址
+	url : "../vote/list?questionnairesId="+id, // ajax地址
 	pageNum : 1,// 当前页码
 	pageSize : 5,// 每页显示条数
 	idFiled : "id",// id域指定
@@ -34,20 +36,20 @@ var voteOptions = {
 	} ],
 	actionCloumText : "操作",// 操作列文本
 	actionCloumWidth : "30%",
-	actionCloums : [ {
+	actionCloums : [ /*{
 		text : "预览",
 		cls : "green btn-sm",
 		icon : "fa fa-search",
 		handle : function(index, data) {
 			window.open(data.filed1);
 		}
-	},
+	},*/
 	{
 		text : "管理选项",
 		cls : "green btn-sm",
 		handle : function(index, data) {
-			$("#content_grid").html("");
-			grid = $("#content_grid").dmGrid(getoptions(data.id));
+			currentvoteId=data.id;
+			freshItem(data.id);
 		}
 	},{
 
@@ -65,32 +67,11 @@ var voteOptions = {
 				distroy : true
 			});
 			modal.show();*/
-			$("#content_grid").html("");
-			form =$("#content_grid").dmForm(getVoteForm(1,hasPublishRole));
+			$("#channel_grid").html("");
+			form =$("#channel_grid").dmForm(getVoteForm(1));
 			//var form = modal.$body.dmForm(getVoteForm());
 			form.loadRemote("../vote/load?id=" + data.id);
-		}
-	},{
-		text:"发布",
-		cls:"btn green btn-sm",
-		handle:function(i,c){
-
-			var url = "../vote/publish?voteIds="+c.id;
-			bootbox.confirm("确认发布!",function(res){
-				if(res){
-					$.ajax({
-					url : url,
-					type : "POST",
-					dataType : "json",
-					success : function(res) { 
-						grid.reload();
-					},
-					error : function() {
-						bootbox.alert("请求异常！");
-					}
-				});
-				}
-			})
+			$("#questionnairesId").val(id);
 		}
 	}
 	
@@ -100,64 +81,31 @@ var voteOptions = {
 		text : "添加",
 		cls : "btn green btn-sm",
 		handle : function(grid) {// 按钮点击事件
-			if(currentChannelId==undefined)
-				bootbox.alert("请先选择频道");
-			else if(currentChannelIsParent)
-				bootbox.alert("请选择子频道进行添加!");
-			else{
-				showForm(9,"投票信息")
-				//form.loadRemote("../vote/load?videoId=" + data.id);
+			$("#channel_grid").html("");
+			form =$("#channel_grid").dmForm(getVoteForm(1));
+			$("#questionnairesId").val(id);
 				
-			}
-		}
-	},/*{
-		text : "移动",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../video/cutTo");
 		}
 	}, {
-		text : "复制",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../video/copyTo");
-		}
-	},{
-		text : "提交",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			var ids = grid.getSelectIds();
-			if (ids.length > 0) {
-				var url = "../vote/check?voteIds=" + ids;
-				$.ajax({
-					url : url,
-					type : "POST",
-					dataType : "json",
-					success : function(res) {
-						bootbox.alert(res.msg);
-						grid.reload();
-					},
-					error : function() {
-						bootbox.alert("请求异常！");
-					}
-				});
-			} else {
-				bootbox.alert("请选择要提交的项");
-			}
-		}
-	}, */ {
 		text : " 删 除",
 		cls : "btn red btn-sm",// 按钮样式
 		handle : function(grid) {
 			deleteItems(grid.getSelectIds());
 		}
-	} ]
-	
+	},{
+		type : 'button',
+		text : '返回',
+		handle : function() {
+			reGrid();
+		}
+	}  ]
 };
+return voteOptions;
+}
 
-function getVoteForm(type,hasPublishRole) {
+function getVoteForm(type) {
 	var buttons = [];
-	if(hasPublishRole){
+	/*if(hasPublishRole){
 		buttons.push(
 		{
 			type : 'submit',
@@ -178,12 +126,12 @@ function getVoteForm(type,hasPublishRole) {
 				form.setAction("../vote/saveAndCommit");
 			}
 		});
-	}
+	}*/
 	buttons.push({
 		type : 'button',
 		text : '关闭',
 		handle : function() {
-			flushGrid();
+			manage(currentqId);
 		}
 	} );
 	var items = [
@@ -194,8 +142,8 @@ function getVoteForm(type,hasPublishRole) {
 			},
 			{
 				type : 'hidden',
-				name : 'channelId',
-				id : 'channelId'
+				name : 'questionnairesId',
+				id : 'questionnairesId'
 			},
 			{
 				type : 'text',// 类型
@@ -248,7 +196,7 @@ function getVoteForm(type,hasPublishRole) {
 					maxlength : "最多输入50字符"
 				}
 			},
-			{
+			/*{
 				type : 'select',// 类型
 				name : 'filed2',// name
 				id : 'filed2',// id
@@ -257,10 +205,9 @@ function getVoteForm(type,hasPublishRole) {
 					value : '',
 					text : '默认模板'
 				} ],
-				itemsUrl : "../template/selects?templateType=2&siteId="
-						+ currentSiteId,
+				itemsUrl : "../template/selects?templateType=2&siteId=6",
 				cls : 'input-large'
-			},{
+			},*/{
 				type : 'datepicker',// 类型
 				name : 'publishTime',// name
 				id : 'publishTime',// id
@@ -281,7 +228,7 @@ function getVoteForm(type,hasPublishRole) {
 
 		},
 		ajaxSuccess : function() {
-			flushGrid();
+			manage(currentqId);
 		},
 		submitText : "保存",// 保存按钮的文本
 		showReset : true,// 是否显示重置按钮
@@ -387,8 +334,8 @@ function getoptions(id){
 					in_modal.show();
 					var form = in_modal.$body.dmForm(optFormOpt);
 						form.loadLocal(data);
-					/*$("#content_grid").html("");
-					var form = $("#content_grid").dmForm(optFormOpt);*///.load("../interview/page?id="+data.id);
+					/*$("#channel_grid").html("");
+					var form = $("#channel_grid").dmForm(optFormOpt);*///.load("../interview/page?id="+data.id);
 					form.loadLocal({voteId:id});
 					/*var form = modal.$body.load("../interview/page?id="+data.id);*/
 					/*var form = modal.$body.dmForm(getVideoForm(data.contentType));*/
@@ -433,8 +380,8 @@ function getoptions(id){
 					});
 					in_modal.show();
 					var form = in_modal.$body.dmForm(optFormOpt);
-//					$("#content_grid").html("");
-//					var form = $("#content_grid").dmForm(optFormOpt);//.load("../interview/page?id="+data.id);
+//					$("#channel_grid").html("");
+//					var form = $("#channel_grid").dmForm(optFormOpt);//.load("../interview/page?id="+data.id);
 					form.loadLocal({voteId:id});
 					/*var form = modal.$body.load("../interview/page?id="+data.id);*/
 					/*var form = modal.$body.dmForm(getVideoForm(data.contentType));
@@ -445,10 +392,14 @@ function getoptions(id){
 				text : "返回",
 				cls : "btn btn-sm",
 				handle : function(grid) {
-					flushGrid();
+					freshItem(currentvoteId);
 				}
 			}  ]
 			
 	};
 	return opt;
+}
+function freshItem(id){
+	$("#channel_grid").html("");
+	grid = $("#channel_grid").dmGrid(getoptions(id));
 }
