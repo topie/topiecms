@@ -22,6 +22,7 @@
                            <div class="col-md-8">
                              <div class="panel panel-default panel1">
                                <@channelDirective channelId=51>
+                               <#if channel.forbidden=="0">
                                <div class="panel-heading panel1-t"><a href="${channel.url!}" target="_blank" class="panel1-ton fontSize18">在线访谈</a></div>
                                <div class="panel-body">
                                  <div class="row">
@@ -59,6 +60,7 @@
                                    </div>
                                  </div>
                                </div>
+                               </#if>
                                  </@channelDirective>
                              </div>
                              <div class="panel panel-default panel1"> 
@@ -67,7 +69,7 @@
                                  <li role="presentation" class="active"> <a href="#lxhf" aria-controls="lxhf" role="tab" data-toggle="tab">来信回复选编</a> </li>
                                  <li role="presentation" > <a href="#blqk" aria-controls="blqk" role="tab" data-toggle="tab">办理情况</a> </li>
                                  <li class="navTab3-search">
-                                   <form action="../../websurvey/findOne" class="form-inline form-inline1" id="emailForm">
+                                   <form action="../../websurvey/findOne" target="_blank" class="form-inline form-inline1" id="emailForm">
                                     <label>信件查询</label>
                                     <div class="form-group">
                                       <input type="text" class="form-control" id="codeId" name="id" placeholder="请输入信件编号">
@@ -125,8 +127,19 @@
                                       <#list websurveys as websurvey>
                                        <tr>
                                          <td>${websurvey.username!}</td>
-                                         <td>${websurvey.title!}</td>
-                                         <td>${(websurvey.type=="2")?string('投诉','举报')}</td>
+                                         <td><a href="../../websurvey/findOne?id=${websurvey.id}" target= "_blank">${websurvey.title!}</a></td>
+                                         <#if websurvey.type=="1">
+                                         <td>咨询</td>
+                                         </#if>
+                                         <#if websurvey.type=="2">
+                                         <td>投诉</td>
+                                         </#if>
+                                         <#if websurvey.type=="3">
+                                         <td>建议</td>
+                                         </#if>
+                                         <#if websurvey.type=="4">
+                                         <td>举报</td>
+                                         </#if>
                                          <td>${(websurvey.state=='0')?string('未回复','已回复')}</td>
                                        </tr>
                                        </#list>
@@ -259,9 +272,10 @@
                                 $('#emailInfo').on('click', function(){
                                  if($("#codeId").val() && $("#codeId").val()!="")
                                  {
-                                     layer.prompt({title: '输入任何口令，并确认',type: 1}, function(pass){
+                                     var tip = layer.prompt({title: '输入任何口令，并确认',type: 1}, function(pass){
                                         $("#phone").val(pass);
                                         $("#emailForm").submit();
+                                        layer.close(tip);
                                      });
                                  } 
                                  else{

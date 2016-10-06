@@ -39,12 +39,28 @@
 		        <tr style="height:30px;">
                        <td align="center" bgcolor="#F4FEF1" width="15%">是否满意：</td>
                        <td class="text_gray2" align="center" bgcolor="#F4FEF1">
+                         <#if webSurvey.isSatisfied??>
 		       <label class="radio-inline">
-                                <input type="radio" name="isSatisfied" <#if webSurvey.isSatisfied??>${(webSurvey.isSatisfied=='1')?string('checked=checked','')} </#if>id="form-xb3" value="1"> 满意
+                                <input type="radio" disabled = "disabled" name="isSatisfied" ${(webSurvey.isSatisfied=='1')?string('checked=checked','')} id="form-xb3" value="1"> 满意
                             </label>
 			    <label class="radio-inline">
-                                <input type="radio" name="isSatisfied" <#if webSurvey.isSatisfied??> ${(webSurvey.isSatisfied=='0')?string('checked=checked','')}</#if> id="form-xb2" value="0">不满意
+                                <input type="radio" disabled = "disabled" name="isSatisfied"${(webSurvey.isSatisfied=='0')?string('checked=checked','')}id="form-xb2" value="0">不满意
                             </label>
+                          <#elseif isAllowedComment>
+                           <label class="radio-inline">
+                                <input type="radio" name="isSatisfied" id="form-xb3" value="1"> 满意
+                            </label>
+          <label class="radio-inline">
+                                <input type="radio" name="isSatisfied" id="form-xb2" value="0">不满意
+                            </label>
+                            <#else>
+                            <label class="radio-inline">
+                                <input type="radio"  disabled = "disabled" name="isSatisfied"${(webSurvey.isSatisfied=='1')?string('checked=checked','')} id="form-xb3" value="1"> 满意
+                            </label>
+          <label class="radio-inline">
+                                <input type="radio"  disabled = "disabled" name="isSatisfied" ${(webSurvey.isSatisfied=='0')?string('checked=checked','')} id="form-xb2" value="0">不满意
+                            </label>
+                          </#if>
 			 </td>
                        </tr>  
                    </tbody></table>
@@ -84,7 +100,9 @@
 					if(data.status=='1')
 					   alert("谢谢评价!");
 					else{
+
 					}
+           document.location.reload();
 				},
 				error:function(){
 

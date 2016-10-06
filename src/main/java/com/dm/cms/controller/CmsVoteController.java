@@ -38,7 +38,7 @@ public class CmsVoteController {
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,
 			CmsVote record,
 			@RequestParam(value = "sort", required = false) String sort) {
-		if (record.getChannelId() == null) {
+		if (record.getQuestionnairesId() == null) {
 			return PageConvertUtil.emptyGrid();
 		}
 		Map map = new SqlParam<CmsVote>().autoParam(record, sort);
@@ -50,12 +50,6 @@ public class CmsVoteController {
 	@RequestMapping("/insertOrUpdate")
 	@ResponseBody
 	public Object insertOrUpdate(CmsVote record) {
-		if (record.getFiled2() == null) {// 设置默认模板
-			CmsTemplateConfig c =cmsTemplateConfigService.load(null,
-					record.getChannelId());
-			if(c!=null)
-				record.setFiled2(c.getContentTemplateId().toString());
-		}
 		if (record.getId() == null) {
 			record.setStatus("0");
 			this.cmsVoteService.insert(record);

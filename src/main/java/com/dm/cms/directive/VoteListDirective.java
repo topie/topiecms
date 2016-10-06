@@ -66,7 +66,7 @@ public class VoteListDirective implements TemplateDirectiveModel {
 		Map map = new HashMap();
 		map.put("order", orderby);
 		CmsVote novel = new CmsVote();
-		novel.setChannelId(channelId);
+		novel.setQuestionnairesId(channelId);
 		novel.setStatus("5");
 		map.put("model", novel);
 		PageInfo<CmsVote> page = this.cmsVoteService.findPage(pageNum, pageSize, map);

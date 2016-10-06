@@ -200,6 +200,10 @@
               <script type="text/javascript">
                   $(function () {
                       $('input, textarea').placeholder();
+		      var trLen = $("#tb tr").length;
+		if(trLen>=9){
+			gunDong();
+			}
                       $('#navTab1 a').click(function (e) {
                           e.preventDefault();
                           $(this).tab('show');
@@ -216,25 +220,28 @@
 				
 							
                   });
-		  var speed = 30;
-							var m_demo = document.getElementById("m_demo");
-							var m_demo2 = document.getElementById("m_demo2");
-							var m_demo1 = document.getElementById("m_demo1");
-							var m_demo3 = document.getElementById("m_demo3");
-							m_demo2.innerHTML = m_demo1.innerHTML;
-							m_demo3.innerHTML = m_demo1.innerHTML;
-							function Marquee1(){
-								if(m_demo2.offsetHeight - m_demo.scrollTop <= 0){
-									m_demo.scrollTop -= m_demo1.offsetHeight;
-									}
-								else{
-									 m_demo.scrollTop++;
-									}
-								
-								}
-								var myVar = setInterval(Marquee1 , speed);
-								 m_demo.onmouseover = function(){clearInterval(myVar);}
-								  m_demo.onmouseout = function(){myVar = setInterval(Marquee1 , speed);}
+		 function gunDong(){
+    	var speed = 45;
+		var demo2 = document.getElementById("demo2");
+		var demo1 = document.getElementById("demo1");
+		var demo = document.getElementById("demo");
+        if(demo1.offsetHeight>demo.offsetHeight){   //只有在显示数据的div的高度大于外部div高度时才进行滚动
+    		demo2.innerHTML = demo1.innerHTML
+    		function Marquee1() {
+    			if (demo2.offsetTop - demo.scrollTop <= 0)
+    				demo.scrollTop -= demo1.offsetHeight;
+    			else {
+    				demo.scrollTop++;
+    			}
+    		}
+    		var myscroll = setInterval(Marquee1, speed);
+    		demo.onmouseover = function() {
+    			clearInterval(myscroll)
+    		}
+    		demo.onmouseout = function() {
+    			myscroll = setInterval(Marquee1, speed)
+    		}
+    	  }
               </script>
               </body>
               </html>

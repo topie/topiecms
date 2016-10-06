@@ -464,7 +464,7 @@ public class CmsPortalController {
 		model.addAttribute("htmlFolder", htmlFolder);
 		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		CmsVote webSur =this.cmsVoteService.findOne(voteId);
-		CmsChannel cmsChannel = cmsChannelService.findOneById(webSur.getChannelId());
+		CmsChannel cmsChannel = cmsChannelService.findOneById(webSur.getQuestionnairesId());
 		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
 		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
 		model.addAttribute("site", cmsSite);
@@ -482,7 +482,7 @@ public class CmsPortalController {
 		model.addAttribute("htmlFolder", htmlFolder);
 		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		CmsVote webSur =this.cmsVoteService.findOne(voteId);
-		CmsChannel cmsChannel = cmsChannelService.findOneById(webSur.getChannelId());
+		CmsChannel cmsChannel = cmsChannelService.findOneById(webSur.getQuestionnairesId());
 		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
 		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
 		model.addAttribute("site", cmsSite);
