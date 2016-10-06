@@ -65,6 +65,11 @@
             background-repeat: no-repeat;
             background-attachment: scroll;
         }
+        .form-body {
+		    height: 1000px!important;
+		    padding-left: 0;
+		    padding-right: 0;
+		}
 
         .ztree li span.button2.up {
             background-image: url("<%=basePath%>assets/dmcms/plugins/zTree/css/zTreeStyle/img/diy/arrow_up.png");
