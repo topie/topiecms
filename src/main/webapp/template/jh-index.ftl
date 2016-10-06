@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
                                                                  <html>
                                                                  <head lang="en">
                                                                      <#include "/template/jh-meta.ftl">
@@ -399,7 +399,7 @@
                                                                                              <ul class="panel2-list panel2-list-sm">
                                                                  			    <@contentListDirective channelId=43 pageSize=3 pageNum=1 titleLeft=20 order=1>
                                                                  				<#list contents as cmsContent>
-                                                                 					<li><a href="${cmsContent.url}" target="_blank" title="${cmsContent.title!}">${cmsContent.title!}</a></li>
+                                                                 					<li><a href="${cmsContent.url}" target="_blank" title="${cmsContent.title!}">${cmsContent.shortTitle!}</a></li>
                                                                  				</#list> 
                                                                  			</@contentListDirective>
                                                                                              </ul>
