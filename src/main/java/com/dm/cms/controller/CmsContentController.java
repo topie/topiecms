@@ -77,6 +77,12 @@ public class CmsContentController {
 		model.addAttribute("currentChannelType", channelType);
 		return "/cms/content/addPage";
 	}
+	
+	@RequestMapping("/mine")
+	public String mine(Model model, String channelType) {
+		model.addAttribute("currentChannelType", channelType);
+		return "/cms/content/addPage";
+	}
 
 	@RequestMapping("/shpage")
 	public String shpage(Model model) {
