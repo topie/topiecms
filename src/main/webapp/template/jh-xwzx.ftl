@@ -81,7 +81,7 @@
 			   <#list channels as channel>
                               <div class="col-md-6">
                                   <div class="panel panel-default panel1">
-                                      <div class="panel-heading panel1-t"><a href="${channel.url}" class="panel1-ton fontSize18">${channel.displayName}</a></div>
+                                      <div class="panel-heading panel1-t"><a href="${channel.url}" target="_blank" class="panel1-ton fontSize18">${channel.displayName}</a></div>
                                       <div class="panel-body">
                                           <ul class="panel2-list panel2-list-pd">
 					  <#if channel.id==16>

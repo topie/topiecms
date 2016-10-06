@@ -64,7 +64,7 @@
                         <td>联系地址 </td>
                         <td><input type="text" name="address" class="form-control" placeholder="请输入您的联系地址" datatype="*"></td>
                         <td>邮政编码 </td>
-                        <td><input type="text" name="postcode" class="form-control" placeholder="请输入您的邮政编码" datatype="p"></td>
+                        <td><input type="text" name="postcode" class="form-control" placeholder="请输入您的邮政编码" ></td>
                     </tr>
 		    <#if code??> <#if code=="1">
 			<input type="hidden" name="codeId" value="${leader.id!}" />

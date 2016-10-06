@@ -87,12 +87,13 @@
            		<@channelListDirective channelId=channel.id order=1>
            		<#list channels as channel>
                                <div class="col-xs-3">
-                                 <#if channel.displayName?length lt 5>
+			       <a target="_blank" href="${channel.url}" class="ggfw-btn" style="font-size:13px;">${channel.displayName}</a>
+                                 <#--<#if channel.displayName?length lt 5>
                                    <a target="_blank" href="${channel.url}" class="ggfw-btn">${channel.displayName}</a>
                                   </#if>
                                  <#if channel.displayName?length gt 4>
                                    <a target="_blank" href="${channel.url}" class="ggfw-btn ">${channel.displayName?substring(0,2)}<span class="fontSmall2">${channel.displayName?substring(2)}</span></a>
-                                  </#if>
+                                  </#if>-->
                                </div>
            		</#list >
            		</@channelListDirective>

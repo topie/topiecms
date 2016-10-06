@@ -2,7 +2,7 @@
              <div class="ft-bg" ></div>
              <div class="container">
                  <div class="row">
-                     <div class="col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6 text-center fontSize16">
+		 <div class="col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4 text-center fontSize16">
                          <div class="row ft-pd">
                              <div class="col-xs-4"><a href="/html/jinhu/qita/content/406.html" target="_blank">在线投稿</a><span class="ft-line">|</span></div>
                              <div class="col-xs-4"><a href="/html/jinhu/qita/content/407.html" target="_blank">联系我们</a><span class="ft-line">|</span></div>

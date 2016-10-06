@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,8 +17,6 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.dm.platform.util.*;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
@@ -44,6 +43,11 @@ import com.dm.platform.service.InboxService;
 import com.dm.platform.service.UserAccountService;
 import com.dm.platform.service.UserAttrService;
 import com.dm.platform.service.UserRoleService;
+import com.dm.platform.util.FileUtil;
+import com.dm.platform.util.MailUtil;
+import com.dm.platform.util.ResponseUtil;
+import com.dm.platform.util.UUIDUtils;
+import com.dm.platform.util.UserAccountUtil;
 
 @Controller
 public class BaseController extends DefaultController {
@@ -114,6 +118,7 @@ public class BaseController extends DefaultController {
 			userAccount.setAccountExpired(false);
 			userAccount.setEmail(ruser.getEmail());
 			userAccount.setMobile(ruser.getMobile());
+			userAccount.setCreateTime(new Date());
 			userAccount.setPassword(getEncodePassword(ruser.getPassword()));
 			userAccount.setName(ruser.getFullname());
 			userAccount.setLoginname(ruser.getUsername());

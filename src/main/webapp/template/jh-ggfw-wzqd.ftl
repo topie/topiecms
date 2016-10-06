@@ -64,7 +64,7 @@
 				<div class="fontSize18 pd3 color-red">${channel.displayName!}</div>
 				<ul class="news-list1 news-list1-sm wxqd-red fontSize16 clearfix">
 					<#list channels as cha>
-				    <li class="${(cha.id_index==0)?string('active','')}"><a href="${cha.url!}"><span class="glyphicon glyphicon-play-circle"></span>${cha.displayName!}</a> </li>
+				    <li class="${(cha_index==0)?string('active','')}"><a href="${cha.url!}"><span class="glyphicon glyphicon-play-circle"></span>${cha.displayName!}</a> </li>
 				    </#list>
 				</ul>
 			<#else>

@@ -77,6 +77,41 @@
             $(function () {
                 $('input, textarea').placeholder();
             });
+	     function window.onloadt() 
+	{ 
+	var arr; 
+	if(arr=document.cookie.match(/scrollTop=([^;]+)(;|$)/)) 
+	document.documentElement.scrollTop=parseInt(arr[1]); 
+	document.body.scrollTop=parseInt(arr[1]); 
+	} 
+
+	//页面刷新前保存滚动条位置信息到cookie 
+
+	function window.onbeforeunloadt(){ 
+	var scrollPos; 
+	if (typeof window.pageYOffset != 'undefined') { 
+	   scrollPos = window.pageYOffset; 
+	} 
+	else if (typeof document.compatMode != 'undefined' && 
+	     document.compatMode != 'BackCompat') { 
+	   scrollPos = document.documentElement.scrollTop; 
+	} 
+	else if (typeof document.body != 'undefined') { 
+	   scrollPos = document.body.scrollTop; 
+	} 
+	document.cookie="scrollTop="+scrollPos; 
+	}  
+	if (window.addEventListener)  
+                {  
+                     window.addEventListener("load", onloadt, false);  
+                     window.addEventListener("beforeunload",onbeforeunloadt,false)  
+                }else if (window.attachEvent){  
+                     window.attachEvent("load",onloadt,false);  
+                     window.attachEvent("beforeunload",beforeunloadt,false);  
+                }else{  
+                     window.onload=onbeforeunloadt;  
+                     window.onload=onloadt;  
+                } 
         </script>
         </body>
 </html>
