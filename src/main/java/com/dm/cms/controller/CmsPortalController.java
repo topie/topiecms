@@ -355,7 +355,13 @@ public class CmsPortalController {
 			webSur= new WebSurvey();
 			webSur.setTitle("查询编号有误!");
 		}
+		boolean isAllowedComment = false;
+		if(StringUtils.isNotEmpty(webSurvey.getPhone()))
+		{
+			isAllowedComment=true;
+		}
 		model.addAttribute("webSurvey", webSur);
+		model.addAttribute("isAllowedComment", isAllowedComment);
 		return "/template/result";
     }
 	@RequestMapping("/websurvey/isSatisfied")
