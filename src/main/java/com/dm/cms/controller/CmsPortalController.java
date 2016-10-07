@@ -203,6 +203,28 @@ public class CmsPortalController {
 		model.addAttribute("websurvey",webSurveyService.add(webSurvey));
 		return "/template/success";
 	}
+	@RequestMapping("/websurvey/{channelId}_{pageNum}.htm")
+	public String add(Model model,
+			@PathVariable("channelId") Integer channelId,
+			@PathVariable(value = "pageNum") Integer pageNum,
+			WebSurvey webSurvey,
+			@RequestParam(value="param",required=false) String param,
+			HttpServletRequest request)
+	{	CmsChannel cmsChannel = cmsChannelService.findOneById(channelId);
+	if (cmsChannel == null)
+		return "404";
+		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
+		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
+		model.addAttribute("own", channelId);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("site", cmsSite);
+		model.addAttribute("channel", cmsChannel);
+		model.addAttribute("htmlFolder", htmlFolder);
+		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		model.addAttribute("projectName", projectName);
+		model.addAttribute("param", param);
+		return "/template/jh-websuerveypage";
+	}
 
 
 	@RequestMapping("/search.htm")

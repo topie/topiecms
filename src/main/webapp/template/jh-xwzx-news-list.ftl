@@ -49,7 +49,7 @@
                        <ul class="panel2-list panel2-list-pd news-list2">
 			  <#list contents as cmsContent>
 				<li><a target="_blank" href="${cmsContent.url}" title="${cmsContent.title}">
-				<span class="panel2-list-content">${cmsContent.title}</span>
+				<span class="panel2-list-content">${cmsContent.shortTitle}</span>
 				<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>	
 			  </#list>
                        </ul> 

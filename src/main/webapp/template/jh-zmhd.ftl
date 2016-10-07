@@ -32,7 +32,7 @@
                                        <ul class="panel2-list">
                                          <@interviewListDirective channelId=51 pageSize=1 pageNum=1 >
                   	<#list cmsInterviews as  v>
-                  	    <li><span class="jh-dotted">·</span>主题： <a href="${v.url!}" title="${v.title!}"><#if v.title?length gt 22>${v.title?substring(0,20)!}...<#else>${v.title!}</#if></a></li>
+                  	    <li><span class="jh-dotted">·</span>主题： <a href="${v.url!}" target="_blank" title="${v.title!}"><#if v.title?length gt 22>${v.title?substring(0,20)!}...<#else>${v.title!}</#if></a></li>
                   	    <li><span class="jh-dotted">·</span title="${v.guests!}">嘉宾：<#if v.guests?length gt 22>${v.guests?substring(0,20)!}...<#else>${v.guests!}</#if>   </li>
                   	    <li><span class="jh-dotted">·</span>时间：   ${v.startTime!}—${v.endTime}</li>
                        <li class="htAuto"><span class="jh-dotted">·</span><#if v.desc?length gt 90>${v.desc?substring(0,87)!}...<#else>${v.desc!}</#if></li>
@@ -66,9 +66,13 @@
                              <div class="panel panel-default panel1"> 
                                <!-- Nav tabs -->
                                <ul class="nav nav-tabs fontSize16 navTab1 navTab3 navTab1s text-center" role="tablist" id="navTab1">
-                                 <li role="presentation" class="active"> <a href="#lxhf" data-url="${channel.url!}" aria-controls="lxhf" role="tab" data-toggle="tab">来信回复选编</a> </li>
-                                 <li role="presentation" > <a href="#blqk"  data-url="${channel.url!}" aria-controls="blqk" role="tab" data-toggle="tab">办理情况</a> </li>
-                                 <li class="navTab3-search">
+			       <@channelDirective channelId=50>
+                                 <li role="presentation" class="active"> <a href="#lxhf" data-url="${channel.url!}" aria-controls="lxhf" role="tab" data-toggle="tab">${channel.displayName!}</a> </li><!--来信回复选编-->
+                                </@channelDirective>
+				<@channelDirective channelId=49>
+				 <li role="presentation" > <a href="#blqk"  data-url="${channel.url!}" aria-controls="blqk" role="tab" data-toggle="tab">${channel.displayName!}</a> </li><!--办理情况-->
+                                 </@channelDirective>
+				 <li class="navTab3-search">
                                    <form action="../../websurvey/findOne" target="_blank" class="form-inline form-inline1" id="emailForm">
                                     <label>信件查询</label>
                                     <div class="form-group">
@@ -85,14 +89,14 @@
 				 <@contentListDirective channelId=49 pageSize=5 pageNum=pageNum titleLeft=40 order=2>  
 				 <ul class="panel2-list">
                             			    <#list contents as cmsContent>
-                                                            <li><span class="jh-dotted">·</span><a href="${cmsContent.url}">${cmsContent.title}</a></li>
+                                                            <li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">${cmsContent.title}</a></li>
                             			</#list> 
 						</ul>
                             			</@contentListDirective>
                                     <#-- <table class="table table-bordered table-hover table1">
                                      <thead>
                                        <tr>
-                                         <th>姓名</th>
+                                         
                                          <th>标题</th>
                                          <th>类型</th>
                                          <th>状态</th>
@@ -102,7 +106,6 @@
                                      <@websurveyListDirective pageNum=1 pageSize=5 type="1,3">
                                       <#list websurveys as websurvey>
                                        <tr>
-                                         <td>${websurvey.username!}</td>
                                          <td>${websurvey.title!}</td>
                                          <td>${(websurvey.type=='1')?string('咨询','建议')}</td>
                                          <td>${(websurvey.state=='0')?string('未回复','已回复')}</td>
@@ -116,7 +119,7 @@
                                    <table class="table table-bordered table-hover table1">
                                      <thead>
                                        <tr>
-                                         <th>姓名</th>
+                                         <#--<th>姓名</th>-->
                                          <th>标题</th>
                                          <th>类型</th>
                                          <th>状态</th>
@@ -126,7 +129,7 @@
                                        <@websurveyListDirective pageNum=1 pageSize=5 type="1,2,3,4" isOpen='1'>
                                       <#list websurveys as websurvey>
                                        <tr>
-                                         <td>${websurvey.username!}</td>
+                                         <#--<td>${websurvey.username!}</td>-->
                                          <td><a href="../../websurvey/findOne?id=${websurvey.id}" target= "_blank">${websurvey.title!}</a></td>
                                          <#if websurvey.type=="1">
                                          <td>咨询</td>
@@ -173,7 +176,7 @@
                                                      <ul class="panel2-list">
                          			     <@voteListDirective channelId=52 pageSize=5 pageNum=pageNum titleLeft=40 order=10>  
                             			    <#list cmsVotes as cmsContent>
-                                                            <li><span class="jh-dotted">·</span><a href="${cmsContent.filed1}">${cmsContent.title}</a></li>
+                                                            <li><span class="jh-dotted">·</span><a href="${cmsContent.filed1}" target="_blank">${cmsContent.title}</a></li>
                             			</#list> 
                             			</@voteListDirective>
                                                      </ul>
@@ -182,7 +185,7 @@
                                                      <ul class="panel2-list">
                                                         <@contentListDirective channelId=53 pageSize=5 pageNum=pageNum titleLeft=40 order=10>  
                             			    <#list contents as cmsContent>
-                                                            <li><span class="jh-dotted">·</span><a href="${cmsContent.url}">${cmsContent.title}</a></li>
+                                                            <li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">${cmsContent.title}</a></li>
                             			</#list> 
                             			</@contentListDirective>
                                                      </ul>
@@ -191,7 +194,7 @@
                                                      <ul class="panel2-list">
                          				<@contentListDirective channelId=54 pageSize=5 pageNum=pageNum titleLeft=40 order=10>  
                             			    <#list contents as cmsContent>
-                                                            <li><span class="jh-dotted">·</span><a href="${cmsContent.url}">${cmsContent.title}</a></li>
+                                                            <li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">${cmsContent.title}</a></li>
                             			</#list> 
                             			</@contentListDirective>
                                                      </ul>

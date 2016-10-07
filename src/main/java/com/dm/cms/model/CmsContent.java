@@ -793,6 +793,8 @@ public class CmsContent implements Serializable {
 	}
 	
 	public String getShortTitle() {
+		if(shortTitle==null)
+			return title;
 		return shortTitle;
 	}
 

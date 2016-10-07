@@ -56,8 +56,18 @@
    				</ul>
    				${pagination} 
    			</@voteListDirective>
-   		</#if>
-   		<#if own!=52>
+   		<#elseif own=50>
+           		<@websurveyListDirective pageNum=pageNum pageSize=5 type="1,2,3,4" isOpen='1' channelId=own>
+			<ul class="panel2-list panel2-list-pd news-list2"> 
+			<#list websurveys as websurvey>
+			<li><a target="_blank" title="${websurvey.title}" href="../../websurvey/findOne?id=${websurvey.id}"><span class="panel2-list-content">
+			${websurvey.title!}</span><span class="panel2-list-time"></span></a></li>
+			</#list>
+			</ul>
+   			${pagination} 
+			</@websurveyListDirective>
+
+   		<#else>
     		<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=10> 
                     <ul class="panel2-list panel2-list-pd news-list2"> 
     		<#list contents as cmsContent>
