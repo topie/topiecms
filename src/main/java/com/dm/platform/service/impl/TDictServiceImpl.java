@@ -56,7 +56,7 @@ public class TDictServiceImpl implements TDictService{
 
 	private Object insertDict(TDict tDict) {
 		if(this.listTDictByTDictCode(tDict.getDictCode()).size()>0){
-			return ResponseUtil.error("code码重复");
+			return ResponseUtil.error("字典码重复");
 		}
 		this.tDictMapper.insert(tDict);
 		return ResponseUtil.success("操作成功！");
@@ -66,7 +66,7 @@ public class TDictServiceImpl implements TDictService{
 		List<TDict> list = this.listTDictByTDictCode(tDict.getDictCode());
 		if(list.size()>0){
 			if(!list.get(0).getDictId().equals(tDict.getDictId())){
-				return ResponseUtil.error("code码重复");
+				return ResponseUtil.error("字典码重复");
 			}
 		}
 		this.tDictMapper.updateByPrimaryKeySelective(tDict);

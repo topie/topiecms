@@ -80,7 +80,7 @@
 						<@contentListDirective channelId=channel.id pageSize=5>
                         <ul class="panel2-list panel2-list-pds wxqd-red">
 							<#list contents as content>
-                            <li><span class="jh-dotted color-oldgray">·</span><a href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string('yyyy-MM-dd')}</span></a></li>
+                            <li><span class="jh-dotted color-oldgray">·</span><a title="${content.title!}" href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string('yyyy-MM-dd')}</span></a></li>
 							</#list>
 						</ul>
 						</@contentListDirective>
@@ -101,7 +101,7 @@
 						<@contentListDirective channelId=channel.id pageSize=5>
                         <ul class="panel2-list panel2-list-pds wxqd-red">
 							<#list contents as content>
-                            <li><span class="jh-dotted color-oldgray">·</span><a href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string('yyyy-MM-dd')}</span></a></li>
+                            <li><span class="jh-dotted color-oldgray">·</span><a title="${content.title!}" href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string('yyyy-MM-dd')}</span></a></li>
 							</#list>
 						</ul>
 						</@contentListDirective>

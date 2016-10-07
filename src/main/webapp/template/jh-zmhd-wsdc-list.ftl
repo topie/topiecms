@@ -50,7 +50,7 @@
    			<@voteListDirective channelId=own pageSize=15>
    			 <ul class="panel2-list panel2-list-pd news-list2"> 
    				<#list cmsVotes as vote>
-   					<li><a target="_blank" href="${vote.filed1}"><span class="panel2-list-content">
+   					<li><a target="_blank" title="${vote.title}" href="${vote.filed1}"><span class="panel2-list-content">
    					${vote.title}</span><span class="panel2-list-time">${vote.publishTime?substring(0,10)}</span></a></li>
    				</#list>
    				</ul>
@@ -61,7 +61,7 @@
     		<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=10> 
                     <ul class="panel2-list panel2-list-pd news-list2"> 
     		<#list contents as cmsContent>
-    		<li><a target="_blank" href="${cmsContent.url}"><span class="panel2-list-content">
+    		<li><a target="_blank" title="${cmsContent.title}" href="${cmsContent.url}"><span class="panel2-list-content">
     		${cmsContent.title}</span><span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>
     		</#list> 
                     </ul>

@@ -25,7 +25,7 @@
       		<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=10>  	
       		<ul class="panel2-list panel2-list-pd ztrd3-panel">
       		<#list contents as cmsContent>
-      			 <li><a href="${cmsContent.url} " target="_blank"><span class="panel2-list-content">${cmsContent.title}</span><span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>
+      			 <li><a href="${cmsContent.url} " title="${cmsContent.title}" target="_blank"><span class="panel2-list-content">${cmsContent.title}</span><span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>
       		</#list>	
                   </ul>
                   ${pagination}

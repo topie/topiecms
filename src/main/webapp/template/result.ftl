@@ -55,10 +55,10 @@
                             </label>
                             <#else>
                             <label class="radio-inline">
-                                <input type="radio"  disabled = "disabled" name="isSatisfied"${(webSurvey.isSatisfied=='1')?string('checked=checked','')} id="form-xb3" value="1"> 满意
+                                <input type="radio"  disabled = "disabled" name="isSatisfied" <#if webSurvey.isSatisfied??>${(webSurvey.isSatisfied=='1')?string('checked=checked','')}</#if> id="form-xb3" value="1"> 满意
                             </label>
           <label class="radio-inline">
-                                <input type="radio"  disabled = "disabled" name="isSatisfied" ${(webSurvey.isSatisfied=='0')?string('checked=checked','')} id="form-xb2" value="0">不满意
+                                <input type="radio"  disabled = "disabled" name="isSatisfied" <#if webSurvey.isSatisfied??> ${(webSurvey.isSatisfied=='0')?string('checked=checked','')} </#if>id="form-xb2" value="0">不满意
                             </label>
                           </#if>
 			 </td>

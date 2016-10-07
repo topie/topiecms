@@ -66,8 +66,8 @@
                              <div class="panel panel-default panel1"> 
                                <!-- Nav tabs -->
                                <ul class="nav nav-tabs fontSize16 navTab1 navTab3 navTab1s text-center" role="tablist" id="navTab1">
-                                 <li role="presentation" class="active"> <a href="#lxhf" aria-controls="lxhf" role="tab" data-toggle="tab">来信回复选编</a> </li>
-                                 <li role="presentation" > <a href="#blqk" aria-controls="blqk" role="tab" data-toggle="tab">办理情况</a> </li>
+                                 <li role="presentation" class="active"> <a href="#lxhf" data-url="${channel.url!}" aria-controls="lxhf" role="tab" data-toggle="tab">来信回复选编</a> </li>
+                                 <li role="presentation" > <a href="#blqk"  data-url="${channel.url!}" aria-controls="blqk" role="tab" data-toggle="tab">办理情况</a> </li>
                                  <li class="navTab3-search">
                                    <form action="../../websurvey/findOne" target="_blank" class="form-inline form-inline1" id="emailForm">
                                     <label>信件查询</label>
@@ -154,13 +154,13 @@
                                              <!-- Nav tabs -->
                                              <ul class="nav nav-tabs fontSize16 navTab1 navTab3 navTabWidth3 navTab1s text-center" role="tablist" id="navTab2">
                          		    <@channelDirective channelId=52><!---->
-                                                    <li role="presentation" class="active"><a href="#zrdl" aria-controls="zrdl" role="tab" data-toggle="tab">${channel.displayName}</a></li>
+                                                    <li role="presentation" class="active"><a href="#zrdl" data-url="${channel.url!}" aria-controls="zrdl" role="tab" data-toggle="tab">${channel.displayName}</a></li>
                             		 </@channelDirective><!---->
                          		 <@channelDirective channelId=53><!---->
-                                                    <li role="presentation" class=""><a href="#xzqh" aria-controls="zrdl" role="tab" data-toggle="tab">${channel.displayName}</a></li>
+                                                    <li role="presentation" class=""><a href="#xzqh" data-url="${channel.url!}" aria-controls="zrdl" role="tab" data-toggle="tab">${channel.displayName}</a></li>
                             		 </@channelDirective><!---->
                          		 <@channelDirective channelId=54><!---->
-                                                    <li role="presentation" class=""><a href="#lsyg" aria-controls="zrdl" role="tab" data-toggle="tab">${channel.displayName}</a></li>
+                                                    <li role="presentation" class=""><a href="#lsyg"  data-url="${channel.url!}" aria-controls="zrdl" role="tab" data-toggle="tab">${channel.displayName}</a></li>
                             		 </@channelDirective><!--
                          		 <li role="presentation" class="active"><a href="#zrdl" aria-controls="zrdl" role="tab" data-toggle="tab">网上调查</a></li>
                                                  <li role="presentation"><a href="#xzqh" aria-controls="xzqh" role="tab" data-toggle="tab">民意征集</a></li>
@@ -282,7 +282,18 @@
                                  alert("请输入信件编号！");
                                }
                                });
-                              
+                               $('#navTab1 a').hover(function () {
+				$(this).tab('show');
+			      });
+				  $('#navTab1 a').click(function () {
+				window.open($(this).data('url'));
+			      });
+			      $('#navTab2 a').hover(function () {
+				$(this).tab('show');
+			      });
+				  $('#navTab2 a').click(function () {
+				window.open($(this).data('url'));
+			      });
                             });
                          </script>
                          </body>

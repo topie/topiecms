@@ -222,7 +222,128 @@
 			bootbox.alert("请选择要"+title+"的项！");
 		}
 	}
-		var showopt={
+	var showopt={
+			id : "show_form",//表单id
+			name : "show_form",//表单名
+			method : "post",//表单method
+			//action : "",//表单action
+			ajaxSubmit : false,//是否使用ajax提交表单
+			labelInline : true,
+			rowEleNum : 1,
+			beforeSubmit : function() {
+
+			},
+			ajaxSuccess : function() {
+				modal.hide();
+				grid.reload();
+			},
+			buttons : [ {
+				type : 'button',
+				text : '关闭',
+				handle : function() {
+					modal.hide();
+				}
+			} ],
+			buttonsAlign : "center",
+			//表单元素
+			items : [
+					{
+						type : 'display',
+						name : 'username',
+						label : '姓名',//左边label
+						format : function(c) {
+							if (c) {
+								return c;
+							}
+							else
+								{
+								return "";
+								}
+						}
+					},
+					{
+						type : 'display',
+						name : 'phone',
+						label : '手机',
+						format : function(c) {
+							if (c) {
+								return c;
+							}
+							else
+								{
+								return "";
+								}
+						}
+					},{
+						type : 'display',
+						name : 'email',
+						label : '邮箱',
+						format : function(c) {
+							if (c) {
+								return c;
+							}
+							else
+								{
+								return "";
+								}
+						}
+					},{
+						type : 'display',
+						name : 'inputDate',
+						label : '留言时间',
+						format : function(c) {
+							if (c) {
+								return dateTostr(c);
+							}
+							else
+								{
+								return "";
+								}
+						}
+					},
+					{
+						type : 'display',
+						name : 'title',
+						label : '标题',
+						format : function(c) {
+							if (c) {
+								return c;
+							}
+							else
+								{
+								return "";
+								}
+						}
+					},{
+						type : 'display',
+						name : 'content',
+						label : '内容',
+						format : function(c) {
+							if (c) {
+								return c;
+							}
+							else
+								{
+								return "";
+								}
+						}
+					},{
+						type : 'display',
+						name : 'recontent',
+						label : '回复',
+						format : function(c) {
+							if (c) {
+								return c;
+							}
+							else
+								{
+								return "";
+								}
+						}
+					}						
+					]	
+	};
+		var showoptIp={
 				id : "show_form",//表单id
 				name : "show_form",//表单名
 				method : "post",//表单method
@@ -340,7 +461,20 @@
 									return "";
 									}
 							}
-						}						
+						},{
+							type : 'display',
+							name : 'ip',
+							label : 'ip',//左边label
+							format : function(c) {
+								if (c) {
+									return c;
+								}
+								else
+									{
+									return "";
+									}
+							}
+						}					
 						]	
 		};
 /****************添加*********************/	
@@ -413,7 +547,7 @@
 			format : function(i, c) {
 				if (c.isOpen == "0")
 					return "不公开";
-				if (c.status == "1")
+				if (c.isOpen == "1")
 					return "公开";
 				return "--";
 			}
@@ -431,25 +565,12 @@
 					distroy : true
 				});
 				modal.show();
+				var  opt = showopt;
 				if($("#isShowIp").val()=="1")
 				{
-					var ip = {
-							type : 'display',
-							name : 'ip',
-							label : 'ip',//左边label
-							format : function(c) {
-								if (c) {
-									return c;
-								}
-								else
-									{
-									return "";
-									}
-							}
-						};
-					showopt.items.push(ip);
+					opt = showoptIp;
 				}
-				var form = modal.$body.dmForm(showopt);
+				var form = modal.$body.dmForm(opt);
 				form.loadRemote("./load?id=" + data.id);
 			}
 		}, {

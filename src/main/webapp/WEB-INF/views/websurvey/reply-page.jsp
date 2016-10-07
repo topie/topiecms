@@ -28,6 +28,12 @@
 	href="<%=basePath%>assets/global/plugins/select2/select2.css" />
 <%@include file="../includejsps/style.jsp"%>
 <%@include file="../includejsps/plugin-style.jsp"%>
+<style type="text/css">
+	.mytextarea{
+	    width: 80%;
+    	height: 200px;
+	}
+</style>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -193,7 +199,7 @@
 						name : 'recontent',//name
 						id : 'recontent',//id
 						label : '回复',//左边label
-						cls : 'input-large'
+						cls : 'mytextarea'
 					}]
 	}
 	var cutOrCopyModal;

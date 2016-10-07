@@ -114,7 +114,7 @@
 						success : function(data) {
 							if (data.status == 1) {
 								grid.reload();
-								alert(data.msg);
+								bootbox.alert(data.msg);
 							}
 						}
 					});
@@ -192,24 +192,50 @@
 						type : 'text',//类型
 						name : 'name',
 						label : '姓名',//左边label
-						cls : 'input-large'
+						cls : 'input-large',
+						rule : {
+							required : true
+						},
+						message : {
+							required : "请输入"
+						}
 					},{
-						type : 'text',//类型
+						type : 'textarea',//类型
 						name : 'occupation',
 						label : '职务',//左边label
-						cls : 'input-large'
+						cls : 'input-large',
+						rule : {
+							required : true
+						},
+						message : {
+							required : "请输入"
+						}
 					},
 					{
-						type : 'text',//类型
+						type : 'textarea',//类型
 						name : 'division',
 						label : '分工',//左边label
-						cls : 'input-large'
+						cls : 'input-large',
+						rule : {
+							required : true
+						},
+						message : {
+							required : "请输入"
+						}
 					},
 					{
 						type : 'text',//类型
 						name : 'seq',
 						label : '排序号',//左边label
-						cls : 'input-large'
+						cls : 'input-large',
+						rule : {
+							required : true,
+							number:true
+						},
+						message : {
+							required : "请输入数字",
+							number:"请输入数字"
+						}
 					},
 					{
 						type : 'select',
@@ -224,7 +250,13 @@
 						 {
 							value : '2',
 							text : '书记'
-						}]
+						}],
+						rule : {
+							required : true
+						},
+						message : {
+							required : "请选择"
+						}
 					},{
 						type : 'image',
 						id : 'headImg',
@@ -251,7 +283,13 @@
 						label:'分类',
 						cls:'input-large',
 						items:[],
-						itemsUrl:'../dict/getItems?code=C01'
+						itemsUrl:'../dict/getItems?code=C01',
+						rule : {
+							required : true
+						},
+						message : {
+							required : "请选择"
+						}
 					}
 					]
 	}

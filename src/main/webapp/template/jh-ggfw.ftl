@@ -90,7 +90,7 @@
                                                                                <div class="col-sm-10 ggfw-cycx2">
                                                                                    <div class="row ggfw-btn-pd ggfw-btn-pd1 text-center">
                                                                                        <@contentListDirective channelId=44 pageSize=12 pageNum=1><#list contents as content><div class="col-xs-4 col-md-2">
-                                                                                                      <a href="${content.url!}" target="_blank" class="ggfw-btn">${content.title!}</a>
+                                                                                                      <a title="${content.title!}" href="${content.url!}" target="_blank" class="ggfw-btn">${content.title!}</a>
                                                                                                   </div>
                                                                                                     	
                                                                                                     </#list></@contentListDirective>

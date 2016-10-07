@@ -39,7 +39,7 @@
                                  <div class="ztrd4-pd clearfix">
                                      <ul class="panel2-list">
          							<#list contents as cmsContent>
-         									<li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">
+         									<li><span class="jh-dotted">·</span><a title="${cmsContent.title}" href="${cmsContent.url}" target="_blank">
          	${cmsContent.title}
          </a></li>
          							</#list>

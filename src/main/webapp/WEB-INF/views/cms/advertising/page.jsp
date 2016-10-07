@@ -194,7 +194,7 @@
 					return '否';
 					
 				}
-			},{title:'隐藏',
+			},{title:'暂停使用',
 				field:'',
 				width:'10%',
 				format:function(i,c){
@@ -390,7 +390,7 @@
 				type:"radioGroup",
 				name:"alwaysShow",
 				id :"alwaysShow",
-				label:"一直展示",
+				label:"永久展示",
 				items:[{text:"是",value:true},{text:"否",value:false,checked:true}]
 			},{
 				type:"radioGroup",

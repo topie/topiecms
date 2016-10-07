@@ -38,7 +38,7 @@ public class CmsVoteController {
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,
 			CmsVote record,
 			@RequestParam(value = "sort", required = false) String sort) {
-		if (record.getQuestionnairesId() == null) {
+		if (record.getChannelId() == null) {
 			return PageConvertUtil.emptyGrid();
 		}
 		Map map = new SqlParam<CmsVote>().autoParam(record, sort);

@@ -27,7 +27,7 @@
 	    <@contentListDirective channelId=own pageSize=10 pageNum=pageNum>
             <ul class="panel2-list panel2-list-pd ztrd3-panel borderBottom pdb10">
 	    <#list contents as content>
-                <li><a href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string("yyyy-MM-dd")}</span></a></li>
+                <li><a title="${content.title}" href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string("yyyy-MM-dd")}</span></a></li>
 	    </#list>
             </ul>
             ${pagination}

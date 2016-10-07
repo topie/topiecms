@@ -28,7 +28,7 @@
           		<@contentListDirective channelId=43 pageNum=pageNum pageSize=20>
                           <ul class="panel2-list panel2-list-pd ">
           			<#list contents as content>
-                              <li><a href="${content.url}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string("yyyy-MM-dd")}</span></a></li>
+                              <li><a href="${content.url}" title="${content.title!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string("yyyy-MM-dd")}</span></a></li>
                               <#if (content_index==4)>
          			<li class="lineccc-1"></li>
          		     </#if>
@@ -51,7 +51,7 @@
                                   <ul class="panel2-list panel2-list-sm">
           			<@contentListDirective channelId=34 pageSize=8 pageNum=1>
           			   <#list contents as content>
-                                      <li><span class="jh-dotted">·</span><a href="${content.url}" target="_blank">${content.title!}</a></li>
+                                      <li><span class="jh-dotted">·</span><a title="${content.title!}" href="${content.url}" target="_blank">${content.title!}</a></li>
                                       </#list>
           			</@contentListDirective>
                                   </ul>
@@ -61,7 +61,7 @@
           			<div class="clearfix">
                                   <div class="col-sm-4 ggfw-cycx1 color-green ">
           			<@channelDirective channelId=44>
-                                      <div><a href="${channel.url!}" target="_blank"><span class="ggfw-cycx1-circle color-green"><span class="glyphicon glyphicon-search"></span></span> <span class="color-green">常用查询</span></a></div>
+                                      <div><a href="${channel.url!}"  target="_blank"><span class="ggfw-cycx1-circle color-green"><span class="glyphicon glyphicon-search"></span></span> <span class="color-green">常用查询</span></a></div>
           			</@channelDirective>
                                   </div>
                          <div class="col-sm-12 ggfw-cycx2 mgt10">
@@ -69,7 +69,7 @@
           			    <@contentListDirective channelId=44 pageSize=18 pageNum=1>
           				    <#list contents as content>
           				    <div class="col-xs-4 col-md-4">
-          					<a href="${content.url!}" target="_blank" class="ggfw-btn">${content.title!}</a>
+          					<a href="${content.url!}" title="${content.title!}" target="_blank" class="ggfw-btn">${content.title!}</a>
           				    </div>
           				     </#list>
           			     </@contentListDirective>

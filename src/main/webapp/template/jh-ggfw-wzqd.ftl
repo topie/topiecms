@@ -92,7 +92,7 @@
 						<@contentListDirective channelId=ch.id pageSize=channel.pageSize pageNum=channel.pageNum titleLeft=37>
 						<#list contents as cont>
 				<ul class="panel2-list panel2-list-pd news-list2 wxqd-red">
-				    <li><a href="${cont.url!}" target="_blank">
+				    <li><a href="${cont.url!}" title="${cont.title!}" target="_blank">
 							<span class="panel2-list-content">${cont.title!}</span><span class="panel2-list-time">${cont.publishDate?string('yyyy-MM-dd')}</span>
 							</a></li>
 				</ul>
@@ -108,7 +108,7 @@
 						<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=channel.pageNum titleLeft=37>
 						<#list contents as cont>
 				<ul class="panel2-list panel2-list-pd news-list2 wxqd-red">
-				    <li><a href="${cont.url!}" target="_blank">
+				    <li><a href="${cont.url!}" title="${cont.title!}" target="_blank">
 							<span class="panel2-list-content">${cont.title!}</span><span class="panel2-list-time">${cont.publishDate?string('yyyy-MM-dd')}</span>
 							</a></li>
 				</ul>

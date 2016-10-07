@@ -34,10 +34,10 @@
        	    <@channelDirective channelId=own>
                        <div class="fontSize18 new-list2-t">${channel.displayName}</div>
 		        <#if channel.id==16>
-                        <@videoListDirective channelId=16 pageSize=channel.pageSize pageNum=pageNum  titleLeft=20 >
+                        <@videoListDirective channelId=16 pageSize=channel.pageSize pageNum=pageNum  titleLeft=50 >
 			<ul class="panel2-list panel2-list-pd news-list2">
 			  <#list cmsVideos as video>
-				<li><a target="_blank" href="${video.url!}">
+				<li><a target="_blank" href="${video.url!}" title="${video.name}">
 				<span class="panel2-list-content">${video.name!}</span>
 				<span class="panel2-list-time">${video.publishDate?string("yyyy-MM-dd")}</span></a></li>	
 			  </#list>
@@ -48,7 +48,7 @@
        		   <@contentListDirective channelId=channel.id pageSize=channel.pageSize pageNum=pageNum titleLeft=50 order=2>
                        <ul class="panel2-list panel2-list-pd news-list2">
 			  <#list contents as cmsContent>
-				<li><a target="_blank" href="${cmsContent.url}">
+				<li><a target="_blank" href="${cmsContent.url}" title="${cmsContent.title}">
 				<span class="panel2-list-content">${cmsContent.title}</span>
 				<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>	
 			  </#list>

@@ -39,7 +39,7 @@
 				<@contentListDirective channelId=channel.id pageSize=channel.pageSize pageNum=pageNum titleLeft=50 order=2>
 				       <ul class="panel2-list panel2-list-pd news-list2">
 				  <#list contents as cmsContent>
-					<li><a target="_blank" href="${cmsContent.url}">
+					<li><a title="${cmsContent.title}" target="_blank" href="${cmsContent.url}">
 					<span class="panel2-list-content">${cmsContent.title}</span>
 					<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>	
 				  </#list>

@@ -9,7 +9,9 @@ public class CmsVote {
 
     private String title;
 
-    private Integer questionnairesId;
+   // private Integer questionnairesId;
+    
+    private Integer channelId;
 
     private String description;
 
@@ -51,17 +53,25 @@ public class CmsVote {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Integer getChannelId() {
+		return channelId;
+	}
+
+	public void setChannelId(Integer channelId) {
+		this.channelId = channelId;
+	}
+
+	public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
     }
 
-    public Integer getQuestionnairesId() {
+    /*public Integer getQuestionnairesId() {
 		return questionnairesId;
 	}
 
 	public void setQuestionnairesId(Integer questionnairesId) {
 		this.questionnairesId = questionnairesId;
-	}
+	}*/
 
 	public String getDescription() {
         return description;
