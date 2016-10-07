@@ -9,6 +9,10 @@
         <script src="/html/jinhu-static/js/html5shiv.min.js"></script>
         <script src="/html/jinhu-static/js/respond.min.js"></script>
         <![endif]-->
+	<style>
+		.add-edage p{height:40px; text-align:center; padding:5px 0;}
+		.border-green-add{margin:25px 0; border:1px solid #5eb326;}
+	</style>
     </head>
     <body>
     <#include "/template/jh-head.ftl">
@@ -17,7 +21,7 @@
         <div class="jh-main">
             <div class="clearfix weibo-square">
 		<div class="fontSize22 text-center color-green pdt10 mgb30"><span>微博广场</span></div>
-		    <div class="border-green" ></div>
+		    <div class="border-green-add" ></div>
 		    <!--<div class="color-green mgb20"><img src="/html/jinhu-static/img/green1.png" style="margin-right:10px;">书记信箱</div>-->
 		    <div class="row pdt10">
 		    <@microcobolListDirective siteId=6>
@@ -25,7 +29,7 @@
 			<div class="col-md-1 col-sm-1 col-xs-2 add-edage">
 			    <div class="thumbnail thumbnails">
 				<a href="${micr.link!}" target="_blank"><img title="${micr.name!}" alt="${micr.name!}" src="${micr.logo!}" height="77.7px" class="thumbnail-border-gray" style="width:100%;"></a>
-				<p style="white-space: nowrap;overflow: hidden;text-align: center;" title="${micr.name!}">${micr.name!}</p>
+				<p title="${micr.name!}">${micr.name!}</p>
 			    </div>
 			</div> 
 			</#list>

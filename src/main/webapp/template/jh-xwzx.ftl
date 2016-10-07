@@ -64,7 +64,7 @@
                   			<a href="${cmsContent.url}" title="${cmsContent.title!}" target="_blank"><p class="fontSize22 color-green">${cmsContent.shortTitle!}</p></a>
                 			</#list>
                 			</@contentListDirective>-->
-                  			<@contentListDirective channelId=channel.id pageSize=10 titleLeft=36 order=4>
+                  			<@contentListDirective channelId=channel.id pageSize=10 titleLeft=36 order=2>
                                <ul class="panel2-list">
                   			  <#list contents as cmsContent>
                   				<li><span class="jh-dotted">·</span><a title="${cmsContent.title}" target="_blank" href="${cmsContent.url}"><span class="panel2-list-content">${cmsContent.shortTitle}</span><span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>	
@@ -85,7 +85,7 @@
                                       <div class="panel-body">
                                           <ul class="panel2-list panel2-list-pd">
 					  <#if channel.id==16>
-                                          <@videoListDirective channelId=16 pageSize=7 pageNum=1 titleLeft=36 >
+                                          <@videoListDirective channelId=16 pageSize=7 pageNum=1 titleLeft=42 >
                    	<#list cmsVideos as video>
                          <li> <a href="${video.url!}" title="${video.name}" target="_blank"><span class="panel2-list-content">${video.name!}</span>
                            <span class="panel2-list-time">${video.publishDate?string("yyyy-MM-dd")}</span></a></li>
@@ -93,8 +93,7 @@
                    	</#list>
                    	
                    </@videoListDirective>
-                   
-                                                                                                         </#if>
+                    </#if>
                   			<@contentListDirective channelId=channel.id pageSize=7 titleLeft=36 order=2>
                   			  <#list contents as cmsContent>
                   				<li><a target="_blank" title="${cmsContent.title}" href="${cmsContent.url}"><span class="panel2-list-content">${cmsContent.shortTitle}</span><span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>	
@@ -132,9 +131,9 @@
                                       <div class="panel-heading panel2-t fontSize18"><a href="${channel.url}">${channel.displayName}</a></div>
                                       <div class="panel-body">
                                           <ul class="panel2-list panel2-list-sm">
-                  			<@contentListDirective channelId=channel.id pageSize=3 titleLeft=18 order=4>
+                  			<@contentListDirective channelId=channel.id pageSize=3 titleLeft=18 order=2>
                   			  <#list contents as cmsContent>
-                                              <li><span class="jh-dotted">·</span><a title="${cmsContent.title}" href="${cmsContent.url}">${cmsContent.shortTitle}</a></li>
+                                              <li><span class="jh-dotted">·</span><a title="${cmsContent.title}" target="_blank" href="${cmsContent.url}">${cmsContent.shortTitle}</a></li>
                                               </#list>
                   			</@contentListDirective>
                                           </ul>
@@ -148,9 +147,9 @@
                                       <div class="panel-heading panel2-t fontSize18"><a href="${channel.url}">${channel.displayName}</a></div>
                                       <div class="panel-body">
                                           <ul class="panel2-list panel2-list-sm">
-                                           <@contentListDirective channelId=channel.id pageSize=3 titleLeft=18 order=4>
+                                           <@contentListDirective channelId=channel.id pageSize=3 titleLeft=18 order=2>
                   			  <#list contents as cmsContent>
-                                              <li><span class="jh-dotted">·</span><a title="${cmsContent.title}" href="${cmsContent.url}">${cmsContent.shortTitle}</a></li>
+                                              <li><span class="jh-dotted">·</span><a title="${cmsContent.title}" target="_blank" href="${cmsContent.url}">${cmsContent.shortTitle}</a></li>
                                               </#list>
                   			</@contentListDirective>
                                           </ul>

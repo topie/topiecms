@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dm.cms.model.CmsQuestionnaires;
+import com.dm.cms.model.CmsVote;
 import com.dm.cms.service.CmsQuestionnairesService;
+import com.dm.cms.service.CmsVoteService;
 import com.dm.cms.sqldao.CmsQuestionnairesMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -18,6 +20,9 @@ public class CmsQuestionnairesServiceImpl implements CmsQuestionnairesService{
 
 	@Autowired
 	private CmsQuestionnairesMapper mapper;
+	@Autowired
+	private CmsVoteService voteMapper;
+	
 	@Override
 	public PageInfo<CmsQuestionnaires> findByPage(Integer pageNum,
 			Integer pageSize, Map map) {
@@ -50,6 +55,7 @@ public class CmsQuestionnairesServiceImpl implements CmsQuestionnairesService{
 	public CmsQuestionnaires load(Integer id) {
 		return this.mapper.selectByPrimaryKey(id);
 	}
+	
 
 	@Override
 	public void updateStatus(Integer id, String status) {
@@ -61,6 +67,17 @@ public class CmsQuestionnairesServiceImpl implements CmsQuestionnairesService{
 			record.setPublishTime(new Date());
 		}
 		this.mapper.updateByPrimaryKeySelective(record);
+		
+	}
+
+	@Override
+	public CmsQuestionnaires loadWithVote(Integer id) {
+		 CmsQuestionnaires q = this.mapper.selectByPrimaryKey(id);
+		 if(q==null) return null;
+		 List<CmsVote> votes = this.voteMapper.listByQtionId(id);
+		 q.setVotes(votes);
+		 return q;
+		 
 		
 	}
 

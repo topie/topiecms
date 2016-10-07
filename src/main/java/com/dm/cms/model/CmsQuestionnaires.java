@@ -1,6 +1,8 @@
 package com.dm.cms.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class CmsQuestionnaires {
     private Integer id;
@@ -22,8 +24,25 @@ public class CmsQuestionnaires {
     private String url;
 
     private String isHtml;
+    
+    private List<CmsVote> votes;
+    
+    
+    public List<CmsVote> getVotes() {
+		return votes;
+	}
 
-    public Integer getId() {
+	public void setVotes(List<CmsVote> votes) {
+		this.votes = votes;
+	}
+	public void add(CmsVote vote) {
+		if(votes==null){
+			votes = new ArrayList<CmsVote>();
+		}
+		votes.add(vote);
+	}
+
+	public Integer getId() {
         return id;
     }
 

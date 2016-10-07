@@ -21,7 +21,7 @@
 		
 	</properties>
 	<build>
-		<finalName>dmbase</finalName>
+		<finalName>topiecms</finalName>
 		<plugins>
 			<!-- 解决资源文件的编码问题 -->
 			<plugin>

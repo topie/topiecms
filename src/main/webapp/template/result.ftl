@@ -48,17 +48,29 @@
                             </label>
                           <#elseif isAllowedComment>
                            <label class="radio-inline">
-                                <input type="radio" name="isSatisfied" id="form-xb3" value="1"> 满意
+                                <input type="radio" name="isSatisfied" id="form-xb3" value="6"> 非常满意
                             </label>
           <label class="radio-inline">
-                                <input type="radio" name="isSatisfied" id="form-xb2" value="0">不满意
+                                <input type="radio" name="isSatisfied" id="form-xb2" value="5">满意
+                            </label>
+			    <label class="radio-inline">
+                                <input type="radio" name="isSatisfied" id="form-xb3" value="4">一般
+                            </label>
+          <label class="radio-inline">
+                                <input type="radio" name="isSatisfied" id="form-xb2" value="3">不满意
                             </label>
                             <#else>
                             <label class="radio-inline">
-                                <input type="radio"  disabled = "disabled" name="isSatisfied" <#if webSurvey.isSatisfied??>${(webSurvey.isSatisfied=='1')?string('checked=checked','')}</#if> id="form-xb3" value="1"> 满意
+                                <input type="radio"  disabled = "disabled" name="isSatisfied" <#if webSurvey.isSatisfied??>${(webSurvey.isSatisfied=='6')?string('checked=checked','')}</#if> id="form-xb3" value="6"> 非常满意
                             </label>
           <label class="radio-inline">
-                                <input type="radio"  disabled = "disabled" name="isSatisfied" <#if webSurvey.isSatisfied??> ${(webSurvey.isSatisfied=='0')?string('checked=checked','')} </#if>id="form-xb2" value="0">不满意
+                                <input type="radio"  disabled = "disabled" name="isSatisfied" <#if webSurvey.isSatisfied??> ${(webSurvey.isSatisfied=='5')?string('checked=checked','')} </#if>id="form-xb2" value="5">满意
+                            </label>
+			    <label class="radio-inline">
+                                <input type="radio"  disabled = "disabled" name="isSatisfied" <#if webSurvey.isSatisfied??>${(webSurvey.isSatisfied=='4')?string('checked=checked','')}</#if> id="form-xb3" value="4"> 一般
+                            </label>
+          <label class="radio-inline">
+                                <input type="radio"  disabled = "disabled" name="isSatisfied" <#if webSurvey.isSatisfied??> ${(webSurvey.isSatisfied=='3')?string('checked=checked','')} </#if>id="form-xb2" value="3">不满意
                             </label>
                           </#if>
 			 </td>

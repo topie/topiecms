@@ -19,5 +19,7 @@ public interface CmsQuestionnairesService {
 	CmsQuestionnaires load(Integer id);
 
 	void updateStatus(Integer id, String status);
+	
+	CmsQuestionnaires loadWithVote(Integer id);
 
 }

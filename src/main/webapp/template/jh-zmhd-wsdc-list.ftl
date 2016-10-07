@@ -35,6 +35,10 @@
                         <li class="${(channel.id==own)?string('active','')}">
     		    <a href="${channel.url}"><span class="glyphicon glyphicon-play-circle"></span>${channel.displayName}</a> </li>
     		</@channelDirective> 
+		<@channelDirective channelId=49>
+                        <li class="${(channel.id==own)?string('active','')}">
+    		    <a href="${channel.url}"><span class="glyphicon glyphicon-play-circle"></span>${channel.displayName}</a> </li>
+    		</@channelDirective> 
     		<@channelDirective channelId=50>
                         <li class="${(channel.id==own)?string('active','')}">
     		    <a href="${channel.url}"><span class="glyphicon glyphicon-play-circle"></span>${channel.displayName}</a> </li>
@@ -47,7 +51,7 @@
                     <div class="fontSize18 new-list2-t">${channel.displayName}</div>
     		</@channelDirective >
                   <#if own==52>
-   			<@voteListDirective channelId=own pageSize=15>
+   			<@voteListDirective channelId=own pageNum=pageNum pageSize=15>
    			 <ul class="panel2-list panel2-list-pd news-list2"> 
    				<#list cmsVotes as vote>
    					<li><a target="_blank" title="${vote.title}" href="${vote.filed1}"><span class="panel2-list-content">
@@ -57,7 +61,7 @@
    				${pagination} 
    			</@voteListDirective>
    		<#elseif own=50>
-           		<@websurveyListDirective pageNum=pageNum pageSize=5 type="1,2,3,4" isOpen='1' channelId=own>
+           		<@websurveyListDirective pageNum=pageNum pageSize=15 type="1,2,3,4" isOpen='1' channelId=own>
 			<ul class="panel2-list panel2-list-pd news-list2"> 
 			<#list websurveys as websurvey>
 			<li><a target="_blank" title="${websurvey.title}" href="../../websurvey/findOne?id=${websurvey.id}"><span class="panel2-list-content">
@@ -68,7 +72,7 @@
 			</@websurveyListDirective>
 
    		<#else>
-    		<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=10> 
+    		<@contentListDirective channelId=own pageSize=15 pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=2> 
                     <ul class="panel2-list panel2-list-pd news-list2"> 
     		<#list contents as cmsContent>
     		<li><a target="_blank" title="${cmsContent.title}" href="${cmsContent.url}"><span class="panel2-list-content">

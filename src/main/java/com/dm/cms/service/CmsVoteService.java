@@ -31,4 +31,6 @@ public interface CmsVoteService {
 	CmsVoteOption findOneOpt(Integer id);
 
 	List<CmsVoteOption> loadOpt(Integer voteId);
+
+	List<CmsVote> listByQtionId(Integer id);
 }

@@ -112,7 +112,7 @@ public class CmsContentController {
 	@RequestMapping("/checkAllType")
 	public @ResponseBody Map checkAllType(HttpServletRequest request,
 			Short status, String channelType, Integer id) {
-		if (channelType.equals("0")) {
+		if (channelType.equals("0")||channelType.equals("11")||channelType.equals("10")) {
 			boolean succ = this.cmsContentService.updateContentState(request,
 					id, status);
 			if (succ) {

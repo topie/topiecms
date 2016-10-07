@@ -243,6 +243,14 @@
 		{
 		url = "../content/sort";
 		}
+		if(currentChannelType=='10')
+		{
+		url = "../content/sort";
+		}
+		if(currentChannelType=='11')
+		{
+		url = "../content/sort";
+		}
 		else if(currentChannelType=='5')
 		{
 		url = "../video/sort";	

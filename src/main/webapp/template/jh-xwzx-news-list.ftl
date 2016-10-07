@@ -21,7 +21,7 @@
        		<@channelDirective channelId=channel.pid>
                        <div class="fontSize18 pd3 color-green">${channel.displayName}</div>
                        <ul class="news-list1 news-list1-sm fontSize16 clearfix">
-       		<@channelListDirective channelId=channel.id order=1 excludeIds="50,51,52,53,54,59,60,61,211,45,46,47,57,58,58,19,225,28,20,21,22,23,24,25,26,27,28" >
+       		<@channelListDirective channelId=channel.id order=1 excludeIds="49,50,51,52,53,54,59,60,61,211,45,46,47,57,58,58,19,225,28,20,21,22,23,24,25,26,27,28" >
        		 <#list channels as channel>
                            <li class="${(channel.id==own)?string('active','')}">
        		    <a href="${channel.url}"><span class="glyphicon glyphicon-play-circle"></span>${channel.displayName}</a> </li>

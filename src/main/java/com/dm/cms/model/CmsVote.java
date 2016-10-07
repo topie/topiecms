@@ -1,6 +1,7 @@
 package com.dm.cms.model;
 
 import java.util.Date;
+import java.util.List;
 
 import com.dm.platform.util.ConfigUtil;
 
@@ -9,7 +10,7 @@ public class CmsVote {
 
     private String title;
 
-   // private Integer questionnairesId;
+    private Integer questionnairesId;
     
     private Integer channelId;
 
@@ -40,8 +41,19 @@ public class CmsVote {
     private String filed3;//投票人数
 
     private String filed4;
+    
+    private List<CmsVoteOption> option;
+    
 
-    public Integer getId() {
+    public List<CmsVoteOption> getOption() {
+		return option;
+	}
+
+	public void setOption(List<CmsVoteOption> option) {
+		this.option = option;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -65,13 +77,13 @@ public class CmsVote {
         this.title = title == null ? null : title.trim();
     }
 
-    /*public Integer getQuestionnairesId() {
+    public Integer getQuestionnairesId() {
 		return questionnairesId;
 	}
 
 	public void setQuestionnairesId(Integer questionnairesId) {
 		this.questionnairesId = questionnairesId;
-	}*/
+	}
 
 	public String getDescription() {
         return description;

@@ -319,6 +319,27 @@ public class CmsInterviewController {
 	@ResponseBody
 	public Object updateQuestionsStatus(
 			CmsInterviewQuestions record){
+		if(record.getStatus()!=null && record.getStatus().equals("1")){
+			//插入留言
+			CmsInterviewQuestions c =this.cmsInterviewQueService.load(record.getId());
+			CmsInterviewRecord f = new CmsInterviewRecord();
+			f.setContent(c.getContent());
+			f.setCreateTime(new Date());
+			f.setInterviewId(c.getInterviewId());
+			f.setRoleName("网友");
+			f.setFiled1(c.getName());
+			f.setPublishTime(new Date());
+			this.cmsInterviewService.insertRecord(f);
+			//插入回复
+			CmsInterviewRecord r = new CmsInterviewRecord();
+			r.setContent(record.getContent());
+			r.setCreateTime(new Date());
+			r.setInterviewId(record.getInterviewId());
+			r.setRoleName("回复");
+			r.setFiled1(" ");
+			r.setPublishTime(new Date());
+			this.cmsInterviewService.insertRecord(r);
+		}
 		CmsInterviewQuestions temp = new CmsInterviewQuestions();
 		temp.setId(record.getId());
 		temp.setStatus(record.getStatus());

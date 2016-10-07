@@ -150,4 +150,21 @@ public class CmsVoteServiceImpl implements CmsVoteService {
 		return this.cmsVoteOptionMapper.findList(map);
 	}
 
+	@Override
+	public List<CmsVote> listByQtionId(Integer id) {
+		Map map =new HashMap();
+		CmsVote model = new CmsVote();
+		model.setQuestionnairesId(id);
+		map.put("model", model);
+		List<CmsVote> list = this.cmsVoteMapper.findList(map);
+		for(CmsVote o:list){
+			CmsVoteOption m = new CmsVoteOption();
+			m.setVoteId(o.getId());
+			map.put("model", m);
+			List<CmsVoteOption> listo = this.cmsVoteOptionMapper.findList(map);
+			o.setOption(listo);
+		}
+		return list;
+	}
+
 }

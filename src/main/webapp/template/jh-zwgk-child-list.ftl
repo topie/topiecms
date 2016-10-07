@@ -35,7 +35,7 @@
 		   <@channelListDirective channelId=own>
 			<#if channels?size gt 0>
 				<#list channels as c>
-					<@contentListDirective channelId=c.id pageSize=6 pageNum=pageNum titleLeft=50 order=4> 
+					<@contentListDirective channelId=c.id pageSize=6 pageNum=pageNum titleLeft=38 order=2> 
 						<div class="wxqd-panel mgb20 " style="min-height:200px">
 						    <div class="wxqd-panel-t">
 							<a target="_blank" href="${c.url!}" class="wxqd-panel-tbg wxqd-panel-tbg1"><span class="color-white fontSize18">${c.displayName}</span></a>
@@ -44,7 +44,7 @@
 							<ul class="panel2-list panel2-list-pds">
 							  <#list contents as cmsContent>
 								<li><span class="jh-dotted">·</span><a title="${cmsContent.title}" target="_blank" href="${cmsContent.url}">
-								<span class="panel2-list-content">${cmsContent.title} </span>
+								<span class="panel2-list-content">${cmsContent.shortTitle} </span>
 								<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>	
 							  </#list>
 							 </ul>
@@ -55,7 +55,7 @@
 				</#list>
 			<#else>
 				<@channelDirective channelId=own>
-					<@contentListDirective channelId=channel.id pageSize=18 pageNum=pageNum titleLeft=50 order=4> 
+					<@contentListDirective channelId=channel.id pageSize=18 pageNum=pageNum titleLeft=38 order=2> 
 						<div class="wxqd-panel">
 						    <div class="wxqd-panel-t">
 							<span class="wxqd-panel-tbg wxqd-panel-tbg1"><span class="color-white fontSize18">${channel.displayName}</span></span>

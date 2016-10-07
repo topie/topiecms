@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <#include "/template/jh-meta.ftl">
-    <title>${site.displayName!}-{channel.displayName!}</title>
+    <title>${site.displayName!}-${channel.displayName!}</title>
     <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/html/jinhu-static/css/style.ts.css" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -77,10 +77,10 @@
                         <div class="wxqd-panel-tw"></div>
                     </div>
                     <div class="wxqd-panel-c bg-white">
-						<@contentListDirective channelId=channel.id pageSize=5>
+						<@contentListDirective channelId=channel.id pageSize=5 titleLeft=38>
                         <ul class="panel2-list panel2-list-pds wxqd-red">
 							<#list contents as content>
-                            <li><span class="jh-dotted color-oldgray">·</span><a title="${content.title!}" href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string('yyyy-MM-dd')}</span></a></li>
+                            <li><span class="jh-dotted color-oldgray">·</span><a title="${content.title!}" href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span><span class="panel2-list-time">${content.publishDate?string('yyyy-MM-dd')}</span></a></li>
 							</#list>
 						</ul>
 						</@contentListDirective>
@@ -98,10 +98,10 @@
                         <div class="wxqd-panel-tw"></div>
                     </div>
                     <div class="wxqd-panel-c bg-white">
-						<@contentListDirective channelId=channel.id pageSize=5>
+						<@contentListDirective channelId=channel.id pageSize=5 titleLeft=24>
                         <ul class="panel2-list panel2-list-pds wxqd-red">
 							<#list contents as content>
-                            <li><span class="jh-dotted color-oldgray">·</span><a title="${content.title!}" href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string('yyyy-MM-dd')}</span></a></li>
+                            <li><span class="jh-dotted color-oldgray">·</span><a title="${content.title!}" href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span><span class="panel2-list-time">${content.publishDate?string('yyyy-MM-dd')}</span></a></li>
 							</#list>
 						</ul>
 						</@contentListDirective>
@@ -137,10 +137,10 @@
 							</div>
 
 							<div class="wxqd-panel-c bg-white wxqd-panel-cpd">
-								<@contentListDirective channelId=channel.id pageSize=5>
+								<@contentListDirective channelId=channel.id pageSize=5 titleLeft=12>
 								<ul class="panel2-list panel2-list-pds wxqd-red">
 									<#list contents as content>
-									<li><a href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span></a></li>
+									<li><a href="${content.url!}" title="${cotent.title!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span></a></li>
 									</#list>
 								</ul>
 								</@contentListDirective>
@@ -187,10 +187,10 @@
 							</div>
 
 							<div class="wxqd-panel-c bg-white wxqd-panel-cpd">
-								<@contentListDirective channelId=channel.id pageSize=5>
+								<@contentListDirective channelId=channel.id pageSize=5 titleLeft=48>
 								<ul class="panel2-list panel2-list-pds wxqd-red">
 									<#list contents as content>
-									<li><a href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span></a></li>
+									<li><a href="${content.url!}" title="${content.title!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span></a></li>
 									</#list>
 								</ul>
 								</@contentListDirective>
@@ -207,10 +207,10 @@
 							</div>
 
 							<div class="wxqd-panel-c bg-white wxqd-panel-cpd">
-								<@contentListDirective channelId=channel.id pageSize=5>
+								<@contentListDirective channelId=channel.id pageSize=5 titleLeft=17>
 								<ul class="panel2-list panel2-list-pds wxqd-red">
 									<#list contents as content>
-									<li><span class="jh-dotted color-oldgray">·</span><a href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span></a></li>
+									<li><span class="jh-dotted color-oldgray">·</span><a href="${content.url!}" title="${content.title!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span></a></li>
 									</#list>
 								</ul>
 								</@contentListDirective>
@@ -231,10 +231,10 @@
 				</div>
 
 				<div class="wxqd-panel-c bg-white wxqd-panel-cpd">
-					<@contentListDirective channelId=channel.id pageSize=5>
+					<@contentListDirective channelId=channel.id pageSize=5 titleLeft=25>
 					<ul class="panel2-list panel2-list-pds wxqd-red">
 						<#list contents as content>
-						<li><span class="jh-dotted color-oldgray">·</span><a href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span></a></li>
+						<li><span class="jh-dotted color-oldgray">·</span><a href="${content.url!}" title="${content.title!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span></a></li>
 						</#list>
 					</ul>
 					</@contentListDirective>

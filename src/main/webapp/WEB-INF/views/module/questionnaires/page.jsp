@@ -70,6 +70,14 @@
 								</div>
 							</div>
 							<div class="portlet-body" id="channel_grid"></div>
+							<div class="row  portlet light">
+							<div class=" col-md-6  col-sm-6">
+							<div class="portlet-body" id="channel_grid_child1"></div>
+							</div>
+							<div class=" col-md-6  col-sm-6">
+							<div class="portlet-body" id="channel_grid_child2"></div>
+							</div>
+							</div>
 						</div>
 						<!-- END PORTLET-->
 					</div>
@@ -91,7 +99,7 @@
 	<script type="text/javascript"
 		src="<%=basePath%>assets/global/plugins/select2/select2.min.js"></script>
 		<script type="text/javascript"
-		src="<%=basePath%>assets/dmcms/js/vote-form-grid.js"></script>
+		src="<%=basePath%>assets/dmcms/js/new-vote-form-grid.js"></script>
 	<script type="text/javascript">
     var root = "<%=basePath%>";
 		var grid;
@@ -181,15 +189,6 @@
 			}	 ]
 		};
 		function replyModal(data){
-			/* modal = $.dmModal({
-				id : "siteForm",
-				title : "修改",
-				distroy : true
-			});
-			modal.show(); 
-			
-			var form = modal.$body.dmForm(getFormOptions());
-			form.loadRemote("./load?id="+data.id);*/
 			$("#channel_grid").html("");
 			var form = $("#channel_grid").dmForm(getFormOptions());
 			form.loadRemote("./load?id="+data.id,function(data){
@@ -198,8 +197,8 @@
 			});
 		}
 		function manage(id){
-			$("#channel_grid").html("");
-			grid = $("#channel_grid").dmGrid(getVoteOptions(id));
+			$("#channel_grid_child1").html("");
+			grid = $("#channel_grid_child1").dmGrid(getVoteOptions(id));
 		}
 		function dateTostr(utc)
 		{
@@ -223,8 +222,7 @@
 				name:"title",
 				id :"title",
 				cls : 'input-large',
-				label:"问卷标题"/* ,
-				items:[{text:"",value:"AD1"},{text:"位置2",value:"AD2"},{text:"位置3",value:"AD3"}] */
+				label:"问卷标题"
 			},{
 				type:'textarea',
 				name:'description',
@@ -295,6 +293,32 @@
 	                    url: "./delete",
 	                    success: function(data){
 	                    	if (data.status == 1) {
+	                    		reGrid()
+	                        }else{
+	                        	bootbox.alert(data.msg);
+	                        }
+	                    }
+	                });
+	            }
+	        });
+	    }
+	    function deleteItems(ids) {
+	        if (ids.length > 0) {
+	        	deleteItem(ids);
+	        } else {
+	            bootbox.alert("请选择要删除的选项！");
+	        }
+	    }
+	    function deleteVoteItem(id) {
+	        bootbox.confirm("确定删除吗？", function (result) {
+	            if (result) {
+	                $.ajax({
+	                    type: "POST",
+	                    data: "id=" + id,
+	                    dataType: "json",
+	                    url: "../votes/delete",
+	                    success: function(data){
+	                    	if (data.status == 1) {
 	                            grid.reload();
 	                        }else{
 	                        	bootbox.alert(data.msg);
@@ -315,6 +339,8 @@
 			grid = $("#channel_grid").dmGrid(options);
 		});
 		function reGrid(){
+			$("#channel_grid_child1").html('');
+			$("#channel_grid_child2").html('');
 			$("#channel_grid").html('');
 			grid = $("#channel_grid").dmGrid(options);
 		}

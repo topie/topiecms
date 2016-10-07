@@ -32,6 +32,11 @@ public class CmsInterviewQuestionsServiceImpl implements CmsInterviewQuestionsSe
 		record.setCreateTime(new Date());
 		record.setStatus("0");
 	}
+
+	@Override
+	public CmsInterviewQuestions load(Integer id) {
+		return this.queMapper.selectByPrimaryKey(id);
+	}
 	
 	
 }

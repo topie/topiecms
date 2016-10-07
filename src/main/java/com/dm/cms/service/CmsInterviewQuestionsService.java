@@ -8,4 +8,6 @@ public interface CmsInterviewQuestionsService {
 	
 	void insert(CmsInterviewQuestions record);
 
+	CmsInterviewQuestions load(Integer id);
+
 }

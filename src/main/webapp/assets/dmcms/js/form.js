@@ -37,7 +37,7 @@
         viewMode: false
     };
     Form.statics = {
-        formDivTmpl: '<div class="portlet light "><div class="portlet-body form"></div></div>',
+        formDivTmpl: '<div class="portlet light " style="border:#ccc solid 1px;"><div class="portlet-body form"></div></div>',
         formTmpl: '<form id="${id_}" name="${name_}" action="${action_}" method="${method_}" enctype="multipart/form-data" class="${cls_}"></form>',
         formBodyTmpl: '<div class="form-body"></div>',
         formActionTmpl: '<div class="form-actions" style="text-align:${align_};"></div>',
@@ -215,23 +215,58 @@
                             formBody.append(ele);
                             return;
                         }
-                        // 计算分布
-                        if (count % rowEleNum == 0) {
-                            row = $.tmpl(Form.statics.rowTmpl, {
-                                "row_": count
-                            });
-                            formBody.append(row);
+                        if(item.type == "files"){
+                        	// 计算分
+                        	row = $.tmpl(Form.statics.rowTmpl, {
+                        			"row_": count
+                        		});
+                    		formBody.append(row);
+                        	if (count % rowEleNum != 0) {
+                        		count++;
+                        	}
+	                        var wrapper = $.tmpl(Form.statics.eleTmpl,
+	                            {
+	                                "span_": "12"
+	                            });
+	                        
+	                        // 构建元素
+	                        that._buildModuleWrapper(wrapper, item);
+	                        row.append(wrapper);
+                        }else if(item.type == "kindEditor"){
+                        	// 计算分
+                        	row = $.tmpl(Form.statics.rowTmpl, {
+                        			"row_": count
+                        		});
+                    		formBody.append(row);
+                        	if (count % rowEleNum != 0) {
+                        		count++;
+                        	}
+	                        var wrapper = $.tmpl(Form.statics.eleTmpl,
+	                            {
+	                                "span_": "12"
+	                            });
+	                        
+	                        // 构建元素
+	                        that._buildModuleWrapper(wrapper, item);
+	                        row.append(wrapper);
+                        }else{
+                        	// 计算分布
+                        	if (count % rowEleNum == 0) {
+                        		row = $.tmpl(Form.statics.rowTmpl, {
+                        			"row_": count
+                        		});
+                        		formBody.append(row);
+                        	}
+                        	count++;
+	                        var wrapper = $.tmpl(Form.statics.eleTmpl,
+	                            {
+	                                "span_": rowEleSpan
+	                            });
+	                        
+	                        // 构建元素
+	                        that._buildModuleWrapper(wrapper, item);
+	                        row.append(wrapper);
                         }
-                        count++;
-                        var wrapper = $.tmpl(Form.statics.eleTmpl,
-                            {
-                                "span_": rowEleSpan
-                            });
-
-                        // 构建元素
-                        that._buildModuleWrapper(wrapper, item);
-                        row.append(wrapper);
-
                         // validate
                         if (item.rule != undefined) {
                             that._validateOptions.rules[item.name] = item.rule;

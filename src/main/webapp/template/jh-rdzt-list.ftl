@@ -10,9 +10,18 @@
           <script src="/html/jinhu-static-z01/js/html5shiv.min.js"></script>
           <script src="/html/jinhu-static-z01/js/respond.min.js"></script>
           <![endif]-->
+	  <style type="text/css">
+		.fhsy{height:50px; line-height:50px; text-align:right;}
+		.fhsy a{ text-decoration:underline; color:#ff5c37; font-family:"黑体"; margin-left:10px;}
+		.ztrd3_logo{margin-top:0px; }
+		.panel2-list-content{width:70%;}
+		.panel2-list-pd{width:95%; margin:0 auto;}
+	</style>
       </head>
       <body class="ztrd3-bg">
 <div class="container">
+
+	<div class="fhsy"><a href="${site.url!}"><img src="/html/jinhu-static/img/fhsy.png">返回主站</a></div>
     <div class="ztrd3_logo">
         <#if channel.channelIcon??>
               <img src="${channel.channelIcon!}">

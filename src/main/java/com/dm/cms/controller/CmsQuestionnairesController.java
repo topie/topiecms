@@ -42,7 +42,6 @@ public class CmsQuestionnairesController {
 			@RequestParam(value = "sort", required = false) String sort) {
 		Map map = new SqlParam<CmsQuestionnaires>().autoParam(microcobol, sort);
 		map.put("model", microcobol);
-		System.out.println(microcobol);
 		PageInfo<CmsQuestionnaires> page = qustionnairesService.findByPage(
 				pageNum, pageSize, map);
 		return PageConvertUtil.grid(page);
@@ -68,6 +67,7 @@ public class CmsQuestionnairesController {
 	public Object load(Integer id){
 		return this.qustionnairesService.load(id);
 	}
+	
 	@RequestMapping("/check")
 	@ResponseBody
 	public Object publish(Integer id,String status){

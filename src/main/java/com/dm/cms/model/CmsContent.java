@@ -785,6 +785,8 @@ public class CmsContent implements Serializable {
 	}
 
 	public String getTopTitle() {
+		if(topTitle==null || topTitle.equals(""))
+			return title;
 		return topTitle;
 	}
 

@@ -128,19 +128,19 @@ public class CmsInterviewRecord {
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
     }
-
+    /**发言人姓名**/
     public String getFiled1() {
         return filed1;
     }
-
+    /**发言人姓名**/
     public void setFiled1(String filed1) {
         this.filed1 = filed1 == null ? null : filed1.trim();
     }
-
+    /**更新人姓名**/
     public String getFiled2() {
         return filed2;
     }
-
+    /**更新人姓名**/
     public void setFiled2(String filed2) {
         this.filed2 = filed2 == null ? null : filed2.trim();
     }
