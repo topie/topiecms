@@ -52,6 +52,8 @@
 	    <result column="checker_name" property="checkerName" jdbcType="VARCHAR" />
 	    <result column="click_count" property="clickCount" jdbcType="INTEGER" />
 	    <result column="delete_user" property="deleteUser" jdbcType="VARCHAR"/>
+	     <result column="top_title" property="topTitle" jdbcType="VARCHAR"/>
+	    
     </resultMap>
     <resultMap id="AttachmentMap" type="com.dm.cms.model.CmsAttachment">
         <!--
@@ -84,7 +86,7 @@
         publish_date, channel_id,channel_en_name,site_domain, template_id, is_html, create_time,
         create_user, update_time,url,origin,seq,is_comment,title_style,keywords,
         status,code,filed1,is_top,is_picture,zt_type,zj_type,create_user_name, checker, checker_name, 
-    	click_count,is_delete
+    	click_count,is_delete,top_title
     </sql>
     <sql id="Blob_Column_List">
         <!--
@@ -190,7 +192,7 @@
       zt_type, zj_type, is_top, 
       is_picture, create_user_name, checker, 
       checker_name, click_count, is_delete, 
-      delete_user, content_text)
+      delete_user, content_text,top_title)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{titleImageUrl,jdbcType=VARCHAR}, 
       #{titleImageIllustrate,jdbcType=VARCHAR}, #{brief,jdbcType=VARCHAR}, #{contentType,jdbcType=INTEGER}, 
       #{author,jdbcType=VARCHAR}, #{publishDate,jdbcType=TIMESTAMP}, #{channelId,jdbcType=INTEGER}, 
@@ -202,7 +204,7 @@
       #{ztType,jdbcType=VARCHAR}, #{zjType,jdbcType=VARCHAR}, #{isTop,jdbcType=BIT}, 
       #{isPicture,jdbcType=BIT}, #{createUserName,jdbcType=VARCHAR}, #{checker,jdbcType=VARCHAR}, 
       #{checkerName,jdbcType=VARCHAR}, #{clickCount,jdbcType=INTEGER}, #{isDelete,jdbcType=BIT}, 
-      #{deleteUser,jdbcType=VARCHAR}, #{contentText,jdbcType=LONGVARCHAR})
+      #{deleteUser,jdbcType=VARCHAR}, #{contentText,jdbcType=LONGVARCHAR},#{topTitle,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.dm.cms.model.CmsContent" useGeneratedKeys="true"
             keyProperty="id">
@@ -320,6 +322,9 @@
       <if test="contentText != null" >
         content_text,
       </if>
+      <if test="topTitle != null" >
+        top_title,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -429,6 +434,9 @@
       </if>
       <if test="contentText != null" >
         #{contentText,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="topTitle != null" >
+        #{topTitle,jdbcType=VARCHAR},
       </if>
     </trim>
     </insert>
@@ -540,6 +548,9 @@
       <if test="contentText != null" >
         content_text = #{contentText,jdbcType=LONGVARCHAR},
       </if>
+       <if test="topTitle != null" >
+        top_title = #{topTitle,jdbcType=VARCHAR},
+       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -579,7 +590,8 @@
       click_count = #{clickCount,jdbcType=INTEGER},
       is_delete = #{isDelete,jdbcType=BIT},
       delete_user = #{deleteUser,jdbcType=VARCHAR},
-      content_text = #{contentText,jdbcType=LONGVARCHAR}
+      content_text = #{contentText,jdbcType=LONGVARCHAR},
+      top_title = #{topTitle,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dm.cms.model.CmsContent" >
@@ -617,7 +629,8 @@
       checker_name = #{checkerName,jdbcType=VARCHAR},
       click_count = #{clickCount,jdbcType=INTEGER},
       is_delete = #{isDelete,jdbcType=BIT},
-      delete_user = #{deleteUser,jdbcType=VARCHAR}
+      delete_user = #{deleteUser,jdbcType=VARCHAR},
+       top_title = #{topTitle,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

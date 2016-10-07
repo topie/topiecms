@@ -556,7 +556,8 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 								required : "请输入内容信息标题",
 								maxlength : "最多输入64字节"
 							}
-						},{
+						},
+						{
 							type : 'image',
 							id : 'titleImageUrl',
 							name : 'titleImageUrl',
@@ -876,7 +877,16 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 				text : '开启评论'
 			}*/]
 		});  
+		var topTitle = {
+				type : 'text',// 类型
+				name : 'topTitle',// name
+				id : 'topTitle',// id
+				label : '头条标题',// 左边label
+				cls : 'input-large',
+			};
+		items.push(topTitle);
 	}
+	
 	items.push(titleImg);
 	if (contentType == 0) {
 		items.push(titleImgTitle);

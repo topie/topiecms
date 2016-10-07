@@ -84,7 +84,7 @@ public class ContentListDirective implements TemplateDirectiveModel{
 			for(CmsContent ce:contents)		{
 				if(ce.getTitle().length()>titleLeft)
 				{
-				 ce.setTitle(ce.getTitle().substring(0,titleLeft)+"...");
+				 ce.setShortTitle(ce.getTitle().substring(0,titleLeft)+"...");
 				}
 			}
 		}
