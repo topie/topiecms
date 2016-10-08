@@ -11,6 +11,8 @@ public class CmsInterview {
     private Integer id;
 
     private String title;
+    
+    private String shortTitle;
 
     private String desc;
 
@@ -55,7 +57,18 @@ public class CmsInterview {
         this.id = id;
     }
 
-    public String getTitle() {
+    
+    public String getShortTitle() {
+    	if(shortTitle==null || shortTitle.equals(""))
+    		return title;
+		return shortTitle;
+	}
+
+	public void setShortTitle(String shortTitle) {
+		this.shortTitle = shortTitle;
+	}
+
+	public String getTitle() {
         return title;
     }
 

@@ -92,7 +92,18 @@ public class TDictCache {
 		TDictCache dictCache = TDictCache.getInstance();
 		dictCache.dictJsonContainer.put(dictId.toString(), jsonArray.toString());
 	}
-
+	
+	public void initAllDic(TDictService dictService){
+		Map argMap = new HashMap();
+		TDict t = new TDict();
+		t.setDictStatus(1L);//启用的字典
+		argMap.put("model",t);
+		List<TDict> d = dictService.findDictByPage(1, 200, argMap).getList();
+		for (TDict dict : d) {
+			refreshTDict(dict.getDictId(), dict.getDictCode(), dictService);
+			
+		}
+	}
 	public void initAllJsonDic(TDictService dictService) {
 		Map argMap = new HashMap();
 		TDict t = new TDict();

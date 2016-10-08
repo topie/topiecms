@@ -883,6 +883,12 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 				id : 'topTitle',// id
 				label : '头条标题',// 左边label
 				cls : 'input-large',
+				rule : {
+					maxlength : 20
+				},
+				message : {
+					maxlength : "最多输入20字"
+				}
 			};
 		items.push(topTitle);
 	}

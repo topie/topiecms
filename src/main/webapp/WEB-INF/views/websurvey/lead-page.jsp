@@ -277,7 +277,7 @@
 							$("#headImg").attr("value", "");
 						}
 					} ,{
-						type:'select',
+						type:'checkboxGroup',
 						name:'org',
 						id:'org',
 						label:'分类',
@@ -457,7 +457,7 @@
 			}
 		} ],
 		search : {
-			rowEleNum : 2,
+			rowEleNum : 3,
 			hide:false,
 			// 搜索栏元素
 			items : [ {

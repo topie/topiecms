@@ -301,7 +301,7 @@ public class CmsContentController {
 		UserAccount user = UserAccountUtil.getInstance()
 				.getCurrentUserAccount();
 		cmsContent.setCreateUser(user.getCode());
-		cmsContent.setCreateUserName(user.getUsername());
+		cmsContent.setCreateUserName(user.getName());
 		if (cmsContent.getTitleStyle() != null
 				&& !cmsContent.getTitleStyle().equals("")) {
 			String titleStyleArray[] = cmsContent.getTitleStyle().split(",");
@@ -316,6 +316,9 @@ public class CmsContentController {
 				.getChannelId());
 		cmsContent.setSiteDomain(cmsChannel.getSiteDomain());
 		cmsContent.setChannelEnName(cmsChannel.getEnName());
+		UserAccount user = UserAccountUtil.getInstance()
+				.getCurrentUserAccount();
+		cmsContent.setCreateUserName(user.getName());
 		cmsContent.setStatus(new Short("0"));
 		if (!StringUtils.isEmpty(cmsContent.getTitleStyle())) {
 			String titleStyleArray[] = cmsContent.getTitleStyle().split(",");

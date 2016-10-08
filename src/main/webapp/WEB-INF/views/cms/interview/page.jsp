@@ -24,12 +24,12 @@
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 <meta content="" name="description" />
 <meta content="" name="author" />
-<%-- <link rel="stylesheet" type="text/css"
+<%--  <link rel="stylesheet" type="text/css"
 	href="<%=basePath%>assets/global/plugins/bootstrap-select/bootstrap-select.min.css" />
 <link rel="stylesheet" type="text/css"
 	href="<%=basePath%>assets/global/plugins/select2/select2.css" />
 <%@include file="../../includejsps/style.jsp"%>
-<%@include file="../../includejsps/plugin-style.jsp"%> --%>
+<%@include file="../../includejsps/plugin-style.jsp"%>  --%>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -131,7 +131,7 @@
 												<div class="form-group">
 													<label class="col-md-3 control-label">主题说明</label>
 													<div class="col-md-6">
-														<input name="desc" class="form-control" placeholder="主题说明"value="${model.desc }" type="text">
+														<textarea name="desc" class="form-control" placeholder="主题说明" type="text">${model.desc }</textarea>
 														<span class="help-block">
 														 </span>
 													</div>
@@ -160,6 +160,14 @@
 														 </span>
 													</div>
 												</div>
+												<%-- <div class="form-group">
+													<label class="col-md-3 control-label">视频地址</label>
+													<div class="col-md-6">
+														<input name="filed2" value="${model.filed2 }" id="insertfile" class="form-control" placeholder="视频地址" type="text">
+														<input type="button" id="binsertfile" value="添加视频" /><span class="help-block">
+														 </span>
+													</div>
+												</div> --%>
 												<!--<c:if test="${empty model.filed2}">
 													<input type="hidden" value="0" name="filed2"/>
 												</c:if>
@@ -280,8 +288,10 @@
 							</div>
 						
 							 </div>
+	
      							 
 <script type="text/javascript">
+
 	var subInterview = function(){
 		var data = $('#interviewForm').serialize();
 		$.ajax({
@@ -319,7 +329,36 @@
                 format: 'YYYY-MM-DD hh:mm:ss'
             });
         });
-		
+		$('input[role="date-picker1"]').on("click", function () {
+            laydate({
+                istime: true,
+                format: 'YYYY-MM-DD hh:mm:ss'
+            });
+        });
+		var KE;
+	    if (typeof (KindEditor) != "undefined") {
+	        KindEditor.ready(function (K) {
+	            KE = K;
+	        });
+	    }
+		var editor = KE.editor({
+			allowFileManager : true,
+			 uploadJson: 
+             '../../KE/file_upload',
+             fileManagerJson: 
+             '../../KE/file_manager'
+		});
+		KE('#binsertfile').click(function() {
+			editor.loadPlugin('insertfile', function() {
+				editor.plugin.fileDialog({
+					fileUrl : KE('#insetfile').val(),
+					clickFn : function(url, title) {
+						KE('#insetfile').val(url);
+						editor.hideDialog();
+					}
+				});
+			});
+		});
 		currentInterviewId='${model.id}';
 		about_grid = $("#about_grid").dmGrid(aboutoptions(currentInterviewId));
 		image_grid = $("#image_grid").dmGrid(imageoptions(currentInterviewId));
@@ -985,7 +1024,7 @@
 							if(r){
 						$.ajax({
 							url:"../interview/updateQS?id="+c.id+"&status=2",
-							type:'POST',
+							type:'POST',	
 							success:function(res){
 								if(res.status==1)
 									questions_grid.reload();

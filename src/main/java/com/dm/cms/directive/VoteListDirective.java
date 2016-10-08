@@ -78,8 +78,8 @@ public class VoteListDirective implements TemplateDirectiveModel {
 			titleLeft = Integer.valueOf(params.get("titleLeft").toString());
 			for (CmsVote ce : novels) {
 				if (  ce.getTitle().length() > titleLeft) {
-					ce.setTitle(ce.getTitle()
-							.substring(0, titleLeft) + "……");
+					ce.setShortTitle(ce.getTitle()
+							.substring(0, titleLeft) + "…");
 				}
 			}
 		}

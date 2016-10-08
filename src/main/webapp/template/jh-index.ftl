@@ -124,7 +124,7 @@
                    </@videoListDirective>
                    
                                                                                                          </#if>
-                                                                 				    <@contentListDirective channelId=channel.id pageSize=8 pageNum=1 titleLeft=20  order=2>
+                                                                 				    <@contentListDirective channelId=channel.id pageSize=8 pageNum=1 titleLeft=22 order=2>
                                                                                 			<#list contents as cmsContent>
                                                                                 				<li><span class="jh-dotted">·</span><a href="${cmsContent.url}" title="${cmsContent.title!}" target="_blank"><span class="panel2-list-content">${cmsContent.shortTitle!}</span>
                                                                  					<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>
@@ -241,7 +241,7 @@
                                                                                          <div class="tab-content navTab1-content navTab3-content1 pTextIndent">
                                                                                              <div role="tabpanel" class="tab-pane active" id="zfwj">
                                                                                                  <ul class="panel2-list panel2-list-sm">
-                                                                 				<@contentListDirective titleLeft=20 channelId=29 pageSize=9 pageNum=1 order=2>
+                                                                 				<@contentListDirective titleLeft=27 channelId=29 pageSize=9 pageNum=1 order=2>
                                                                                 				<#list contents as cmsContent>
                                                                                 					<li><span class="jh-dotted">·</span><a title="${cmsContent.title!}" href="${cmsContent.url}" target="_blank">${cmsContent.shortTitle}</a></li>
                                                                                 				</#list> 
@@ -251,7 +251,7 @@
                                                                                              </div>
                                                                                              <div role="tabpanel" class="tab-pane" id="zcjd">
                                                                                                  <ul class="panel2-list panel2-list-sm">
-                                                                                                     <@contentListDirective titleLeft=20 channelId=32 pageSize=9 pageNum=1 order=2>
+                                                                                                     <@contentListDirective titleLeft=27 channelId=32 pageSize=9 pageNum=1 order=2>
                                                                                 				<#list contents as cmsContent>
                                                                                 					<li><span class="jh-dotted">·</span><a title="${cmsContent.title!}" href="${cmsContent.url}" target="_blank">${cmsContent.shortTitle}</a></li>
                                                                                 				</#list> 
@@ -260,7 +260,7 @@
                                                                                              </div>
                                                                                              <div role="tabpanel" class="tab-pane" id="rsxx">
                                                                                                  <ul class="panel2-list panel2-list-sm">
-                                                                                                     <@contentListDirective titleLeft=20 channelId=34 pageSize=9 pageNum=1 order=2>
+                                                                                                     <@contentListDirective titleLeft=27 channelId=34 pageSize=9 pageNum=1 order=2>
                                                                                 				<#list contents as cmsContent>
                                                                                 					<li><span class="jh-dotted">·</span><a title="${cmsContent.title!}" href="${cmsContent.url}" target="_blank">${cmsContent.shortTitle}</a></li>
                                                                                 				</#list> 
@@ -269,7 +269,7 @@
                                                                                              </div>
                                                                                              <div role="tabpanel" class="tab-pane" id="tjsj">
                                                                                                  <ul class="panel2-list panel2-list-sm">
-                                                                                                     <@contentListDirective channelId=33 pageSize=9 pageNum=1 order=2>
+                                                                                                     <@contentListDirective titleLeft=27 channelId=33 pageSize=9 pageNum=1 order=2>
                                                                                 				<#list contents as cmsContent>
                                                                                 					<li><span class="jh-dotted">·</span><a title="${cmsContent.title!}" href="${cmsContent.url}" target="_blank">${cmsContent.shortTitle}</a></li>
                                                                                 				</#list> 
@@ -339,7 +339,7 @@
                                                                                          </div>
                                                                                          <div class="col-sm-10 ggfw-cycx2">
                                                                                              <div class="row ggfw-btn-pd ggfw-btn-pd1 text-center">
-                                                                                                <@contentListDirective channelId=44 pageSize=12 pageNum=1>
+                                                                                                <@contentListDirective  channelId=44 pageSize=12 pageNum=1>
 												<#list contents as content>
 												<div class="col-xs-4 col-md-2">
                                                                                                       <a href="${content.url!}" target="_blank" class="ggfw-btn">${content.shortTitle!}</a>

@@ -49,10 +49,13 @@ public class LeaderServiceImpl implements LeaderService{
 	}
 	
 	@Override
-	public List<Leader> findAll(String code) {
+	public List<Leader> findAll(String code,String org) {
 		// TODO Auto-generated method stub
 		Map map = new HashMap();
-		map.put("type", code);
+		Map m = new HashMap();
+		m.put("type", code);
+		m.put("org", org);
+		map.put("model", m);
 		List<Leader> leaders = leadMapper.selectRecordByArgMap(map);
 		return leaders;
 	}

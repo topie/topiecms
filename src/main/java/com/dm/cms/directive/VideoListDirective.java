@@ -76,7 +76,7 @@ public class VideoListDirective implements TemplateDirectiveModel{
 			{
 				if(ce.getName().length()>titleLeft)
 				{
-				 ce.setName(ce.getName().substring(0,titleLeft));
+				 ce.setShortName(ce.getName().substring(0,titleLeft)+"...");
 				}
 			}
 		}

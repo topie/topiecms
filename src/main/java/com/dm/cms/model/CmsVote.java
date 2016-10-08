@@ -9,6 +9,8 @@ public class CmsVote {
     private Integer id;
 
     private String title;
+    
+    private String shortTitle;
 
     private Integer questionnairesId;
     
@@ -44,8 +46,15 @@ public class CmsVote {
     
     private List<CmsVoteOption> option;
     
+    public String getShortTitle() {
+		return shortTitle;
+	}
 
-    public List<CmsVoteOption> getOption() {
+	public void setShortTitle(String shortTitle) {
+		this.shortTitle = shortTitle;
+	}
+
+	public List<CmsVoteOption> getOption() {
 		return option;
 	}
 

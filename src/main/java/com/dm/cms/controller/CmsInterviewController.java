@@ -330,7 +330,7 @@ public class CmsInterviewController {
 			f.setFiled1(c.getName());
 			f.setPublishTime(new Date());
 			this.cmsInterviewService.insertRecord(f);
-			//插入回复
+			/*//插入回复
 			CmsInterviewRecord r = new CmsInterviewRecord();
 			r.setContent(record.getContent());
 			r.setCreateTime(new Date());
@@ -338,7 +338,7 @@ public class CmsInterviewController {
 			r.setRoleName("回复");
 			r.setFiled1(" ");
 			r.setPublishTime(new Date());
-			this.cmsInterviewService.insertRecord(r);
+			this.cmsInterviewService.insertRecord(r);*/
 		}
 		CmsInterviewQuestions temp = new CmsInterviewQuestions();
 		temp.setId(record.getId());

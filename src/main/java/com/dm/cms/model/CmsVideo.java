@@ -12,6 +12,8 @@ public class CmsVideo {
     private String createUserId;
 
     private String name;
+    
+    private String shortName;
 
     private String origin;
 
@@ -59,7 +61,17 @@ public class CmsVideo {
         this.id = id;
     }
 
-    public Integer getChannelId() {
+    public String getShortName() {
+    	if(shortName==null || shortName.equals(""))
+    		return name;
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
+	public Integer getChannelId() {
 		return channelId;
 	}
 

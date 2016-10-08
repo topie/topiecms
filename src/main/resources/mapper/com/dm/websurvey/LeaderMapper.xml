@@ -20,7 +20,7 @@
     from leader
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <select id="selectRecordByArgMap" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectRecordByArgMap" resultMap="BaseResultMap"  >
     select 
     <include refid="Base_Column_List" />
     from leader
@@ -30,7 +30,7 @@
        and type=#{model.type,jdbcType=VARCHAR}
       </if>
       <if test="model!=null and model.org!=null and model.org!=''">
-      	and org = #{model.org}
+      	and org like concat('%',#{model.org},'%')
       </if>
    </where>    
       <if test="sort!=null and sort!=''">

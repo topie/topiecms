@@ -8,6 +8,8 @@ public class CmsQuestionnaires {
     private Integer id;
 
     private String title;
+    
+    private String shortTitle;
 
     private String description;
 
@@ -30,6 +32,14 @@ public class CmsQuestionnaires {
     
     public List<CmsVote> getVotes() {
 		return votes;
+	}
+
+	public String getShortTitle() {
+		return shortTitle;
+	}
+
+	public void setShortTitle(String shortTitle) {
+		this.shortTitle = shortTitle;
 	}
 
 	public void setVotes(List<CmsVote> votes) {

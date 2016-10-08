@@ -42,7 +42,7 @@
                 	<a href="${cha.url!}" target="_blank" title="${cha.displayName}">${cha.displayName}</a>
                 </li>
                 <li class="col-md-8 mapContent col-sm-8 col-xs-9">
-		<@channelListDirective channelId=cha.id >
+		<@channelListDirective channelId=cha.id excludeIds="10">
 			<#list channels as channel>
                 	<a href="${channel.url}" target="_blank" title="${channel.displayName!}">${channel.displayName!}</a>
 			</#list>

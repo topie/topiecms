@@ -29,9 +29,12 @@ public class TopOneDirective implements TemplateDirectiveModel{
 		if(params.get("titleLeft")!=null)
 		{
 	  int len = Integer.valueOf(params.get("titleLeft").toString());
-		if(cmsContent!=null && StringUtils.isNotEmpty(cmsContent.getTitle()) && cmsContent.getTitle().length()>len)
-		{
-			cmsContent.setTitle(cmsContent.getTitle().substring(0, len));
+	  if(cmsContent.getTopTitle()==null|| cmsContent.getTopTitle().equals("")){
+		  cmsContent.setTopTitle(cmsContent.getTitle());
+	  }
+		if(cmsContent!=null && StringUtils.isNotEmpty(cmsContent.getTopTitle()) && cmsContent.getTopTitle().length()>len)
+		{	
+			cmsContent.setTopTitle(cmsContent.getTopTitle().substring(0, len)+"...");
 		}
 		}
 		env.setVariable("cmsContent",ObjectWrapper.DEFAULT_WRAPPER.wrap(cmsContent));

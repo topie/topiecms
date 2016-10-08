@@ -331,7 +331,7 @@
 				width : "5%",
 				format : function(i, c) {
 					if (c.forbidden == "1") {
-						return "禁用";
+						return "隐藏";
 					}
 					return "启用";
 				}
@@ -582,7 +582,7 @@
 							checked:true
 						},{
 							value:'1',
-							text:'禁用'
+							text:'隐藏'
 						} 
 					],
 				rule : {

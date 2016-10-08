@@ -53,15 +53,15 @@ public class LogAspect {
 	public void allCall() {
 	}
 
-	@Pointcut("execution(* com.dm.platform.service.*.insert*(..))")
+	@Pointcut("execution(* com.dm.*.service.*.insert*(..))")
 	public void insertServiceCall() {
 	}
 
-	@Pointcut("execution(* com.dm.platform.service.*.update*(..))")
+	@Pointcut("execution(* com.dm.*.service.*.update*(..))")
 	public void updateServiceCall() {
 	}
 
-	@Pointcut("execution(* com.dm.platform.service.*.delete*(..)) && !execution(* com.dm.platform.service.LogService.delete*(..))")
+	@Pointcut("execution(* com.dm.*.service.*.delete*(..)) && !execution(* com.dm.platform.service.LogService.delete*(..))")
 	public void deleteServiceCall() {
 	}
 
@@ -197,8 +197,15 @@ public class LogAspect {
 		// 遍历参数对象
 		for (Object info : args) {
 			// 获取对象类型
+			if(info==null){
+				continue;
+			}
+			
 			className = info.getClass().getName();
 			className = className.substring(className.lastIndexOf(".") + 1);
+			if(className.equals("HttpServlet3RequestFactory$Servlet3SecurityContextHolderAwareRequestWrapper")){
+				continue;
+			}
 			rs.append("[类型：" + className + "，值：");
 			// 获取对象的所有方法
 			Method[] methods = info.getClass().getDeclaredMethods();

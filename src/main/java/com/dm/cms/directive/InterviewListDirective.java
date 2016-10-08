@@ -94,7 +94,7 @@ public class InterviewListDirective implements TemplateDirectiveModel {
 		}
 		for (CmsInterview ce : novels) {
 			if (descLeft != 0 && ce.getTitle().length() > descLeft) {
-				ce.setTitle(ce.getTitle().substring(0, descLeft) + "……");
+				ce.setShortTitle(ce.getTitle().substring(0, descLeft) + "...");
 			}
 
 		}

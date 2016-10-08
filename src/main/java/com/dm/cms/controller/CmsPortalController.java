@@ -34,6 +34,7 @@ import com.dm.cms.model.CmsContent;
 import com.dm.cms.model.CmsInterview;
 import com.dm.cms.model.CmsInterviewQuestions;
 import com.dm.cms.model.CmsNovel;
+import com.dm.cms.model.CmsQuestionnaires;
 import com.dm.cms.model.CmsSite;
 import com.dm.cms.model.CmsTemplate;
 import com.dm.cms.model.CmsVideo;
@@ -46,6 +47,7 @@ import com.dm.cms.service.CmsContentService;
 import com.dm.cms.service.CmsInterviewQuestionsService;
 import com.dm.cms.service.CmsInterviewService;
 import com.dm.cms.service.CmsNovelService;
+import com.dm.cms.service.CmsQuestionnairesService;
 import com.dm.cms.service.CmsSiteService;
 import com.dm.cms.service.CmsTemplateService;
 import com.dm.cms.service.CmsVideoService;
@@ -105,6 +107,8 @@ public class CmsPortalController {
 	WebSurveyService webSurveyService;
 	@Autowired
 	private MicrocobolService microcobolService;
+	@Autowired
+	private CmsQuestionnairesService cmsQuestionnairesService;
 	
 	 @Autowired LeaderService leaderService;
 	 @Autowired
@@ -149,7 +153,7 @@ public class CmsPortalController {
 		{
 		if(code.equals("1"))
 		{
-			List<Leader> leaders = leaderService.findAll("1");
+			List<Leader> leaders = leaderService.findAll("1",null);
 			Leader leader = new Leader();
 			if(leaders.size()>0)
 				leader = leaders.get(0);
@@ -157,7 +161,7 @@ public class CmsPortalController {
 		}
 		else if(code.equals("2"))
 		{
-			List<Leader> leaders = leaderService.findAll("2");
+			List<Leader> leaders = leaderService.findAll("2",null);
 			Leader leader = new Leader();
 			if(leaders.size()>0)
 				leader = leaders.get(0);
@@ -180,17 +184,17 @@ public class CmsPortalController {
 	{
 		if(code.equals("1"))
 		{
-			List<Leader> leaders = leaderService.findAll("1");
+			List<Leader> leaders = leaderService.findAll("1",null);
 			return leaders;
 		}
 		else if(code.equals("2"))
 		{
-			List<Leader> leaders = leaderService.findAll("2");
+			List<Leader> leaders = leaderService.findAll("2",null);
 			return leaders;
 		}
 		else
 		{
-			List<Leader> leaders = leaderService.findAll(null);
+			List<Leader> leaders = leaderService.findAll(null,null);
 			return leaders;
 		}
 	}
@@ -411,7 +415,7 @@ public class CmsPortalController {
 		Leader leader = new Leader();
 		if(StringUtils.isEmpty(id))
 		{
-			List<Leader> leaders = leaderService.findAll(null);
+			List<Leader> leaders = leaderService.findAll(null,"县委");
 			leader = leaders.get(0);
 			
 		}
@@ -647,6 +651,14 @@ public class CmsPortalController {
 		model.setViewName("template/jh-weibo");
 		return model;
 	}
+	@RequestMapping("/questionnaires/{id}.htm")
+	public Object loadQuestionnaires(@PathVariable("id") Integer id,ModelAndView model){
+		CmsQuestionnaires que = this.cmsQuestionnairesService.loadWithVote(id);
+		model.addObject("own", que);
+		model.setViewName("template/jh-wsdc");
+		return model;
+	}
+	
 	/*
 	 * @RequestMapping("/channel/{enName}_{channelId}.htm") public String
 	 * channel(Model model, @PathVariable("channelId") Integer channelId,

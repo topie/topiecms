@@ -296,8 +296,10 @@ var options = {
 			sort : true
 		}, {
 			title : "来源",
-			field : "origin",
-			sort : true
+			field : "origin"
+		}, {
+			title : "发布人",
+			field : "createUserName"
 		}, {
 			title : "发布时间",
 			field : "origin",
@@ -305,7 +307,7 @@ var options = {
 				if(c.publishDate){
 					return dateTostr(c.publishDate);
 				}
-				return '';
+				return dataTostr(new Date());
 			}
 		}, {
 			title : "状态",
