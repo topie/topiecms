@@ -48,27 +48,27 @@
         <include refid="Base_Column_List"/>
         from web_survey
         <where>
-            <if test="codeId !=null">
+            <!-- <if test="codeId !=null">
               code_id in
 				<foreach collection="codeId" item="item"  open="(" close=")" separator=",">
 					#{item}
 				</foreach>
-            </if>
-            <if test="type !=null">
-              and type in
-				<foreach collection="type" item="item"  open="(" close=")" separator=",">
-					#{item}
-				</foreach>
-            </if>
-               <if test="state !=null">
+            </if> -->
+            <if test="model!=null">
+            
+	            <if test="model.code !=null and model.code!=''">
+	                 and code = #{model.code}
+	            </if>
+               <if test="model.state !=null and model.state!=''">
                  and state = #{model.state}
                </if>
-            <if test="isOpen!=null and isOpen!=''">
-             and is_open = #{isOpen}
-             </if>
-             <if test="isSatisfied!=null">
-             and is_satisfied=#{isSatisfied}
-             </if>
+	            <if test="model.isOpen!=null and model.isOpen!=''">
+	             and is_open = #{model.isOpen}
+	             </if>
+	             <if test="isSatisfied!=null">
+	             and is_satisfied=#{model.isSatisfied}
+	             </if>
+	         </if>
         </where>
         <if test="order!=null and order!=''">
         	order by ${order}

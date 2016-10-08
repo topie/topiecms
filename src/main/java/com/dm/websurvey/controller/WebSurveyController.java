@@ -51,6 +51,30 @@ public class WebSurveyController {
 		return "/websurvey/page";
 	}
 	
+	@RequestMapping("/sjpage")
+	public String sjpage(Model model)
+	{
+		String userId = UserAccountUtil.getInstance().getCurrentUserId();
+		UserEmailConfig userEmailConfig =  userEmailConfigService.findByUserId(userId);
+		if(userEmailConfig!=null)
+		{
+		model.addAttribute("isShowIp", userEmailConfig.getIsShowIp());
+		}
+		return "/websurvey/sjpage";
+	}
+	
+	@RequestMapping("/orgpage")
+	public String orgpage(Model model)
+	{
+		String userId = UserAccountUtil.getInstance().getCurrentUserId();
+		UserEmailConfig userEmailConfig =  userEmailConfigService.findByUserId(userId);
+		if(userEmailConfig!=null)
+		{
+		model.addAttribute("isShowIp", userEmailConfig.getIsShowIp());
+		}
+		return "/websurvey/orgpage";
+	}
+	
 	@RequestMapping("/shpage")
 	public String shpage(Model model)
 	{
@@ -103,6 +127,10 @@ public class WebSurveyController {
 		 UserAccount user = UserAccountUtil.getInstance().getCurrentUserAccount();
 		 UserEmailConfig config =  userEmailConfigService.findByUserId(user.getCode());
 		 Map map = new SqlParam<WebSurvey>().autoParam(searchEntity,sort);
+		PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMap(pageNum,pageSize,map);
+		return PageConvertUtil.grid(webSurveys);
+		/* if(searchEntity!=null)
+		 {
 		 if(searchEntity.getType().equals("5"))
 		 {
 			 List<String> types = new ArrayList<String>();
@@ -123,18 +151,20 @@ public class WebSurveyController {
 			 {
 				 toUsers.addAll(Arrays.asList(config.getOrgId().split(",")));
 			 }
-				 String typeArray[] = searchEntity.getType().split(",");
-				 map.put("type",Arrays.asList(typeArray));
-			     map.put("codeId", toUsers);
-			     map.put("state", searchEntity.getState());
-				PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMap(pageNum,pageSize,map);
-				return PageConvertUtil.grid(webSurveys);
+			 String typeArray[] = searchEntity.getType().split(",");
+			 map.put("type",Arrays.asList(typeArray));
+		     map.put("codeId", toUsers);
+		     map.put("state", searchEntity.getState());
+			 map.put("code", searchEntity.getCode());
+			PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMap(pageNum,pageSize,map);
+			return PageConvertUtil.grid(webSurveys);
 		 }
 			 else
 			 {
 				return PageConvertUtil.emptyGrid();
 			 }
 		 }
-	     }
+	     }*/
+	}
 	
 }

@@ -6,11 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.hql.ast.SqlASTFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dm.cms.model.CmsChannel;
 import com.dm.cms.service.CmsChannelService;
 import com.dm.cms.util.PageUtil;
+import com.dm.platform.util.SqlParam;
 import com.dm.websurvey.model.WebSurvey;
 import com.dm.websurvey.service.WebSurveyService;
 import com.github.pagehelper.PageInfo;
@@ -41,9 +44,13 @@ public class WebsurveyListDirective implements TemplateDirectiveModel{
 		String isOpen = params.get("isOpen")==null?null:String.valueOf(params.get("isOpen"));
 		String type =  params.get("type")==null?"1":params.get("type").toString();
 		String[] typeArray = type.split(",");
-		Map map = new HashMap();
-		map.put("isOpen", isOpen);
-		map.put("type", Arrays.asList(typeArray));
+		String code = params.get("code")==null?null:params.get("code").toString();
+		WebSurvey webSurvey = new WebSurvey();
+		webSurvey.setCode(code);
+		webSurvey.setIsOpen(isOpen);
+		String sort = "inputDate_desc";
+		Map map = new SqlParam<WebSurvey>().autoParam(webSurvey, sort);
+             		
 		PageInfo<WebSurvey> page = websurveyService.selectRecordByArgMap(pageNum, pageSize, map);
 		Long total = page.getTotal();
 		List<WebSurvey> websureys = page.getList();

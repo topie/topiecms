@@ -73,7 +73,7 @@
 							<div class="portlet-title">
 								<div class="caption caption-md">
 									<i class="icon-bar-chart theme-font hide"></i> <span
-										class="caption-subject theme-font bold uppercase">县长信箱信息管理</span>
+										class="caption-subject theme-font bold uppercase">部门信箱信息管理</span>
 									<span class="caption-helper"></span>
 								</div>
 							</div>
@@ -510,7 +510,7 @@
 	
 	/** **********普通新闻表格选项*************** */
 	var options = {
-		url : "./list?code=1", // ajax地址
+		url : "./list?code=3", // ajax地址
 		pageNum : 1,// 当前页码
 		pageSize : 5,// 每页显示条数
 		idFiled : "id",// id域指定

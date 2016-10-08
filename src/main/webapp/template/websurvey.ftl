@@ -66,6 +66,7 @@
                         <td>邮政编码 </td>
                         <td><input type="text" name="postcode" class="form-control" placeholder="请输入您的邮政编码" ></td>
                     </tr>
+                    <input type="hidden" name=code value="${code}">
 		    <#if code??> <#if code=="1">
 			<input type="hidden" name="codeId" value="${leader.id!}" />
 			<#elseif code=="2">

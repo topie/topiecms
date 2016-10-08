@@ -126,7 +126,7 @@
                                        </tr>
                                      </thead>
                                      <tbody>
-                                       <@websurveyListDirective pageNum=1 pageSize=5 type="1,2,3,4" isOpen='1'>
+                                       <@websurveyListDirective pageNum=1 pageSize=5 isOpen='1'>
                                       <#list websurveys as websurvey>
                                        <tr>
                                          <#--<td>${websurvey.username!}</td>-->
