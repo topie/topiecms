@@ -237,7 +237,7 @@
 							number:"请输入数字"
 						}
 					},
-					{
+					/* {
 						type : 'select',
 						name : 'type',
 						id : 'type',
@@ -257,7 +257,7 @@
 						message : {
 							required : "请选择"
 						}
-					},{
+					}, */{
 						type : 'image',
 						id : 'headImg',
 						name : 'headImg',
@@ -385,7 +385,7 @@
 		pageNum : 1,// 当前页码
 		pageSize : 5,// 每页显示条数
 		idFiled : "id",// id域指定
-		showCheckbox : true,// 是否显示checkbox
+		showCheckbox : false,// 是否显示checkbox
 		checkboxWidth : "3%",
 		showIndexNum : true,
 		indexNumWidth : "5%",
@@ -401,7 +401,7 @@
 		}, {
 			title : "分工",
 			field : "division",
-		}, {
+		}/* , {
 			title : "领导分类",
 			field : "type",
 			format:function(i,d)
@@ -412,7 +412,7 @@
 						return "书记";
 						return "";
 			}
-		},{
+		} */,{
 			title:'分类',
 			field:'org'
 		}, {
@@ -457,11 +457,11 @@
 			}
 		} ],
 		search : {
-			rowEleNum : 3,
+			rowEleNum : 2,
 			hide:false,
 			// 搜索栏元素
 			items : [ {
-				type : "select",
+				type : "radioGroup",
 				label : "分类",
 				name : "org",
 				id:'sorg',

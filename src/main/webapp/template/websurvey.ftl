@@ -22,15 +22,15 @@
 				<div class="clearfix zhuye">
 				<#if code??>
                                      <#if code=="1">
-					<h2 class=" color-green mgb20">县长信箱</h2>
+					<h2 class=" color-red mgb20">县长信箱</h2>
            				
                                       <#elseif code=="2">
-                                     <h2 class=" color-green mgb20">书记信箱</h2>
+                                     <h2 class=" color-red mgb20">书记信箱</h2>
                                      
                                      <#elseif code =="3">
-                                    <h2 class=" color-green mgb20">镇或部门信箱</h2>
+                                    <h2 class=" color-red mgb20">镇或部门信箱</h2>
                                      <#else>
-                                     <h2 class=" color-green mgb20">留言</h2>
+                                     <h2 class=" color-red mgb20">留言</h2>
                                      </#if>
                                   </#if>
             <form role="form" class="mgb20"  name="letterform" onsubmit="return submitcheck(this)"
@@ -38,13 +38,13 @@
                 <table class="form-table form-table-width fontSize16">
                     <tr><input name="org.apache.struts.taglib.html.token" type="hidden"
            									value="1d14616d7163b7e9c56edc7e996394e3">
-                        <td style="width: 100px;">姓名<span class="color-green">*</span></td>
-                        <td><input type="text" name="username" class="form-control" placeholder="请输入您的名字" datatype="*"></td>
+                        <td style="width: 100px;">姓名<span class="color-red">*</span></td>
+                        <td><input type="text" id="username" name="username" class="form-control" placeholder="请输入您的名字" datatype="*"></td>
                         <td style="width: 100px;">年龄 </td>
-                        <td><input type="number" name="age"  class="form-control" placeholder="请输入您的年龄" datatype="n"></td>
+                        <td><input type="number" id="age" name="age"  class="form-control" placeholder="请输入您的年龄" datatype="n"></td>
                     </tr>
                     <tr>
-                        <td>性别<span class="color-green">*</span></td>
+                        <td>性别<span class="color-red">*</span></td>
                         <td colspan="3">
                             <label class="radio-inline">
                                 <input type="radio" checked=true name="sex" id="form-xb1" value="m"> 男
@@ -55,8 +55,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>联系电话<span class="color-green">*</span></td>
-                        <td><input type="tel" name="phone" class="form-control" placeholder="请输入您的联系电话" datatype="m"></td>
+                        <td>联系电话<span class="color-red">*</span></td>
+                        <td><input type="tel" id="phone" name="phone" class="form-control" placeholder="请输入您的联系电话" datatype="m"></td>
                         <td>电子邮箱 </td>
                         <td><input type="email" name="email" class="form-control" placeholder="请输入您的电子邮箱" datatype="e"></td>
                     </tr>
@@ -72,8 +72,8 @@
 			<input type="hidden" name="codeId" value="${leader.id!}" />
 			<#elseif code=="3">
 			<tr>
-				<td>选择部门<span class="color-green">*</span></td>
-				<td colspan="4"><select name="codeId">
+				<td>选择部门<span class="color-red">*</span></td>
+				<td colspan="4"><select name="codeId" id="bumen">
 						<option>请选择...</option> <#list orgs as org>
 						<option value="${org.id}">${org.name}</option> </#list>
 				</select><span class="link4"> *</span></td>
@@ -83,8 +83,8 @@
 			</#if>
 		    <#if code!="4">
 		    <tr>
-                        <td>类型<span class="color-green">*</span></td>
-                        <td colspan="4">
+                        <td>类型<span class="color-red">*</span></td>
+                        <td colspan="4" id="leixing">
                             <label class="radio-inline">
                                 <input type="radio" name="type" value="1"> 咨询
                             </label>
@@ -101,7 +101,7 @@
                     </tr>
 		    </#if> 
                     <tr>
-                        <td>是否公开<span class="color-green">*</span></td>
+                        <td>是否公开<span class="color-red">*</span></td>
                         <td colspan="4">
                             <label class="radio-inline">
                                 <input type="radio" name="isOpen" value="1"> 公开
@@ -112,15 +112,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>信件标题<span class="color-green">*</span></td>
+                        <td>信件标题<span class="color-red">*</span></td>
                         <td colspan="4">
-                            <input type="text" name="title" class="form-control" placeholder="请输入您的标题" datatype="*">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="请输入您的标题" datatype="*">
                         </td>
                     </tr>
                     <tr>
-                        <td valign="top">信件内容<span class="color-green">*</span></td>
+                        <td valign="top">信件内容<span class="color-red">*</span></td>
                         <td colspan="4">
-                            <textarea name="content" class="form-control" rows="10" placeholder="请输入您的内容" datatype="*"></textarea>
+                            <textarea name="content" id="content" class="form-control" rows="10" placeholder="请输入您的内容" datatype="*"></textarea>
                         </td>
                     </tr>
                     <!--<tr>
@@ -132,7 +132,7 @@
                     </tr>-->
                     <tr>
                         <td colspan="2" class="text-right">
-                            <input type="submit" class="btn btn-default btn-download1" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                            <input type="button" onclick="validateForm;" class="btn btn-default btn-download1" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
                         </td>
                         <td colspan="2">
                             <input type="reset" class="btn btn-default btn-download" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;填&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
@@ -184,6 +184,66 @@
 					window.open("../websurvey/findOne?id="+id+"&phone="+phone);
 				});
            		});
+			//表单提交验证
+function validateForm(){
+	//获取姓名
+		var username=$("#username").val();
+		if(username==""){
+			alert("用户名不能为空!");
+			return false;
+		}
+		var age=$("#age").val();
+		if(age==""){
+			alert("年龄不能为空!");
+			return false;
+		}
+		var agePattern=/[1-9]\d?/;
+		if(!agePattern.test(age)){
+			alert("请输入正确的年龄!");
+			//$("#phone").val("");
+			return false;
+		}
+		//获取联系电话
+		var phone=$("#phone").val();
+		//电话号码正则表达式（支持手机号码，3-4位区号，7-8位直播号码，1－4位分机号） ((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$) 
+		var phonePattern=/^1[358]\d{9}$/;
+		var telPattern=/^0\d{2,3}-?\d{7,8}$/;
+		if(phone==""){
+			alert("联系电话不能为空！");
+			return false;
+		}
+		//alert(phonePattern.test(phone));
+		if(!phonePattern.test(phone) && !telPattern.test(phone)){
+			alert("请输入正确的联系电话!");
+			//$("#phone").val("");
+			return false;
+		}
+		//部门
+		/*var bumen=$("#bumen").find("option:selected").text();
+		if(bumen.trim()=="请选择..."){
+			alert("请选择部门!");
+			return false;
+		}*/
+		//类型
+		var leixing=$("#leixing").find("input[type='radio']:checked").val();
+		if(leixing==undefined){
+			alert("请选择类型!");
+			return false;
+		}
+		//信件标题
+		var title=$("#title").val();
+		if(title==""){
+			alert("请填写信件标题!");
+			return false;
+		}
+		//信件内容
+		var content=$("#content").val();
+		if(content==""){
+			alert("请填写信件内容!");
+			return false;
+		}
+		//$("#myForm").action="/jinhuadmin/portal/websurvey/add";
+		$("#myForm").submit();
            	</script>
            
            
