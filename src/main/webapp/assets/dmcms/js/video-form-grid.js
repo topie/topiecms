@@ -7,7 +7,7 @@ function dateTostr(utc)
      return date.getFullYear()+"-"+((date.getMonth()+1)>=10?date.getMonth()+1:"0"+(date.getMonth()+1))+"-"+(date.getDate()>10?date.getDate():"0"+date.getDate())+" "+(date.getHours()>10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>10?date.getMinutes():"0"+date.getMinutes())+":"+(date.getSeconds()>10?date.getSeconds():"0"+date.getSeconds());
    }
 }
-function getvideoOptions(action,hasPublishRole){
+function getvideoOptions(action,hasPublishRole,hasShenheRole){
 
 	var actionCloums=[ {
 		text : "预览",
@@ -29,7 +29,7 @@ function getvideoOptions(action,hasPublishRole){
 			// index为点击操作的行数
 			// data为该行的数据
 			$("#content_grid").html("");
-			 form = $("#content_grid").dmForm(getVideoForm(data.contentType,hasPublishRole));
+			 form = $("#content_grid").dmForm(getVideoForm(data.contentType,hasPublishRole,hasShenheRole));
 			form.loadRemote("../video/load?videoId=" + data.id,function(){
 				if(data.publishDate){
 				var l = dateTostr(data.publishDate);
@@ -95,7 +95,7 @@ function getvideoOptions(action,hasPublishRole){
 						}
 					}
 		);
-	}else{
+	}if(hasShenheRole){
 		tools.push({
     		text : "提交",
     		cls : "btn green btn-sm",
@@ -163,7 +163,7 @@ return videoOptions;
 }
 
 /** *************视频表单*************** */
-function getVideoForm(typeId,hasPublishRole) {
+function getVideoForm(typeId,hasPublishRole,hasShenheRole) {
 	var buttons = [];
 	if(hasPublishRole){
 		buttons.push(
@@ -176,7 +176,7 @@ function getVideoForm(typeId,hasPublishRole) {
 				form.setAction("../video/saveAndPublish");
 			}
 		});
-	}else{
+	}if(hasShenheRole){
 		buttons.push({
 			type : 'submit',
 			attribute:'role=submit',

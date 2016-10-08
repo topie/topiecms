@@ -57,6 +57,8 @@ public class CmsContentController {
 	CmsInterviewService cmsInterviewService;
 	@Value("${publishRoleId}")
 	private String publishRoleId;
+	@Value("${shenheRoleId}")
+	private String shenheRoleId;
 
 	@RequestMapping("/page")
 	public String page(Model model) {
@@ -66,7 +68,9 @@ public class CmsContentController {
 		for (UserRole r : list) {
 			if (r.getCode().equals(this.publishRoleId)) {
 				model.addAttribute("hasPublishRole", true);
-				break;
+			}
+			if (r.getCode().equals(this.shenheRoleId)) {
+				model.addAttribute("hasShenheRole", true);
 			}
 		}
 		return "/cms/content/page";

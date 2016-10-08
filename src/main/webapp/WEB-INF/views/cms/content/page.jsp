@@ -178,6 +178,7 @@
 	  --%><script type="text/javascript">
 	/**********普通内容操作函数****************/
 	var hasPublishRole = '${hasPublishRole}';
+	var hasShenheRole = '${hasShenheRole}';
 	function deleteItems(ids) {
 		if (ids.length > 0) {
 			bootbox.confirm("确定删除吗？", function(result) {
@@ -439,31 +440,31 @@
 		var formOption;
 		if(currentChannelType == '0')
 		{
-		formOption = getForm(contentType,hasPublishRole);
+		formOption = getForm(contentType,hasPublishRole,hasShenheRole);
 		}
 		else if(contentType == '2')
 		{
-			formOption = getForm(contentType,hasPublishRole);
+			formOption = getForm(contentType,hasPublishRole,hasShenheRole);
 		}
 	else if(currentChannelType == '5')
 	{
-	formOption = getVideoForm(contentType,hasPublishRole);
+	formOption = getVideoForm(contentType,hasPublishRole,hasShenheRole);
 	}
 	else if(currentChannelType == '6')
 	{
-	formOption = getAudioForm(contentType,hasPublishRole);
+	formOption = getAudioForm(contentType,hasPublishRole,hasShenheRole);
 	}
 	else if(currentChannelType == '7')
 		{
-		formOption = getNovelForm(contentType,hasPublishRole);
+		formOption = getNovelForm(contentType,hasPublishRole,hasShenheRole);
 		}
 	else if(currentChannelType == '8')
 	{
-	formOption = getInterviewForm(contentType,hasPublishRole);
+	formOption = getInterviewForm(contentType,hasPublishRole,hasShenheRole);
 	}
 	else if(currentChannelType == '9')
 	{
-	formOption = getVoteForm(contentType,hasPublishRole);
+	formOption = getVoteForm(contentType,hasPublishRole,hasShenheRole);
 	}
 		$("#content_grid").html("");
 		form = $("#content_grid").dmForm(formOption);

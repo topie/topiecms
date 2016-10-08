@@ -66,7 +66,7 @@ var voteOptions = {
 			});
 			modal.show();*/
 			$("#content_grid").html("");
-			form =$("#content_grid").dmForm(getVoteForm(1,hasPublishRole));
+			form =$("#content_grid").dmForm(getVoteForm(1,hasPublishRole,hasShenheRole));
 			//var form = modal.$body.dmForm(getVoteForm());
 			form.loadRemote("../vote/load?id=" + data.id);
 		}
@@ -155,7 +155,7 @@ var voteOptions = {
 	
 };
 
-function getVoteForm(type,hasPublishRole) {
+function getVoteForm(type,hasPublishRole,hasShenheRole) {
 	var buttons = [];
 	if(hasPublishRole){
 		buttons.push(
@@ -168,7 +168,7 @@ function getVoteForm(type,hasPublishRole) {
 				form.setAction("../vote/saveAndPublish");
 			}
 		});
-	}else{
+	}if(hasShenheRole){
 		buttons.push({
 			type : 'submit',
 			attribute:'role=submit',

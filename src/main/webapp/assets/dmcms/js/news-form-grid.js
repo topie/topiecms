@@ -21,11 +21,11 @@ function flushGrid()
 	}
 	if (currentChannelType == '0') {
 		 var action = "./list?channelId=" + currentChannelId;
-		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,currentChannelType));
+		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,hasShenheRole,currentChannelType));
 	} 
 	if (currentChannelType == '11') {
 		 var action = "./list?channelId=" + currentChannelId;
-		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,currentChannelType));
+		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,hasShenheRole,currentChannelType));
 	}
 	if (currentChannelType == '2') {
 		$("#content_grid").html('<div class="note note-success note-bordered">'
@@ -35,7 +35,7 @@ function flushGrid()
 	}
 	if (currentChannelType == '4') {
 		var action= "./list?channelId=" + currentChannelId;
-		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,currentChannelType));
+		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,hasShenheRole,currentChannelType));
 	}
 	if (currentChannelType == '3') {
 		$("#content_grid").html('<div class="note note-success note-bordered">'
@@ -46,7 +46,7 @@ function flushGrid()
 	else if (currentChannelType == '5') {
 		var action = "../video/list?channelId="
 				+ currentChannelId;
-		grid = $("#content_grid").dmGrid(getvideoOptions(action,hasPublishRole));
+		grid = $("#content_grid").dmGrid(getvideoOptions(action,hasPublishRole,hasShenheRole));
 	} else if (currentChannelType == '6') {
 		audioOptions.url = "../audio/list?channelId="
 				+ currentChannelId;
@@ -71,7 +71,7 @@ function flushGrid()
 	}else if (currentChannelType == '10') {
 		$("#content_grid").html("");
 		var action = "./list?channelId=" + currentChannelId;
-		grid = $("#content_grid").dmGrid(getfileoptions(action,hasPublishRole));
+		grid = $("#content_grid").dmGrid(getfileoptions(action,hasPublishRole,hasShenheRole));
 	}
 }
 var channelSetting = {
@@ -247,7 +247,7 @@ function refreshSite() {
 }
 
 /** **********普通新闻表格选项*************** */
-function getnewsoption(action,hasPublishRole,currentChannelType){
+function getnewsoption(action,hasPublishRole,hasShenheRole,currentChannelType){
 var actionColoums =[{
 	text : "预览",
 	cls : "green btn-sm",
@@ -274,7 +274,7 @@ var actionColoums =[{
 		});
 		modal.show();*/
 		$("#content_grid").html("");
-		form = $("#content_grid").dmForm(getForm(data.contentType,hasPublishRole,currentChannelType));
+		form = $("#content_grid").dmForm(getForm(data.contentType,hasPublishRole,hasShenheRole,currentChannelType));
 		form.loadRemote("./load?contentId=" + data.id,function(){
 			if(data.titleStyle){
 				var color = data.titleStyle.split(";");
@@ -344,7 +344,7 @@ var tools=[// 工具属性
    			deleteItems(grid.getSelectIds());
    		}
    	} ];
-if(!hasPublishRole){
+if(hasShenheRole){
 	tools.push( {
 	   		text : "提交",
 	   		cls : "btn green btn-sm",
@@ -424,7 +424,7 @@ var options = {
 					bootbox.alert("请选择子频道进行添加!");
 				else{
 					$("#content_grid").html("");
-					form = $("#content_grid").dmForm(getForm('0',hasPublishRole,currentChannelType));
+					form = $("#content_grid").dmForm(getForm('0',hasPublishRole,hasShenheRole,currentChannelType));
 					form.loadLocal({"channelId":currentChannelId,"contentType":"10"});
 				//showForm('0',"普通内容");
 				}
@@ -462,7 +462,7 @@ return options;
 }
 // form
 /** **************普通内容表单选项*************** */
-function getForm(contentType,hasPublishRole,currentChannelType) {
+function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 	var buttons = [];
 	if(hasPublishRole){
 		buttons.push(
@@ -475,7 +475,8 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 				form.setAction("./saveAndPublish");
 			}
 		});
-	}else{
+	}
+	if(hasShenheRole){
 		buttons.push( {
 			type : 'submit',
 			attribute:'role=submit',
@@ -928,17 +929,9 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 
 
 /** **************容表单选项*************** */
-function getFileForm(contentType,hasPublishRole) {
-	var buttons = [/*--{
-		type : 'submit',
-		attribute:'role=submit',
-		cls:'blue btn-lg',
-		text : '提交审核',
-		handle : function() {
-			form.setAction("./saveAndCommit");
-		}
-	}*/];
-	//if(hasPublishRole){
+function getFileForm(contentType,hasPublishRole,hasShenheRole) {
+	var buttons = [];
+	if(hasPublishRole){
 		buttons.push(
 		{
 			type : 'submit',
@@ -949,7 +942,19 @@ function getFileForm(contentType,hasPublishRole) {
 				form.setAction("./saveAndPublish");
 			}
 		});
-	//}
+	}
+	if(hasShenheRole){
+		buttons.push({
+		type : 'submit',
+		attribute:'role=submit',
+		cls:'blue btn-lg',
+		text : '提交审核',
+		handle : function() {
+			form.setAction("./saveAndCommit");
+		}
+	});
+	}
+	
 	buttons.push({
 		type : 'button',
 		text : '关闭',
@@ -1176,7 +1181,7 @@ function getFileForm(contentType,hasPublishRole) {
 }
 	
 	/**最新政府文件**/
-	function getfileoptions(action,hasPublishRole){
+	function getfileoptions(action,hasPublishRole,hasShenheRole){
 		var actionColoums =[{
 			text : "预览",
 			cls : "green btn-sm",
@@ -1203,7 +1208,7 @@ function getFileForm(contentType,hasPublishRole) {
 				});
 				modal.show();*/
 				$("#content_grid").html("");
-				form = $("#content_grid").dmForm(getFileForm(data.contentType,hasPublishRole));
+				form = $("#content_grid").dmForm(getFileForm(data.contentType,hasPublishRole,hasShenheRole));
 				form.loadLocal({"channelId":currentChannelId});
 				form.loadRemote("./load?contentId=" + data.id,function(){
 					$("#publishDate").val(dateTostr(data.publishDate));
@@ -1250,7 +1255,7 @@ function getFileForm(contentType,hasPublishRole) {
 								bootbox.alert("请选择子频道进行添加!");
 							else{
 								$("#content_grid").html("");
-								var form = $("#content_grid").dmForm(getFileForm('10',hasPublishRole));
+								var form = $("#content_grid").dmForm(getFileForm('10',hasPublishRole,hasShenheRole));
 								form.loadLocal({"channelId":currentChannelId,"contentType":"10"});
 							}
 								
@@ -1299,7 +1304,7 @@ function getFileForm(contentType,hasPublishRole) {
 							deleteItems(grid.getSelectIds());
 						}
 					}];
-		if(!hasPublishRole){
+		if(hasShenheRole){
 			tools.push( {
 			   		text : "提交",
 			   		cls : "btn green btn-sm",
