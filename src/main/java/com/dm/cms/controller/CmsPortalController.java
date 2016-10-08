@@ -141,31 +141,31 @@ public class CmsPortalController {
 	 * @return
 	 */
 	@RequestMapping("/websurvey/form.htm")
-	public String form(Model model,String code,String leadId)
+	public String form(Model model,String code) //,String leadId)
 	{
-		if(!StringUtils.isEmpty(leadId))
+		/*if(!StringUtils.isEmpty(leadId))
 		{
 			Leader leader = leaderService.findOne(leadId);
 			model.addAttribute("code", leader.getType());
 			model.addAttribute("leader", leader);
-		}
+		}*/
 		if(!StringUtils.isEmpty(code))
 		{
 		if(code.equals("1"))
 		{
-			List<Leader> leaders = leaderService.findAll("1",null);
+			/*List<Leader> leaders = leaderService.findAll("1",null);
 			Leader leader = new Leader();
 			if(leaders.size()>0)
 				leader = leaders.get(0);
-			model.addAttribute("leader", leader);
+			model.addAttribute("leader", leader);*/
 		}
 		else if(code.equals("2"))
 		{
-			List<Leader> leaders = leaderService.findAll("2",null);
+			/*List<Leader> leaders = leaderService.findAll("2",null);
 			Leader leader = new Leader();
 			if(leaders.size()>0)
 				leader = leaders.get(0);
-			model.addAttribute("leader", leader);
+			model.addAttribute("leader", leader);*/
 		}
 		else if(code.equals("3"))
 		{
