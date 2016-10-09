@@ -16,7 +16,7 @@ import com.dm.platform.util.FreeMarkertUtil;
  * @author wjl
  * @createdate 2016年2月23日 下午4:14:50
  */
-public class generatorHtmlHandler {
+public class generatorHtmlHandler{
 	@Value("${htmlDir}")
 	protected String htmlFolder;
 	@Value("${htmlMobileDir}")

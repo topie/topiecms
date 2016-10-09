@@ -1,12 +1,14 @@
 package com.dm.cms.service;
 
 import com.dm.cms.model.CmsAttachment;
+import com.dm.cms.model.CmsChannel;
 import com.dm.cms.model.CmsCheck;
 import com.dm.cms.model.CmsContent;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,6 +73,11 @@ public interface CmsContentService {
 	 */
 	void restore(String contentId);
 
+	int selectCountBychannelIdOnly(Integer channelId);
+
+	void generateChannelMutipleThread(HttpServletRequest request,
+			CmsChannel channel, ExecutorService executor);
+	
 	PageInfo<CmsContent> findLeaderContentsByPage(Integer pageNum,
 			Integer pageSize, String leaderId);
 	

@@ -50,6 +50,7 @@ import com.dm.platform.util.UUIDUtils;
 import com.dm.platform.util.UserAccountUtil;
 
 @Controller
+
 public class BaseController extends DefaultController {
 
 	@Resource
@@ -78,7 +79,7 @@ public class BaseController extends DefaultController {
 
 	@RequestMapping("/")
 	public String base(ModelAndView model) {
-		return "redirect:/login";
+		return "redirect:/admin/login";
 	}
 
 	@RequestMapping("/login")

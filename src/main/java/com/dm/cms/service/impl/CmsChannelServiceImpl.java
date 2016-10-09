@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -335,15 +337,12 @@ import com.github.pagehelper.PageInfo;
     	StringBuffer iteratorChannelName = new StringBuffer();
 		iteratorChannelName = getChannelenNameByIterator(channelId, iteratorChannelName);
 		String htmldir = serperator+iteratorChannelName;
-		int total = cmsContentService.selectCountBychannelId(channelId);
+		int total = cmsContentService.selectCountBychannelIdOnly(channelId);
 		Integer totalpage =total /channel.getPageSize();
 		if(total==0)
 		{
 			totalpage=1;
 		}
-		
-		
-		
 		if (total % channel.getPageSize() != 0) {
 			totalpage++;
 		}
