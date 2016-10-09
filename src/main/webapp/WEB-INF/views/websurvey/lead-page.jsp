@@ -192,7 +192,7 @@
 						type : 'text',//类型
 						name : 'name',
 						label : '姓名',//左边label
-						cls : 'input-large',
+						cls : 'input-xlarge',
 						rule : {
 							required : true
 						},
@@ -203,7 +203,7 @@
 						type : 'textarea',//类型
 						name : 'occupation',
 						label : '职务',//左边label
-						cls : 'input-large',
+						cls : 'input-xlarge',
 						rule : {
 							required : true
 						},
@@ -215,19 +215,13 @@
 						type : 'textarea',//类型
 						name : 'division',
 						label : '分工',//左边label
-						cls : 'input-large',
-						rule : {
-							required : true
-						},
-						message : {
-							required : "请输入"
-						}
+						cls : 'input-xlarge'
 					},
 					{
 						type : 'text',//类型
 						name : 'seq',
 						label : '排序号',//左边label
-						cls : 'input-large',
+						cls : 'input-xlarge',
 						rule : {
 							required : true,
 							number:true
@@ -242,7 +236,7 @@
 						name : 'type',
 						id : 'type',
 						label : '领导分类',
-						cls : 'input-large',
+						cls : 'input-xlarge',
 						items : [ {
 							value : '1',
 							text : '县长'
@@ -281,7 +275,7 @@
 						name:'org',
 						id:'org',
 						label:'分类',
-						cls:'input-large',
+						cls:'input-xlarge',
 						items:[],
 						itemsUrl:'../dict/getItems?code=C01',
 						rule : {

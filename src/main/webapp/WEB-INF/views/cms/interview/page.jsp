@@ -1077,7 +1077,7 @@
 }
 	var questions_grid;
 	
-	function recordFormOpt (id) {
+	function replyrecordFormOpt (id) {
 		var url="../interview/updateQS?id="+id+"&status=2";
 		var opt ={
 					id : "channel_form",//表单id

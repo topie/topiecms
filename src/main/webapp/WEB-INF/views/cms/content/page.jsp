@@ -310,7 +310,7 @@
 						name : 'seq',//name
 						id : 'seq',//id
 						label : '顺序',//左边label
-						cls : 'input-large',
+						cls : 'input-xlarge',
 						rule : {
 							required : true,
 							number : true,

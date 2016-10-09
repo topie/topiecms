@@ -158,7 +158,7 @@ function getNovelForm(typeId) {
 				name : 'name',// name
 				id : 'name',// id
 				label : '小说名称',// 左边label
-				cls : 'input-large',
+				cls : 'input-xlarge',
 				rule : {
 					required : true,
 					maxlength : 50

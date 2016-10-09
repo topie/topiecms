@@ -204,7 +204,7 @@
 						name : 'recontent',//name
 						id : 'recontent',//id
 						label : '回复',//左边label
-						cls : 'input-large'
+						cls : 'input-xlarge'
 					}]
 	}
 	var cutOrCopyModal;

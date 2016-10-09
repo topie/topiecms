@@ -543,7 +543,7 @@
 				name : 'displayName',//name
 				id : 'displayName',//id
 				label : '频道名称',//左边label
-				cls : 'input-large',
+				cls : 'input-xlarge',
 				rule : {
 					required : true
 				},
@@ -575,7 +575,7 @@
 				name:'forbidden',
 				id:'forbidden',
 				label:'状态',
-				cls:'input-large',
+				cls:'input-xlarge',
 				items : [ {
 							value : '0',
 							text : '启用',
@@ -597,7 +597,7 @@
 					name : 'enName',//name
 					id : 'enName',//id
 					label : '英文标示',//左边label
-					cls : 'input-large',
+					cls : 'input-xlarge',
 					rule : {
 						required : true
 					},
@@ -610,7 +610,7 @@
 					name : 'pageSize',//name
 					id : 'pageSize',//id
 					label : '每页条数',//左边label
-					cls : 'input-large',
+					cls : 'input-xlarge',
 					rule : {
 						required : true,
 						number:true
@@ -625,7 +625,7 @@
 					name : 'templateId',
 					id : 'templateId',
 					label : '页面模板',
-					cls : 'input-large',
+					cls : 'input-xlarge',
 					items : [ {
 						value : '',
 						text : '默认模板'
@@ -637,7 +637,7 @@
 						name : 'url',//name
 						id : 'url',//id
 						label : '链接地址',//左边label
-						cls : 'input-large',
+						cls : 'input-xlarge',
 						rule : {
 							required : true
 						},

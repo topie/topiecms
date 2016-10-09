@@ -215,7 +215,7 @@ function getVideoForm(typeId,hasPublishRole,hasShenheRole) {
 				name : 'name',// name
 				id : 'name',// id
 				label : '标题',// 左边label
-				cls : 'input-large',
+				cls : 'input-xlarge',
 				rule : {
 					required : true,
 					maxlength : 50
@@ -230,14 +230,14 @@ function getVideoForm(typeId,hasPublishRole,hasShenheRole) {
 				name : 'director',// name
 				id : 'director',// id
 				label : '作者',// 左边label
-				cls : 'input-large'
+				cls : 'input-xlarge'
 			},
 			{
 				type : 'datepicker',//类型
 				name : 'publishDate',//name
 				id : 'publishDate',//id
 				label : '发布时间',//左边label
-				cls : 'input-large'
+				cls : 'input-xlarge'
 			},
 			{
 				type : 'select',// 类型
@@ -250,7 +250,7 @@ function getVideoForm(typeId,hasPublishRole,hasShenheRole) {
 				} ],
 				itemsUrl : "../template/selects?templateType=2&siteId="
 						+ currentSiteId,
-				cls : 'input-large'
+				cls : 'input-xlarge'
 			} ];
 	var contentText = {
 		type : 'kindEditor',

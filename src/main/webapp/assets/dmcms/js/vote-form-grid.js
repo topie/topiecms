@@ -202,7 +202,7 @@ function getVoteForm(type,hasPublishRole,hasShenheRole) {
 				name : 'title',// name
 				id : 'title',// id
 				label : '标题',// 左边label
-				cls : 'input-large',
+				cls : 'input-xlarge',
 				rule : {
 					required : true,
 					maxlength : 50
@@ -217,28 +217,28 @@ function getVoteForm(type,hasPublishRole,hasShenheRole) {
 				name : 'description',// name
 				id : 'description',// id
 				label : '说明',// 左边label
-				cls : 'input-large'
+				cls : 'input-xlarge'
 			},
 			{
 				type : 'datepicker',// 类型
 				name : 'startTime',// name
 				id : 'startTime',// id
 				label : '开始时间',// 左边label
-				cls : 'input-large'
+				cls : 'input-xlarge'
 			},
 			{
 				type : 'datepicker',// 类型
 				name : 'endTime',// name
 				id : 'endTime',// id
 				label : '结束时间',// 左边label
-				cls : 'input-large'
+				cls : 'input-xlarge'
 			},{
 				type : 'radioGroup',// 类型
 				name : 'checkType',// name
 				id : 'checkType',// id
 				label : '类型',// 左边label
 				items:[{value:'radio',text:'单选'},{value:'checkbox',text:'多选'}],
-				cls : 'input-large',
+				cls : 'input-xlarge',
 				rule : {
 					required : true,
 					maxlength : 50
@@ -259,13 +259,13 @@ function getVoteForm(type,hasPublishRole,hasShenheRole) {
 				} ],
 				itemsUrl : "../template/selects?templateType=2&siteId="
 						+ currentSiteId,
-				cls : 'input-large'
+				cls : 'input-xlarge'
 			},{
 				type : 'datepicker',// 类型
 				name : 'publishTime',// name
 				id : 'publishTime',// id
 				label : '发布时间',// 左边label
-				cls : 'input-large'
+				cls : 'input-xlarge'
 			} ];
 
 	//items.push(offic);
@@ -337,7 +337,7 @@ var optFormOpt = {
 			name : 'option',// name
 			id : 'option',// id
 			label : '选项',// 左边label
-			cls : 'input-large',
+			cls : 'input-xlarge',
 			rule : {
 				required : true,
 				maxlength : 80

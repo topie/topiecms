@@ -56,8 +56,21 @@ public class WebSurvey {
     private String title;
     
     private String isSatisfied;
+    
+    private String shortTitle;
+    
+    public String getShortTitle() {
+    	if(shortTitle==null){
+    		return title;
+    	}
+		return shortTitle;
+	}
 
-    public String getId() {
+	public void setShortTitle(String shortTitle) {
+		this.shortTitle = shortTitle;
+	}
+
+	public String getId() {
         return id;
     }
 

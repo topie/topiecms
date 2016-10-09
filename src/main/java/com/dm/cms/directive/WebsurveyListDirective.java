@@ -45,6 +45,7 @@ public class WebsurveyListDirective implements TemplateDirectiveModel{
 		String type =  params.get("type")==null?"1":params.get("type").toString();
 		String[] typeArray = type.split(",");
 		String code = params.get("code")==null?null:params.get("code").toString();
+		Integer titleLeft = params.get("titleLeft")==null?null:Integer.valueOf(params.get("titleLeft").toString());
 		WebSurvey webSurvey = new WebSurvey();
 		webSurvey.setCode(code);
 		webSurvey.setIsOpen(isOpen);
@@ -54,6 +55,13 @@ public class WebsurveyListDirective implements TemplateDirectiveModel{
 		PageInfo<WebSurvey> page = websurveyService.selectRecordByArgMap(pageNum, pageSize, map);
 		Long total = page.getTotal();
 		List<WebSurvey> websureys = page.getList();
+		if(titleLeft!=null){
+			for(WebSurvey web:websureys){
+				if(web.getTitle()!=null &&web.getTitle().length()>titleLeft){
+					web.setShortTitle(web.getTitle().substring(0,titleLeft-1 )+"...");
+				}
+			}
+		}
 		env.setVariable("websurveys",ObjectWrapper.DEFAULT_WRAPPER.wrap(websureys));
 		Integer channelId = Integer.valueOf(params.get("channelId")==null?"0":params.get("channelId").toString());
 		CmsChannel channel = cmsChannelService.findOneById(channelId);
