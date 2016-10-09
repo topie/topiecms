@@ -31,7 +31,7 @@
                 <div class="row fontSize16 " style="border-bottom:1px dotted #d3d3d3; margin-bottom:1em; padding:0 0 1.5em 0.5em">分&nbsp;&nbsp;&nbsp;&nbsp;工：<span>${leader.division!}</span></div>
                 <div class="fontSize16 pd4 color-green">相关新闻</div>
                 <ul class="panel2-list panel2-list-pd news-list2">
-		<@leaderContentListDirective leaderId=leader.id pagesize=10>
+		<@leaderContentListDirective leaderId=leader.id pageSize=10>
 		    <#list contents as ne>
                     <li><a href="${ne.url}" target="_blank"><span class="panel2-list-content">${ne.title}</span><span class="panel2-list-time">${ne.publishDate?string('yyyy-MM-dd')}</span></a></li>
 		    

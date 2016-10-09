@@ -389,7 +389,7 @@ var options = {
 		title : "来源",
 		field : "origin",
 		sort : true,
-		width:"10%"
+		width:"7%"
 	}, {
 		title : "作者",
 		field : "author",
@@ -408,7 +408,7 @@ var options = {
 	}, {
 		title : "状态",
 		field : "status",
-		width:"10%",
+		width:"5%",
 		format : function(i, c) {
 			if (c.status == "0")
 				return "新稿";
