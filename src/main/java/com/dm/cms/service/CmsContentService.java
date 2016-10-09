@@ -70,6 +70,9 @@ public interface CmsContentService {
 	 * @param contentId
 	 */
 	void restore(String contentId);
+
+	PageInfo<CmsContent> findLeaderContentsByPage(Integer pageNum,
+			Integer pageSize, String leaderId);
 	
 	
 }

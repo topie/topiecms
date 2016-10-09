@@ -181,12 +181,18 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		return sdf.parse(dateStr);
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		new SearchConfigServiceImpl().searchResults("金湖", "content,title", 1, 10, null, null, null, null);
-	}
+	}*/
 	@Override
 	public Map searchResults(String textValue,String colum, Integer pageNum,
 			Integer pageSize, String sortField, String entity, Integer days,
+			Device device) {
+		return this.searchResults(textValue, colum, pageNum, pageSize, sortField, entity, days,null, device);
+	}
+	@Override
+	public Map searchResults(String textValue,String colum, Integer pageNum,
+			Integer pageSize, String sortField, String entity, Integer days,String highlight,
 			Device device) {
 		/*if (!StringUtils.hasText(entity)) {
 			entity = "cmsContent";
@@ -271,22 +277,27 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		}*/
 		query.setSort("publishDate", ORDER.desc);
 		query.setRows(pageSize);
-		query.setHighlight(searchConfig.getHighlight() == null ? false
-				: searchConfig.getHighlight());
-		if (!query.getHighlight()) {
-			// return ;
+		String color = searchConfig.getHighlightcolor();
+		if(highlight!=null){
+			color = highlight;
 		}
+			query.setHighlight(searchConfig.getHighlight() == null ? false
+					: searchConfig.getHighlight());
+			if (!query.getHighlight()) {
+				// return ;
+			}
+			query.addHighlightField(highlightTitle);
+			query.addHighlightField(highlightContent);
+			query.addHighlightField(highlightActor);
+			
+			query.setHighlightSimplePre("<font color='"
+					+ color + "'>");
+			query.setHighlightSimplePost("</font>");
+			
+			query.setHighlightSnippets(searchConfig.getSnippets());// 结果分片数，默认为1
+			query.setHighlightFragsize(searchConfig.getSnippetsNum());
+		
 
-		query.addHighlightField(highlightTitle);
-		query.addHighlightField(highlightContent);
-		query.addHighlightField(highlightActor);
-
-		query.setHighlightSimplePre("<font color='"
-				+ searchConfig.getHighlightcolor() + "'>");
-		query.setHighlightSimplePost("</font>");
-
-		query.setHighlightSnippets(searchConfig.getSnippets());// 结果分片数，默认为1
-		query.setHighlightFragsize(searchConfig.getSnippetsNum());
 		// query.set("defType", "edismax");
 
 		QueryResponse response = null;

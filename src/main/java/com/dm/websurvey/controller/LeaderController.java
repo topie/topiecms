@@ -9,12 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dm.cms.model.TreeNode;
 import com.dm.platform.util.PageConvertUtil;
 import com.dm.platform.util.ResponseUtil;
 import com.dm.platform.util.SqlParam;
 import com.dm.websurvey.model.Leader;
 import com.dm.websurvey.service.LeaderService;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 @Controller
@@ -66,5 +66,10 @@ public class LeaderController {
 	{
 		Leader leader = leaderService.findOne(id);
         return leader;
+	}
+	@RequestMapping("/tree")
+	@ResponseBody
+	public List<TreeNode> tree(){
+		return this.leaderService.treeWithOrg();
 	}
 }

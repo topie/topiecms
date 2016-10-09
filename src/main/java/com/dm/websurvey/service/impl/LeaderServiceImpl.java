@@ -1,5 +1,6 @@
 package com.dm.websurvey.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dm.cms.model.TreeNode;
+import com.dm.platform.model.TDictItem;
+import com.dm.platform.util.TDictUtil;
 import com.dm.platform.util.UUIDUtils;
 import com.dm.websurvey.model.Leader;
 import com.dm.websurvey.service.LeaderService;
@@ -55,6 +59,7 @@ public class LeaderServiceImpl implements LeaderService{
 		Map m = new HashMap();
 		m.put("type", code);
 		m.put("org", org);
+		map.put("sort", "seq asc");
 		map.put("model", m);
 		List<Leader> leaders = leadMapper.selectRecordByArgMap(map);
 		return leaders;
@@ -63,6 +68,36 @@ public class LeaderServiceImpl implements LeaderService{
 	public Leader findOne(String id)
 	{
 		return leadMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public List<TreeNode> treeWithOrg() {
+		Map map = new HashMap();
+		Map m = new HashMap();
+		List<TDictItem> items = TDictUtil.itemList("C01");
+		List<TreeNode>  list = new ArrayList<TreeNode>();
+		map.put("sort", "seq asc");
+		for(TDictItem item:items){
+			m.put("org", item.getItemName());
+			map.put("model", m);
+			List<Leader> leaders = leadMapper.selectRecordByArgMap(map);
+			TreeNode node = new TreeNode();
+			node.setId(item.getItemId().toString());
+			node.setOpen(false);
+			node.setName(item.getItemName());
+			list.add(node);
+			for(Leader l:leaders){
+				TreeNode cnode = new TreeNode();
+				cnode.setId(l.getId().toString());
+				cnode.setOpen(false);
+				cnode.setpId(item.getItemId().toString());
+				cnode.setName(l.getName());
+				cnode.setI("1");
+				list.add(cnode);
+			}
+			
+		}
+		return list;
 	}
 
 }

@@ -21,7 +21,7 @@
                                         <div class="panel panel-default panel2">
                                           <@channelDirective channelId=20>
                                             <div class="panel-heading panel2-t fontSize18"><a href="${channel.url!}" target="_blank"> 领导信息</a></div></@channelDirective>
-                                            <div class="panel-body">
+					     <div class="panel-body">
                                                 <ul class="list-group zwgk-list-group fontSize12">
                                                     <a href="javascript:void(0);" class="color-green fontSize16 pd2 dis-b">县政府</a>
                                                     <!--<li class="list-group-item"><div class="zwgk-list-c"><span class="zwgk-list-name">徐亚平</span>县委副书记，县政府代县长、党组书记</div></li>

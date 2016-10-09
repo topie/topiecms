@@ -104,6 +104,7 @@
 				<entry key="websurveyListDirective" value-ref="websurveyListDirective"></entry>
 				<entry key="pictureListDirective" value-ref="pictureListDirective"></entry>
 				<entry key="microcobolListDirective" value-ref="microcobolListDirective"></entry>
+				<entry key="leaderContentListDirective" value-ref="leaderContentListDirective"></entry>
 
 			</map>
 		</property>
@@ -146,6 +147,7 @@
    <bean id="topOneDirective" class="com.dm.cms.directive.TopOneDirective"/>
    <bean id="pictureListDirective" class="com.dm.cms.directive.PictureListDirective"/>
    <bean id="microcobolListDirective" class ="com.dm.module.directive.MicrocobolListDirective"></bean>
+   <bean id="leaderContentListDirective" class="com.dm.cms.directive.LeaderContentListDirective"></bean>
     <!-- 自定义标签结束 -->
 
 

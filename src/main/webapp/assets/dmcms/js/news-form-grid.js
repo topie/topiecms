@@ -518,7 +518,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 			buttonsAlign : "center",
 			// 表单元素
 			items : [
-						{
+						/*{
 							type : "tree",
 							name : "channelId",
 							id : "channelId",
@@ -532,7 +532,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 								}
 							},
 							chkStyle : "radio"
-						},
+						},*/
 						{
 							type : 'hidden',
 							name : 'id',
@@ -642,6 +642,20 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 									required : "请输入链接",
 									maxlength : "最多输入356字符"
 								}
+							},{
+								type : "tree",
+								name : "filed1",
+								id : "filed1",
+								label : "相关领导",
+								url : "../../leader/tree",
+								autoParam : [ "id", "name", "pId" ],
+								expandAll : false,
+								beforeCheck : function(treeId, treeNode) {
+									if (treeNode.isParent) {
+										return false;
+									}
+								},
+								chkStyle : "checkbox"
 							}
 					]
 		};
@@ -813,6 +827,21 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 			$("#titleImageUrl").attr("value", "");
 		}
 	};
+	var leader={
+		type : "tree",
+		name : "filed1",
+		id : "filed1",
+		label : "相关领导",
+		url : "../../leader/tree",
+		autoParam : [ "id", "name", "pId" ],
+		expandAll : false,
+		beforeCheck : function(treeId, treeNode) {
+			if (treeNode.isParent) {
+				return false;
+			}
+		},
+		chkStyle : "checkbox"
+	};
 	var titleImgTitle = {
 		type : 'textarea',// 类型
 		row : 3,
@@ -900,6 +929,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 		items.push(contentText);
 		items.push(offic);
 	}
+	items.push(leader);
 
 	
 	var formOpts = {

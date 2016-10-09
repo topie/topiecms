@@ -422,15 +422,18 @@ public class CmsPortalController {
 		else{
          leader = leaderService.findOne(id);
 		}
-		List<SearchResult> news = new ArrayList<SearchResult>();
+		/*List<SearchResult> news = new ArrayList<SearchResult>();
 		if(leader.getId()!=null){
 			try{
-				Map m = this.searchConfigService.searchResults(leader.getName(),null, 1, 10, null, null, null, null);
+				String name=leader.getName();
+				name = name.replace(" ","");
+				name="\""+name+"\"";
+				Map m = this.searchConfigService.searchResults(leader.getName(),null, 1, 10, null, null, null,"#000", null);
 				news = (List<SearchResult>)m.get("list");
 			}catch(RuntimeException e){
 			}
 		}
-		model.addAttribute("news", news);
+		model.addAttribute("news", news);*/
 		model.addAttribute("leader",leader);
          return "/template/leader";
     }
