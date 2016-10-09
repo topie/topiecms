@@ -45,6 +45,7 @@
                            ref="myFilter"/>
         <sec:intercept-url pattern="/api/**" access="permitAll"/>
         <sec:intercept-url pattern="/**" access="isAuthenticated()"/>
+        <sec:intercept-url pattern="/login" access="hasIpAddress('10.2.30.12')"/>
         <sec:remember-me key="springDm" use-secure-cookie="true"/>
     </sec:http>
     <sec:authentication-manager

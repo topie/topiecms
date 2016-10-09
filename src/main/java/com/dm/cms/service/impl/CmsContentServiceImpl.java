@@ -1,17 +1,23 @@
 package com.dm.cms.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -25,6 +31,7 @@ import com.dm.cms.model.CmsSite;
 import com.dm.cms.model.CmsTemplate;
 import com.dm.cms.model.CmsTemplateConfig;
 import com.dm.cms.service.CmsAttachmentService;
+import com.dm.cms.service.CmsChannelService;
 import com.dm.cms.service.CmsContentService;
 import com.dm.cms.service.CmsSiteService;
 import com.dm.cms.service.CmsTemplateConfigService;
@@ -32,6 +39,8 @@ import com.dm.cms.sqldao.CmsChannelMapper;
 import com.dm.cms.sqldao.CmsContentMapper;
 import com.dm.cms.sqldao.CmsSiteMapper;
 import com.dm.cms.sqldao.CmsTemplateMapper;
+import com.dm.cms.thread.ContentGenerateHtml;
+import com.dm.cms.util.AppUtil;
 import com.dm.platform.model.UserAccount;
 import com.dm.platform.util.UserAccountUtil;
 import com.github.pagehelper.PageHelper;
@@ -56,11 +65,17 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	CmsAttachmentService cmsAttachmentService;
 	@Autowired
 	CmsTemplateConfigService cmsTemplateConfigService;
+	
+	@Autowired
+	CmsChannelService cmsChannelService;
 
 	@Autowired
 	CmsSiteMapper cmsSiteMapper;
 	@Autowired
 	CmsSiteService cmsSiteService;
+	
+	@Value("${isChannelStatic}")
+    boolean isChannelStatic;
 	String serperator = System.getProperty("file.separator");
 
 	@Override
@@ -304,6 +319,12 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 				this.cmsContentMapper.updateByPrimaryKeySelective(cmsContent);	
 				CmsChannel cms = cmsChannelMapper.selectByPrimaryKey(cmsContent
 						.getChannelId());
+				if(isChannelStatic)
+				{
+				ExecutorService excutor = Executors.newFixedThreadPool(10);
+				//多线程静态化频道，如无需注释即可
+				generateChannelMutipleThread(request, cms, excutor);
+				}
 				succ = cmsSiteService.generatorHtml(cms.getSiteId(), request);
 			}
 			else{
@@ -311,6 +332,12 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 				if (c != null) {
 					CmsChannel cms = cmsChannelMapper.selectByPrimaryKey(cmsContent
 							.getChannelId());
+					if(isChannelStatic)
+					{
+					ExecutorService excutor = Executors.newFixedThreadPool(10);
+					//多线程静态化频道，如无需注释即可
+					generateChannelMutipleThread(request, cms, excutor);
+					}
 					succ = cmsSiteService.generatorHtml(cms.getSiteId(), request);
 				}
 				else
@@ -333,6 +360,13 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		List<Integer> channelIds = cmsChannelMapper.selectByPId(channelId);
 		if (channelIds.size() == 0)
 			return 0;
+		return cmsContentMapper.selectCount(channelIds);
+	}
+	
+	@Override
+	public int selectCountBychannelIdOnly(Integer channelId) {
+		List<Integer> channelIds =new ArrayList<Integer>();
+		channelIds.add(channelId);
 		return cmsContentMapper.selectCount(channelIds);
 	}
 
@@ -466,6 +500,33 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 			}
 		}
 		
+	}
+	
+	@Override
+	public void generateChannelMutipleThread(HttpServletRequest request,CmsChannel channel, ExecutorService executor)
+	{
+		ContentGenerateHtml runable = (ContentGenerateHtml) AppUtil
+				.getBean("contentGenerateHtml");
+		runable.setChannelId(channel.getId());
+		runable.setChannelType(channel.getChannelType());
+		runable.setRequest(request);
+		runable.setSiteChannelContent("channel");
+		executor.execute(runable);
+		if(channel.getPid()!=0)
+		{
+			CmsChannel ch = cmsChannelMapper.selectByPrimaryKey(channel.getPid());
+			generateChannelMutipleThread(request, ch, executor);
+		}
+		else
+		{
+			executor.shutdown();
+			try {
+				executor.awaitTermination(1200, TimeUnit.MINUTES);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				log.error(e1.getMessage());
+			}
+		}
 	}
 
 }

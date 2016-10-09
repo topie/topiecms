@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,6 +61,9 @@ public class CmsContentController {
 	private String publishRoleId;
 	@Value("${shenheRoleId}")
 	private String shenheRoleId;
+	
+	@Value("${isChannelStatic}")
+    boolean isChannelStatic;
 
 	@RequestMapping("/page")
 	public String page(Model model) {
@@ -353,6 +358,12 @@ public class CmsContentController {
 		}
 		CmsChannel cmsChannel = cmsChannelService.findOneById(content
 				.getChannelId());
+		if(isChannelStatic)
+		{
+			ExecutorService excutor = Executors.newFixedThreadPool(10);
+			//多线程静态化频道，如无需注释即可
+			cmsContentService.generateChannelMutipleThread(request, cmsChannel, excutor);
+		}
 		cmsSiteService.generatorHtml(cmsChannel.getSiteId(), request);
 		return ResponseUtil.success("操作成功");
 	}

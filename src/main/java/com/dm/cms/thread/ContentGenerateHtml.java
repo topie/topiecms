@@ -122,7 +122,8 @@ public class ContentGenerateHtml implements Runnable {
             } 
 			else if(channelType.equals("7"))
 			{
-				while (true) {
+				while (true) 
+				{
 					argMap.put("pageStart", (pageNum-1)*pageSize);
 					List<CmsNovel> cmsNovels = cmsNovelService.selectPageListByMap(argMap);
 		//			List<CmsContent> contents = pageInfo.getList();
@@ -133,7 +134,7 @@ public class ContentGenerateHtml implements Runnable {
 						cmsNovelService.generatorHtml(c.getId(), request);
 					}
 					pageNum++;
-			  }
+			    }
             } 
 		}
 		if(siteChannelContent.indexOf("channel")!=-1)
