@@ -78,5 +78,8 @@ public interface CmsContentService {
 	void generateChannelMutipleThread(HttpServletRequest request,
 			CmsChannel channel, ExecutorService executor);
 	
+	PageInfo<CmsContent> findLeaderContentsByPage(Integer pageNum,
+			Integer pageSize, String leaderId);
+	
 	
 }

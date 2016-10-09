@@ -447,10 +447,14 @@
                                                         .tmpl(
                                                         Grid.statics.inlineRadioTmpl,
                                                         {
-                                                            "value_": (option.value == undefined ? ""
-                                                                : option.value),
-                                                            "text_": (option.text == undefined ? ""
-                                                                : option.text)
+                                                        	"name_": (item.name == undefined ? ""
+                                                                    : item.name),
+                                                                "id_": (item.id == undefined ? ""
+                                                                    : item.id),
+                                                                "value_": (option.value == undefined ? ""
+                                                                    : option.value),
+                                                                "text_": (option.text == undefined ? ""
+                                                                    : option.text)
                                                         })
                                                         .appendTo(
                                                         ele);
@@ -510,10 +514,14 @@
                                                         .tmpl(
                                                         Grid.statics.inlineCheckboxTmpl,
                                                         {
-                                                            "value_": (option.value == undefined ? ""
-                                                                : option.value),
-                                                            "text_": (option.text == undefined ? ""
-                                                                : option.text)
+                                                        	"name_": (item.name == undefined ? ""
+                                                                    : item.name),
+                                                                "id_": (item.id == undefined ? ""
+                                                                    : item.id),
+                                                                "value_": (option.value == undefined ? ""
+                                                                    : option.value),
+                                                                "text_": (option.text == undefined ? ""
+                                                                    : option.text)
                                                         })
                                                         .appendTo(
                                                         ele);

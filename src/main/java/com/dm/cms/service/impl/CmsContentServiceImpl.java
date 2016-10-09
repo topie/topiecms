@@ -529,4 +529,12 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		}
 	}
 
+	@Override
+	public PageInfo<CmsContent> findLeaderContentsByPage(Integer pageNum,
+			Integer pageSize, String leaderId) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<CmsContent> list = this.cmsContentMapper.selectByLeaderId(leaderId);
+		return new PageInfo<CmsContent>(list);
+	}
+
 }

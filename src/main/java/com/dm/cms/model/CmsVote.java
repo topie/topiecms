@@ -47,6 +47,8 @@ public class CmsVote {
     private List<CmsVoteOption> option;
     
     public String getShortTitle() {
+    	if(shortTitle==null || shortTitle.equals(""))
+    		return title;
 		return shortTitle;
 	}
 

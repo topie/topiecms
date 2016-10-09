@@ -203,7 +203,7 @@ public class LogAspect {
 			
 			className = info.getClass().getName();
 			className = className.substring(className.lastIndexOf(".") + 1);
-			if(className.equals("HttpServlet3RequestFactory$Servlet3SecurityContextHolderAwareRequestWrapper")){
+			if(className.equals("String")||className.equals("HttpServlet3RequestFactory$Servlet3SecurityContextHolderAwareRequestWrapper")){
 				continue;
 			}
 			rs.append("[类型：" + className + "，值：");

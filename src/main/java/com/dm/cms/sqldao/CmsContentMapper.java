@@ -99,5 +99,6 @@ public interface CmsContentMapper {
 	List<CmsContent> selectIsPictures();
 	
 	List<CmsCheck> selectViewByReord(Map map);
+	List<CmsContent> selectByLeaderId(String leaderId);
 
 }
