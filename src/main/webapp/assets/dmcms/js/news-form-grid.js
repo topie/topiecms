@@ -664,7 +664,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 								url : "../../leader/tree",
 								autoParam : [ "id", "name", "pId" ],
 								expandAll : false,
-								
+								chkboxType:{"Y":"s","N":"s"},
 								chkStyle : "checkbox"
 							}
 					]
@@ -844,6 +844,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 		label : "相关领导",
 		url : "../../leader/tree",
 		autoParam : [ "id", "name", "pId" ],
+		chkboxType:{"Y":"s","N":"s"},
 		expandAll : false,
 		
 		chkStyle : "checkbox"

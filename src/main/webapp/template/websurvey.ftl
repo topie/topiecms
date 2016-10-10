@@ -131,7 +131,7 @@
                     </tr>-->
                     <tr>
                         <td colspan="2" class="text-right">
-                            <input type="button" onclick="validateForm;" class="btn btn-default btn-download1" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+                            <input type="button" onclick="validateForm();" class="btn btn-default btn-download1" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;提&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;交&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
                         </td>
                         <td colspan="2">
                             <input type="reset" class="btn btn-default btn-download" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;填&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
@@ -163,26 +163,13 @@
                                                          
               <script type="text/javascript" src="/html/jinhu-static/js/js.js"></script>
 	       <script type="text/javascript" src="/html/jinhu-static/js/Validform_v5.3.2_min.js"></script>
-	     
-                                                         
-              <script type="text/javascript" src="/html/jinhu-static/js/visit-record.js"></script>  
+	      
            	<!--<script type="text/javascript" src="/html/jinhu-static-xxwq/js/jquery.placeholder.min.js"></script>
            
            	<script src="/html/jinhu-static-xxwq/js/bootstrap.min.js" type="text/javascript"></script>-->
            
            	<script type="text/javascript">
-           		$(function() {
-           			$('input, textarea').placeholder();
-           			 $(".form-table").Validform();
-				$('.jh-link-click').click(function(){
-				    $('#'+$(this).data('src')).slideToggle('normal').siblings().css('display','none');
-				});
-				$('#xjcx').click(function(){
-					var id = $("#xjbh").val();
-					var phone=$("#xjmm").val();
-					window.open("../websurvey/findOne?id="+id+"&phone="+phone);
-				});
-           		});
+           		
 			//表单提交验证
 function validateForm(){
 	//获取姓名
@@ -193,14 +180,14 @@ function validateForm(){
 		}
 		var age=$("#age").val();
 		if(age==""){
-			alert("年龄不能为空!");
-			return false;
-		}
-		var agePattern=/[1-9]\d?/;
-		if(!agePattern.test(age)){
-			alert("请输入正确的年龄!");
-			//$("#phone").val("");
-			return false;
+		
+			var agePattern=/[1-9]\d?/;
+			if(!agePattern.test(age)){
+				alert("请输入正确的年龄!");
+				//$("#phone").val("");
+				return false;
+			}
+			
 		}
 		//获取联系电话
 		var phone=$("#phone").val();
@@ -218,11 +205,7 @@ function validateForm(){
 			return false;
 		}
 		//部门
-		/*var bumen=$("#bumen").find("option:selected").text();
-		if(bumen.trim()=="请选择..."){
-			alert("请选择部门!");
-			return false;
-		}*/
+		
 		//类型
 		var leixing=$("#leixing").find("input[type='radio']:checked").val();
 		if(leixing==undefined){
@@ -241,8 +224,8 @@ function validateForm(){
 			alert("请填写信件内容!");
 			return false;
 		}
-		//$("#myForm").action="/jinhuadmin/portal/websurvey/add";
 		$("#myForm").submit();
+		}
            	</script>
            
            

@@ -29,7 +29,7 @@
                              <tr>
                                  <th class="color-green">选项</th>
                                  <th class="text-center color-green">百分百</th>
-                                 <th class="text-center color-green">投票人数</th>
+                                 <th class="text-center color-green">得票数</th>
                              </tr>
                              </thead>
                              <tbody>

@@ -74,7 +74,7 @@ public class ContentGenerateHtml implements Runnable {
 			int pageNum = 1;
 			int pageSize = 50;
 			argMap.put("pageSize", pageSize);
-		if(channelType.equals("0"))
+		if(channelType.equals("0")||channelType.equals("10")||channelType.equals("11"))
 			{
 				while (true) {
 					argMap.put("pageStart", (pageNum-1)*pageSize);

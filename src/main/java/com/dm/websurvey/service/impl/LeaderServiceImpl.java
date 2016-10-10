@@ -91,7 +91,7 @@ public class LeaderServiceImpl implements LeaderService{
 				cnode.setId(l.getId().toString());
 				cnode.setOpen(false);
 				cnode.setpId(item.getItemId().toString());
-				cnode.setName(l.getName());
+				cnode.setName(l.getName().replace("&nbsp;", ""));
 				cnode.setI("1");
 				list.add(cnode);
 			}

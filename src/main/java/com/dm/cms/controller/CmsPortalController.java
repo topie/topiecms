@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -143,6 +144,7 @@ public class CmsPortalController {
 	@RequestMapping("/websurvey/form.htm")
 	public String form(Model model,String code) //,String leadId)
 	{
+		
 		/*if(!StringUtils.isEmpty(leadId))
 		{
 			Leader leader = leaderService.findOne(leadId);
@@ -169,8 +171,10 @@ public class CmsPortalController {
 		}
 		else if(code.equals("3"))
 		{
-			List<Org> orgs = orgService.findAll();
+			List<Org> orgs = orgService.listOrg(0, 1000,"where parent is not null and parent !=''");
 			model.addAttribute("orgs", orgs);
+		}else{
+			code="1";
 		}
 		
 		model.addAttribute("code", code);
@@ -200,15 +204,17 @@ public class CmsPortalController {
 	}
 	
 
-	@RequestMapping("/websurvey/add")
+	@RequestMapping(value="/websurvey/add",method=RequestMethod.POST)
 	public String add(Model model,WebSurvey webSurvey,HttpServletRequest request)
-	{
+	{	//if(webSurvey.getCode())
+		
+		request.getSession().getAttribute("");
 		webSurvey.setIp(RequestUtil.getIpAddress(request));
 		model.addAttribute("websurvey",webSurveyService.add(webSurvey));
 		return "/template/success";
 	}
 	@RequestMapping("/websurvey/{channelId}_{pageNum}.htm")
-	public String add(Model model,
+	public String find(Model model,
 			@PathVariable("channelId") Integer channelId,
 			@PathVariable(value = "pageNum") Integer pageNum,
 			WebSurvey webSurvey,
@@ -636,6 +642,13 @@ public class CmsPortalController {
 	@RequestMapping("/interview/insertQ")
 	@ResponseBody
 	public Object insertQuestions(CmsInterviewQuestions record){
+		if(StringUtils.isEmpty(record.getContent())){
+			return ResponseUtil.success("请填写内容!");
+		}
+		if(StringUtils.isEmpty(record.getName())){
+			return ResponseUtil.success("请填写姓名!");
+		}
+		
 		cmsInterviewQServie.insert(record);
 		return ResponseUtil.success("谢谢参与!");
 	}

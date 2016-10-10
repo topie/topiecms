@@ -428,7 +428,7 @@ function getoptions(id){
 					in_modal = $.dmModal({
 						id : "siteForm",
 						title : "添加",
-						width:"500px",
+						width:"700px",
 						distroy : true
 					});
 					in_modal.show();

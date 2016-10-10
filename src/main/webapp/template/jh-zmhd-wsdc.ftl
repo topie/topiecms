@@ -31,7 +31,7 @@
   			<input type="hidden" value="${cmsVote.id}" name="voteId">
                           <ul class="zmhd-wsdc-dlist">
   			<#list options as option>
-  			<li><a href="javascript:void(0);" data-id="${option.id}"><span class="border-gray"><span class="glyphicon glyphicon-ok color-green"></span></span>${option.option!}</a> </li>	
+  			<li><a  data-id="${option.id}"><span class="border-gray"><span class="glyphicon glyphicon-ok color-green"></span></span>${option.option!}</a> </li>	
   			    </#list>
                           </ul>
   			</form>

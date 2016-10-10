@@ -123,7 +123,7 @@
                                                	<td class="paddClass">
                                                    	<table cellpadding="0" cellspacing="0" width="100%" align="center"; border="0">
                                                        	<tbody>
-       							<@contentListDirective channelId=10 pageSize=9 pageNum=1 titleLeft=20 order=1>
+       							<@contentListDirective channelId=10 pageSize=1000 pageNum=1 titleLeft=20 order=1>
        								
        								<#list contents as cmsContent>
        								<tr>
@@ -172,7 +172,7 @@
                      						<#list channels as channel>
                      							<div role="tabpanel" class="tab-pane ${(channel_index==0)?string('active','')}" id="shsy${channel.id}">
                      								<div class="row">
-                                                    <@contentListDirective channelId=channel.id pageSize=1 pageNum=pageNum titleLeft=32 order=10>
+                                                    <@contentListDirective channelId=channel.id pageSize=1 pageNum=pageNum titleLeft=32 order=2>
                                                       <#list contents as cmsContent>
                      									<div class="col-xs-5">
                      										<div class="thumbnail thumbnails thumbnailb">
