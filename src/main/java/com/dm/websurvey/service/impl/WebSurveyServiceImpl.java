@@ -29,7 +29,8 @@ public class WebSurveyServiceImpl implements WebSurveyService{
 	@Override
 	public WebSurvey add(WebSurvey webSurvey)
 	{
-		webSurvey.setId(UUIDUtils.getUUID16());
+		//webSurvey.setId(UUIDUtils.getUUID16());
+		webSurvey.setId(System.currentTimeMillis()+""+((int)(Math.random()*9000+1000)));
 		webSurvey.setInputDate(new Date());
 		Leader leader = leaderMapper.selectByPrimaryKey(webSurvey.getCodeId());
 		if(leader!=null)

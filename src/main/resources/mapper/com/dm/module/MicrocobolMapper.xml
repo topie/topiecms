@@ -20,13 +20,13 @@
     <result column="site_id" property="siteId" jdbcType="INTEGER" />
     <result column="qr_code" property="qrCode" jdbcType="VARCHAR" />
     <result column="click_counts" property="clickCounts" jdbcType="INTEGER" />
-    <result column="app_url" property="appUrl" jdbcType="VARCHAR" />
-    <result column="app_qr_code" property="appQrCode" jdbcType="VARCHAR" />
+    <result column="android_app_url" property="androidAppUrl" jdbcType="VARCHAR" />
+    <result column="apple_app_url" property="appleAppUrl" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, logo, `desc`, remark, is_hidden, create_time, open_time, seq, link, open_org, 
-    open_plant, weiban_org, create_user, type, site_id, qr_code, click_counts, app_url, 
-    app_qr_code
+    open_plant, weiban_org, create_user, type, site_id, qr_code, click_counts, android_app_url, 
+    apple_app_url
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -43,10 +43,10 @@
     	and is_hidden = #{model.isHidden}
     </if>
     <if test="model.name!=null and model.name!=''">
-    	and name like concat('%',#{name},'%')
+    	and name like concat('%',#{model.name},'%')
     </if>
-    <if test="model.type!=null">
-    	and type =#{type}
+    <if test="model.type!=null and model.type!=''">
+    	and type =#{model.type}
     </if>
     order by seq asc,id desc
   </select>
@@ -61,14 +61,14 @@
       link, open_org, open_plant, 
       weiban_org, create_user, type, 
       site_id, qr_code, click_counts, 
-      app_url, app_qr_code)
+      android_app_url, apple_app_url)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, 
       #{desc,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{isHidden,jdbcType=BIT}, 
       #{createTime,jdbcType=TIMESTAMP}, #{openTime,jdbcType=TIMESTAMP}, #{seq,jdbcType=INTEGER}, 
       #{link,jdbcType=VARCHAR}, #{openOrg,jdbcType=VARCHAR}, #{openPlant,jdbcType=VARCHAR}, 
       #{weibanOrg,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{siteId,jdbcType=INTEGER}, #{qrCode,jdbcType=VARCHAR}, #{clickCounts,jdbcType=INTEGER}, 
-      #{appUrl,jdbcType=VARCHAR}, #{appQrCode,jdbcType=VARCHAR})
+      #{androidAppUrl,jdbcType=VARCHAR}, #{appleAppUrl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dm.module.model.Microcobol" >
     insert into m_microcobol
@@ -127,11 +127,11 @@
       <if test="clickCounts != null" >
         click_counts,
       </if>
-      <if test="appUrl != null" >
-        app_url,
+      <if test="androidAppUrl != null" >
+        android_app_url,
       </if>
-      <if test="appQrCode != null" >
-        app_qr_code,
+      <if test="appleAppUrl != null" >
+        apple_app_url,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -189,11 +189,11 @@
       <if test="clickCounts != null" >
         #{clickCounts,jdbcType=INTEGER},
       </if>
-      <if test="appUrl != null" >
-        #{appUrl,jdbcType=VARCHAR},
+      <if test="androidAppUrl != null" >
+        #{androidAppUrl,jdbcType=VARCHAR},
       </if>
-      <if test="appQrCode != null" >
-        #{appQrCode,jdbcType=VARCHAR},
+      <if test="appleAppUrl != null" >
+        #{appleAppUrl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -251,11 +251,11 @@
       <if test="clickCounts != null" >
         click_counts = #{clickCounts,jdbcType=INTEGER},
       </if>
-      <if test="appUrl != null" >
-        app_url = #{appUrl,jdbcType=VARCHAR},
+      <if test="androidAppUrl != null" >
+        android_app_url = #{androidAppUrl,jdbcType=VARCHAR},
       </if>
-      <if test="appQrCode != null" >
-        app_qr_code = #{appQrCode,jdbcType=VARCHAR},
+      <if test="appleAppUrl != null" >
+        apple_app_url = #{appleAppUrl,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -279,8 +279,8 @@
       site_id = #{siteId,jdbcType=INTEGER},
       qr_code = #{qrCode,jdbcType=VARCHAR},
       click_counts = #{clickCounts,jdbcType=INTEGER},
-      app_url = #{appUrl,jdbcType=VARCHAR},
-      app_qr_code = #{appQrCode,jdbcType=VARCHAR}
+      android_app_url = #{androidAppUrl,jdbcType=VARCHAR},
+      apple_app_url = #{appleAppUrl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -29,7 +29,7 @@ public class PageUtil {
 		{
 			extendName = ".html";
 		}
-		String lastUrl = url.substring(0, url.indexOf(extendName)-1)+totalpage+extendName;
+		String lastUrl = url.substring(0, url.indexOf(".htm")-1)+totalpage+extendName;
 		StringBuffer sb = new StringBuffer();
 		sb.append("<div class=\"text-right new-page\"><span class=\"new-page-pd\"><span class=\"color-green\">");
 		

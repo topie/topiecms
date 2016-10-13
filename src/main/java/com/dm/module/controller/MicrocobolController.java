@@ -45,7 +45,6 @@ public class MicrocobolController {
 		}
 		Map map = new SqlParam<Microcobol>().autoParam(microcobol, sort);
 		map.put("model", microcobol);
-		System.out.println(microcobol);
 		PageInfo<Microcobol> page = microcobolService.findMicrocobolByPage(
 				pageNum, pageSize, map);
 		return PageConvertUtil.grid(page);

@@ -110,7 +110,7 @@
 							<div class="portlet-title">
 								<div class="caption caption-md">
 									<i class="icon-bar-chart theme-font hide"></i> <span
-										class="caption-subject theme-font bold uppercase">微博列表</span>
+										class="caption-subject theme-font bold uppercase">微列表</span>
 									<span class="caption-helper"></span>
 								</div>
 							</div>
@@ -154,7 +154,7 @@
 			pageSelect : [ 2, 15, 30, 50 ],
 			cloums : [ 
 			{
-				title : "微博名称",
+				title : "微名称",
 				field : "name",
 				width : "10%"
 			},{
@@ -191,29 +191,7 @@
 				field : "seq",
 				width : "10%"
 			}
-			/*,{
-				title : "位置",
-				field : "",
-				width : "10%",
-				format:function(i,c){
-					if(c.type=='AD1')
-						return "位置1";
-					if(c.type=='AD2')
-						return "位置2";
-					if(c.type=='AD3')
-						return "位置3";
-				}
-			} ,{
-				title : "是否展示",
-				field : "",
-				width : "10%",
-				format:function(i,c){
-					if(c.enabled){
-						return "是";
-					}
-					return "否";
-				}
-			}  */],
+			],
 			actionCloumText : "操作",//操作列文本
 			actionCloumWidth : "20%",
 			actionCloums : [
@@ -279,9 +257,17 @@
 				}
 			}  ], 
 			search : {
-				rowEleNum : 2,
+				rowEleNum : 3,
 				//搜索栏元素
+				hide:false,
 				items : [ {
+					type:"radioGroup",
+					name:"type",
+					id:"type",
+					label:'类型',
+					items:[{text:"全部",value:''}],
+					itemsUrl:'../dict/getItems?code=C02'
+				},{
 					type : "text",
 					label : "名称",
 					name : "name",
@@ -310,7 +296,7 @@
 			if(utc)
 				{
 		     var date = new Date(utc);
-		     return date.getFullYear()+"-"+((date.getMonth()+1)>10?date.getMonth()+1:"0"+(date.getMonth()+1))+"-"+(date.getDate()>10?date.getDate():"0"+date.getDate())+" "+(date.getHours()>10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>10?date.getMinutes():"0"+date.getMinutes())+":"+(date.getSeconds()>10?date.getSeconds():"0"+date.getSeconds());
+		     return date.getFullYear()+"-"+((date.getMonth()+1)>=10?date.getMonth()+1:"0"+(date.getMonth()+1))+"-"+(date.getDate()>=10?date.getDate():"0"+date.getDate())+" "+(date.getHours()>10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>10?date.getMinutes():"0"+date.getMinutes())+":"+(date.getSeconds()>10?date.getSeconds():"0"+date.getSeconds());
 		   }
 		}
 		var getFormOptions = function() {
@@ -326,15 +312,15 @@
 				type:"text",
 				name:"openOrg",
 				id :"openOrg",
-				cls : 'input-large',
+				cls : 'input-xlarge',
 				label:"开通单位"/* ,
 				items:[{text:"",value:"AD1"},{text:"位置2",value:"AD2"},{text:"位置3",value:"AD3"}] */
 			},{
 					type : 'text',//类型
 					name : 'name',//name
 					id : 'name',//id
-					label : '微博名称',//左边label
-					cls : 'input-large',
+					label : '微名称',//左边label
+					cls : 'input-xlarge',
 					rule : {
 						required : true
 					},
@@ -359,29 +345,46 @@
 					},
 					deleteHandle : function() {
 						$("#logo").attr("value", "");
+					},rule : {
+						required : true
+					},
+					message : {
+						required : "请选择"
 					}
 				} 
-		 ,{
-				type : 'text',//类型
-				name : 'link',//name
-				id : 'link',//id
-				label : '链接地址',//左边label
-				cls : 'input-large'
-			},{
+				,{
+					type : 'text',//类型
+					name : 'link',//name
+					id : 'link',//id
+					label : '微博地址',//左边label
+					cls : 'input-xlarge'
+				},{
+					type : 'text',//类型
+					name : 'androidAppUrl',//name
+					id : 'androidAppUrl',//id
+					label : '安卓App',//左边label
+					cls : 'input-xlarge'
+				},{
+					type : 'text',//类型
+					name : 'appleAppUrl',//name
+					id : 'appleAppUrl',//id
+					label : '苹果App',//左边label
+					cls : 'input-xlarge'
+				},{
 				type:"text",
 				name:"weibanOrg",
 				id :"weibanOrg",
-				cls : 'input-large',
+				cls : 'input-xlarge',
 				label:"承办单位"/* ,
 				items:[{text:"",value:"AD1"},{text:"位置2",value:"AD2"},{text:"位置3",value:"AD3"}] */
-			}/* ,{
+			} ,{
 				type : 'image',
 				id : 'qrCode',
 				name : 'qrCode',
-				label : '二维码',
+				label : '微信二维码',
 				isAjaxUpload : true,
 				autoUpload : true,
-				uploadUrl : '../attachment/singleUpload',
+				uploadUrl : '../cms/attachment/singleUpload',
 				onSuccess : function(data) {
 					if (data.status == "1") {
 						$("#qrCode")
@@ -393,11 +396,11 @@
 				deleteHandle : function() {
 					$("#qrCode").attr("value", "");
 				}
-			} */ ,{
+			} ,{
 				type:"text",
 				name:"openPlant",
 				id :"openPlant",
-				cls : 'input-large',
+				cls : 'input-xlarge',
 				label:"开通平台"/* ,
 				items:[{text:"",value:"AD1"},{text:"位置2",value:"AD2"},{text:"位置3",value:"AD3"}] */
 			} ,{
@@ -405,7 +408,7 @@
 				name : 'openTime',//name
 				id : 'openTime',//id
 				label : '开通时间',//左边label
-				cls : 'input-large'
+				cls : 'input-xlarge'
 			},{
 				type:'radioGroup',
 				name:'isHidden',
@@ -415,9 +418,22 @@
 			},{
 				type:'text',
 				name:'seq',
-				cls : 'input-large',
+				cls : 'input-xlarge',
 				id:'seq',
 				label:'顺序'
+			},{
+				type:"radioGroup",
+				name:"type",
+				id:"type",
+				label:'类型',
+				items:[],
+				itemsUrl:'../dict/getItems?code=C02',
+				rule : {
+					required : true
+				},
+				message : {
+					required : "请选择"
+				}
 			}];
 			var formOpts = {
 				id : "channel_form",//表单id

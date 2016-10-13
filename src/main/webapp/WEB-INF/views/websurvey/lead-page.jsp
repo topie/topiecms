@@ -271,7 +271,7 @@
 							$("#headImg").attr("value", "");
 						}
 					} ,{
-						type:'checkboxGroup',
+						type:'radioGroup',
 						name:'org',
 						id:'org',
 						label:'分类',

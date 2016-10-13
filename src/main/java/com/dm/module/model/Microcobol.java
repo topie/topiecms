@@ -39,9 +39,9 @@ public class Microcobol {
 
     private Integer clickCounts;
 
-    private String appUrl;
+    private String androidAppUrl;
 
-    private String appQrCode;
+    private String appleAppUrl;
 
     public Integer getId() {
         return id;
@@ -50,19 +50,6 @@ public class Microcobol {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    @Override
-	public String toString() {
-		return "Microcobol [id=" + id + ", name=" + name + ", logo=" + logo
-				+ ", desc=" + desc + ", remark=" + remark + ", isHidden="
-				+ isHidden + ", createTime=" + createTime + ", openTime="
-				+ openTime + ", seq=" + seq + ", link=" + link + ", openOrg="
-				+ openOrg + ", openPlant=" + openPlant + ", weibanOrg="
-				+ weibanOrg + ", createUser=" + createUser + ", type=" + type
-				+ ", siteId=" + siteId + ", qrCode=" + qrCode
-				+ ", clickCounts=" + clickCounts + ", appUrl=" + appUrl
-				+ ", appQrCode=" + appQrCode + "]";
-	}
 
 	public String getName() {
         return name;
@@ -200,19 +187,20 @@ public class Microcobol {
 		this.clickCounts = clickCounts;
 	}
 
-	public String getAppUrl() {
-        return appUrl;
-    }
+	public String getAndroidAppUrl() {
+		return androidAppUrl;
+	}
 
-    public void setAppUrl(String appUrl) {
-        this.appUrl = appUrl == null ? null : appUrl.trim();
-    }
+	public void setAndroidAppUrl(String androidAppUrl) {
+		this.androidAppUrl = androidAppUrl;
+	}
 
-    public String getAppQrCode() {
-        return appQrCode;
-    }
+	public String getAppleAppUrl() {
+		return appleAppUrl;
+	}
 
-    public void setAppQrCode(String appQrCode) {
-        this.appQrCode = appQrCode == null ? null : appQrCode.trim();
-    }
+	public void setAppleAppUrl(String appleAppUrl) {
+		this.appleAppUrl = appleAppUrl;
+	}
+
 }

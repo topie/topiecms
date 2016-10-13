@@ -59,7 +59,6 @@ public class MicrocobolListDirective implements TemplateDirectiveModel{
 		model.setSiteId(siteId);
 		model.setType(type);
 		params.put("model",model);
-		System.out.println(model);
 		PageInfo<Microcobol> page = microcobolService.findMicrocobolByPage(pageNum, pageSize, params);
 		env.setVariable("microcobols",ObjectWrapper.DEFAULT_WRAPPER.wrap(page.getList()));
 		body.render(env.getOut());  
