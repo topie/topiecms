@@ -103,14 +103,6 @@
 	<script type="text/javascript">
 	/**********普通内容操作函数****************/
 	
-	function dateTostr(utc)
-{
-	if(utc)
-		{
-     var date = new Date(utc);
-     return date.getFullYear()+"-"+((date.getMonth()+1)>=10?date.getMonth()+1:"0"+(date.getMonth()+1))+"-"+(date.getDate()>10?date.getDate():"0"+date.getDate())+" "+(date.getHours()>10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>10?date.getMinutes():"0"+date.getMinutes())+":"+(date.getSeconds()>=10?date.getSeconds():"0"+date.getSeconds());
-   }
-}
 	
 	var modal;
 	function deleteItems(ids) {
@@ -350,7 +342,9 @@
 				//action : "",//表单action
 				ajaxSubmit : false,//是否使用ajax提交表单
 				labelInline : true,
+				showReset:false,
 				rowEleNum : 1,
+				showSubmit:false,
 				beforeSubmit : function() {
 
 				},
@@ -549,7 +543,7 @@
 					return "不公开";
 				if (c.isOpen == "1")
 					return "公开";
-				return "--";
+				return "不公开";
 			}
 		}],
 		actionCloumText : "操作",// 操作列文本
