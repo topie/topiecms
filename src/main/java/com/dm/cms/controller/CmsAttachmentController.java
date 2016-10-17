@@ -87,6 +87,20 @@ import java.util.Map;
             String path = baseDir.substring(0, baseDir.indexOf(projectName) - 1) + folder;
             //                httpServletRequest.getSession().getServletContext().getRealPath(resourceBasePath);
             for (MultipartFile multipartFile : multipartFiles) {
+            	String fileType = multipartFile.getOriginalFilename()
+                .substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
+            	String type="gif,jpg,jpeg,png,bmp,"+
+                "swf,flv,"+
+                "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb,"+
+                "flv,mp4,doc,docx,xls,xlsx,ppt,txt,zip,rar,gz,bz2";
+            	if(!type.contains(fileType))
+            	{
+            		JSONObject jsonList = JSONObject.fromObject(ResponseUtil.error("上传的文件格式不支持"));
+            		out.write(jsonList.toString());
+            		out.flush();
+                    out.close();
+            		return;
+            	}
                 String newFileName = FileUtil.saveFileFromMultipartFileCreateNewName(multipartFile, path);
                 String url = folder + "/"
                     + newFileName;

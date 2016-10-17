@@ -179,7 +179,7 @@
                                                                <div class="tab-content navTab1-content navTab3-content pTextIndent" style="height:199px;">
                                                                    <div role="tabpanel" class="tab-pane active" id="zrdl">
                                                                        <ul class="panel2-list">
-                                           			     <@voteListDirective channelId=52 pageSize=6 pageNum=pageNum titleLeft=40 order=10>  
+                                           			     <@voteListDirective channelId=52 pageSize=6 pageNum=pageNum titleLeft=40 order=2>  
                                               			    <#list cmsVotes as cmsContent>
                                                                               <li><span class="jh-dotted">·</span><a href="${cmsContent.filed1}" target="_blank">${cmsContent.title}<span class="panel2-list-time">${cmsContent.publishTime?substring(0,10)}</span></a></li>
                                               			</#list> 
@@ -188,7 +188,7 @@
                                                                    </div>
                                                                    <div role="tabpanel" class="tab-pane" id="xzqh">
                                                                        <ul class="panel2-list">
-                                                                          <@contentListDirective channelId=53 pageSize=6 pageNum=pageNum titleLeft=40 order=10>  
+                                                                          <@contentListDirective channelId=53 pageSize=6 pageNum=pageNum titleLeft=40 order=2>  
                                               			    <#list contents as cmsContent>
                                                                               <li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">${cmsContent.title}<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a> </li>
                                               			</#list> 
@@ -197,7 +197,7 @@
                                                                    </div>
                                                                    <div role="tabpanel" class="tab-pane" id="lsyg">
                                                                        <ul class="panel2-list">
-                                           				<@contentListDirective channelId=54 pageSize=6 pageNum=pageNum titleLeft=40 order=10>  
+                                           				<@contentListDirective channelId=54 pageSize=6 pageNum=pageNum titleLeft=40 order=2>  
                                               			    <#list contents as cmsContent>
                                                                               <li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">${cmsContent.title}<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>
                                               			</#list> 

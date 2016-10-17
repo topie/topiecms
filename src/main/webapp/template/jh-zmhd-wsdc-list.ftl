@@ -2,7 +2,7 @@
     <html>
     <head lang="en">
          <#include "/template/jh-meta.ftl">
-        <title>${site.displayName!}-${channel.diaplyName!}</title>
+        <title>${site.displayName!}-${channel.displayName!}</title>
         <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="/html/jinhu-static/css/style.ts.css" rel="stylesheet">
         <!--[if lt IE 9]>
@@ -65,7 +65,7 @@
 			<ul class="panel2-list panel2-list-pd news-list2"> 
 			<#list websurveys as websurvey>
 			<li><a target="_blank" title="${websurvey.title}" href="../../websurvey/findOne?id=${websurvey.id}"><span class="panel2-list-content">
-			${websurvey.title!}</span><span class="panel2-list-time"></span></a></li>
+			${websurvey.title!}</span><span class="panel2-list-time">${websurvey.inputDate?string("yyyy-MM-dd")}</span></a></li>
 			</#list>
 			</ul>
    			${pagination} 

@@ -50,7 +50,7 @@
 						    <div class="panel-heading panel1-t"><a href="${channel.url}" target="_blank" class="panel1-ton fontSize18">${channel.displayName!}</a></div>
 						    <div class="panel-body">
 							<ul class="panel2-list panel2-list-sm">
-							<@contentListDirective channelId=channel.id pageSize=7 pageNum=1 titleLeft=27>
+							<@contentListDirective channelId=channel.id pageSize=7 pageNum=1 titleLeft=27 order=2>
 							<#list contents as cont>
 								<li><span class="jh-dotted">·</span><a title="${cont.title!}" href="${cont.url!}" target="_blank"><span class="panel2-list-content">${cont.title!}</span><span class="panel2-list-time">${cont.publishDate?string("yyyy-MM-dd")}</span></a></li>
 							</#list>
@@ -67,7 +67,7 @@
 <div class="panel-heading panel1-t"><a href="${channel.url}" target="_blank" class="panel1-ton fontSize18">${channel.displayName!}</a></div>
 						    <div class="panel-body">
 							<ul class="panel2-list panel2-list-sm">
-							   <@contentListDirective channelId=channel.id pageSize=7 pageNum=1 titleLeft=15>
+							   <@contentListDirective channelId=channel.id pageSize=7 pageNum=1 titleLeft=15 order=2>
 								<#list contents as cont>
 									<li><span class="jh-dotted">·</span><a title="${cont.title!}" href="${cont.url!}" target="_blank"><span class="panel2-list-content">${cont.title!}</span></a></li>
 								</#list>
@@ -87,7 +87,7 @@
 						   <div class="panel-heading panel1-t"><a href="${channel.url}" target="_blank" class="panel1-ton fontSize18">${channel.displayName!}</a></div>
 						    <div class="panel-body">
 							<ul class="panel2-list panel2-list-sm">
-							   <@contentListDirective channelId=channel.id pageSize=7 pageNum=1 titleLeft=15>
+							   <@contentListDirective channelId=channel.id pageSize=7 pageNum=1 titleLeft=15 order=2>
 								<#list contents as cont>
 									<li><span class="jh-dotted">·</span><a title="${cont.title!}" href="${cont.url!}" target="_blank"><span class="panel2-list-content">${cont.title!}</span><#if (channel_index lt 2)><span class="panel2-list-time">${cont.publishDate?string("yyyy-MM-dd")}</span></#if></a></li>
 								</#list>
@@ -106,7 +106,7 @@
 						    <div class="panel-heading panel1-t"><a href="${channel.url}" target="_blank" class="panel1-ton fontSize18">${channel.displayName!}</a></div>
 						    <div class="panel-body">
 							<ul class="panel2-list panel2-list-sm">
-							<@contentListDirective channelId=channel.id pageSize=7 pageNum=1 titleLeft=27>
+							<@contentListDirective channelId=channel.id pageSize=7 pageNum=1 titleLeft=27 order=2>
 							<#list contents as cont>
 								<li><span class="jh-dotted">·</span><a href="${cont.url!}" target="_blank"><span class="panel2-list-content">${cont.title!}</span><span class="panel2-list-time">${cont.publishDate?string("yyyy-MM-dd")}</span></a></li>
 							</#list>

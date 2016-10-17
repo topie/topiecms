@@ -26,9 +26,9 @@ public class CmsStatisticController {
 	
 	@RequestMapping("/addVisited")
 	@ResponseBody
-	public Object addVisited(CmsVisitCountVo cmsVisitCountVo,HttpServletRequest request,String callback){
+	public Object addVisited(CmsVisitCountVo cmsVisitCountVo,HttpServletRequest request){
 		cmsStatisticService.addVisited(cmsVisitCountVo,request);
-		return callback+":({'status':'1'})";
+		return "JquerycallbackRt"+":({'status':'1'})";
 	}
 	
 	@RequestMapping("/siteVisitList")

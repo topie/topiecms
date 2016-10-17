@@ -89,7 +89,7 @@
   					<#if ch_index==0>
   					<@channelDirective channelId=ch.id>
   				<div class="fontSize18 new-list2-t wxqd-red">${channel.displayName!}</div>
-  						<@contentListDirective channelId=ch.id pageSize=channel.pageSize pageNum=pageNum titleLeft=35>
+  						<@contentListDirective channelId=ch.id pageSize=channel.pageSize pageNum=pageNum titleLeft=35 order=2>
   						<#list contents as cont>
   				<ul class="panel2-list panel2-list-pd news-list2 wxqd-red">
   				    <li><a href="${cont.url!}" title="${cont.title!}" target="_blank">
@@ -105,7 +105,7 @@
   			<#else>
   				<@channelDirective channelId=own>
   				<div class="fontSize18 new-list2-t wxqd-red">${channel.displayName!}</div>
-  						<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=35>
+  						<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=35 order=2>
   						<#list contents as cont>
   				<ul class="panel2-list panel2-list-pd news-list2 wxqd-red">
   				    <li><a href="${cont.url!}" title="${cont.title!}" target="_blank">

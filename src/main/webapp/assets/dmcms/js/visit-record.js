@@ -1,5 +1,5 @@
 
-;($(document).ready(function(){
+$(document).ready(function(){
 	var url = "http://127.0.0.1/dmbase/cmsStatic/addVisited";
 	var path = window.location.pathname;
 	path = path.split(".")[0];
@@ -26,10 +26,10 @@
     $.ajax({  
         url:url,  
         dataType:'jsonp',  
-        data:'',  
-        jsonp:'callback',  
+        data:'',   
+        jsonpCallback :"JquerycallbackRt",
         success:function(result) { 
         },  
         timeout:3000  
     });    
-}));
+});

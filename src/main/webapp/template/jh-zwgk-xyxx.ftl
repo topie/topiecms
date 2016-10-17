@@ -35,7 +35,7 @@
 		    <div class="tab-content navTab1-content navTab3-content pTextIndent">
 			<div role="tabpanel" class="tab-pane active" >
 			
-		    <@contentListDirective channelId=own pageSize=10 pageNum=pageNum>
+		    <@contentListDirective channelId=own pageSize=10 pageNum=pageNum order=2>
 		    <ul class="panel2-list panel2-list-pd ztrd3-panel borderBottom pdb10">
 		    <#list contents as content>
 			<li><a title="${content.title}" href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string("yyyy-MM-dd")}</span></a></li>

@@ -25,7 +25,7 @@
                              <div class="row">
                          <div class="col-md-8">
                              <div class="fontSize18 new-list2-t">便民提示</div>
-             		<@contentListDirective channelId=43 pageNum=pageNum pageSize=20>
+             		<@contentListDirective channelId=43 pageNum=pageNum pageSize=20 order=2>
                              <ul class="panel2-list panel2-list-pd ">
              			<#list contents as content>
                                  <li><a href="${content.url}" title="${content.title!}" target="_blank"><span class="panel2-list-content">${content.title!}</span><span class="panel2-list-time">${content.publishDate?string("yyyy-MM-dd")}</span></a></li>

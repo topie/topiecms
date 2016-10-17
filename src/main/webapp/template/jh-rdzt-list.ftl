@@ -31,7 +31,7 @@
  <div class="container">
      <div class="jh-main">
          <div class="ztrd3_pd fontSize16">
-       		<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=10>  	
+       		<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=2>  	
        		<ul class="panel2-list panel2-list-pd ztrd3-panel">
        		<#list contents as cmsContent>
        			 <li><a href="${cmsContent.url} " title="${cmsContent.title}" target="_blank"><span class="panel2-list-content">${cmsContent.title}</span><span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>

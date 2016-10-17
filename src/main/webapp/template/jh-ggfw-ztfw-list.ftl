@@ -18,7 +18,7 @@
     <div class="jh-main">
         <div class="fontSize18 new-list2-t">${channel.displayName}</div>
         <div class="ggfw-ztfw-list">
-			<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=10>  				                              		<#list contents as cmsContent>
+			<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=2>  				                              		<#list contents as cmsContent>
 			<a href="${cmsContent.url}" class="borderBottom">
                 <p class="fontSize18 color-green">${cmsContent.title}</p>
 		

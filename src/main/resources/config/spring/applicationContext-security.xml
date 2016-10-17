@@ -11,8 +11,8 @@
     <sec:http pattern="/file_center/**" security="none"/>
     <sec:http pattern="/randomImage" security="none"/>
     <sec:http pattern="/cmsStatic/**" security="none"/>
-    <sec:http pattern="/checkunique" security="none"/>
-    <sec:http pattern="/login" security="none"/>
+    <!-- <sec:http pattern="/checkunique" security="none"/> -->
+    <sec:http pattern="/login" security="none"/> 
     <!-- <sec:http pattern="/regiest" security="none"/>
     <sec:http pattern="/saveRegiest" security="none"/>
     <sec:http pattern="/ajaxSaveRegister" security="none"/> -->
@@ -38,14 +38,14 @@
 
         <sec:custom-filter before="LOGOUT_FILTER" ref="myLogoutFilter"/>
         <sec:custom-filter position="LOGOUT_FILTER" ref="myAjaxLogoutFilter"/>
-
         <sec:custom-filter position="CONCURRENT_SESSION_FILTER"
                            ref="concurrencyFilter"/>
         <sec:custom-filter before="FILTER_SECURITY_INTERCEPTOR"
                            ref="myFilter"/>
+		<!-- <sec:custom-filter ref="ipFilter" before="FIRST"/> -->
         <sec:intercept-url pattern="/api/**" access="permitAll"/>
         <sec:intercept-url pattern="/**" access="isAuthenticated()"/>
-        <sec:intercept-url pattern="/login" access="hasIpAddress('10.2.20.102')"/>
+        <!-- <sec:intercept-url pattern="/login" access="hasIpAddress('172.16.10.1')"/> -->
         <sec:remember-me key="springDm" use-secure-cookie="true"/>
     </sec:http>
     <sec:authentication-manager
@@ -172,6 +172,13 @@
         <property name="tokenValiditySeconds" value="1209600"/>
         <property name="parameter" value="_spring_security_remember_me"/>
     </bean>
+	<bean id="ipFilter" class="com.dm.platform.security.IPAuthenticationFilter">  
+	          <property name="ips">  
+	               <list>  
+	                    <value>127.0.0.1</value>  
+	               </list>  
+	          </property>  
+	</bean>
     <bean id="rememberMeAuthenticationProvider"
           class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
         <property name="key" value="springDm"/>
@@ -192,7 +199,6 @@
 
     <bean id="sessionRegistry"
           class="org.springframework.security.core.session.SessionRegistryImpl"/>
-
     <!-- 国际化 -->
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">

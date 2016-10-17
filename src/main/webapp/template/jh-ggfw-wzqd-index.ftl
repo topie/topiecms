@@ -98,7 +98,7 @@
                             <div class="wxqd-panel-tw"></div>
                         </div>
                         <div class="wxqd-panel-c bg-white" style="height:183px;">
-    						<@contentListDirective channelId=channel.id pageSize=5 titleLeft=24>
+    						<@contentListDirective channelId=channel.id pageSize=5 titleLeft=24 order=2>
                             <ul class="panel2-list panel2-list-pds wxqd-red">
     							<#list contents as content>
                                 <li><span class="jh-dotted color-oldgray">·</span><a title="${content.title!}" href="${content.url!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span><span class="panel2-list-time">${content.publishDate?string('yyyy-MM-dd')}</span></a></li>
@@ -137,7 +137,7 @@
     							</div>
     
     							<div class="wxqd-panel-c bg-white wxqd-panel-cpd" style="height:183px;">
-    								<@contentListDirective channelId=channel.id pageSize=5 titleLeft=12>
+    								<@contentListDirective channelId=channel.id pageSize=5 titleLeft=12 order=2>
     								<ul class="panel2-list panel2-list-pds wxqd-red">
     									<#list contents as content>
     									<li><a href="${content.url!}" title="${content.title!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span></a></li>
@@ -187,7 +187,7 @@
     							</div>
     
     							<div class="wxqd-panel-c bg-white wxqd-panel-cpd" style="height:183px;">
-    								<@contentListDirective channelId=channel.id pageSize=5 titleLeft=48>
+    								<@contentListDirective channelId=channel.id pageSize=5 titleLeft=48 order=2>
     								<ul class="panel2-list panel2-list-pds wxqd-red">
     									<#list contents as content>
     									<li><a href="${content.url!}" title="${content.title!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span></a></li>
@@ -207,7 +207,7 @@
     							</div>
     
     							<div class="wxqd-panel-c bg-white wxqd-panel-cpd" style="height:183px;">
-    								<@contentListDirective channelId=channel.id pageSize=5 titleLeft=17>
+    								<@contentListDirective channelId=channel.id pageSize=5 titleLeft=17 order=2>
     								<ul class="panel2-list panel2-list-pds wxqd-red">
     									<#list contents as content>
     									<li><span class="jh-dotted color-oldgray">·</span><a href="${content.url!}" title="${content.title!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span></a></li>
@@ -231,7 +231,7 @@
     				</div>
     
     				<div class="wxqd-panel-c bg-white wxqd-panel-cpd ">
-    					<@contentListDirective channelId=channel.id pageSize=5 titleLeft=25>
+    					<@contentListDirective channelId=channel.id pageSize=5 titleLeft=25 order=2>
     					<ul class="panel2-list panel2-list-pds wxqd-red">
     						<#list contents as content>
     						<li><span class="jh-dotted color-oldgray">·</span><a href="${content.url!}" title="${content.title!}" target="_blank"><span class="panel2-list-content">${content.shortTitle!}</span></a></li>

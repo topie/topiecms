@@ -51,7 +51,7 @@
     	and title like concat('%',#{model.title},'%')
     </if>
     </if>
-    order by id desc
+    order by publish_time desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from cms_vote

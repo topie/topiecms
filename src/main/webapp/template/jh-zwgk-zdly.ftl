@@ -80,7 +80,7 @@
             <div class="col-md-8 pdTop1em">
 	   <@channelDirective channelId=88 >
                 <div class="fontSize18 new-list2-t">${channel.displayName}</div>
-		<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=10> 
+		<@contentListDirective channelId=own pageSize=channel.pageSize pageNum=pageNum titleLeft=32 order=2> 
 		 <ul class="panel2-list panel2-list-pd news-list2">
 		<#list contents as cmsContent>
 		<li><a title="${cmsContent.title}" target="_blank" href="${cmsContent.url}">

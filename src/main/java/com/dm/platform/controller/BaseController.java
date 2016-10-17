@@ -77,10 +77,10 @@ public class BaseController extends DefaultController {
 	@Value("${projectName}")
 	String projectName;
 
-	@RequestMapping("/")
+	/*@RequestMapping("/")
 	public String base(ModelAndView model) {
 		return "redirect:/admin/login";
-	}
+	}*/
 
 	@RequestMapping("/login")
 	public ModelAndView login(ModelAndView model) {
