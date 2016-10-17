@@ -55,7 +55,6 @@
 				</foreach>
             </if> -->
             <if test="model!=null">
-            
 	            <if test="model.code !=null and model.code!=''">
 	                 and code = #{model.code}
 	            </if>

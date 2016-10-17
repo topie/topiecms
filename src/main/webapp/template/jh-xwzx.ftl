@@ -59,12 +59,12 @@
                                            
                                        </div>
                                        <div class="col-md-7 pdTop1em">
-                                           <!-- Nav tabs --><#--<@contentListDirective channelId=17 pageSize=1 titleLeft=17 order=1>
+                                           <!-- Nav tabs --><#--<@contentListDirective channelId=17 pageSize=1 titleLeft=17 order=2>
                    			  <#list contents as cmsContent>
                    			<a href="${cmsContent.url}" title="${cmsContent.title!}" target="_blank"><p class="fontSize22 color-green">${cmsContent.shortTitle!}</p></a>
                  			</#list>
                  			</@contentListDirective>-->
-                   			<@contentListDirective channelId=channel.id pageSize=10 titleLeft=36 order=2>
+                   			<@contentListDirective channelId=channel.id pageSize=10 titleLeft=33 order=2>
                                 <ul class="panel2-list">
                    			  <#list contents as cmsContent>
                    				<li><span class="jh-dotted">·</span><a title="${cmsContent.title}" target="_blank" href="${cmsContent.url}"><span class="panel2-list-content">${cmsContent.shortTitle}</span><span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>	

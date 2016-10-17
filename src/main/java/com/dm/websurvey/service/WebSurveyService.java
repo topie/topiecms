@@ -21,6 +21,6 @@ public interface WebSurveyService {
 	void update(WebSurvey webSur);
 
 	void check(String id, String state);
-	
+
 
 }

@@ -109,6 +109,7 @@
 		lead1.click(function(){
 			if(lead_pad1.css("display")=="none"){
 				lead_pad1.show();
+				lead_pad1.find('a:eq(0)').trigger('click');
 				}
 				else{
 					lead_pad1.hide();
@@ -122,6 +123,7 @@
 		lead2.click(function(){
 			if(lead_pad2.css("display")=="none"){
 				lead_pad2.show();
+				lead_pad2.find('a:eq(0)').trigger('click');
 				}
 				else{
 					lead_pad2.hide();
@@ -134,6 +136,7 @@
 			lead3.click(function(){
 			if(lead_pad3.css("display")=="none"){
 				lead_pad3.show();
+				lead_pad3.find('a:eq(0)').trigger('click');
 				}
 				else{
 					lead_pad3.hide();
@@ -145,6 +148,7 @@
 			lead4.click(function(){
 			if(lead_pad4.css("display")=="none"){
 				lead_pad4.show();
+				lead_pad4.find('a:eq(0)').trigger('click');
 				}
 				else{
 					lead_pad4.hide();

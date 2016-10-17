@@ -472,35 +472,6 @@
 						]	
 		};
 /****************添加*********************/	
-	function showForm(contentType,title){
-		modal = $.dmModal({
-			id : "siteForm",
-			title : "添加-"+title,
-			distroy : true
-		});
-		modal.show();
-		var formOption;
-		if(currentChannelType == '0')
-			{
-			formOption = getForm(contentType);
-			}
-		else if(currentChannelType == '5')
-		{
-		formOption = getVideoForm(contentType);
-		}
-		else if(currentChannelType == '6')
-		{
-		formOption = getAudioForm(contentType);
-		}
-		else if(currentChannelType == '7')
-			{
-			formOption = getNovelForm(contentType);
-			}
-		
-		var form = modal.$body.dmForm(formOption);
-		form.setValue("channelId", currentChannelId);
-		form.setValue("contentType",contentType);
-	}
 	
 	/** **********普通新闻表格选项*************** */
 	var options = {
@@ -594,6 +565,12 @@
 			handle : function(i, c) {
 				deleteItems(c.id);
 			}
+		}, {
+			text : "分配",
+			cls : "green btn-sm",
+			handle : function(i, c) {
+				fenpeidialog(c);
+			}
 		} ],
 		tools : [// 工具属性
 		 /* {
@@ -638,6 +615,58 @@
 	};
 	// form
 	/** **************普通内容表单选项*************** */
+	function fenpeidialog(c){
+		modal = $.dmModal({
+			id : "fpForm",
+			title : "分配-"+c.title,
+			distroy : true
+		});
+		modal.show();
+		var formOption;
+		var form = modal.$body.dmForm(fenpeiOption);
+		form.loadLocal(c);
+	}
+	var fenpeiOption={
+			id : "show_form",//表单id
+			name : "show_form",//表单名
+			method : "post",//表单method
+			action : "./toUser",//表单action
+			ajaxSubmit : true,//是否使用ajax提交表单
+			labelInline : true,
+			showReset:true,
+			rowEleNum : 1,
+			showSubmit:true,
+			beforeSubmit : function() {
+
+			},
+			ajaxSuccess : function() {
+				modal.hide();
+				grid.reload();
+			},
+			buttons : [ {
+				type : 'button',
+				text : '关闭',
+				handle : function() {
+					modal.hide();
+				}
+			} ],
+			buttonsAlign : "center",
+			//表单元素
+			items : [
+					{
+						type : 'hidden',
+						name : 'id',
+					},{
+						type:'tree',
+						name : "touser",
+						id : "touser",
+						label : "分配",
+						url : "../useraccount/loadAllUsers",
+						autoParam : [ "id", "name", "pId" ],
+						expandAll : false,/* 
+						chkboxType:{"Y":"s","N":"s"}, */
+						chkStyle : "radio"
+					}]};
 	jQuery(document).ready(function() {
 		
 		grid = $("#content_grid").dmGrid(options);

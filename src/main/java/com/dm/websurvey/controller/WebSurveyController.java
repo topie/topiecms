@@ -1,9 +1,5 @@
 package com.dm.websurvey.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -14,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dm.cms.model.CmsContent;
 import com.dm.platform.model.UserAccount;
 import com.dm.platform.util.PageConvertUtil;
 import com.dm.platform.util.ResponseUtil;
@@ -101,6 +96,16 @@ public class WebSurveyController {
 	public Map check(Model model,String id,String state)
 	{
 		webSurveyService.check(id, state);
+		return ResponseUtil.success("操作成功！");
+	}
+	@RequestMapping("/toUser")
+	@ResponseBody
+	public Map toUser(Model model,String id,String touser)
+	{	
+		WebSurvey web = new WebSurvey();
+		web.setId(id);
+		web.setTouser(touser);
+		webSurveyService.update(web);
 		return ResponseUtil.success("操作成功！");
 	}
 	
