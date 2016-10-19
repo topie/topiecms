@@ -271,7 +271,7 @@ public class CmsPortalController {
 		if (title.equalsIgnoreCase("script")
 				|| content.equalsIgnoreCase("script")) {
 			if (webSurvey.getCode().equals("3")) {
-				List<Org> orgs = orgService.listOrg(0, 1000,
+				List<Org> orgs = orgService.listOrg(0, 500,
 						"where parent is not null and parent !=''");
 				model.addAttribute("orgs", orgs);
 			}
