@@ -1,5 +1,6 @@
 package com.dm.cms.controller;
 
+import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,7 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
@@ -58,6 +61,7 @@ import com.dm.module.service.MicrocobolService;
 import com.dm.platform.model.Org;
 import com.dm.platform.service.OrgService;
 import com.dm.platform.util.DmDateUtil;
+import com.dm.platform.util.RandomValidateCode;
 import com.dm.platform.util.RequestUtil;
 import com.dm.platform.util.ResponseUtil;
 import com.dm.search.model.SearchResult;
@@ -122,6 +126,7 @@ public class CmsPortalController {
 	private CmsInterviewService cmsInterviewService;
 	@Autowired
 	private CmsInterviewQuestionsService cmsInterviewQServie;
+	public static final String VILIDATECODE = "webSurveyValidateCode";
 
 	private Logger log = LoggerFactory.getLogger(CmsPortalController.class);
 
@@ -170,7 +175,14 @@ public class CmsPortalController {
 			} else if (code.equals("3")) {
 				List<Org> orgs = orgService.listOrg(0, 1000,
 						"where parent is not null and parent !=''");
-				model.addAttribute("orgs", orgs);
+				List list = new ArrayList();
+				for (Org o : orgs) {
+					Map map = new HashMap();
+					map.put("id", o.getId().toString());
+					map.put("name", o.getName());
+					list.add(map);
+				}
+				model.addAttribute("orgs", list);
 			} else {
 				code = "1";
 			}
@@ -198,13 +210,34 @@ public class CmsPortalController {
 		}
 	}
 
+	@RequestMapping("/leader/items")
+	@ResponseBody
+	public List<Map> leaderItems(Model model, String code) {
+		List<Leader> leaders = new ArrayList<>();
+		if (code.equals("1")) {
+			leaders = leaderService.findAll("1", null);
+		} else if (code.equals("2")) {
+			leaders = leaderService.findAll("2", null);
+		} else {
+			leaders = leaderService.findAll(null, null);
+		}
+		List<Map> items = new ArrayList<Map>();
+		for (Leader l : leaders) {
+			Map item = new HashMap();
+			item.put("text", l.getName());
+			item.put("value", l.getId());
+			items.add(item);
+		}
+		return items;
+	}
+
 	@RequestMapping(value = "/websurvey/form.htm", method = RequestMethod.POST)
 	public String add(Model model, WebSurvey webSurvey,
 			HttpServletRequest request, String viliCode) { // if(webSurvey.getCode())
 		HttpSession session = request.getSession();
-		String vilidateCode = session.getAttribute("validateCode") == null ? null
-				: (String) session.getAttribute("validateCode");
-		session.removeAttribute("validateCode");
+		String vilidateCode = session.getAttribute(VILIDATECODE) == null ? null
+				: (String) session.getAttribute(VILIDATECODE);
+		session.removeAttribute(VILIDATECODE);
 		String title = webSurvey.getTitle();
 		String content = webSurvey.getContent();
 		model.addAttribute("websurvey", webSurvey);
@@ -223,7 +256,14 @@ public class CmsPortalController {
 			if (webSurvey.getCode().equals("3")) {
 				List<Org> orgs = orgService.listOrg(0, 1000,
 						"where parent is not null and parent !=''");
-				model.addAttribute("orgs", orgs);
+				List list = new ArrayList();
+				for (Org o : orgs) {
+					Map map = new HashMap();
+					map.put("id", o.getId().toString());
+					map.put("name", o.getName());
+					list.add(map);
+				}
+				model.addAttribute("orgs", list);
 			}
 			model.addAttribute("msg", "请填写内容");
 			return "/template/websurvey";
@@ -422,6 +462,12 @@ public class CmsPortalController {
 		if (StringUtils.isNotEmpty(webSurvey.getPhone())) {
 			isAllowedComment = true;
 		}
+		if (StringUtils.isNotEmpty(webSurvey.getPhone()))
+			if (!webSur.getPhone().equals(webSurvey.getPhone())) {
+				webSur = new WebSurvey();
+				webSur.setTitle("查询密码有误!");
+				isAllowedComment = false;
+			}
 		model.addAttribute("webSurvey", webSur);
 		model.addAttribute("isAllowedComment", isAllowedComment);
 		return "/template/result";
@@ -454,7 +500,7 @@ public class CmsPortalController {
 
 		} else {
 			leader = leaderService.findOne(id);
-			if(leader==null){
+			if (leader == null) {
 				List<Leader> leaders = leaderService.findAll(null, "县委");
 				leader = leaders.get(0);
 			}
@@ -710,6 +756,21 @@ public class CmsPortalController {
 		return model;
 	}
 
+	@RequestMapping("/randomImage")
+	public void randomImage(HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			BufferedImage is = RandomValidateCode.getInstance().getRandcode(
+					request, VILIDATECODE);
+			response.setHeader("Pragma", "No-cache");
+			response.setHeader("Cache-Control", "No-cache");
+			response.setDateHeader("Expires", 0);
+			response.setContentType("image/jpeg");
+			ImageIO.write(is, "JPEG", response.getOutputStream()); // scaledImage1为BufferedImage，jpg为图像的类型
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	/*
 	 * @RequestMapping("/channel/{enName}_{channelId}.htm") public String
 	 * channel(Model model, @PathVariable("channelId") Integer channelId,

@@ -305,7 +305,7 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		CmsContent cmsContent = this.cmsContentMapper
 				.selectByPrimaryKey(contentId);
 		boolean succ = true;
-		if (cmsContent == null || cmsContent.getStatus().equals(status)) {
+		if (cmsContent == null || (cmsContent.getStatus().equals(status)&&!status.equals("2"))) {
 			return false;
 		}
 		if (status == 1 && cmsContent.getStatus() == 1) {

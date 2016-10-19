@@ -19,4 +19,6 @@ public interface WebSurveyMapper {
     int updateByPrimaryKey(WebSurvey record);
 
 	List<WebSurvey> selectRecordByArgMap(Map args);
+	
+	List<WebSurvey> selectRecordByArgMaps(Map args);
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dm.platform.model.UserAccount;
@@ -85,9 +86,9 @@ public class WebSurveyController {
 	
 	@RequestMapping("/updateRecontent")
 	@ResponseBody
-	public Map update(Model model,String id,String recontent)
+	public Map update(Model model,String id,String recontent,@RequestParam(value="isOpen",required=false) String isOpen)
 	{
-		webSurveyService.update(id, recontent);
+		webSurveyService.update(id, recontent,isOpen);
 		return ResponseUtil.success("操作成功！");
 	}
 	
@@ -132,6 +133,23 @@ public class WebSurveyController {
 		 UserAccount user = UserAccountUtil.getInstance().getCurrentUserAccount();
 		 UserEmailConfig config =  userEmailConfigService.findByUserId(user.getCode());
 		 Map map = new SqlParam<WebSurvey>().autoParam(searchEntity,sort);
+		 if(config!=null){
+			 map.put("config", config);
+			String codes = config.getLeaderId();
+			if(codes!=null && codes.contains(searchEntity.getCode())){
+				PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMaps(pageNum,pageSize,map);
+				return PageConvertUtil.grid(webSurveys);
+			}
+		 }
+		 String toUser = user.getOrg()==null?null:user.getOrg().getId().toString();
+		 if(toUser==null){
+			 return PageConvertUtil.emptyGrid();
+		 }
+		 if(searchEntity.getCode()!=null&&searchEntity.getCode().equals("3")){
+			 searchEntity.setCodeId(toUser);
+		 }else{
+			 map.put("toUser",toUser);
+		 }
 		PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMap(pageNum,pageSize,map);
 		return PageConvertUtil.grid(webSurveys);
 		/* if(searchEntity!=null)

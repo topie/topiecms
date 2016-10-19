@@ -54,6 +54,9 @@
 					#{item}
 				</foreach>
             </if> -->
+            <if test="toUser!=null">
+            	and touser=#{toUser}
+            </if>
             <if test="model!=null">
 	            <if test="model.code !=null and model.code!=''">
 	                 and code = #{model.code}
@@ -61,6 +64,34 @@
                <if test="model.state !=null and model.state!=''">
                  and state = #{model.state}
                </if>
+	            <if test="model.isOpen!=null and model.isOpen!=''">
+	             and is_open = #{model.isOpen}
+	             </if>
+	             <if test="model.isSatisfied!=null and model.isOpen!=''">
+	             and is_satisfied=#{model.isSatisfied}
+	             </if>
+	             <if test="model.codeId!=null and model.codeId!=''">
+	             	and code_id =#{model.codeId}
+	             </if>
+	         </if>
+        </where>
+        <if test="sort!=null and sort!=''">
+        	order by ${sort}
+        </if>
+    </select>
+    <select id="selectRecordByArgMaps" resultMap="BaseResultMap"
+            parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List"/>
+        from web_survey
+        <where>
+            <if test="model!=null">
+		        <if test="model.code !=null and model.code!=''">
+		                 and code = #{model.code}
+		        </if>
+	             <if test="model.state !=null and model.state!=''">
+	               and state = #{model.state}
+	             </if>
 	            <if test="model.isOpen!=null and model.isOpen!=''">
 	             and is_open = #{model.isOpen}
 	             </if>

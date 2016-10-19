@@ -24,24 +24,34 @@
     		</@channelDirective>
                     <ul class="fontSize16 zmhd-wsdc-list">
     		<@channelDirective channelId=52>
+		<#if channel.forbidden=='0'>
                         <li class="${(channel.id==own)?string('active','')}">
     		    <a href="${channel.url}"><span class="glyphicon glyphicon-play-circle"></span>${channel.displayName}</a> </li>
+		 </#if>
     		</@channelDirective> 
     		<@channelDirective channelId=53>
+		<#if channel.forbidden=='0'>
                         <li class="${(channel.id==own)?string('active','')}">
     		    <a href="${channel.url}"><span class="glyphicon glyphicon-play-circle"></span>${channel.displayName}</a> </li>
+    		 </#if>
     		</@channelDirective> 
     		<@channelDirective channelId=54>
+		<#if channel.forbidden=='0'>
                         <li class="${(channel.id==own)?string('active','')}">
     		    <a href="${channel.url}"><span class="glyphicon glyphicon-play-circle"></span>${channel.displayName}</a> </li>
+    		 </#if>
     		</@channelDirective> 
 		<@channelDirective channelId=49>
+		<#if channel.forbidden=='0'>
                         <li class="${(channel.id==own)?string('active','')}">
     		    <a href="${channel.url}"><span class="glyphicon glyphicon-play-circle"></span>${channel.displayName}</a> </li>
+    		 </#if>
     		</@channelDirective> 
     		<@channelDirective channelId=50>
+		<#if channel.forbidden=='0'>
                         <li class="${(channel.id==own)?string('active','')}">
     		    <a href="${channel.url}"><span class="glyphicon glyphicon-play-circle"></span>${channel.displayName}</a> </li>
+    		 </#if>
     		</@channelDirective> 
                     </ul>
                     </div>

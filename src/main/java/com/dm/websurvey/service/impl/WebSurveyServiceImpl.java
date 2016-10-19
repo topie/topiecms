@@ -42,10 +42,11 @@ public class WebSurveyServiceImpl implements WebSurveyService{
 	}
 	
 	@Override
-	public void update(String id,String reContent)
+	public void update(String id,String reContent,String isOpen)
 	{
 		WebSurvey webSurvey = webSurveyMapper.selectByPrimaryKey(id);
 		webSurvey.setRecontent(reContent);
+		webSurvey.setIsOpen(isOpen);
 		webSurvey.setState("1");
 		webSurvey.setReplyDate(new Date());
 		webSurveyMapper.updateByPrimaryKeySelective(webSurvey);
@@ -71,6 +72,14 @@ public class WebSurveyServiceImpl implements WebSurveyService{
 		// TODO Auto-generated method stub
 		PageHelper.startPage(pageNum, pageSize);
 		List<WebSurvey> webSurveys = webSurveyMapper.selectRecordByArgMap(args);
+		PageInfo<WebSurvey> pageInfo = new PageInfo<WebSurvey>(webSurveys);
+		return pageInfo;
+	}
+	@Override
+	public PageInfo<WebSurvey> selectRecordByArgMaps(Integer pageNum,Integer pageSize,Map args) {
+		// TODO Auto-generated method stub
+		PageHelper.startPage(pageNum, pageSize);
+		List<WebSurvey> webSurveys = webSurveyMapper.selectRecordByArgMaps(args);
 		PageInfo<WebSurvey> pageInfo = new PageInfo<WebSurvey>(webSurveys);
 		return pageInfo;
 	}

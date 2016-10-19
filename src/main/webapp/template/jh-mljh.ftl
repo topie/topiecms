@@ -22,7 +22,7 @@
                              <#include "/template/jh-head.ftl">
                              <#include "/template/jh-daohang.ftl">
                              <div class="container bg-white">
-                             
+                               	<#include "/template/jh-daohang2.ftl">
                                  <div class="jh-main">
                                      <div class="panel panel-default panel1">
                              		<@channelDirective channelId=2><!--城市概况-->

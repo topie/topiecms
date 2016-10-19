@@ -21,6 +21,7 @@
     <sec:http pattern="/searchConfig/search" security="none"/>
     <sec:http pattern="/checkUrl" security="none"/>
     <sec:http pattern="/resource/**" security="none"/>
+    <sec:http pattern="/cms/attachment/download/**" security="none"/>
      <sec:http pattern="/axis2-web/**" security="none"/>
      <sec:http pattern="/axis2-admin/**" security="none"/>
     <sec:http pattern="/services/**" security="none"/>

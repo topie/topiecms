@@ -108,7 +108,7 @@
            <script type="text/javascript" src="/html/jinhu-static/js/jquery.placeholder.min.js"></script>
            <script type="text/javascript" src="/html/jinhu-static/bootstrap/js/bootstrap.min.js"></script>
            <script type="text/javascript" src="/html/jinhu-static/js/js.js"></script>
-	   <link href="/html/jinhu-static/plugins/jPlayer-2.9.1/skin/pink.flag/jplayer.pink.flag.css" rel="stylesheet" type="text/css" />
+	   <link href="/html/jinhu-static/plugins/jPlayer-2.9.1/skin/blue.monday/jplayer.blue.monday.css" rel="stylesheet" type="text/css" />
 	   <script type="text/javascript" src="/html/jinhu-static/plugins/jPlayer-2.9.1/dist/jplayer/jquery.jplayer.min.js"></script>
 
            <script type="text/javascript">

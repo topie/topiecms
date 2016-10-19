@@ -121,6 +121,10 @@ public class LogAspect {
 		LogEntity log = new LogEntity();
 		UserAccount user = UserAccountUtil.getInstance()
 				.getCurrentUserAccount();
+		if(user==null){
+			user = new UserAccount();
+			user.setName("网友");
+		}
 		log.setUser(user.getName() + "(" + user.getCode() + ")");
 		log.setTitle(joinPoint.getTarget().getClass().getName() + "."
 				+ methodName + "正常。");
@@ -128,7 +132,11 @@ public class LogAspect {
 				+ ":修改"));
 		log.setDate(DmDateUtil.DateToStr(new Date(), "yyyy-MM-dd HH:mm:ss"));
 		log.setType("1");
-		log.setIp(UserAccountUtil.getInstance().getCurrentIp());
+		try{
+			log.setIp(UserAccountUtil.getInstance().getCurrentIp());
+		}catch(RuntimeException e){
+			
+		}
 		commonDAO.save(log);
 	}
 

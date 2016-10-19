@@ -196,8 +196,70 @@
 						id : 'recontent',//id
 						label : '回复',//左边label
 						cls : 'input-large'
+					},
+					{
+						type : 'display',//类型
+						name : 'isOpen',//name
+						label : '是否公开',
+						format : function(c) {
+							if (c) {
+								return '不公开';
+							}
+							else
+								{
+								return "";
+								}
+						}}]
+	};
+	var replyFormOpen = {
+			id : "reply_form",//表单id
+			name : "sort_form",//表单名
+			method : "post",//表单method
+			action : "./updateRecontent",//表单action
+			ajaxSubmit : true,//是否使用ajax提交表单
+			labelInline : true,
+			rowEleNum : 1,
+			beforeSubmit : function() {
+				
+			},
+			ajaxSuccess : function() {
+				modal.hide();
+				grid.reload();
+			},
+			submitText : "保存",//保存按钮的文本
+			showReset : true,//是否显示重置按钮
+			resetText : "重置",//重置按钮文本
+			isValidate : true,//开启验证
+			buttons : [ {
+				type : 'button',
+				text : '关闭',
+				handle : function() {
+					modal.hide();
+				}
+			} ],
+			buttonsAlign : "center",
+			//表单元素
+			items : [
+					{
+						type : 'hidden',
+						name : 'id',
+						id : 'id'
+					},
+					{
+						type : 'textarea',//类型
+						name : 'recontent',//name
+						id : 'recontent',//id
+						label : '回复',//左边label
+						cls : 'input-large'
+					},
+					{
+						type : 'radioGroup',//类型
+						name : 'isOpen',//name
+						id : 'isOpen',//id
+						label : '同意公开',//左边label
+						items:[{text:'暂不处理',value:'1',checked:true},{text:'同意公开',value:'3'},{text:'拒绝公开',value:'2'}]
 					}]
-	}
+	};
 	var cutOrCopyModal;
 	function cutOrCopyfun(ids,title,checkType,url){
 		if (ids.length > 0) {
@@ -468,36 +530,6 @@
 						}					
 						]	
 		};
-/****************添加*********************/	
-	function showForm(contentType,title){
-		modal = $.dmModal({
-			id : "siteForm",
-			title : "添加-"+title,
-			distroy : true
-		});
-		modal.show();
-		var formOption;
-		if(currentChannelType == '0')
-			{
-			formOption = getForm(contentType);
-			}
-		else if(currentChannelType == '5')
-		{
-		formOption = getVideoForm(contentType);
-		}
-		else if(currentChannelType == '6')
-		{
-		formOption = getAudioForm(contentType);
-		}
-		else if(currentChannelType == '7')
-			{
-			formOption = getNovelForm(contentType);
-			}
-		
-		var form = modal.$body.dmForm(formOption);
-		form.setValue("channelId", currentChannelId);
-		form.setValue("contentType",contentType);
-	}
 	
 	/** **********普通新闻表格选项*************** */
 	var options = {
@@ -539,8 +571,22 @@
 				if (c.isOpen == "0")
 					return "不公开";
 				if (c.isOpen == "1")
-					return "公开";
+					return "申请公开";
+				if (c.isOpen == "2")
+						return " 不公开";
+				if (c.isOpen == "3")
+						return "同意公开";
 				return "--";
+			}
+		},
+		{
+			title : "回复状态",
+			field : "",
+			format : function(i, c) {
+				if (c.state=='1')
+					return "已回复";
+				else
+					return "<font color='#f33'>未回复</font>";
 			}
 		}],
 		actionCloumText : "操作",// 操作列文本
@@ -569,8 +615,8 @@
 			text : "回复",
 			cls : "green btn-sm",
 			visable : function(i, c) {
-				if (c.state == "1" || c.state== "2")
-					return false;
+// 				if (c.state == "1" || c.state== "2")
+// 					return false;
 				return true;
 			},
 			handle : function(index, data) {
@@ -582,7 +628,11 @@
 					distroy : true
 				});
 				modal.show();
-				var form = modal.$body.dmForm(replyForm);
+				var reopt =replyForm;
+				if(data.isOpen!='0'){
+					reopt=replyFormOpen;
+				}
+				var form = modal.$body.dmForm(reopt);
 				form.loadRemote("./load?id=" + data.id);
 			}
 		}, {

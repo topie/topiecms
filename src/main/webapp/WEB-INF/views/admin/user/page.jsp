@@ -83,7 +83,9 @@
 	<%@include file="../../includejsps/plugin-js.jsp"%>
 	<script type="text/javascript">
 	
-	   var configForm = '<form id="configMailForm"><div style="float:left;margin-left:100px;">配置用户:<select id="leadIds" name="leadIds" multiple="multiple" class="form-control input-large">'
+	   var configForm = '<form id="configMailForm">'
+	   +'<div style="float:left;margin-left:100px;">'
+	   +'配置用户:<select id="leadIds" name="leadIds" multiple="multiple" class="form-control input-large">';
         
 	   function loadLeaderAndOrg()
 	   {
@@ -123,7 +125,6 @@
 	
 	   function configSave()
 	   {
-		   
 		   $.ajax({
 			  url:"../email/config/addOrUpdate",
 			  type:"post",
@@ -605,7 +606,9 @@
 				distroy : true
 			});
 			modal.show();
-			 modal.$body.html(configForm);
+			var form = modal.$body.dmForm(configFormOpt);
+			form.loadRemote("../email/config/loadByUserId?userId="+id);
+			/*  modal.$body.html(configForm);
 			 $("#userId").val(id);
 			$.ajax({url:"../email/config/loadByUserId",
 				    data:{userId:id},
@@ -626,8 +629,77 @@
 						 }
 						}
 			         }
-		         });
+		         }); */
 			}
+		var configFormOpt={
+						id : "config_form2",//表单id
+						name : "config_form2",//表单名
+						method : "post",//表单method
+						action : "../email/config/addOrUpdate",//表单action
+						ajaxSubmit : true,//是否使用ajax提交表单
+						labelInline : true,
+						rowEleNum : 1,
+						beforeSubmit : function() {
+
+						},
+						ajaxSuccess : function(res) {
+							if(res.status=="1"){
+								bootbox.alert("保存成功!");
+								modal.hide();
+							}else{
+								bootbox.alert("操作失败!");	
+							}
+						},
+						submitText : "配置",//保存按钮的文本
+						showReset : false,//是否显示重置按钮
+						resetText : "reset",//重置按钮文本
+						isValidate : true,//开启验证
+						buttons : [ {
+							type : 'button',
+							text : '关闭',
+							handle : function() {
+								modal.hide();
+							}
+						} ],
+						buttonsAlign : "center",
+						//表单元素
+						
+						items : [ {
+							type : 'hidden',
+							name : 'id',
+							id : 'id'
+						},{
+							type : 'hidden',
+							name : 'userId',
+							id : 'userId'
+						}, {
+							type : 'checkboxGroup',//类型
+							name : 'leaderId',//name
+							id : 'leaderId',//id
+							label : '拥有权限',//左边label
+							items:[{text:'县长信箱',value:'1'}
+							,{text:'书记信箱',value:'2'}
+							,{text:'镇和部门信箱',value:'3'}]
+						}/* ,{
+							type : 'tree',//类型
+							name : 'orgId',//name
+							id : 'orgId',//id
+							label : '可查看部门信箱',//左边label
+							url:'../org/loadOrgs',
+							autoParam : [ "id", "name", "pId" ],
+							expandAll : true,
+							chkboxType:{"Y":"s","N":"s"}, 
+							chkStyle : "checkbox"
+						} */, {
+							type : 'radioGroup',//类型
+							name : 'isShowIp',//name
+							id : 'isShowIp',//id
+							label : '是否可查看IP',
+							items:[{text:'是',value:'1'}
+							,{text:'否',value:'0'}]
+						}]
+				
+		};
 		function deleteItem(id) {
 			bootbox.confirm("确定删除吗？", function(result) {
 				if (result) {

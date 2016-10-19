@@ -54,7 +54,9 @@ public class UserEmailConfigServiceImpl implements UserEmailConfigService{
 		{
 			return userEmailConfigs.get(0);
 		}
-		return null;
+		UserEmailConfig config =  new UserEmailConfig();
+		config.setUserId(userId);
+		return config;
 	}
 
 }

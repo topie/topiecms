@@ -10,7 +10,7 @@ public interface WebSurveyService {
 
 	WebSurvey add(WebSurvey webSurvey);
 
-	void update(String id, String reContent);
+	void update(String id, String reContent, String isOpen);
 
 	PageInfo<WebSurvey> selectRecordByArgMap(int pageNum,int pageSize,Map args);
 
@@ -21,6 +21,9 @@ public interface WebSurveyService {
 	void update(WebSurvey webSur);
 
 	void check(String id, String state);
+
+	PageInfo<WebSurvey> selectRecordByArgMaps(Integer pageNum,
+			Integer pageSize, Map map);
 
 
 }
