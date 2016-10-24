@@ -169,6 +169,8 @@
                     if (data.status == 1) {
                         modal.hide();
                         callback();
+                    }else{
+                    	bootbox.alert(data.msg);
                     }
                 },
                 deleteHandle: function () {

@@ -181,3 +181,9 @@ $.validator.addMethod(
 
 		);
 
+$("#flashImage").bind("click",function(){
+	var getTimestamp=new Date().getTime();
+	$("#imageF").attr('src','./randomImage?s='+getTimestamp);
+	
+});
+

@@ -15,6 +15,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -190,6 +192,17 @@ public class CmsFileManagerForHtmlController {
 		if (multipartFile == null || multipartFile.isEmpty()) {
 			return ResponseUtil.error("请先上传附件");
 		}
+		String fileType = multipartFile.getOriginalFilename()
+                .substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
+            	String type="gif,jpg,jpeg,png,bmp,css,js,bak"+
+                "swf,flv,"+
+                "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb,"+
+                "flv,mp4,doc,docx,xls,xlsx,ppt,txt,zip,rar,gz,bz2";
+            	if(!type.contains(fileType))
+            	{
+            		return ResponseUtil.error("上传不支持该格式");
+            		
+            	}
 		String wholeRealPath = httpServletRequest.getSession()
 				.getServletContext().getRealPath("/");
 		wholeRealPath = wholeRealPath.split(projectName)[0] + htmlDir + "/"

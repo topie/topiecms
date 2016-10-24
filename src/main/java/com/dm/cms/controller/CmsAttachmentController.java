@@ -50,7 +50,22 @@ import java.util.Map;
             out.write(jsonList.toString());
             out.flush();
             out.close();
+            return ;
         }
+        String fileType = multipartFile.getOriginalFilename()
+                .substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
+            	String type="gif,jpg,jpeg,png,bmp,"+
+                "swf,flv,"+
+                "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb,"+
+                "flv,mp4,doc,docx,xls,xlsx,ppt,txt,zip,rar,gz,bz2";
+            	if(!type.contains(fileType))
+            	{
+            		JSONObject jsonList = JSONObject.fromObject(ResponseUtil.error("上传的文件格式不支持"));
+            		out.write(jsonList.toString());
+            		out.flush();
+                    out.close();
+            		return;
+            	}
 
         String baseDir = System.getProperty("web.root");
         String path =

@@ -211,12 +211,7 @@
 				type : 'button',
 				text : '关闭',
 				handle : function(data) {
-					if(data.status == 1){
 						modal.hide();
-						grid.reload();
-					}else{
-						bootbox.alert(data.err);
-					}
 				}
 			} ],
 			buttonsAlign : "center",

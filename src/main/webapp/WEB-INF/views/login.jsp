@@ -118,25 +118,31 @@
                 name="j_username"/>
         </div>
         <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">验证码</label> <input
+            <label class="control-label visible-ie8 visible-ie9">密码</label> <input
                 class="form-control form-control-solid placeholder-no-fix"
                 type="password" autocomplete="off" placeholder="请输入密码"
                 name="j_password"/>
         </div>
         <c:if test="${param.error==true}">
-            <div class="form-group">
+            <%-- <div class="form-group">
                 <a id="flashImage" title="看不清,换一张" href="javascript:void(0)"> <img
                         id="imageF" src="<%=basePath%>randomImage"
                         style="width:100%;height:34px;border: 1px solid #e5e5e5;"
                         class="m-wrap form-control-solid placeholder-no-fix"/>
                 </a>
-            </div>
-            <div class="form-group">
+            </div> --%>
+            <div class="form-group" style="margin-bottom: 70px;">
                 <label class="control-label visible-ie8 visible-ie9">验证码</label>
+                <div class="col-dm-7 col-sm-7">
                 <input
                         class="form-control form-control-solid placeholder-no-fix"
                         type="text" autocomplete="off" placeholder="请输入验证码"
-                        name="j_captcha"/>
+                        name="j_captcha" style="margin-left: -15px;"/>
+                 </div><div class="col-dm-5 col-sm-5"><a id="flashImage" title="看不清,换一张" href="javascript:void(0)"> <img
+                        id="imageF" src="<%=basePath%>randomImage"
+                        style="width:100%;height:34px;border: 1px solid #e5e5e5;margin-left: -15px;margin-top: 4px;"
+                        class="m-wrap form-control-solid placeholder-no-fix"/>
+                </a></div>
             </div>
         </c:if>
         <div class="form-actions">

@@ -56,7 +56,7 @@ public class ContentListDirective implements TemplateDirectiveModel{
 				.valueOf(params.get("pageNum").toString());
 		
 		Integer order = Integer.valueOf(params.get("order") != null ? params.get("order")
-				.toString() : "1");
+				.toString() : "2");
 		String orderby="";
 		if(order ==1){
 			orderby = "seq desc,publish_date desc";

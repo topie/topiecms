@@ -124,34 +124,6 @@
 			bootbox.alert("请选择要删除的选项！");
 		}
 	}
-	function sortfun (i,c,title){
-		seqModal = $.dmModal({
-			id : "seqForm",
-			title : "编辑顺序-"+title,
-			distroy : true,
-			width:"800px"
-		});
-		seqModal.show();
-		if(currentChannelType=='0')
-		{
-		url = "../content/sort";
-		}
-		else if(currentChannelType=='5')
-		{
-		url = "../video/sort";	
-		}
-		else if(currentChannelType=='6')
-		{
-		url = "../audio/sort";	
-		}
-		else if(currentChannelType=='7')
-		{
-		url = "../novel/sort";	
-		}
-		var seqForm = seqModal.$body.dmForm(getSeqFormOpts(url));
-		c.seq = '';
-		seqForm.loadLocal(c);
-	}
 	var replyModal;
 	//form
 	var replyForm = {

@@ -131,6 +131,17 @@ import java.util.*;
         if (multipartFile == null || multipartFile.isEmpty()) {
             return ResponseUtil.error("请先上传附件");
         }
+        String fileType = multipartFile.getOriginalFilename()
+                .substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
+            	String type="gif,jpg,jpeg,png,bmp,css,js,bak"+
+                "swf,flv,"+
+                "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb,"+
+                "flv,mp4,doc,docx,xls,xlsx,ppt,txt,zip,rar,gz,bz2";
+            	if(!type.contains(fileType))
+            	{
+            		return ResponseUtil.error("上传不支持该格式");
+            		
+            	}
         String wholePath =
             httpServletRequest.getSession().getServletContext().getRealPath(folderPath);
         FileUtil.saveFileFromInputStream(multipartFile.getInputStream(), wholePath,

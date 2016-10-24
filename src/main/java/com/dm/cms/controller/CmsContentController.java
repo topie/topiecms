@@ -329,6 +329,7 @@ public class CmsContentController {
 				.getCurrentUserAccount();
 		cmsContent.setCreateUserName(user.getName());
 		cmsContent.setStatus(new Short("0"));
+		cmsContent.setIsHtml(false);
 		if (!StringUtils.isEmpty(cmsContent.getTitleStyle())) {
 			String titleStyleArray[] = cmsContent.getTitleStyle().split(",");
 			if (titleStyleArray.length == 2) {

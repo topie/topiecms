@@ -289,7 +289,8 @@
 				},{type:"radioGroup",
 					label:"位置",
 					name:'type',
-					items:[{text:'全部',value:''},{text:"位置1",value:"AD1"},{text:"位置2",value:"AD2"},{text:"位置3",value:"AD3"},{text:"浮动",value:"ADFLOAT"}]
+					items:[],
+					itemsUrl:'../../dict/getItems?code=C03'
 				} ]
 			}
 		};
@@ -361,7 +362,14 @@
 				name:"type",
 				id :"type",
 				label:"位置",
-				items:[{text:"位置1",value:"AD1"},{text:"位置2",value:"AD2"},{text:"位置3",value:"AD3"},{text:"浮动",value:"ADFLOAT"}]
+				items:[],
+				itemsUrl:'../../dict/getItems?code=C03',
+				rule : {
+					required : true
+				},
+				message : {
+					required : "请选择"
+				}
 			},{
 				type : 'datepicker',//类型
 				name : 'startime',//name

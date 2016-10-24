@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
+import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
@@ -77,10 +78,10 @@ public class BaseController extends DefaultController {
 	@Value("${projectName}")
 	String projectName;
 
-	/*@RequestMapping("/")
+	@RequestMapping("/")
 	public String base(ModelAndView model) {
 		return "redirect:/admin/login";
-	}*/
+	}
 
 	@RequestMapping("/login")
 	public ModelAndView login(ModelAndView model) {
@@ -470,6 +471,16 @@ public class BaseController extends DefaultController {
 		if (multipartFile == null || multipartFile.isEmpty()) {
 			return ResponseUtil.error("请先选择附件");
 		}
+		String fileType = multipartFile.getOriginalFilename()
+                .substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
+            	String type="jpg,jpeg,png";
+            	if(!type.contains(fileType))
+            	{
+            		JSONObject jsonList = JSONObject.fromObject(ResponseUtil.error("上传的文件格式不支持"));
+            		Map map = ResponseUtil.error();
+            		map.put("msg", "更新失败！(格式为jpg,jpeg,png)");
+            		return map;
+            	}
 		String baseDir = System.getProperty("web.root");
 		String path = baseDir + imagePath;
 		String realfileName = multipartFile.getOriginalFilename();

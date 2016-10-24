@@ -1,20 +1,35 @@
 package com.dm.platform.util;
 
 
-import com.github.junrar.Archive;
-import com.github.junrar.rarfile.FileHeader;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Expand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import com.github.junrar.Archive;
+import com.github.junrar.rarfile.FileHeader;
+import com.sun.tools.javac.util.ArrayUtils;
 
 /**
  * Created by cgj on 2015/12/12.
@@ -384,4 +399,41 @@ public class FileTool {
             e.printStackTrace();
         }
     }
+    @SuppressWarnings("unchecked")
+	public static void renameChild(String filePath){
+    	File file = new File(filePath);
+    	File[] list = file.listFiles();
+    	List<File> lists = new ArrayList<File>();
+    	Collections.addAll(lists, list);
+    	Collections.sort(lists,new Comparator(){
+
+			@Override
+			public int compare(Object o1, Object o2) {
+				File f1 = (File)o1;
+				File f2 = (File)o2;
+				if(f1.isFile()&&f2.isFile()){
+				String n1 = f1.getName();
+				String n2 = f2.getName();
+				int int1 =Integer.parseInt(n1.substring(n1.indexOf("_")+1,n1.lastIndexOf(".")));
+				int int2 =Integer.parseInt(n2.substring(n2.indexOf("_")+1,n2.lastIndexOf(".")));
+				return int2-int1;
+				}return 0;
+			}
+    		
+    	});
+    	for(File f:lists){
+    		if(f.isFile()){
+    			String n1 = f.getName();
+				int int1 =Integer.parseInt(n1.substring(n1.indexOf("_")+1,n1.lastIndexOf(".")));
+				int newname= int1+1;
+				String n = n1.substring(0,n1.indexOf("_")+1);
+				n = n+newname+".html";
+				f.renameTo(new File(filePath+"\\"+n));
+    		
+    		}
+    	}
+    }
+    public static void main(String[] args) {
+		renameChild("D:\\Tools\\apache-tomcat-7-solr-cloud\\apache-tomcat-7.0.69-8081\\webapps\\html\\jinhu\\xwzx\\gggs");
+	}
 }
