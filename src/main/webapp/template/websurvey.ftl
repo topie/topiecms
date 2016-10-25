@@ -89,7 +89,7 @@
                               <td>类型<span class="color-red">*</span></td>
                               <td colspan="4" id="leixing">
                                   <label class="radio-inline">
-                                      <input type="radio" name="type" value="1"> 咨询
+                                      <input type="radio" name="type" checked=true value="1"> 咨询
                                   </label>
                                   <label class="radio-inline">
                                       <input type="radio" name="type" value="2"> 投诉
@@ -107,10 +107,10 @@
                               <td>是否公开<span class="color-red">*</span></td>
                               <td colspan="4">
                                   <label class="radio-inline">
-                                      <input type="radio" name="isOpen" value="1"> 公开
+                                      <input type="radio" name="isOpen" value="1" checked=true> 公开
                                   </label>
                                   <label class="radio-inline">
-                                      <input type="radio" name="isOpen" value="0" checked=true> 不公开
+                                      <input type="radio" name="isOpen" value="0"> 不公开
                                   </label>
                               </td>
                           </tr>

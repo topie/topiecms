@@ -617,7 +617,7 @@ function getForm(contentType,hasPublishRole,currentChannelType) {
 		id : 'attachmentIds',
 		name : 'attachmentIds',
 		limit : 3,
-		allowType : ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.htm,.html,.zip,.rar,.gz,.bz2",// 用,分开
+		allowType : ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.zip,.rar,.gz,.bz2",// 用,分开
 		uploadUrl : "../attachment/multipleUpload",
 		convertData : function(data) {
 			var arrays = [];
@@ -886,7 +886,7 @@ function getFileForm(contentType,hasPublishRole) {
 		id : 'attachmentIds',
 		name : 'attachmentIds',
 		limit : 3,
-		allowType : ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.htm,.html,.zip,.rar,.gz,.bz2",// 用,分开
+		allowType : ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.zip,.rar,.gz,.bz2",// 用,分开
 		uploadUrl : "../attachment/multipleUpload",
 		convertData : function(data) {
 			var arrays = [];

@@ -1392,6 +1392,11 @@
                             autoUpload: true,
                             dataType: 'json',
                             previewCrop: true,
+                            success:function(data){
+                            	if(data.status=='0'){
+                            		alert(data.msg);
+                            	}
+                            },
                             add: function (e, data) {
                                 var type = getLowCaseType(data.files[0].name);
                                 var allowType = element_data.allowType == undefined ? "" : element_data.allowType;
@@ -1447,6 +1452,7 @@
                             },
                             done: function (e, data) {// 设置文件上传完毕事件的回调函数
                                 $(".start", data.content).remove();
+                               
                                 var id = data.result.id;
                                 var name = data.result.name;
                                 var url = data.result.fileUrl;

@@ -27,6 +27,7 @@ import com.dm.platform.dao.CommonDAO;
 import com.dm.platform.model.LogEntity;
 import com.dm.platform.model.UserAccount;
 import com.dm.platform.util.DmDateUtil;
+import com.dm.platform.util.RandomValidateCode;
 
 public class AjaxAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Resource CommonDAO commonDAO;
@@ -48,6 +49,7 @@ public class AjaxAuthenticationFailureHandler implements AuthenticationFailureHa
         if (exception.getMessage().equals("密码不正确")) {
             String name = request.getParameter(
                 UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY);
+            //RandomValidateCode.getInstance().getRandcode(request);
             UserAccount u = null;
             if (commonDAO.findByPropertyName(UserAccount.class, "loginname", name).size() > 0) {
                 u = commonDAO.findByPropertyName(UserAccount.class, "loginname", name).get(0);

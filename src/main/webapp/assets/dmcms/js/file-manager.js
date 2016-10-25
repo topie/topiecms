@@ -601,13 +601,13 @@
                 },
                 showType: "fileAndFolder"// file,folder,fileAndFolder,desk
             },
-            {
+            /*{
                 text: "下载",
                 onClick: function (currentFolder, targetFiles, targetFile) {
                     targetFile.download();
                 },
                 showType: "file"
-            },
+            },*/
             {
                 text: "刷新",
                 onClick: function (currentFolder) {

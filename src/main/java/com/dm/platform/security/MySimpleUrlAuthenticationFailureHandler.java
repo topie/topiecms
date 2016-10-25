@@ -22,6 +22,7 @@ import com.dm.platform.dao.CommonDAO;
 import com.dm.platform.model.LogEntity;
 import com.dm.platform.model.UserAccount;
 import com.dm.platform.util.DmDateUtil;
+import com.dm.platform.util.RandomValidateCode;
 
 public class MySimpleUrlAuthenticationFailureHandler implements
 		AuthenticationFailureHandler {
@@ -46,10 +47,12 @@ public class MySimpleUrlAuthenticationFailureHandler implements
 		 * 次数限制
 		 */
 		HttpSession session = request.getSession();
+		
 		if (exception.getMessage().equals("密码不正确")) {
 			String name = request
 					.getParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY);
 			UserAccount u = null;
+			//RandomValidateCode.getInstance().getRandcode(request);
 			if (commonDAO.findByPropertyName(UserAccount.class, "loginname",
 					name).size() > 0) {
 				u = commonDAO.findByPropertyName(UserAccount.class,

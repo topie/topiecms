@@ -80,7 +80,7 @@ public class BaseController extends DefaultController {
 
 	@RequestMapping("/")
 	public String base(ModelAndView model) {
-		return "redirect:/admin/login";
+		return "redirect:/login";
 	}
 
 	@RequestMapping("/login")

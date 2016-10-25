@@ -1,10 +1,18 @@
 package com.dm.cms.controller;
 
-import com.dm.cms.model.CmsAttachment;
-import com.dm.cms.service.CmsAttachmentService;
-import com.dm.platform.controller.DefaultController;
-import com.dm.platform.util.FileUtil;
-import com.dm.platform.util.ResponseUtil;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
@@ -17,12 +25,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import com.dm.cms.model.CmsAttachment;
+import com.dm.cms.service.CmsAttachmentService;
+import com.dm.platform.controller.DefaultController;
+import com.dm.platform.util.FileUtil;
+import com.dm.platform.util.ResponseUtil;
 
 /**
  * Created by cgj on 2015/12/3.
@@ -79,8 +86,12 @@ import java.util.Map;
         cmsAttachment.setIsActive(true);
         cmsAttachmentService.insertCmsAttachment(cmsAttachment);
         Map map = ResponseUtil.success(); 
-        map.put("fileUrl",path+"/"+newFileName);
-        map.put("attachment", cmsAttachment);
+        //map.put("fileUrl",path+"/"+newFileName);
+        Map cmsAttachmentt  = new HashMap();
+        cmsAttachmentt.put("id", cmsAttachment.getId());
+        cmsAttachmentt.put("attachmentName", cmsAttachment.getAttachmentName());
+        cmsAttachmentt.put("attachmentUrl", cmsAttachment.getAttachmentUrl());
+        map.put("attachment", cmsAttachmentt);
         JSONObject jsonList = JSONObject.fromObject(map);
         out.write(jsonList.toString());
         out.flush();

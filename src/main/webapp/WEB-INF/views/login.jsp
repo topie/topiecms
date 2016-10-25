@@ -123,7 +123,7 @@
                 type="password" autocomplete="off" placeholder="请输入密码"
                 name="j_password"/>
         </div>
-        <c:if test="${param.error==true}">
+        <%-- <c:if test="${param.error==true}"> --%>
             <%-- <div class="form-group">
                 <a id="flashImage" title="看不清,换一张" href="javascript:void(0)"> <img
                         id="imageF" src="<%=basePath%>randomImage"
@@ -144,7 +144,7 @@
                         class="m-wrap form-control-solid placeholder-no-fix"/>
                 </a></div>
             </div>
-        </c:if>
+        <%-- </c:if> --%>
         <div class="form-actions">
             <button type="submit" class="btn btn-primary btn-block uppercase">登录</button>
         </div>
@@ -224,6 +224,8 @@
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="<%=basePath%>assets/global/scripts/metronic.js"
+        type="text/javascript"></script>
+<script src="<%=basePath%>assets/admin/pages/scripts/base64.js"
         type="text/javascript"></script>
 <script src="<%=basePath%>assets/admin/pages/scripts/login.js"
         type="text/javascript"></script>

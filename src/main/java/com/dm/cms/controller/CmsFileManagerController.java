@@ -75,7 +75,11 @@ import java.util.*;
         @RequestParam(value = "newName", required = true) String newName) {
         String wholeRealPath =
             httpServletRequest.getSession().getServletContext().getRealPath(folderPath);
-        return FileTool.renameFile(wholeRealPath, oldName, newName);
+        String type = oldName.substring(oldName.lastIndexOf("."));
+        String ntype= newName.substring(newName.lastIndexOf("."));
+        String newName1 = newName.substring(0,newName.lastIndexOf(".")>0?newName.lastIndexOf("."):newName.length());
+        String newNametype=newName1+type;
+        return FileTool.renameFile(wholeRealPath, oldName, newNametype);
     }
 
     @RequestMapping(value = "/deleteFolder", method = RequestMethod.POST) public @ResponseBody
@@ -102,15 +106,20 @@ import java.util.*;
         @RequestParam(value = "fileName", required = true) String fileName)
         throws UnsupportedEncodingException {
         response.setCharacterEncoding("utf-8");
+        try {
+        OutputStream os = response.getOutputStream();
+        os.write("下载未开放".getBytes());
+        os.flush();
+        if(1==1)
+        return ;
         response.setContentType("multipart/form-data");
         response.setHeader("Content-Disposition",
             "attachment;fileName=" + new String(fileName.getBytes("gbk"), "iso-8859-1"));
-        try {
             String wholeRealPath = httpServletRequest.getSession().getServletContext()
                 .getRealPath(folderPath + "/" + fileName);
             File file = new File(wholeRealPath);
             InputStream inputStream = new FileInputStream(file);
-            OutputStream os = response.getOutputStream();
+            //OutputStream os = response.getOutputStream();
             byte[] b = new byte[1024];
             int length;
             while ((length = inputStream.read(b)) > 0) {

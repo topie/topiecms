@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.dm.platform.dao.CommonDAO;
@@ -39,6 +40,17 @@ public class MyUsernamePasswordAuthenticationFilter extends
 
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
+		try{
+			if(Base64.isBase64(password.getBytes())){
+				password = new String(Base64.decode(password.getBytes()));
+			}else{
+				password="s";
+			}
+		}catch(Exception e){
+			password="s";
+		}finally{
+			
+		}
 
 		// 验证用户账号与密码是否对应
 		username = username.trim();
@@ -54,14 +66,16 @@ public class MyUsernamePasswordAuthenticationFilter extends
 	protected void checkValidateCode(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Object obj = session.getAttribute(VALIDATE_CODE);
-		if(obj!=null){
-		String sessionValidateCode = obtainSessionValidateCode(session);
-		session.setAttribute(VALIDATE_CODE, null);
-		String validateCodeParameter = obtainValidateCodeParameter(request);
-		if (StringUtils.isEmpty(validateCodeParameter)
-				|| !sessionValidateCode.equalsIgnoreCase(validateCodeParameter)) {
-			throw new AuthenticationServiceException("验证码错误！");
-		}
+			if(obj==null){
+				throw new AuthenticationServiceException("验证码错误！");
+			}else{
+			String sessionValidateCode = obtainSessionValidateCode(session);
+			session.setAttribute(VALIDATE_CODE, null);
+			String validateCodeParameter = obtainValidateCodeParameter(request);
+			if (StringUtils.isEmpty(validateCodeParameter)
+					|| !sessionValidateCode.equalsIgnoreCase(validateCodeParameter)) {
+				throw new AuthenticationServiceException("验证码错误！");
+			}
 		}
 	}
 
@@ -86,5 +100,4 @@ public class MyUsernamePasswordAuthenticationFilter extends
 		Object obj = request.getParameter(PASSWORD);
 		return null == obj ? "" : obj.toString();
 	}
-
 }

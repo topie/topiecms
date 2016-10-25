@@ -101,7 +101,11 @@ public class CmsAttachmentOtherController {
 		cmsAttachment.setIsActive(true);
 		cmsAttachmentOtherService.insert(cmsAttachment);
 		Map map = ResponseUtil.success("上传成功");
-		map.put("attachment", cmsAttachment);
+		 Map cmsAttachmentt  = new HashMap();
+	        cmsAttachmentt.put("id", cmsAttachment.getId());
+	        cmsAttachmentt.put("attachmentName", cmsAttachment.getAttachmentName());
+	        cmsAttachmentt.put("attachmentUrl", cmsAttachment.getAttachmentUrl());
+	        map.put("attachment", cmsAttachmentt);
 		JSONObject jsonList = JSONObject.fromObject(map);
 		return jsonList;
 	}

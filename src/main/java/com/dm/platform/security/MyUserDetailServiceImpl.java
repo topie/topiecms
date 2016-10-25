@@ -22,7 +22,10 @@ public class MyUserDetailServiceImpl implements UserDetailsService{
         	user=commonDAO.findByPropertyName(UserAccount.class, "loginname", username).get(0);
         }else{
         	throw new UsernameNotFoundException("用户名不存在！");
-        }  
+        } 
+        if(!user.isNonLocked()){
+        	throw new UsernameNotFoundException("用户已锁定,请联系管理员！");
+        }
         return user;
 	}
 
