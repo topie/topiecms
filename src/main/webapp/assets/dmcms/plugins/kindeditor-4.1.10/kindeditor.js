@@ -3184,6 +3184,7 @@ _extend(KCmd, {
 	insertimage : function(url, title, width, height, border, align) {
 		title = _undef(title, '');
 		border = _undef(border, 0);
+		width = _undef(width, "960px");
 		var html = '<img src="' + _escape(url) + '" data-ke-src="' + _escape(url) + '" ';
 		if (width) {
 			html += 'width="' + _escape(width) + '" ';
@@ -3532,7 +3533,7 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
 		'<style>',
 		'html {margin:0;padding:0;}',
 		'body {margin:0;padding:5px;}',
-		'body, td {font:12px/1.5 "sans serif",tahoma,verdana,helvetica;}',
+		'body, td {font:16px/1.5 "sans serif",tahoma,verdana,helvetica;}',
 		'body, p, div {word-wrap: break-word;}',
 		'p {margin:5px 0;}',
 		'table {border-collapse:collapse;}',
@@ -5141,10 +5142,11 @@ KEditor.prototype = {
 				width = _removeUnit(width);
 				width = width < self.minWidth ? self.minWidth : width;
 			}
-			self.container.css('width', _addUnit(width));
+			self.container.css('width', '100%');
 			if (updateProp) {
-				self.width = _addUnit(width);
+				//self.width = _addUnit(width);
 			}
+			
 		}
 		if (height) {
 			height = _removeUnit(height);

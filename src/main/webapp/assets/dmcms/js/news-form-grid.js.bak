@@ -262,7 +262,7 @@ var actionColoums =[{
 		// data为该行的数据
 		/*modal = $.dmModal({
 			id : "siteForm",
-			title : "编辑内容信息-" + data.title,
+			title : "编辑内容-" + data.title,
 			distroy : true
 		});
 		modal.show();*/
@@ -461,7 +461,7 @@ var options = {
 			type : "text",
 			label : "标题",
 			name : "title",
-			placeholder : "输入要搜索的内容信息标题"
+			placeholder : "输入要搜索的内容标题"
 		} ]
 	}
 };
@@ -555,13 +555,13 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 							name : 'title',// name
 							id : 'title',// id
 							label : '标题',// 左边label
-							cls : 'input-xlarge',
+							cls : 'input-large',
 							rule : {
 								required : true,
 								maxlength : 64
 							},
 							message : {
-								required : "请输入内容信息标题",
+								required : "请输入内容标题",
 								maxlength : "最多输入64字节"
 							}
 						},
@@ -589,14 +589,14 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 							name : 'titleStyle',// name
 							id : 'titleStyle',// id
 							label : '标题颜色',// 左边label
-							cls : 'input-xlarge'
+							cls : 'input-large'
 						},
 						{
 							type : 'select',// 类型
 							name : 'titleStyle',// name
 							id : 'titleStyle',// id
 							label : '标题字体',// 左边label
-							cls : 'input-xlarge',
+							cls : 'input-large',
 							items : [ {
 								value : "20px",
 								text : '20px'
@@ -621,13 +621,13 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 							name : 'publishDate',//name
 							id : 'publishDate',//id
 							label : '发布时间',//左边label
-							cls : 'input-xlarge'
+							cls : 'input-large'
 						},{
 							type : 'text',// 类型
 							name : 'origin',// name
 							id : 'origin',// id
 							label : '来源',// 左边label
-							cls : 'input-xlarge',
+							cls : 'input-large',
 							rule : {
 								maxlength : 12
 							},
@@ -640,7 +640,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 								name : 'url',// name
 								id : 'url',// id
 								label : '链接',// 左边label
-								cls : 'input-xlarge',
+								cls : 'input-large',
 								rule : {
 									required : true,
 									maxlength : 356
@@ -701,14 +701,14 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 				type : 'text',// 类型
 				name : 'title',// name
 				id : 'title',// id
-				label : '内容信息标题',// 左边label
-				cls : 'input-xlarge',
+				label : '内容标题',// 左边label
+				cls : 'input-large',
 				rule : {
 					required : true,
 					maxlength : 64
 				},
 				message : {
-					required : "请输入内容信息标题",
+					required : "请输入内容标题",
 					maxlength : "最多输入64字节"
 				}
 			},
@@ -717,14 +717,14 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 				name : 'titleStyle',// name
 				id : 'titleStyle',// id
 				label : '标题颜色',// 左边label
-				cls : 'input-xlarge'
+				cls : 'input-large'
 			},
 			{
 				type : 'select',// 类型
 				name : 'titleStyle',// name
 				id : 'titleStyle',// id
 				label : '标题字体',// 左边label
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				items : [ {
 					value : "20px",
 					text : '20px'
@@ -750,15 +750,15 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 				name : 'keywords',// name
 				id : 'keywords',// id
 				label : '关键字',// 左边label
-				cls : 'input-xlarge'
+				cls : 'input-large'
 			},
 			{
 				type : 'textarea',// 类型
-				row : 3,
+				rows : 1,
 				name : 'brief',// name
 				id : 'brief',// id
 				label : '摘要',// 左边label
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				rule : {
 					maxlength : 400
 				},
@@ -771,13 +771,13 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 				name : 'publishDate',//name
 				id : 'publishDate',//id
 				label : '发布时间',//左边label
-				cls : 'input-xlarge'
+				cls : 'input-large'
 			},{
 				type : 'text',//类型
 				name : 'author',//name
 				id : 'author',//id
 				label : '作者',//左边label
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				rule : {
 					maxlength : 30
 				},
@@ -789,7 +789,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 				name : 'origin',// name
 				id : 'origin',// id
 				label : '来源',// 左边label
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				rule : {
 					maxlength : 20
 				},
@@ -802,7 +802,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 				name : 'templateId',
 				id : 'templateId',
 				label : '页面模板',
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				items : [ {
 					value : '',
 					text : '默认模版'
@@ -844,11 +844,11 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 	};
 	var titleImgTitle = {
 		type : 'textarea',// 类型
-		row : 3,
+		rows : 1,
 		name : 'titleImageIllustrate',// name
 		id : 'titleImageIllustrate',// id
 		label : '标题图说明',// 左边label
-		cls : 'input-xlarge',
+		cls : 'input-large',
 		rule : {
 			maxlength : 200
 		},
@@ -861,8 +861,8 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 		name : 'contentText',
 		id : 'contentText',
 		label : '内容文本',
-		height : "300px",
-		width : "500px"/*,
+		height : "400px",
+		width : "100%"/*,
 		rule : {
 			required : true
 		},
@@ -875,7 +875,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 		id : 'attachmentIds',
 		name : 'attachmentIds',
 		limit : 3,
-		allowType : ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.htm,.html,.zip,.rar,.gz,.bz2",// 用,分开
+		allowType : ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.zip,.rar,.gz,.bz2",// 用,分开
 		uploadUrl : "../attachment/multipleUpload",
 		convertData : function(data) {
 			var arrays = [];
@@ -895,7 +895,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 			name : 'specialNeeds',
 			id : 'specialNeeds',
 			label : '相关设置',
-			cls : 'input-xlarge',
+			cls : 'input-large',
 			items : [ {
 				value : '1',
 				text : '头条展示'
@@ -907,29 +907,33 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 				text : '开启评论'
 			}*/]
 		});  
+		
 		var topTitle = {
 				type : 'text',// 类型
 				name : 'topTitle',// name
 				id : 'topTitle',// id
 				label : '头条标题',// 左边label
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				rule : {
 					maxlength : 100
 				},
 				message : {
 					maxlength : "最多输入100字"
 				}
-			};
+		};
 		items.push(topTitle);
 	}
 	
-	items.push(titleImg);
 	if (contentType == 0) {
 		items.push(titleImgTitle);
+		items.push(leader);
+		items.push(titleImg);
 		items.push(contentText);
 		items.push(offic);
+	}else{
+		items.push(leader);
+		items.push(titleImg);
 	}
-	items.push(leader);
 
 	
 	var formOpts = {
@@ -939,7 +943,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 		action : "./insertOrUpdate",// 表单action
 		ajaxSubmit : true,// 是否使用ajax提交表单
 		labelInline : true,
-		rowEleNum : 1,
+		rowEleNum : 2,
 		beforeSubmit : function() {
 
 		},
@@ -1028,7 +1032,7 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 				name : 'title',// name
 				id : 'title',// id
 				label : '名称',// 左边label
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				rule : {
 					required : true,
 					maxlength : 64
@@ -1042,7 +1046,7 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 				name : 'code',// name
 				id : 'code',// id
 				label : '文号',// 左边label
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				rule : {
 					required : true,
 					maxlength : 100
@@ -1057,7 +1061,7 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 				name : 'filed1',// name
 				id : 'filed1',// id
 				label : '索引号',// 左边label
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				rule : {
 					required : true,
 					maxlength : 100
@@ -1073,15 +1077,15 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 				name : 'keywords',// name
 				id : 'keywords',// id
 				label : '关键字',// 左边label
-				cls : 'input-xlarge'
+				cls : 'input-large'
 			},
 			{
 				type : 'textarea',// 类型
-				row : 3,
+				rows : 1,
 				name : 'brief',// name
 				id : 'brief',// id
 				label : '摘要',// 左边label
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				rule : { 
 					maxlength : 456
 				},
@@ -1094,13 +1098,13 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 				name : 'publishDate',//name
 				id : 'publishDate',//id
 				label : '发布时间',//左边label
-				cls : 'input-xlarge'
+				cls : 'input-large'
 			},{
 				type : 'text',// 类型
 				name : 'origin',// name
 				id : 'origin',// id
 				label : '发布机构',// 左边label
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				rule : {
 					required : true,
 					maxlength : 12
@@ -1115,7 +1119,7 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 				name : 'templateId',
 				id : 'templateId',
 				label : '页面模板',
-				cls : 'input-xlarge',
+				cls : 'input-large',
 				items : [ {
 					value : '',
 					text : '默认模版'
@@ -1125,11 +1129,11 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 			} ];
 	var titleImgTitle = {
 		type : 'text',// 类型
-		row : 3,
+		rows : 1,
 		name : 'titleImageIllustrate',// name
 		id : 'titleImageIllustrate',// id
 		label : '载体分类',// 左边label
-		cls : 'input-xlarge',
+		cls : 'input-large',
 		rule : {
 			maxlength : 20
 		},
@@ -1143,7 +1147,7 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 			name : 'titleImageUrl',// name
 			id : 'titleImageUrl',// id
 			label : '组件分类',// 左边label
-			cls : 'input-xlarge',
+			cls : 'input-large',
 			rule : {
 				maxlength : 200
 			},
@@ -1164,7 +1168,7 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 		id : 'attachmentIds',
 		name : 'attachmentIds',
 		limit : 3,
-		allowType : ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.htm,.html,.zip,.rar,.gz,.bz2",// 用,分开
+		allowType : ".pdf,.doc,.docx,.xls,.xlsx,.ppt,.zip,.rar,.gz,.bz2",// 用,分开
 		uploadUrl : "../attachment/multipleUpload",
 		convertData : function(data) {
 			var arrays = [];
@@ -1191,7 +1195,7 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 		action : "./insertOrUpdate",// 表单action
 		ajaxSubmit : true,// 是否使用ajax提交表单
 		labelInline : true,
-		rowEleNum : 1,
+		rowEleNum : 2,
 		beforeSubmit : function() {
 
 		},
@@ -1233,7 +1237,7 @@ function getFileForm(contentType,hasPublishRole,hasShenheRole) {
 				// data为该行的数据
 				/*modal = $.dmModal({
 					id : "siteForm",
-					title : "编辑内容信息-" + data.title,
+					title : "编辑内容-" + data.title,
 					distroy : true
 				});
 				modal.show();*/

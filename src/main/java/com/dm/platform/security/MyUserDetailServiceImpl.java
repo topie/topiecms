@@ -24,7 +24,7 @@ public class MyUserDetailServiceImpl implements UserDetailsService{
         	throw new UsernameNotFoundException("用户名不存在！");
         } 
         if(!user.isNonLocked()){
-        	throw new UsernameNotFoundException("用户已锁定,请联系管理员！");
+        	throw new UsernameNotFoundException("用户已锁定,请联系管理员进行解锁！");
         }
         return user;
 	}

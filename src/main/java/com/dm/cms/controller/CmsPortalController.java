@@ -452,22 +452,25 @@ public class CmsPortalController {
 	}
 
 	@RequestMapping("/websurvey/findOne")
-	public String getLeader(Model model, WebSurvey webSurvey) {
+	public String findOne(Model model, WebSurvey webSurvey) {
 		WebSurvey webSur = webSurveyService.findOne(webSurvey.getId());
+		boolean isAllowedComment = false;
 		if (webSur == null) {
 			webSur = new WebSurvey();
 			webSur.setTitle("查询编号有误!");
 		}
-		boolean isAllowedComment = false;
 		if (StringUtils.isNotEmpty(webSurvey.getPhone())) {
 			isAllowedComment = true;
 		}
-		if (StringUtils.isNotEmpty(webSurvey.getPhone()))
-			if (!webSur.getPhone().equals(webSurvey.getPhone())) {
-				webSur = new WebSurvey();
-				webSur.setTitle("查询密码有误!");
-				isAllowedComment = false;
+		if (StringUtils.isNotEmpty(webSurvey.getPhone())){
+			if(webSur.getPhone()!=null){
+				if (!webSur.getPhone().equals(webSurvey.getPhone())) {
+					webSur = new WebSurvey();
+					webSur.setTitle("查询密码有误!");
+					isAllowedComment = false;
+				}
 			}
+		}
 		model.addAttribute("webSurvey", webSur);
 		model.addAttribute("isAllowedComment", isAllowedComment);
 		return "/template/result";

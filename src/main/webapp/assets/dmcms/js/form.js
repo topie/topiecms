@@ -296,12 +296,16 @@
         _buildModuleWrapper: function (wrapper, item) {
             var that = this;
             var ele = this._formEles[item.type](item, this);
+            if(item.type== "kindEditor"){
+            	
+            }else{
             var label = $.tmpl(Form.statics.labelTmpl, {
                 "cls_": that._labelInline ? "col-md-3" : "",
                 "label_": item.label == undefined ? "" : item.label,
                "redMsg_":item.rule==undefined ?"":item.rule.required==undefined ? "" : "*",
             });
             wrapper.find(".form-group").append(label);
+            }
             var help;
             if (item.detail != undefined) {
                 help = $.tmpl(Form.statics.blockSpanTmpl, {
@@ -309,7 +313,12 @@
                 });
             }
             if (that._labelInline) {
-                var div = $('<div class="col-md-9"></div>');
+            	var div = $('<div class="col-md-9"></div>');
+            	if(item.type== "kindEditor"){
+            		div = $('<div class="col-md-12"></div>');
+                }else{
+                	
+                }
                 if (item.showIcon) {
                     item.icon = "";
                 }
@@ -1030,7 +1039,7 @@
                     "id_": (data.id == undefined ? data.name : data.id),
                     "name_": data.name
                 });
-                ele.data("width", data.width == undefined ? "600px"
+                ele.data("width", data.width == undefined ? "670px"
                     : data.width);
                 ele.data("height", data.height == undefined ? "400px"
                     : data.height);
@@ -1134,11 +1143,11 @@
                                 fileManagerJson: dm_root
                                 + '/KE/file_manager',
                                 width: ele
-                                    .data("width") == undefined ? '600px'
+                                    .data("width") == undefined ? '600'
                                     : ele
                                     .data("width"),
                                 height: ele
-                                    .data("height") == undefined ? '400px'
+                                    .data("height") == undefined ? '400'
                                     : ele
                                     .data("height"),
                                 allowFileManager: true,

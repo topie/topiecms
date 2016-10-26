@@ -58,10 +58,6 @@ var Login = function() {
         $('.login-form input').keypress(function(e) {
             if (e.which == 13) {
                 if ($('.login-form').validate().form()) {
-                	var jp = $('input[name="j_password"]').val();
-                	var b = new Base64();  
-                    var str = b.encode(jp); 
-                	$('input[name="j_password"]').val(str);
                     $('.login-form').submit(); //form validation success, call ajax form submit
                 }
                 return false;

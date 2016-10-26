@@ -24,7 +24,9 @@ import java.util.*;
 /**
  * Created by cgj on 2015/12/8.
  */
-@Controller @RequestMapping("/cms/fileManager") public class CmsFileManagerController {
+//@Controller 
+//@RequestMapping("/cms/fileManager") 
+public class CmsFileManagerController {
     @Value("${resource.basePath}") String resourceBasePath;
     @Value("${projectName}") String projectName;
 
@@ -76,7 +78,7 @@ import java.util.*;
         String wholeRealPath =
             httpServletRequest.getSession().getServletContext().getRealPath(folderPath);
         String type = oldName.substring(oldName.lastIndexOf("."));
-        String ntype= newName.substring(newName.lastIndexOf("."));
+        //String ntype= newName.substring(newName.lastIndexOf("."));
         String newName1 = newName.substring(0,newName.lastIndexOf(".")>0?newName.lastIndexOf("."):newName.length());
         String newNametype=newName1+type;
         return FileTool.renameFile(wholeRealPath, oldName, newNametype);
@@ -100,7 +102,7 @@ import java.util.*;
         return ResponseUtil.success();
     }
 
-    @RequestMapping("/download")
+    //@RequestMapping("/download")
     public void downloadFile(HttpServletResponse response, HttpServletRequest httpServletRequest,
         @RequestParam(value = "folderPath", required = true) String folderPath,
         @RequestParam(value = "fileName", required = true) String fileName)

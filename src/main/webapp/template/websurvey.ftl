@@ -34,7 +34,7 @@
                                            <h2 class=" mgb20">留言</h2>
                                            </#if>
   					 <#if msg??>
-  					<span color="#f00">${msg}</span>
+  					<span style="color:#f00;">${msg}</span>
   				</#if>
                                         </#if>
                   <form role="form" id="myForm" class="mgb20"  name="letterform" 
@@ -43,9 +43,9 @@
                           <tr><input name="org.apache.struts.taglib.html.token" type="hidden"
                  									value="1d14616d7163b7e9c56edc7e996394e3">
                               <td style="width: 100px;">姓名<span class="color-red">*</span></td>
-                              <td><input type="text" id="username" name="username" class="form-control" placeholder="请输入您的名字" datatype="*"></td>
+                              <td><input type="text" id="username" name="username" value="${(websurvey.username)!''}" class="form-control" placeholder="请输入您的名字" datatype="*"></td>
                               <td style="width: 100px;">年龄 </td>
-                              <td><input type="number" id="age" name="age"  class="form-control" placeholder="请输入您的年龄" datatype="n"></td>
+                              <td><input type="number" id="age" name="age" value="${(websurvey.age)!''}"  class="form-control" placeholder="请输入您的年龄" datatype="n"></td>
                           </tr>
                           <tr>
                               <td>性别<span class="color-red">*</span></td>
@@ -60,15 +60,15 @@
                           </tr>
                           <tr>
                               <td>联系电话<span class="color-red">*</span></td>
-                              <td><input type="tel" id="phone" name="phone" class="form-control" placeholder="请输入您的联系电话" datatype="m"></td>
+                              <td><input type="tel" id="phone" name="phone" value="${(websurvey.phone)!''}"  class="form-control" placeholder="请输入您的联系电话" datatype="m"></td>
                               <td>电子邮箱 </td>
-                              <td><input type="email" name="email" class="form-control" placeholder="请输入您的电子邮箱" datatype="e"></td>
+                              <td><input type="email" name="email" value="${(websurvey.email)!''}"  class="form-control" placeholder="请输入您的电子邮箱" datatype="e"></td>
                           </tr>
                           <tr>
                               <td>联系地址 </td>
-                              <td><input type="text" name="address" class="form-control" placeholder="请输入您的联系地址" datatype="*"></td>
+                              <td><input type="text" name="address" value="${(websurvey.address)!''}"  class="form-control" placeholder="请输入您的联系地址" datatype="*"></td>
                               <td>邮政编码 </td>
-                              <td><input type="text" name="postcode" class="form-control" placeholder="请输入您的邮政编码" ></td>
+                              <td><input type="text" name="postcode" value="${(websurvey.postcode)!''}"  class="form-control" placeholder="请输入您的邮政编码" ></td>
                           </tr>
                           <input type="hidden" name="code" value="${code}">
       		    <#if code??> <#if code=="1">
@@ -117,19 +117,19 @@
                           <tr>
                               <td>信件标题<span class="color-red">*</span></td>
                               <td colspan="4">
-                                  <input type="text" name="title" id="title" class="form-control" placeholder="请输入您的标题" datatype="*">
+                                  <input type="text" name="title" value="${(websurvey.title)!''}"  id="title" class="form-control" placeholder="请输入您的标题" datatype="*">
                               </td>
                           </tr>
                           <tr>
                               <td valign="top">信件内容<span class="color-red">*</span></td>
                               <td colspan="4">
-                                  <textarea name="content" id="content" class="form-control" rows="10" placeholder="请输入您的内容" datatype="*"></textarea>
+                                  <textarea name="content" id="content" class="form-control" rows="10" placeholder="请输入您的内容" datatype="*">${(websurvey.content)!''}</textarea>
                               </td>
                           </tr>
   			 <tr>
                               <td valign="top">验证码<span class="color-red">*</span></td>
   			    <td colspan="1">
-  				<a id="codeImage" href="javascript:void(0);"><img id="imgR" src="../../randomImage"/> 看不清,换一张</a>
+  				<a id="codeImage" href="javascript:void(0);"><img id="imgR" src="../randomImage"/> 看不清,换一张</a>
                               </td>
                               <td colspan="3">
                                   <input name="viliCode" id="viliCode" class="form-control" placeholder="请输入验证码" datatype="*"/>
@@ -189,7 +189,7 @@
                  			 $(".form-table").Validform();
   				$("#codeImage").click(function(){
   					var getTimestamp=new Date().getTime();
-  					$("#imgR").attr("src","../../randomImage?s="+getTimestamp);
+  					$("#imgR").attr("src","../randomImage?s="+getTimestamp);
   				});
                  		});
       			//表单提交验证

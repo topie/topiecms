@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserCache;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
@@ -29,6 +30,8 @@ public class MySimpleUrlAuthenticationFailureHandler implements
 
 	@Resource
 	CommonDAO commonDAO;
+	@Resource
+	UserCache userCache;
 	private static Logger logger = Logger.getLogger("login");
 	private boolean forwardToDestination = false;
 	private boolean allowSessionCreation = true;
@@ -75,10 +78,12 @@ public class MySimpleUrlAuthenticationFailureHandler implements
 				commonDAO.save(le);
 				logger.info(le.getUser()+">>"+le.getContent());
 				exception = new AuthenticationServiceException("超过最大登录尝试次数"
-						+ maxTryCount + ",用户已被锁定");
+						+ maxTryCount + ",用户已被锁定,请联系管理员进行解锁");
 				session.setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION,
 						exception);
 				session.removeAttribute(name + "_" + TRY_MAX_COUNT);
+				UserCacheUtil.getInstance().refreshUserCache(userCache, u);
+				
 			} else {
 				session.setAttribute(name + "_" + TRY_MAX_COUNT, tryCount);
 				exception = new BadCredentialsException(exception.getMessage()

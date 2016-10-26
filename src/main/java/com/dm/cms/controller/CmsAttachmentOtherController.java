@@ -212,6 +212,7 @@ public class CmsAttachmentOtherController {
 			cmsAttachment.setIsActive(true);
 			cmsAttachmentOtherService.insert(cmsAttachment);
 			map = ResponseUtil.success("上传成功！");
+			cmsAttachment.setAttachmentUrl("");
 			map.put("attachment", cmsAttachment);
 			map.put("newFileName", newFileName);
 		}

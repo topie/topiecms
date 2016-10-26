@@ -43,8 +43,8 @@ import com.dm.platform.util.ZipCompressor;
  * @author wjl
  * @createdate 2016年2月1日 上午10:58:06
  */
-@Controller
-@RequestMapping("/cms/htmlFolderManager")
+//@Controller
+//@RequestMapping("/cms/htmlFolderManager")
 public class CmsFileManagerForHtmlController {
 	@Value("${htmlDir}")
 	String htmlDir;
@@ -65,6 +65,7 @@ public class CmsFileManagerForHtmlController {
 			@RequestParam(value = "targetPath", required = true) String targetPath) {
 		String wholeRealPath = httpServletRequest.getSession()
 				.getServletContext().getRealPath(rootPath);
+		rootPath="";//不让传输rootPath
 		wholeRealPath = wholeRealPath.split(projectName)[0] + htmlDir;
 		if (StringUtils.isNotBlank(targetPath)) {
 			wholeRealPath += ("/" + targetPath);
@@ -91,6 +92,9 @@ public class CmsFileManagerForHtmlController {
 	public @ResponseBody
 	Object createFolder(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "dirPath", required = true) String dirPath) {
+		if(dirPath.contains("../")){
+			return ResponseUtil.error("操作失败");
+		}
 		String wholeRealPath = httpServletRequest.getSession()
 				.getServletContext().getRealPath("/");
 		wholeRealPath = wholeRealPath.split(projectName)[0] + htmlDir + "/"
@@ -109,6 +113,9 @@ public class CmsFileManagerForHtmlController {
 			@RequestParam(value = "folderPath", required = true) String folderPath,
 			@RequestParam(value = "oldName", required = true) String oldName,
 			@RequestParam(value = "newName", required = true) String newName) {
+		if(folderPath.contains("../")){
+			return ResponseUtil.error("操作失败");
+		}
 		String wholeRealPath = httpServletRequest.getSession()
 				.getServletContext().getRealPath("/");
 		wholeRealPath = wholeRealPath.split(projectName)[0] + htmlDir + "/"
@@ -116,13 +123,20 @@ public class CmsFileManagerForHtmlController {
 		if (!"/".equals(separator)) {
 			wholeRealPath = wholeRealPath.replace("/", separator);
 		}
-		return FileTool.renameFile(wholeRealPath, oldName, newName);
+		 String type = oldName.substring(oldName.lastIndexOf(".")>0?oldName.lastIndexOf("."):oldName.length());
+	        //String ntype= newName.substring(newName.lastIndexOf("."));
+	        String newName1 = newName.substring(0,newName.lastIndexOf(".")>0?newName.lastIndexOf("."):newName.length());
+	        String newNametype=newName1+type;
+		return FileTool.renameFile(wholeRealPath, oldName, newNametype);
 	}
 
 	@RequestMapping(value = "/deleteFolder", method = RequestMethod.POST)
 	public @ResponseBody
 	Object deleteFolder(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "dirPath", required = true) String dirPath) {
+		if(dirPath.contains("../")){
+			return ResponseUtil.error("操作失败");
+		}
 		String wholeRealPath = httpServletRequest.getSession()
 				.getServletContext().getRealPath("/");
 		wholeRealPath = wholeRealPath.split(projectName)[0] + htmlDir + "/"
@@ -138,6 +152,9 @@ public class CmsFileManagerForHtmlController {
 	public @ResponseBody
 	Object deleteFile(HttpServletRequest httpServletRequest,
 			@RequestParam(value = "filePath", required = true) String filePath) {
+		if(filePath.contains("../")){
+			return ResponseUtil.error("操作失败");
+		}
 		String wholeRealPath = httpServletRequest.getSession()
 				.getServletContext().getRealPath("/");
 		wholeRealPath = wholeRealPath.split(projectName)[0] + htmlDir + "/"
@@ -149,7 +166,7 @@ public class CmsFileManagerForHtmlController {
 		return ResponseUtil.success();
 	}
 
-	@RequestMapping("/download")
+	//@RequestMapping("/download")
 	public void downloadFile(
 			HttpServletResponse response,
 			HttpServletRequest httpServletRequest,
@@ -198,6 +215,9 @@ public class CmsFileManagerForHtmlController {
 			HttpServletRequest httpServletRequest) throws IOException {
 		if (multipartFile == null || multipartFile.isEmpty()) {
 			return ResponseUtil.error("请先上传附件");
+		}
+		if(folderPath.contains("../")){
+			return ResponseUtil.error("操作失败");
 		}
 		String fileType = multipartFile.getOriginalFilename()
                 .substring(multipartFile.getOriginalFilename().lastIndexOf(".")+1);
