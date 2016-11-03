@@ -224,14 +224,26 @@ function getVoteForm(type,hasPublishRole,hasShenheRole) {
 				name : 'startTime',// name
 				id : 'startTime',// id
 				label : '开始时间',// 左边label
-				cls : 'input-xlarge'
+				cls : 'input-xlarge',
+				rule : {
+					required : true
+				},
+				message : {
+					required : "请输入开始时间"
+				}
 			},
 			{
 				type : 'datepicker',// 类型
 				name : 'endTime',// name
 				id : 'endTime',// id
 				label : '结束时间',// 左边label
-				cls : 'input-xlarge'
+				cls : 'input-xlarge',
+				rule : {
+					required : true
+				},
+				message : {
+					required : "请输入结束时间"
+				}
 			},{
 				type : 'radioGroup',// 类型
 				name : 'checkType',// name

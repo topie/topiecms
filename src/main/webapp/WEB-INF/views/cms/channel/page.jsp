@@ -114,7 +114,7 @@
 										</div>
 									</div>
 									<div class="portlet-body">
-										<div class="scroller"  style="height:289px;"
+										<div class="scroller"  style="min-height:289px;"
 											id="channel_tree_div" data-always-visible="1"
 											data-rail-visible="1">
 											<ul id="channel_tree" class="ztree"></ul>
@@ -337,7 +337,7 @@
 				}
 			} ],
 			actionCloumText : "操作",//操作列文本
-			actionCloumWidth : "20%",
+			actionCloumWidth : "10%",
 			actionCloums : [
 					{
 						text : "预览",
@@ -359,7 +359,7 @@
 							var form = modal.$body.dmForm(getFormOptions(data.channelType));
 							form.loadRemote("./load?channelId=" + data.id);
 						}
-					},{
+					}/* ,{
 						text : "静态化",
 						cls : "green btn-sm",
 						visable:function(index,data)
@@ -403,7 +403,7 @@
 							});
 
 						}
-					}
+					} */
 					],
 			dropdowns:{
 			    text:"添加",     

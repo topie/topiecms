@@ -82,7 +82,7 @@ public class MySimpleUrlAuthenticationFailureHandler implements
 				session.setAttribute(WebAttributes.AUTHENTICATION_EXCEPTION,
 						exception);
 				session.removeAttribute(name + "_" + TRY_MAX_COUNT);
-				UserCacheUtil.getInstance().refreshUserCache(userCache, u);
+				UserCacheUtil.getInstance().refreshUserCache(userCache, u.getLoginname());
 				
 			} else {
 				session.setAttribute(name + "_" + TRY_MAX_COUNT, tryCount);

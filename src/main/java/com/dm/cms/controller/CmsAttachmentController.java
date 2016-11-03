@@ -169,6 +169,9 @@ import com.dm.platform.util.ResponseUtil;
         response.setCharacterEncoding("utf-8");
         response.setContentType("multipart/form-data");
         CmsAttachment cmsAttachment = cmsAttachmentService.findOneById(attachmentId);
+        if(cmsAttachment==null){
+        	return ;
+        }
         response.setHeader("Content-Disposition",
             "attachment;fileName=" + new String(cmsAttachment.getAttachmentName().getBytes("gbk"),
                 "iso-8859-1"));

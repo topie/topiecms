@@ -247,9 +247,10 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		}else{
 			query.addFilterQuery("id:" + "*_" + ent);
 		}
-		String q = "text:" + textValue;
+		String queryString =escapeQueryChars(textValue);
+		String q = "text:" + queryString;
 		if(colum==null || colum.equals("")){
-			q = "content:" + textValue+" OR title:"+textValue;
+			q = "content:" + queryString+" OR title:"+queryString;
 		}else{
 			String[] list = colum.split(",");
 			q = "";
@@ -258,7 +259,7 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 				if(i>0){
 					q+=" OR ";
 				}
-				q += qt+":" + textValue;
+				q += qt+":" + queryString;
 				i++;
 			}
 		}
@@ -388,7 +389,21 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		
 		return map;
 	}
-
+	public static String escapeQueryChars(String s) {  
+	    StringBuilder sb = new StringBuilder();  
+	    for (int i = 0; i < s.length(); i++) {  
+	      char c = s.charAt(i);  
+	      // These characters are part of the query syntax and must be escaped  
+	      if (c == '\\' || c == '+' || c == '-' || c == '!'  || c == '(' || c == ')' || c == ':'  
+	        || c == '^' || c == '[' || c == ']' || c == '\"' || c == '{' || c == '}' || c == '~'  
+	        || c == '*' || c == '?' || c == '|' || c == '&'  || c == ';' || c == '/'  
+	        || Character.isWhitespace(c)) {  
+	        sb.append('\\');  
+	      }  
+	      sb.append(c);  
+	    }  
+	    return sb.toString();  
+	  } 
 	/*@Override
 	public Map searchResults(String textValue, Integer pageNum,
 			Integer pageSize, String sortField, String entity, Integer days,

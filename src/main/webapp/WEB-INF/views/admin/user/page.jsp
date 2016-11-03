@@ -82,7 +82,10 @@
 	<%@include file="../../includejsps/js.jsp"%>
 	<%@include file="../../includejsps/plugin-js.jsp"%>
 	<script type="text/javascript">
-	
+	jQuery.validator.addMethod("isPassword", function(value, element) {    
+	    var tel = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={} :";'<>?,.\/]).{8,30}$/;
+	    return this.optional(element) || (tel.test(value));
+	}, "必须字母数字符号汇合且大于8位");
 	   var configForm = '<form id="configMailForm">'
 	   +'<div style="float:left;margin-left:100px;">'
 	   +'配置用户:<select id="leadIds" name="leadIds" multiple="multiple" class="form-control input-large">';
@@ -229,7 +232,7 @@
 				text : "重置密码",
 				cls : "green btn-sm",
 				handle : function(index, data) {
-					bootbox.prompt("重置密码将以邮件发送给该账户邮箱(空白则生成随机密码)", function(result){
+					bootbox.prompt("请输入重置密码(空白则生成随机密码)", function(result){
 						if(result!=null){
 							resetPassword(data.code,result);
 						}
@@ -486,7 +489,8 @@
 				label : '密码',//左边label
 				cls : 'input-medium',
 				rule : {
-					required : true
+					required : true,
+					isPassword:true
 				},
 				message : {
 					required : "请输入密码"
@@ -512,7 +516,8 @@
 				label : '是否有效',
 				items : [ {
 					value : true,
-					text : '有效'
+					text : '有效',
+					checked:true
 				}, {
 					value : false,
 					text : '失效'
@@ -530,7 +535,8 @@
 				label : '账号状态',
 				items : [ {
 					value : true,
-					text : '开启'
+					text : '开启',
+					checked:true
 				}, {
 					value : false,
 					text : '锁定'
@@ -786,9 +792,16 @@
 				},
 				url : './resetPassword',
 				success : function(data) {
-					if (data.status == 1) {
-						grid.reload();
+					if (data.status == 1) {//邮件发送成功
+						//grid.reload();
 						bootbox.alert("重置密码为：" + data.password);
+					}
+					if (data.status == 2) {//邮件发送失败
+							//grid.reload();
+							bootbox.alert("重置密码为：" + data.password);
+					}if (data.status == 0) {
+						//grid.reload();
+						bootbox.alert("操作失败");
 					}
 				}
 			});

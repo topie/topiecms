@@ -444,6 +444,10 @@
     <%@include file="../includejsps/plugin-js.jsp" %>
 	<!-- END JAVASCRIPTS -->
 	<script>
+	jQuery.validator.addMethod("isPassword", function(value, element) {    
+	    var tel = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={} :";'<>?,.\/]).{8,30}$/;
+	    return this.optional(element) || (tel.test(value));
+	}, "必须字母数字符号汇合且大于8位");
 		jQuery(document).ready(
 				function() {
 					$('#passwordForm').validate(
@@ -456,7 +460,8 @@
 										required : true
 									},
 									newpassword : {
-										required : true
+										required : true,
+										isPassword:true
 									},
 									cpassword : {
 										required : true,

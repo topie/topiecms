@@ -924,7 +924,7 @@ public class UserAccountController extends DefaultController {
 			return successJson();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return errorJson("内部错误");
+			return errorJson("网络错误");
 		}
 	}
 	
@@ -952,16 +952,26 @@ public class UserAccountController extends DefaultController {
 			String jiamicode = sha.encodePassword(newPassword, null);
 			user.setPassword(jiamicode);
 			userAccountService.updateUser(user);
-			MailUtil.getInstance().sendMail(user.getEmail(), "重置密码",
-					"新的密码：" + newPassword + "请妥善保管！");
+			try {
+				MailUtil.getInstance().sendMail(user.getEmail(), "重置密码",
+						"新的密码：" + newPassword + "请妥善保管！");
+			} catch (Exception e) {
+				//e.printStackTrace();
+				Map result = new HashMap();
+				result.put("status", 2);
+				result.put("password", newPassword);
+				result.put("msg", "网络错误邮件发送失败");
+				return result;
+			}
 			Map result = new HashMap();
 			result.put("status", 1);
 			result.put("password", newPassword);
+			result.put("msg", "重置成功");
 			return result;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return errorJson("内部错误");
+			return errorJson("操作失败");
 		}
 	}
 

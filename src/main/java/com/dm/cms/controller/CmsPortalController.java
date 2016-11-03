@@ -608,9 +608,13 @@ public class CmsPortalController {
 			count += o.getClickTimes();
 		}
 		for (CmsVoteOption o : potions) {
+			if(count==0){
+				o.setFiled1("0.00%");
+			}else{
 			o.setFiled1(new DecimalFormat("0.00").format((double) (o
 					.getClickTimes() / count * 100))
 					+ "%");
+			}
 		}
 		model.addAttribute("voteTimes", webSur.getFiled3());
 		model.addAttribute("options", potions);
@@ -622,6 +626,9 @@ public class CmsPortalController {
 	@ResponseBody
 	public Object sub(Integer voteId, String optionIds) {
 		CmsVote o = cmsVoteService.findOne(voteId);
+		if(o==null){
+			return ResponseUtil.error();
+		}
 		Date start = DmDateUtil.StrToDate(o.getStartTime());
 		Date end = DmDateUtil.StrToDate(o.getEndTime());
 		Date now = new Date();

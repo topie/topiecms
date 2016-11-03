@@ -8,8 +8,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dm.cms.model.CmsTemplateConfig;
 import com.dm.cms.model.CmsVote;
 import com.dm.cms.model.CmsVoteOption;
+import com.dm.cms.service.CmsTemplateConfigService;
 import com.dm.cms.service.CmsVoteService;
 import com.dm.cms.sqldao.CmsVoteMapper;
 import com.dm.cms.sqldao.CmsVoteOptionMapper;
@@ -26,6 +28,8 @@ public class CmsVoteServiceImpl implements CmsVoteService {
 
 	@Autowired
 	private CmsVoteOptionMapper cmsVoteOptionMapper;
+	@Autowired
+	CmsTemplateConfigService cmsTemplateConfigService;
 
 	@Override
 	public PageInfo<CmsVote> findPage(Integer pageNum, Integer pageSize, Map map) {
@@ -42,6 +46,12 @@ public class CmsVoteServiceImpl implements CmsVoteService {
 			record.setCreateUser(user.getCode());
 		record.setCreateTime(new Date());
 		record.setFiled3("0");
+		if (record.getFiled2() == null||record.getFiled2().equals("")) {// 设置默认模板
+			CmsTemplateConfig c =cmsTemplateConfigService.load(null,
+					record.getChannelId());
+			if(c!=null)
+				record.setFiled2((c.getContentTemplateId()+""));
+		}
 		this.cmsVoteMapper.insertSelective(record);
 	}
 

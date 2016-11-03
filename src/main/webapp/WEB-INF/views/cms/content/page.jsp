@@ -113,7 +113,7 @@
 										</div>
 									</div>
 									<div class="portlet-body">
-										<div class="scroller" style="height:289px;"
+										<div class="scroller" style="min-height:289px;"
 											id="channel_tree_div" data-always-visible="1"
 											data-rail-visible="1">
 											<ul id="channel_tree" class="ztree"></ul>
