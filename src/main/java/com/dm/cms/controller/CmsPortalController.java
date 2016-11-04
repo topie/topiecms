@@ -57,19 +57,22 @@ import com.dm.cms.service.CmsSiteService;
 import com.dm.cms.service.CmsTemplateService;
 import com.dm.cms.service.CmsVideoService;
 import com.dm.cms.service.CmsVoteService;
+import com.dm.module.model.OrgPerson;
 import com.dm.module.service.MicrocobolService;
+import com.dm.module.service.OrgPersonService;
 import com.dm.platform.model.Org;
 import com.dm.platform.service.OrgService;
 import com.dm.platform.util.DmDateUtil;
 import com.dm.platform.util.RandomValidateCode;
 import com.dm.platform.util.RequestUtil;
 import com.dm.platform.util.ResponseUtil;
-import com.dm.search.model.SearchResult;
 import com.dm.search.service.SearchConfigService;
 import com.dm.websurvey.model.Leader;
 import com.dm.websurvey.model.WebSurvey;
 import com.dm.websurvey.service.LeaderService;
 import com.dm.websurvey.service.WebSurveyService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 
 /**
  * Created by cgj on 2015/11/23.
@@ -115,7 +118,8 @@ public class CmsPortalController {
 	private MicrocobolService microcobolService;
 	@Autowired
 	private CmsQuestionnairesService cmsQuestionnairesService;
-
+	@Autowired
+	private OrgPersonService orgPersonService;
 	@Autowired
 	LeaderService leaderService;
 	@Autowired
@@ -521,7 +525,7 @@ public class CmsPortalController {
 		return "/template/leader";
 	}
 
-	@RequestMapping("/org/orgList")
+	/*@RequestMapping("/org/orgList")
 	public String orgList(Model model, Integer pageNum, Integer pageSize) {
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 15 : pageSize;
@@ -543,6 +547,45 @@ public class CmsPortalController {
 			prePage = pageNum - 1;
 		} else {
 			prePage = 1;
+		}
+		model.addAttribute("total", total);
+		model.addAttribute("orgs", orgs);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("nextPage", nextPage);
+		model.addAttribute("prePage", prePage);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("totalPage", totalPage);
+		return "/template/org_content";
+	}*/
+	@RequestMapping("/org/orgList")
+	public String orgList(Model model, Integer pageNum, Integer pageSize) {
+		pageNum = pageNum == null ? 1 : pageNum;
+		pageSize = pageSize == null ? 15 : pageSize;
+		PageInfo<OrgPerson> page = orgPersonService.findOrgPersonByPage(pageNum, pageSize, null);
+		Long total = page.getTotal();
+		long totalPage = total / pageSize;
+		long nextPage = 0;
+		long prePage = 0;
+		if (total % pageSize != 0) {
+			totalPage++;
+		}
+		if (pageNum < totalPage) {
+			nextPage = pageNum + 1;
+		} else {
+			nextPage = totalPage;
+		}
+		if (pageNum > 1) {
+			prePage = pageNum - 1;
+		} else {
+			prePage = 1;
+		}
+		List<Map> orgs = new ArrayList<Map>();
+		for(OrgPerson o:page.getList()){
+			Map map = new HashMap();
+			map.put("name", o.getOrgName());
+			map.put("orgDuty", o.getDuty());
+			map.put("orgPerson",o.getPerson());
+			orgs.add(map);
 		}
 		model.addAttribute("total", total);
 		model.addAttribute("orgs", orgs);

@@ -5,8 +5,8 @@
 
 	<insert id="insertVisitRecord">
 		INSERT INTO cms_content_visit_record
-		(content_id,channel_id,channel_type,user_id,ip)
-		VALUES(#{contentId},#{channelId},#{channelType},#{userId},#{ip})
+		(content_id,channel_id,channel_type,user_id,visit_time,ip)
+		VALUES(#{contentId},#{channelId},#{channelType},#{userId},#{visitTime},#{ip})
 	</insert>
 	<select id="selectVisitListForSite" resultType="com.dm.cms.model.CmsVisitCountVo">
 		SELECT s.id siteId,

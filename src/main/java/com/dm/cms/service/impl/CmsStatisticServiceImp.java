@@ -36,6 +36,7 @@ import com.dm.cms.sqldao.CmsNovelMapper;
 import com.dm.cms.sqldao.CmsStatisticMapper;
 import com.dm.cms.sqldao.CmsVideoMapper;
 import com.dm.platform.model.UserAccount;
+import com.dm.platform.util.DmDateUtil;
 import com.dm.platform.util.UserAccountUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -156,9 +157,10 @@ public class CmsStatisticServiceImp implements CmsStatisticService {
 		{
 			userId= userAccount.getCode();
 		}
+		String visitTime = DmDateUtil.Current();
 		String ip = UserAccountUtil.getInstance().getRequestIp(request);
 		this.cmsContentVisitRecordMapper.insertVisitRecord(cId, channelId,channelType,
-				userId, ip);
+				userId,visitTime, ip);
 
 	}
 

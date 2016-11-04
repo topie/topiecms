@@ -19,23 +19,26 @@ public interface CmsContentVisitRecordMapper {
 	void insertVisitRecord(@Param("contentId") Integer contentId,
 			@Param("channelId") Integer channelId,
 			@Param("channelType") String channelType,
-			@Param("userId") String userId, @Param("ip") String ip);
+			@Param("userId") String userId,
+			@Param("visitTime") String visitTime, @Param("ip") String ip);
 
 	List<CmsVisitCountVo> selectVisitListForSite(CmsVisitCountVo cmsVisitCountVo);
 
 	List<CmsVisitCountVo> selectVisitListForChannel(
 			CmsVisitCountVo cmsVisitCountVo);
 
-	List<CmsVisitCountVo> selectVisitListForContent(CmsVisitCountVo cmsVisitCountVo);
+	List<CmsVisitCountVo> selectVisitListForContent(
+			CmsVisitCountVo cmsVisitCountVo);
+
 	List<CmsVisitCountVo> selectPublishList(
 			@Param("vo") CmsVisitCountVo cmsVisitCountVo,
 			@Param("channelIds") List<Integer> channelIds);
 
 	List<CmsVisitCountVo> selectPublishListLimit(CmsVisitCountVo cmsVisitCountVo);
-	
-	Integer selectCountByContentId(@Param("cmsContentId") Integer cmsContentId,@Param("channelType") String channelType);
+
+	Integer selectCountByContentId(@Param("cmsContentId") Integer cmsContentId,
+			@Param("channelType") String channelType);
 
 	List<Map> selectVisitListForUser(Map map);
-	
-	
+
 }
