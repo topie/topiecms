@@ -1,10 +1,7 @@
 <!DOCTYPE html>
                         <html>
                         <head lang="en">
-                            <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-                            <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-                            <meta http-equiv="X-UA-Compatible" content="IE=9" />
+                            <#include "/template/jh-meta.ftl">
                             <title>${site.displayName}-${channel.displayName}</title>
                             <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
                             <link href="/html/jinhu-static/css/style.ts.css" rel="stylesheet">
@@ -160,7 +157,7 @@
                                                </tr>
                                                </thead>
                                                <tbody>
-                                              <@pubDocListDirective channelId=29 pageSize=10 pageNum=1>
+                                              <@pubDocListDirective channelId=29 pageSize=8 pageNum=1>
             				  <#list docs as doc>
                                               <tr>
                                                   <td>${doc.syh!}</td>
@@ -175,30 +172,18 @@
                                         </div>
                         		<@channelDirective channelId=28 >
                                         <div class="color-green fontSize18 pd3 dis-b"><a href="${channel.url!}" target="_blank" class="color-green">${channel.displayName}</a></div>
-                        		<@channelListDirective channelId=channel.id order=1 excludeIds="211" >
-                                        <ul class="nav nav-tabs navTab2 navTab4 text-center" role="tablist" id="navTab1">
-                        			<#list channels as channel>
-                                            <li role="presentation" class="${(channel_index==0)?string('active','')}"><a href="#zd${channel_index}" aria-controls="zd${channel_index}" role="tab" data-toggle="tab">${channel.displayName}</a></li>
-                        		    </#list>
-                                        </ul>
-                                        <!-- Tab panes -->
-                                        <div class="tab-content zwgk-navTab1-content">
-                        		<#list channels as channel>
-                                            <div role="tabpanel" class="tab-pane ${(channel_index==0)?string('active','')}" id="zd${channel_index}">
-                                                <a href="${channel.url}" class="color-green fontSize16 pd2 dis-b">${channel.displayName}</a>
-                                                <ul class="panel2-list panel2-list-pds">
-                        			<@contentListDirective channelId=channel.id pageSize=6 pageNum=1 titleLeft=32 order=10>  
-                        			<#list contents as cmsContent>
-                        				<li><span class="jh-dotted">·</span><a href="${cmsContent.url}">
-                        				<span class="panel2-list-content">${cmsContent.title}</span>
-                        				<span class="panel2-list-time">${cmsContent.publishDate?string("yyyy-MM-dd")}</span></a></li>
-                        			</#list> 
-                        			</@contentListDirective>
-                                                </ul>
-                                            </div>
-                        		</#list>
-                                        </div>
-                        		</@channelListDirective>
+                        		<div class="row zwgk-mgb">
+					<@channelListDirective channelId=28 >
+					<#list channels as chan>
+						    <div class="col-xs-3">
+							<a href="${chan.url}" target="_blank" class="thumbnail thumbnails text-center">
+							    <img src="/html/jinhu-static/img/zwgk_${chan.enName!}_icon.png">
+							    <p>${chan.displayName!}</p>
+							</a>
+						    </div>
+					    </#list>
+					    </@channelListDirective>
+					    </div>
                         	    </@channelDirective >
                                       <!--<iframe src="http://xxgk.jinhu.gov.cn:8180/zwgk/open/publicshow/searchArticle.do?method=getZfxxgkznzdnb&type=zn&id=215&dept=szf" width="100%" height="362" frameborder="0"></iframe>-->
                                 </div>   

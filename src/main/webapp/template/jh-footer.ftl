@@ -1,13 +1,12 @@
 <div class="ft">
-             <div class="ft-bg" style="margin: 2.5em 0 3em 0;background-color: #55a421;height: 1em;border-bottom: 3px solid #487e24;"></div>
+             <div class="ft-bg" ></div>
              <div class="container">
                  <div class="row">
                      <div class="col-sm-offset-2 col-sm-8 col-lg-offset-3 col-lg-6 text-center fontSize16">
                          <div class="row ft-pd">
-                           <div class="col-xs-3"><a href="/jinhuadmin/portal/websurvey/form.htm?code=4" target="_blank">网站留言</a><span class="ft-line">|</span></div>
-                             <div class="col-xs-3"><a href="/html/jinhu/qita/content/406.html" target="_blank">在线投稿</a><span class="ft-line">|</span></div>
-                             <div class="col-xs-3"><a href="/html/jinhu/qita/content/407.html" target="_blank">联系我们</a><span class="ft-line">|</span></div>
-                             <div class="col-xs-3"><a href="/html/jinhu/qita/content/408.html" target="_blank">网站地图</a></div>
+                             <div class="col-xs-4"><a href="/html/jinhu/qita/content/406.html" target="_blank">在线投稿</a><span class="ft-line">|</span></div>
+                             <div class="col-xs-4"><a href="/html/jinhu/qita/content/407.html" target="_blank">联系我们</a><span class="ft-line">|</span></div>
+                             <div class="col-xs-4"><a href="/html/jinhu/qita/content/408.html" target="_blank">网站地图</a></div>
                          </div>
                      </div>
                  </div>

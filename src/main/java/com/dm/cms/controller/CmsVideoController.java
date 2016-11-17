@@ -65,6 +65,20 @@ public class CmsVideoController {
 		cmsVideoService.insertOrUpdate(cmsVideo);
 		return ResponseUtil.success("操作成功");
 	}
+	@RequestMapping("/saveAndCommit")
+	@ResponseBody
+	public Map saveAndCommit(CmsVideo cmsVideo) {
+		cmsVideoService.insertOrUpdate(cmsVideo);
+		cmsVideoService.commit(cmsVideo.getId().toString());
+		return ResponseUtil.success("提交成功");
+	}
+	@RequestMapping("/saveAndPublish")
+	@ResponseBody
+	public Map saveAndPublish(CmsVideo cmsVideo,HttpServletRequest request) {
+		cmsVideoService.insertOrUpdate(cmsVideo);
+		cmsVideoService.updateStatus(2,cmsVideo.getId().toString(),request);
+		return ResponseUtil.success("发布成功");
+	}
 	
 	@RequestMapping("/delete")
 	@ResponseBody

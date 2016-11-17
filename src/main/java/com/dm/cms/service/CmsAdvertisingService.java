@@ -20,4 +20,7 @@ public interface CmsAdvertisingService {
 
 	void click(Integer id);
 
+	PageInfo<CmsAdvertising> findCmsAdvertisingByPageForPortal(int i,
+			Integer pageSize, Map map);
+
 }

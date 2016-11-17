@@ -42,7 +42,20 @@ public class WebSurveyController {
 	@RequestMapping("/page")
 	public String webPage(Model model)
 	{
+		String userId = UserAccountUtil.getInstance().getCurrentUserId();
+		UserEmailConfig userEmailConfig =  userEmailConfigService.findByUserId(userId);
+		if(userEmailConfig!=null)
+		{
+		model.addAttribute("isShowIp", userEmailConfig.getIsShowIp());
+		}
 		return "/websurvey/page";
+	}
+	
+	@RequestMapping("/shpage")
+	public String shpage(Model model)
+	{
+		model.addAttribute("isShowIp", "1");
+		return "/websurvey/shpage";
 	}
 	
 	@RequestMapping("/replyPage")
@@ -56,6 +69,14 @@ public class WebSurveyController {
 	public Map update(Model model,String id,String recontent)
 	{
 		webSurveyService.update(id, recontent);
+		return ResponseUtil.success("操作成功！");
+	}
+	
+	@RequestMapping("/check")
+	@ResponseBody
+	public Map check(Model model,String id,String state)
+	{
+		webSurveyService.check(id, state);
 		return ResponseUtil.success("操作成功！");
 	}
 	
@@ -87,8 +108,8 @@ public class WebSurveyController {
 			 List<String> types = new ArrayList<String>();
 			 types.add("5");
 			 map.put("type", types);
-		 PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMap(pageNum,pageSize,map);
-			return PageConvertUtil.grid(webSurveys);
+		     PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMap(pageNum,pageSize,map);
+			 return PageConvertUtil.grid(webSurveys);
 		 }
 		 else{
 		 if(config!=null)
@@ -105,6 +126,7 @@ public class WebSurveyController {
 				 String typeArray[] = searchEntity.getType().split(",");
 				 map.put("type",Arrays.asList(typeArray));
 			     map.put("codeId", toUsers);
+			     map.put("state", searchEntity.getState());
 				PageInfo<WebSurvey> webSurveys = webSurveyService.selectRecordByArgMap(pageNum,pageSize,map);
 				return PageConvertUtil.grid(webSurveys);
 		 }
@@ -113,6 +135,6 @@ public class WebSurveyController {
 				return PageConvertUtil.emptyGrid();
 			 }
 		 }
-	}
+	     }
 	
 }

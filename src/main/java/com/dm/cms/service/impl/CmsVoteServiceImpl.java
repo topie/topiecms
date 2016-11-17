@@ -41,14 +41,12 @@ public class CmsVoteServiceImpl implements CmsVoteService {
 		if (user != null)
 			record.setCreateUser(user.getCode());
 		record.setCreateTime(new Date());
-		record.setStatus("0");
 		record.setFiled3("0");
 		this.cmsVoteMapper.insertSelective(record);
 	}
 
 	@Override
 	public void update(CmsVote record) {
-		record.setStatus("0");
 		this.cmsVoteMapper.updateByPrimaryKeySelective(record);
 
 	}

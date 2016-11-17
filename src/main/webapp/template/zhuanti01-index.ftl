@@ -1,10 +1,7 @@
 <!DOCTYPE html>
          <html>
          <head lang="en">
-             <meta charset="UTF-8">
-             <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-             <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-             <meta http-equiv="X-UA-Compatible" content="IE=9" />
+             <#include "/template/jh-meta.ftl">
 	     <meta name="keywords" content="${channel.displayName}">
              <title>${site.displayName}-${channel.displayName}</title>
              <link href="/html/jinhu-static-z01/bootstrap/css/bootstrap.min.css" rel="stylesheet">

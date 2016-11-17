@@ -319,12 +319,7 @@
                 format: 'YYYY-MM-DD hh:mm:ss'
             });
         });
-		$('input[role="date-picker1"]').on("click", function () {
-            laydate({
-                istime: true,
-                format: 'YYYY-MM-DD hh:mm:ss'
-            });
-        });
+		
 		currentInterviewId='${model.id}';
 		about_grid = $("#about_grid").dmGrid(aboutoptions(currentInterviewId));
 		image_grid = $("#image_grid").dmGrid(imageoptions(currentInterviewId));
@@ -907,20 +902,15 @@
 							required : true
 						},
 						message : {
-							required : "请输入"
+							required : "请选择"
 						}
 					}
 					,{	type : 'datepicker',//类型
 						name : 'publishTime',//name
 						id : 'publishTime',//id
-						label : '发布时间',//左边label
+						label : '发言时间',//左边label
 						cls : 'input-large',
-						rule : {
-							required : true
-						},
-						message : {
-							required : "请输入"
-						}
+						placeholder:"不填写默认为当前时间"
 						},{
 							type : 'textarea',//类型
 							name : 'content',//name

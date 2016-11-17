@@ -1,10 +1,7 @@
 <!DOCTYPE html>
            <html>
            <head lang="en">
-               <meta charset="UTF-8">
-               <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-               <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-               <meta http-equiv="X-UA-Compatible" content="IE=9" />
+               <#include "/template/jh-meta.ftl">
                <title>${site.displayName}-${channel.displayName}</title>
                <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
                <link href="/html/jinhu-static/css/style.ts.css" rel="stylesheet">
@@ -22,24 +19,24 @@
                
                <div class="jh-main">
                    <div class="fontSize18 new-list2-t">在线访谈</div>
-           		<@interviewListDirective channelId=51 pageSize=10 pageNum=channel.pageNum>
+           		<@interviewListDirective channelId=51 pageSize=10 pageNum=pageNum>
                    <table class="table table-bordered table-hover table1">
                        <thead>
                        <tr>
-                           <th class="text-center">访谈标题</th>
-                           <th class="text-center">邀请嘉宾</th>
-                           <th class="text-center">访谈时间</th>
+                           <th class="text-center" style="width:25%;">访谈标题</th>
+                           <th class="text-center" style="width:60%;">邀请嘉宾</th>
+                           <th class="text-center" style="width:15%;">访谈时间</th>
                        </tr>
                        </thead>
                        <tbody>
            			
-           				<#list cmsInterviews as v>
+           		 <#list cmsInterviews as v>
                        <tr>
                            <td><a href="${v.url!}" target="_blank">${v.title!}</a></td>
                            <td>${v.guests!}</td>
                            <td class="text-center">${v.startTime?substring(0,10)}</td>
                        </tr>
-           				</#list>
+           		 </#list>
                        
                        </tbody>
                    </table>
@@ -48,7 +45,6 @@
                    </div>
            		</@interviewListDirective>
                
-                   <#include "/template/jh-links.ftl">
           </div>
            <#include "/template/jh-footer.ftl">
              </div>

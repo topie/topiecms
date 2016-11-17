@@ -48,7 +48,7 @@ public class SearchListDirective implements TemplateDirectiveModel {
 		Integer pageNum = params.get("pageNum") == null ? 1 : Integer
 				.valueOf(params.get("pageNum").toString());
 		String entity = params.get("entity")== null ? "cmsContent":params.get("entity").toString();
-		Map map = searchConfigService.searchResults("*", pageNum, pageSize,sortField,entity,null, null);
+		Map map = searchConfigService.searchResults("*","", pageNum, pageSize,sortField,entity,null, null);
 		// long total = page.getTotal();
 		List<SearchResult> list = (List<SearchResult>)map.get("list");
 		for(SearchResult s:list){

@@ -66,4 +66,13 @@ public class CmsAdvertisingServiceImpl implements CmsAdvertisingService {
 		
 	}
 
+	@Override
+	public PageInfo<CmsAdvertising> findCmsAdvertisingByPageForPortal(int pageNum,
+			Integer pageSize, Map map) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<CmsAdvertising> list = this.cmsAdvertisingMapper.findByArgMapForProtal(map);
+		PageInfo<CmsAdvertising> page = new PageInfo<CmsAdvertising>(list);
+		return page;
+	}
+
 }

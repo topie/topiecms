@@ -108,8 +108,8 @@
 						 configForm = configForm + '<option value="'+data[i].id+'">'+data[i].name+'</option>';
 							 }
 						 
-						 configForm = configForm +'</select></div>'
-						              +'<div class="form-actions" style="margin-left:50px;">'
+						 configForm = configForm +'</select></div><div style="float:left;margin-left:100px;">显示ip:<input type="checkbox" name="isShowIp" value="1" /></div>'
+						              +'<div class="form-actions" style="text-align:center;">'
 						              +'<button class="btn blue btn-lg" role="submit" type="button" onclick="configSave()">保存</button>'
 						              //+'<button class="btn default btn-lg" type="button">关闭</button>'
 						             + '<input type="hidden" name="userId" id="userId" />'
@@ -619,6 +619,10 @@
 						if(data.orgId)
 						 {
 				          $("#orgIds").val(data.orgId.split(","));
+						 }
+						if(data.isShowIp=="1")
+						 {
+				          $("[name='isShowIp']").attr("checked", true);
 						 }
 						}
 			         }

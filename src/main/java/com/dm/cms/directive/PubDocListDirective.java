@@ -91,7 +91,7 @@ public class PubDocListDirective implements TemplateDirectiveModel{
 			
 			if(fattitle &&ce.getTitle().length()>titleLeft)
 			{
-				doc.put("title",(ce.getTitle().substring(0,titleLeft)+"……"));
+				doc.put("title",(ce.getTitle().substring(0,titleLeft)));
 			}
 			docs.add(doc);
 		}

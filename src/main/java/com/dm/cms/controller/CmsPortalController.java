@@ -50,9 +50,11 @@ import com.dm.cms.service.CmsSiteService;
 import com.dm.cms.service.CmsTemplateService;
 import com.dm.cms.service.CmsVideoService;
 import com.dm.cms.service.CmsVoteService;
+import com.dm.module.service.MicrocobolService;
 import com.dm.platform.model.Org;
 import com.dm.platform.service.OrgService;
 import com.dm.platform.util.DmDateUtil;
+import com.dm.platform.util.RequestUtil;
 import com.dm.platform.util.ResponseUtil;
 import com.dm.search.model.SearchResult;
 import com.dm.search.service.SearchConfigService;
@@ -101,6 +103,9 @@ public class CmsPortalController {
 	SearchConfigService searchConfigService;
 	@Autowired
 	WebSurveyService webSurveyService;
+	@Autowired
+	private MicrocobolService microcobolService;
+	
 	 @Autowired LeaderService leaderService;
 	 @Autowired
 	OrgService orgService;
@@ -190,12 +195,15 @@ public class CmsPortalController {
 		}
 	}
 	
+
 	@RequestMapping("/websurvey/add")
-	public String add(Model model,WebSurvey webSurvey)
+	public String add(Model model,WebSurvey webSurvey,HttpServletRequest request)
 	{
+		webSurvey.setIp(RequestUtil.getIpAddress(request));
 		model.addAttribute("websurvey",webSurveyService.add(webSurvey));
 		return "/template/success";
 	}
+
 
 	@RequestMapping("/search.htm")
 	public String seach(Model model, Device device,String text) {
@@ -350,6 +358,21 @@ public class CmsPortalController {
 		model.addAttribute("webSurvey", webSur);
 		return "/template/result";
     }
+	@RequestMapping("/websurvey/isSatisfied")
+	@ResponseBody
+    public Object getLeader(Model model,String id,String isSatisfied)
+    {
+		if(id==null || id.equals("")){
+			return ResponseUtil.error();
+		}
+		WebSurvey webSur = webSurveyService.findOne(id);
+		if(webSur==null){
+			return ResponseUtil.error();
+		}
+		webSur.setIsSatisfied(isSatisfied);
+		this.webSurveyService.update(webSur);
+		return ResponseUtil.success();
+    }
 	
 	@RequestMapping("/leader/leaderfront")
     public String leaderfront(Model model,String id)
@@ -367,7 +390,7 @@ public class CmsPortalController {
 		List<SearchResult> news = new ArrayList<SearchResult>();
 		if(leader.getId()!=null){
 			try{
-				Map m = this.searchConfigService.searchResults(leader.getName(), 1, 10, null, null, null, null);
+				Map m = this.searchConfigService.searchResults(leader.getName(),null, 1, 10, null, null, null, null);
 				news = (List<SearchResult>)m.get("list");
 			}catch(RuntimeException e){
 			}
@@ -515,7 +538,7 @@ public class CmsPortalController {
 			return callback+"("+jsonObject.toString()+")";
 			//return callback+":({'status':'0','mes', '请输入搜索关键词！'})";
 		}
-		 map = searchConfigService.searchResults(textValue, pageNum, pageSize,sortField,entity,days,device);
+		 map = searchConfigService.searchResults(textValue,"", pageNum, pageSize,sortField,entity,days,device);
 		 map.put("pageNum",pageNum);
 		//return map;
 		JSONObject jsonObject = JSONObject.fromObject(map);
@@ -529,6 +552,7 @@ public class CmsPortalController {
 			@RequestParam(required=false,value="pageNum",defaultValue="1")Integer pageNum,
 			@RequestParam(required=false,value="pageSize",defaultValue="10")Integer pageSize,
 			@RequestParam(required=false,value="sortField",defaultValue="publishDate")String sortField,
+			@RequestParam(required=false,value="searchField",defaultValue="")String searchField,
 			@RequestParam(required=false,value="days")Integer days,
 			@RequestParam(required=false,value="contentValue")String contentValue,
 			@RequestParam(required=false,value="entity")String entity,Device device,
@@ -548,6 +572,9 @@ public class CmsPortalController {
 			map.put("total", 0);
 			map.put("status",0);
 			map.put("textValue", textValue);
+			map.put("days", days==null?0:days);
+			map.put("title", searchField.contains("title"));
+			map.put("content", searchField.contains("content"));
 			model.addObject("result",map);
 			model.setViewName("/template/jh-search");
 			return model; 
@@ -559,7 +586,10 @@ public class CmsPortalController {
 		map.put("nextPage", 1);
 		map.put("total", 0);
 		map.put("status",0);*/
-		Map map = searchConfigService.searchResults(textValue, pageNum, pageSize,sortField,entity,days,device);
+		Map map = searchConfigService.searchResults(textValue,searchField, pageNum, pageSize,sortField,entity,days,device);
+		map.put("days", days==null?0:days);
+		map.put("title", searchField.contains("title"));
+		map.put("content", searchField.contains("content"));
 		model.addObject("result",map);
 		model.setViewName("/template/jh-search");
 		log.debug("{}--contents",map.get("contents"));
@@ -577,6 +607,13 @@ public class CmsPortalController {
 		record = this.cmsInterviewService.loadOne(record.getId());
 		model.addObject("cmsInterview",record);
 		model.setViewName("template/jh-interview-question");
+		return model;
+	}
+	@RequestMapping("/microcobol/page.htm")
+	public Object microcobol(ModelAndView model){
+		/*Map record = this.microcobolService.selectAll();
+		model.addObject("microcobols",record);*/
+		model.setViewName("template/jh-weibo");
 		return model;
 	}
 	/*

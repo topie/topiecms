@@ -1,17 +1,16 @@
 <!DOCTYPE html>
               <html>
               <head lang="en">
-                  <meta charset="UTF-8">
-                  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-                  <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-                  <meta http-equiv="X-UA-Compatible" content="IE=9" />
+                   <#include "/template/jh-meta.ftl">
                   <title>${site.displayName}-${channel.displayName}</title>
                   <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
                   <link href="/html/jinhu-static/css/style.ts.css" rel="stylesheet">
+		  <link href="/html/jinhu-static/css/style.wq1.css" rel="stylesheet">
                   <!--[if lt IE 9]>
                   <script src="/html/jinhu-static/js/html5shiv.min.js"></script>
                   <script src="/html/jinhu-static/js/respond.min.js"></script>
                   <![endif]-->
+		  
               </head>
               <body>
               <#include "/template/jh-head.ftl">
@@ -25,9 +24,9 @@
               			<div class="panel-body">
                               <div class="row">
                                   <div class="col-md-5">
-                                      <a href="javascript:;" class="thumbnail thumbnails thumbnailb">
-                                          <img src="${channel.channelIcon!}">
-                                      </a>
+                                      <span class="thumbnail thumbnails thumbnailb">
+                                          <img src="${channel.channelIcon!}" height="180px">
+                                      </span>
                                   </div>
                                   <div class="col-md-7">
                                       <!-- Nav tabs -->
@@ -40,8 +39,8 @@
               							  <!-- Tab panes -->
               							<div class="tab-content navTab1-content pTextIndent">
               								<#list channels as channel>
-              									<div role="tabpanel" class="tab-pane ${(channel_index==0)?string('active','')}" id="chgk${channel.id}">
-              										${channel.contentText!}
+              									<div role="tabpanel"   class="tab-pane ${(channel_index==0)?string('active','')}" id="chgk${channel.id}">
+              										<div style="overflow: hidden;height: 146px;">${channel.contentText!}</div>
                                                   <a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>
               									</div>
               								</#list>
@@ -95,9 +94,10 @@
               										</div>
               									</div>
               									<div class="col-xs-7">
-              										${channel.contentText!}
-              										<!--${channel.displayName}-->
-              										<a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>
+										<div style="overflow: hidden;height: 147px;">${channel.contentText!}</div>
+                                                  <a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>
+              										<!--${channel.contentText!}
+              										<a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>-->
               									</div>
               								</div>
               							</div>
@@ -110,19 +110,43 @@
                       </div>
                       <div class="row">
                           <div class="col-md-4 pdTop1em">
-              			<@channelDirective channelId=10><!--城市荣誉-->
+              			<!--城市荣誉-->
                               <div class="panel panel-default panel2">
-                                  <div class="panel-heading panel2-t fontSize18"><a href="${channel.url}" target="_blank">${channel.displayName}</a></div>
-                                  <div class="panel-body">
-                                      <ul class="panel2-list panel2-list-sm">
-              						<@contentListDirective channelId=10 pageSize=9 pageNum=1 titleLeft=20 order=1>  				                             <#list contents as cmsContent>
-              							<li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">${cmsContent.title}</a></li>
+                                  <div class="panel-heading panel2-t fontSize18">城市荣誉</div>
+				  <div class="panel-body">
+                    	<div>
+                    	<div id="m_demo">
+                        	<div id="m_demo1">
+                        		<table cellpadding="0" cellspacing="0" width="100%" border="0">
+                                	<tbody>
+                                    	<tr>
+                                        	<td class="paddClass">
+                                            	<table cellpadding="0" cellspacing="0" width="100%" align="center"; border="0">
+                                                	<tbody>
+							<@contentListDirective channelId=10 pageSize=9 pageNum=1 titleLeft=20 order=1> 
+								<#list contents as cmsContent>
+								<tr>
+									<td class="tdClass panel2-list"><span class="jh-dotted">·</span>${cmsContent.title}</td>
+								</tr>
               							</#list> 
               						</@contentListDirective>
-                                      </ul>
-                                  </div>
+                                                    	
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="m_demo2">
+                                 
                               </div>
-              			</@channelDirective>
+              			<div id="m_demo3">
+                            </div>
+                          </div>
+			   </div>
+                          </div>
+			   </div>
                           </div>
                           <div class="col-md-8">
               			<@channelDirective channelId=9><!--社会事业-->
@@ -146,9 +170,10 @@
               										</div>
               									</div>
               									<div class="col-xs-7">
-              										${cmsContent.brief!}
-              										<!--${channel.displayName}-->
-              										<a href="${cmsContent.url}" target="_blank" class="navTab2-detail">【详细】</a>
+										
+										<div style="overflow: hidden;height:161px;">${cmsContent.brief!}</div>
+                                                  <a href="${channel.url}" target="_blank"  class="navTab2-detail">【详细】</a>
+              										
               									</div>
                                                  </#list>
                                                </@contentListDirective>
@@ -160,7 +185,7 @@
               			</@channelDirective>
                           </div>
                       </div>
-                  
+                  </div>
                      </div>
                  <#include "/template/jh-links.ftl">
               </div>
@@ -184,7 +209,29 @@
                           e.preventDefault();
                           $(this).tab('show');
                       });
+							
+				
+							
                   });
+		  var speed = 30;
+							var m_demo = document.getElementById("m_demo");
+							var m_demo2 = document.getElementById("m_demo2");
+							var m_demo1 = document.getElementById("m_demo1");
+							var m_demo3 = document.getElementById("m_demo3");
+							m_demo2.innerHTML = m_demo1.innerHTML;
+							m_demo3.innerHTML = m_demo1.innerHTML;
+							function Marquee1(){
+								if(m_demo2.offsetHeight - m_demo.scrollTop <= 0){
+									m_demo.scrollTop -= m_demo1.offsetHeight;
+									}
+								else{
+									 m_demo.scrollTop++;
+									}
+								
+								}
+								var myVar = setInterval(Marquee1 , speed);
+								 m_demo.onmouseover = function(){clearInterval(myVar);}
+								  m_demo.onmouseout = function(){myVar = setInterval(Marquee1 , speed);}
               </script>
               </body>
               </html>

@@ -96,6 +96,9 @@
 					    #{item}  
 					 </foreach>
 			    </if>
+			    <if test="forbidden!=null">
+			    	and forbidden = #{forbidden}
+			    </if>
 			     order by ${order}
         </where>
 	</select>

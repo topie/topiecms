@@ -85,7 +85,7 @@ private Logger log  = LoggerFactory.getLogger(NovelDirective.class);
 				{
 					if(ce.getName().length()>titleLeft)
 					{
-					 ce.setName(ce.getName().substring(0,titleLeft)+"……");
+					 ce.setName(ce.getName().substring(0,titleLeft));
 					}
 				}
 				int commentCount = cmsCommentService.selectCountByCmsContentId(ce.getId(),"6");

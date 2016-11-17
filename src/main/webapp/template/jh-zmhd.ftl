@@ -1,10 +1,7 @@
 <!DOCTYPE html>
                          <html>
                          <head lang="en">
-                         <meta charset="UTF-8">
-                         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-                         <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-                         <meta http-equiv="X-UA-Compatible" content="IE=9" />
+     <#include "/template/jh-meta.ftl">
                          <title>${site.displayName}-${channel.displayName}</title>
                          <link href="/html/jinhu-static/bootstrap2/css/bootstrap.min.css" rel="stylesheet">
                            <link href="/html/jinhu-static/css/style.ts.css" type="text/css" rel="stylesheet">
@@ -37,7 +34,7 @@
                   	    <li><span class="jh-dotted">·</span>主题： <a href="${v.url!}">${v.title!}</a></li>
                   	    <li><span class="jh-dotted">·</span>嘉宾：   ${v.guests!}</li>
                   	    <li><span class="jh-dotted">·</span>时间：   ${v.startTime!}—${v.endTime}</li>
-                       <li class="htAuto"><span class="jh-dotted">·</span>${v.desc!}</li>
+                       <li class="htAuto"><span class="jh-dotted">·</span>${v.desc?substring(0,130)!}</li>
                   	</#list>
                   </@interviewListDirective>
                                         
@@ -67,8 +64,8 @@
                              <div class="panel panel-default panel1"> 
                                <!-- Nav tabs -->
                                <ul class="nav nav-tabs fontSize16 navTab1 navTab3 navTab1s text-center" role="tablist" id="navTab1">
-                                 <li role="presentation" class="active"> <a href="#blqk" aria-controls="blqk" role="tab" data-toggle="tab">办理情况</a> </li>
-                                 <li role="presentation"> <a href="#lxhf" aria-controls="lxhf" role="tab" data-toggle="tab">来信回复选编</a> </li>
+                                 <li role="presentation" class="active"> <a href="#lxhf" aria-controls="lxhf" role="tab" data-toggle="tab">来信回复选编</a> </li>
+                                 <li role="presentation" > <a href="#blqk" aria-controls="blqk" role="tab" data-toggle="tab">办理情况</a> </li>
                                  <li class="navTab3-search">
                                    <form action="../../websurvey/findOne" class="form-inline form-inline1" id="emailForm">
                                     <label>信件查询</label>
@@ -82,9 +79,9 @@
                                </ul>
                                <!-- Tab panes -->
                                <div class="tab-content navTab1-content navTab3-content1 pTextIndent">
-                                 <div role="tabpanel" class="tab-pane active" id="blqk">
+                                 <div role="tabpanel" class="tab-pane" id="blqk">
 				 <@contentListDirective channelId=49 pageSize=5 pageNum=pageNum titleLeft=40 order=10>  
-				 <ul>
+				 <ul class="panel2-list">
                             			    <#list contents as cmsContent>
                                                             <li><span class="jh-dotted">·</span><a href="${cmsContent.url}">${cmsContent.title}</a></li>
                             			</#list> 
@@ -113,7 +110,7 @@
                                      </tbody>
                                    </table>-->
                                  </div>
-                                 <div role="tabpanel" class="tab-pane" id="lxhf">
+                                 <div role="tabpanel " class="tab-pane active" id="lxhf">
                                    <table class="table table-bordered table-hover table1">
                                      <thead>
                                        <tr>

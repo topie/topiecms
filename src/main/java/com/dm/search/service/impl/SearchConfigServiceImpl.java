@@ -166,7 +166,6 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		if (searchConfig.getId() != null && !searchConfig.getId().equals("")) {
 			searchConfigMapper.updateByPrimaryKey(searchConfig);
 		} else {
-			searchConfig.setId("123");
 			searchConfigMapper.insertSelective(searchConfig);
 		}
 		return true;
@@ -181,8 +180,12 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		String dateStr = sdf.format(date);
 		return sdf.parse(dateStr);
 	}
+	
+	public static void main(String[] args) {
+		new SearchConfigServiceImpl().searchResults("金湖", "content,title", 1, 10, null, null, null, null);
+	}
 	@Override
-	public Map searchResults(String textValue, Integer pageNum,
+	public Map searchResults(String textValue,String colum, Integer pageNum,
 			Integer pageSize, String sortField, String entity, Integer days,
 			Device device) {
 		/*if (!StringUtils.hasText(entity)) {
@@ -191,9 +194,11 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		/*if (entity.length() < 3)
 			entity = "cmsContent";*/
 		SearchConfig searchConfig = searchConfigMapper
-				.selectByPrimaryKey("123");
-//		SearchConfig searchConfig =new SearchConfig();
-//		searchConfig.setIpAddress("102.200.234.44:8983");
+			.selectByPrimaryKey("123");
+		/*SearchConfig searchConfig =new SearchConfig();
+		searchConfig.setIpAddress("http://10.2.30.17:8080");
+		searchConfig.setSnippets(1);
+		searchConfig.setSnippetsNum(5);*/
 		SolrClient solrClient = new HttpSolrClient(searchConfig.getIpAddress()
 				+ "/solr/cms_core");
 		if (!connectSolr(solrClient)) {
@@ -230,14 +235,31 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 		String ent = "*";
 		if(entity!=null&&!entity.equals(""))
 			ent = entity;
-		if (days != null)
+		if (days != null){
 			query.addFilterQuery("id:" + "*_" + ent
 					+ " AND publishDate:[NOW/DAY-" + days + "DAY TO *]");
-		else
+		}else{
 			query.addFilterQuery("id:" + "*_" + ent);
-		query.setQuery("text:" + textValue);
+		}
+		String q = "text:" + textValue;
+		if(colum==null || colum.equals("")){
+			q = "content:" + textValue+" OR title:"+textValue;
+		}else{
+			String[] list = colum.split(",");
+			q = "";
+			int i = 0;
+			for(String qt:list){
+				if(i>0){
+					q+=" OR ";
+				}
+				q += qt+":" + textValue;
+				i++;
+			}
+		}
+		query.setQuery(q);
+		
 		query.setStart((pageNum - 1) * pageSize);
-		if (sortField != null) {
+		/*if (sortField != null) {
 			String[] order = sortField.split("_");
 			if (order.length == 2) {
 				if (order[1].equals("asc")) {
@@ -246,7 +268,8 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 					query.setSort(order[0], ORDER.desc);
 				}
 			}
-		}
+		}*/
+		query.setSort("publishDate", ORDER.desc);
 		query.setRows(pageSize);
 		query.setHighlight(searchConfig.getHighlight() == null ? false
 				: searchConfig.getHighlight());
@@ -330,6 +353,10 @@ public class SearchConfigServiceImpl implements SearchConfigService {
 				}
 			}
 		}
+		/*for(SearchResult s: list){
+		System.out.println("content===="+s.getContent());
+		System.out.println("title===="+s.getTitle());
+		}*/
 		long perPage=1l;
 		if(pageNum-1>1){
 			perPage = pageNum-1;

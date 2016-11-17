@@ -50,6 +50,38 @@
     <!-- END THEME STYLES -->
     <link rel="shortcut icon" href="<%=basePath%>favicon.ico" />
 </head>
+<style type="text/css">   
+        #ie6-warning{background:#FF0; position:absolute;top:0; left:0;font-size:12px; line-height:24px; color:#F00; padding:0 10px; }  
+        #ie6-warning img{float:right; cursor:pointer; margin-top:4px;} 
+        #ie6-warning a{text-decoration:none;color:#2f0 !important}  
+</style>
+    
+	<!--[if lte IE 7]>   
+<div id="ie6-warning" style="z-index:100;">
+<img src="../../../images/cha.png" width="14" height="14" onclick="closeme();" alt="关闭提示" />
+您正在使用 Internet Explorer 7 低版本的IE浏览器。为更好的浏览本页，建议您将浏览器升级到 
+<a href="http://www.microsoft.com/china/windows/internet-explorer/ie8howto.aspx" target="_blank">IE8</a>  
+或以下浏览器：<a href="http://www.firefox.com.cn/download/">Firefox</a>/ <a href="http://www.google.cn/chrome"> Chrome</a>/ <a href="http://chrome.360.cn/index_main.html">360极速模式</a>
+</div>
+<script type="text/javascript">  
+    togo = 0; 
+    function closeme(){    
+        var div = document.getElementById("ie6-warning");    
+        div.style.display ="none";
+    };
+    function position_fixed(el, eltop, elleft){
+        // check if this is IE6
+        if(!window.XMLHttpRequest)
+            window.onscroll = function(){
+                el.style.top = (document.documentElement.scrollTop + eltop)+"px";
+                el.style.left = (document.documentElement.scrollLeft + elleft)+"px";
+            }
+        else 
+            el.style.position = "fixed";
+    };
+    position_fixed(document.getElementById("ie6-warning"),0, 0);
+</script>   
+<![endif]-->
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="login">
@@ -128,11 +160,11 @@
                        data-original-title="wechat" href="#"></a></li>
             </ul>
         </div> -->
-        <div class="create-account">
+        <!-- <div class="create-account">
             <p>
                 <a href="javascript:;" id="register-btn">注册账号</a>
             </p>
-        </div>
+        </div> -->
     </form>
     <!-- END LOGIN FORM -->
     <!-- BEGIN FORGOT PASSWORD FORM -->
@@ -151,65 +183,6 @@
         </div>
     </form>
     <!-- END FORGOT PASSWORD FORM -->
-    <!-- BEGIN REGISTRATION FORM -->
-    <form class="register-form" action="<%=basePath%>saveRegiest" method="post">
-        <div class="form-title">
-            <span class="form-title">注 册</span>
-        </div>
-        <p class="hint">请输入个人详细信息:</p>
-
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">姓名全称</label>
-            <input class="form-control placeholder-no-fix" type="text"
-                   placeholder="姓名全称" name="fullname"/>
-        </div>
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">电子邮箱</label> <input
-                class="form-control placeholder-no-fix" type="text"
-                placeholder="电子邮箱" name="email"/>
-        </div>
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">手机</label> <input
-                class="form-control placeholder-no-fix" type="text"
-                placeholder="手机" name="mobile"/>
-        </div>
-
-        <p class="hint">请填写账号信息:</p>
-
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">用户名</label>
-            <input class="form-control placeholder-no-fix" type="text"
-                   autocomplete="off" placeholder="用户名" id="username" name="username"/>
-        </div>
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">密码</label>
-            <input class="form-control placeholder-no-fix" type="password"
-                   autocomplete="off" id="register_password" placeholder="密码"
-                   name="password"/>
-        </div>
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">再次输入密码
-                Your Password</label> <input class="form-control placeholder-no-fix"
-                                             type="password" autocomplete="off"
-                                             placeholder="再次输入密码" name="rpassword"/>
-        </div>
-        <div class="form-group margin-top-20 margin-bottom-20">
-            <label class="check"> <input type="checkbox" name="tnc"/> <span
-                    class="loginblue-font">我同意 </span> <a href="#"
-                                                          class="loginblue-link">服务协议</a> <span
-                    class="loginblue-font">和</span> <a href="#"
-                                                       class="loginblue-link">隐私政策 </a> </label>
-
-            <div id="register_tnc_error"></div>
-        </div>
-        <div class="form-actions">
-            <button type="button" id="register-back-btn" class="btn btn-default">返回</button>
-            <button type="submit" id="register-submit-btn"
-                    class="btn btn-primary uppercase pull-right">完成注册
-            </button>
-        </div>
-    </form>
-    <!-- END REGISTRATION FORM -->
 </div>
 <div class="copyright hide">2015 © 中国. 金湖.
 </div>

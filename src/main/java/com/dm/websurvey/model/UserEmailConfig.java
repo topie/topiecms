@@ -8,6 +8,8 @@ public class UserEmailConfig {
     private String orgId;
 
     private String userId;
+    
+    private String isShowIp;
 
     public String getId() {
         return id;
@@ -40,4 +42,13 @@ public class UserEmailConfig {
     public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
     }
+
+	public String getIsShowIp() {
+		return isShowIp;
+	}
+
+	public void setIsShowIp(String isShowIp) {
+		this.isShowIp = isShowIp;
+	}
+    
 }

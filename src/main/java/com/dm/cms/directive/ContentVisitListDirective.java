@@ -127,7 +127,7 @@ public class ContentVisitListDirective implements TemplateDirectiveModel {
 			{
 				if(ce.getTitle().length()>titleLeft)
 				{
-					ce.setTitle(ce.getTitle().substring(0,titleLeft)+"……");
+					ce.setTitle(ce.getTitle().substring(0,titleLeft));
 				}
 			}
 		}

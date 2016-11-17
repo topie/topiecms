@@ -1,10 +1,7 @@
 <!DOCTYPE html>
  <html>
  <head lang="en">
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-     <meta http-equiv="X-UA-Compatible" content="IE=9" />
+      <#include "/template/jh-meta.ftl">
      <title>${site.displayName!}-投票结果</title>
      <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
      <link href="/html/jinhu-static/css/style.ts.css" rel="stylesheet">
@@ -19,7 +16,7 @@
  <div class="container bg-white">
      <div class="jh-main">
          <div class="panel panel-default panel2">
-             <div class="panel-heading panel2-t panel2-t1 fontSize18">政府信息公开专栏</div>
+             <div class="panel-heading panel2-t panel2-t1 fontSize18">网上调查</div>
              <div class="panel-body">
                  <div class="jh-article-title fontSize22 text-center color-green pdTop1em2"><span>${cmsVote.title!}</span></div>
                  <div class="jh-article-info text-center">
@@ -49,14 +46,13 @@
                          </table>
                          <div class="pdTop1em2 text-center">
                              
-                             <a class="btn btn-default btn-download" href="javascript:window.close();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;闭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                             <a class="btn btn-default btn-download" href="javascript:closewin();">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;闭&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
                          </div>
                      </div>
                  </div>
              </div>
          </div>
      </div>
-     <#include "/template/jh-links.ftl">
  </div>
  <#include "/template/jh-footer.ftl">
  <script type="text/javascript" src="/html/jinhu-static/js/jquery-1.12.1.min.js"></script>
@@ -79,6 +75,18 @@
              $(this).tab('show');
          });
      });
+     function closewin(){   
+           var browserName=navigator.appName;   
+           if (browserName=="Netscape") {   
+               var opened=window.open('about:blank','_self');  
+               opened.opener=null;  
+               opened.close();  
+           } else if(browserName=="Microsoft Internet Explorer") {   
+               window.opener=null;  
+               window.open('','_self');   
+               window.close();   
+           }  
+       }  
  </script>
  </body>
  </html>

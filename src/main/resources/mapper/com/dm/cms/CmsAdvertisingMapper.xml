@@ -9,23 +9,25 @@
     <result column="target" property="target" jdbcType="VARCHAR" />
     <result column="image_width" property="imageWidth" jdbcType="VARCHAR" />
     <result column="image_height" property="imageHeight" jdbcType="VARCHAR" />
-    <result column="startime" property="startime" jdbcType="VARCHAR" />
-    <result column="endtime" property="endtime" jdbcType="VARCHAR" />
+    <result column="startime" property="startime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
     <result column="type" property="type" jdbcType="VARCHAR" />
     <result column="site_id" property="siteId" jdbcType="BIGINT" />
     <result column="click_count" property="clickCount" jdbcType="INTEGER" />
     <result column="enabled" property="enabled" jdbcType="BIT" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="always_show" property="alwaysShow" jdbcType="BIT" />
+    <result column="lay_up" property="layUp" jdbcType="BIT" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, image_url, link, target, image_width, image_height, startime, endtime, 
-    type, site_id, click_count, enabled
+    type, site_id, click_count, enabled, seq, always_show, lay_up
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from cms_advertising
-    where id = #{id,jdbcType=BIGINT}
-    
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="findByArgMap" resultMap="BaseResultMap">
   	 select 
@@ -47,8 +49,35 @@
     <if test="model.endtime!=null ">
     	and endtime &gt; #{model.endtime}
     </if>
-    order by click_count,id
+    <if test="sort!=null">
+    	order by ${sort}
+    </if>
   </select>
+  <select id="findByArgMapForProtal"  resultMap="BaseResultMap">
+  	 select 
+    <include refid="Base_Column_List" />
+    from cms_advertising
+    where (site_id = #{model.siteId,jdbcType=INTEGER}
+    <if test="model.type!=null">
+    	and type = #{model.type}
+     </if>
+    <if test="model.enabled!=null">
+    	and enabled = #{model.enabled}
+    </if>
+    <if test="model.startime!=null">
+    	and startime &lt; #{model.startime}
+    </if>
+    <if test="model.endtime!=null ">
+    	and endtime &gt; #{model.endtime}
+    </if>
+    and lay_up =false)
+    or (site_id = #{model.siteId,jdbcType=INTEGER}
+    	<if test="model.type!=null">
+    	and type = #{model.type}
+    	</if>
+    	 and always_show =true and lay_up=false)
+    order by seq asc
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from cms_advertising
     where id = #{id,jdbcType=INTEGER}
@@ -58,12 +87,14 @@
       link, target, image_width, 
       image_height, startime, endtime, 
       type, site_id, click_count, 
-      enabled)
+      enabled, seq, always_show, lay_up
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, 
       #{link,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR}, #{imageWidth,jdbcType=VARCHAR}, 
-      #{imageHeight,jdbcType=VARCHAR}, #{startime,jdbcType=VARCHAR}, #{endtime,jdbcType=VARCHAR}, 
+      #{imageHeight,jdbcType=VARCHAR}, #{startime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
       #{type,jdbcType=VARCHAR}, #{siteId,jdbcType=BIGINT}, #{clickCount,jdbcType=INTEGER}, 
-      #{enabled,jdbcType=BIT})
+      #{enabled,jdbcType=BIT}, #{seq,jdbcType=INTEGER}, #{alwaysShow,jdbcType=BIT}, #{layUp,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.dm.cms.model.CmsAdvertising" >
     insert into cms_advertising
@@ -107,6 +138,15 @@
       <if test="enabled != null" >
         enabled,
       </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="alwaysShow != null" >
+        always_show,
+      </if>
+      <if test="layUp != null" >
+        lay_up,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -131,10 +171,10 @@
         #{imageHeight,jdbcType=VARCHAR},
       </if>
       <if test="startime != null" >
-        #{startime,jdbcType=VARCHAR},
+        #{startime,jdbcType=TIMESTAMP},
       </if>
       <if test="endtime != null" >
-        #{endtime,jdbcType=VARCHAR},
+        #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
@@ -147,6 +187,15 @@
       </if>
       <if test="enabled != null" >
         #{enabled,jdbcType=BIT},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="alwaysShow != null" >
+        #{alwaysShow,jdbcType=BIT},
+      </if>
+      <if test="layUp != null" >
+        #{layUp,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -172,10 +221,10 @@
         image_height = #{imageHeight,jdbcType=VARCHAR},
       </if>
       <if test="startime != null" >
-        startime = #{startime,jdbcType=VARCHAR},
+        startime = #{startime,jdbcType=TIMESTAMP},
       </if>
       <if test="endtime != null" >
-        endtime = #{endtime,jdbcType=VARCHAR},
+        endtime = #{endtime,jdbcType=TIMESTAMP},
       </if>
       <if test="type != null" >
         type = #{type,jdbcType=VARCHAR},
@@ -189,6 +238,15 @@
       <if test="enabled != null" >
         enabled = #{enabled,jdbcType=BIT},
       </if>
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="alwaysShow != null" >
+        always_show = #{alwaysShow,jdbcType=BIT},
+      </if>
+      <if test="layUp != null" >
+        lay_up = #{layUp,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -200,12 +258,15 @@
       target = #{target,jdbcType=VARCHAR},
       image_width = #{imageWidth,jdbcType=VARCHAR},
       image_height = #{imageHeight,jdbcType=VARCHAR},
-      startime = #{startime,jdbcType=VARCHAR},
-      endtime = #{endtime,jdbcType=VARCHAR},
+      startime = #{startime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
       type = #{type,jdbcType=VARCHAR},
       site_id = #{siteId,jdbcType=BIGINT},
       click_count = #{clickCount,jdbcType=INTEGER},
-      enabled = #{enabled,jdbcType=BIT}
+      enabled = #{enabled,jdbcType=BIT},
+      seq = #{seq,jdbcType=INTEGER},
+      always_show = #{alwaysShow,jdbcType=BIT},
+      lay_up = #{layUp,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

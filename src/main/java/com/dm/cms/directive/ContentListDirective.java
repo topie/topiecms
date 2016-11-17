@@ -68,10 +68,11 @@ public class ContentListDirective implements TemplateDirectiveModel{
 			orderby = "create_time desc";
 		}
 		Map map = new HashMap();
-		map.put("order", orderby);
+		map.put("sort", orderby);
 		CmsContent cmsContent = new CmsContent();
 		cmsContent.setChannelId(channelId);
 		cmsContent.setIsHtml(true);
+		cmsContent.setIsDelete(false);
 		map.put("model", cmsContent);
 		CmsChannel channel = cmsChannelService.findOneById(channelId);
 		PageInfo<CmsContent> page= cmsContentService.findCmsContentByPage(pageNum, pageSize, map);
@@ -83,7 +84,7 @@ public class ContentListDirective implements TemplateDirectiveModel{
 			for(CmsContent ce:contents)		{
 				if(ce.getTitle().length()>titleLeft)
 				{
-				 ce.setTitle(ce.getTitle().substring(0,titleLeft)+"……");
+				 ce.setTitle(ce.getTitle().substring(0,titleLeft));
 				}
 			}
 		}

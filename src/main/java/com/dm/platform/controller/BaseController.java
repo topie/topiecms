@@ -357,6 +357,9 @@ public class BaseController extends DefaultController {
 			Collections.sort(menuList, c);
 			for (UserMenu m : menuList) {
 				Map map = new HashMap();
+				if(m.getIsShow()==null || m.getIsShow().equals("0")){
+					continue;
+				}
 				map.put("id", m.getId());
 				map.put("name", m.getName());
 				if (m.getPuserMenu() != null) {

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,8 +45,24 @@ public class WebSurveyServiceImpl implements WebSurveyService{
 	{
 		WebSurvey webSurvey = webSurveyMapper.selectByPrimaryKey(id);
 		webSurvey.setRecontent(reContent);
+		webSurvey.setState("1");
 		webSurvey.setReplyDate(new Date());
 		webSurveyMapper.updateByPrimaryKeySelective(webSurvey);
+	}
+	
+	@Override
+	public void check(String id,String state)
+	{
+		if(!StringUtils.isEmpty(id))
+		{
+		String idArray[] = id.split(",");
+		for(String aId:idArray)
+			{
+			WebSurvey webSurvey = webSurveyMapper.selectByPrimaryKey(aId);
+			webSurvey.setState(state);
+			webSurveyMapper.updateByPrimaryKeySelective(webSurvey);
+			}
+		}
 	}
 
 	@Override
@@ -66,5 +83,11 @@ public class WebSurveyServiceImpl implements WebSurveyService{
 	public void delete(String id) {
 		// TODO Auto-generated method stub
 		webSurveyMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public void update(WebSurvey webSur) {
+		this.webSurveyMapper.updateByPrimaryKeySelective(webSur);
+		
 	}
 }

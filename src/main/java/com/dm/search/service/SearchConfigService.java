@@ -17,6 +17,6 @@ public interface SearchConfigService {
 //			String sortField, String titleValue, String contentValue,
 //			String entity);
 
-	Map searchResults(String textValue, Integer pageNum, Integer pageSize,
+	Map searchResults(String textValue, String colum, Integer pageNum, Integer pageSize,
 			String sortField, String entity, Integer days, Device device);
 }

@@ -17,7 +17,7 @@
 <!-- BEGIN HEAD -->
 <head>
 <meta charset="utf-8" />
-<title>后台管理 | 频道管理</title>
+<title>后台管理 | 友情链接</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 <meta content="" name="description" />
@@ -177,9 +177,9 @@
 				width : "10%",
 				format:function(i,c){
 					if(c.isShow=="1"){
-						return "是";
+						return "展示";
 					}
-					return "否";
+					return "隐藏";
 				}
 			},{
 				title : "类型",
@@ -201,7 +201,7 @@
 					if(c.type=="bdw"){
 						return "本地网站";
 					}
-					return "有误";
+					return "--";
 				}
 			},{
 				title : "顺序",
@@ -244,13 +244,26 @@
 				}
 			} ], 
 			search : {
-				rowEleNum : 2,
+				rowEleNum : 1,
+				hide:false,
 				//搜索栏元素
 				items : [ {
 					type : "text",
 					label : "名称",
 					name : "name",
+					cls:"form-control input-large",
 					placeholder : "输入要搜索的名称"
+				},{
+					type : 'radioGroup',//类型
+					name : 'type',//name
+					id : 'type',//id
+					label : '类型',//左边label 
+					items:[	{text:'全部',value:''},
+					       	{text:'中央部委网站',value:"zybw"},
+					       {text:'省（区市）网站',value:"sqs"},
+					       {text:'江苏省辖市网站',value:"jxs"},
+					       {text:'淮安市辖县区网站',value:"hxx"},
+					       {text:'本地网站 ',value:"bdw"}]
 				} ]
 			}
 		};

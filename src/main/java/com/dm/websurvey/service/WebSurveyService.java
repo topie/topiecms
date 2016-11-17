@@ -17,6 +17,10 @@ public interface WebSurveyService {
 	WebSurvey findOne(String id);
 
 	void delete(String id);
+
+	void update(WebSurvey webSur);
+
+	void check(String id, String state);
 	
 
 }

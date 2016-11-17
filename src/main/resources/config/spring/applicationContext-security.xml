@@ -13,9 +13,9 @@
     <sec:http pattern="/cmsStatic/**" security="none"/>
     <sec:http pattern="/checkunique" security="none"/>
     <sec:http pattern="/login" security="none"/>
-    <sec:http pattern="/regiest" security="none"/>
+    <!-- <sec:http pattern="/regiest" security="none"/>
     <sec:http pattern="/saveRegiest" security="none"/>
-    <sec:http pattern="/ajaxSaveRegister" security="none"/>
+    <sec:http pattern="/ajaxSaveRegister" security="none"/> -->
     <sec:http pattern="/resetPassword" security="none"/>
     <sec:http pattern="/portal/**" security="none"/>
     <sec:http pattern="/searchConfig/search" security="none"/>

@@ -26,18 +26,23 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dm.cms.util.ImageUtils;
 import com.dm.platform.model.FileEntity;
 import com.dm.platform.service.FileService;
 import com.dm.platform.util.ConfigUtil;
 import com.dm.platform.util.DmDateUtil;
 import com.dm.platform.util.UserAccountUtil;
+import com.dm.search.model.SearchConfig;
+import com.dm.search.service.SearchConfigService;
 
 
 @Controller @RequestMapping("/KE") public class KEController {
@@ -56,6 +61,9 @@ import com.dm.platform.util.UserAccountUtil;
       
       @Value("${projectName}")
       String projectName;
+      
+      @Autowired
+      SearchConfigService searchConfigService;
       
 
     @RequestMapping(value = "/file_upload", method = RequestMethod.POST)
@@ -164,6 +172,10 @@ import com.dm.platform.util.UserAccountUtil;
                 fileService.insert(entity);
             } catch (Exception e) {
                 writer.println(getError("上传文件失败。"));
+            }
+            if(dirName.equals("image"))
+            {
+            	backImage(savePath + newFileName);
             }
             JSONObject msg = new JSONObject();
             msg.put("error", 0);
@@ -349,6 +361,15 @@ import com.dm.platform.util.UserAccountUtil;
         }
     }
 
+    @Async
+    private void backImage(String imagePath)
+    {
+      SearchConfig searchConfig = searchConfigService.findConfig("imageId");
+      if(searchConfig.getHighlight().booleanValue())
+      {
+      ImageUtils.markImageByIcon(searchConfig.getIpAddress(),imagePath,searchConfig.getSnippets(),imagePath);
+      }
+    }
 
     @SuppressWarnings("rawtypes") class TypeComparator implements Comparator {
         public int compare(Object a, Object b) {

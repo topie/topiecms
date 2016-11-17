@@ -1,10 +1,7 @@
 <!DOCTYPE html>
         <html>
         <head lang="en">
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-            <meta http-equiv="X-UA-Compatible" content="IE=9" />
+            <#include "/template/jh-meta.ftl">
             <title>${site.displayName!}-${cmsContent.title!}</title>
           	<meta name="keywords" content="${cmsContent.keywords!}" />
             <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -43,6 +40,7 @@
 <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 			
 		</div>
+		</div>
                <!--<div class="thumbnail jh-article-thumbnail">
         	<#if cmsContent.titleImageUrl?? &&(cmsContent.titleImageUrl!='')>
                
@@ -50,7 +48,8 @@
                 
         	</#if>
                  </div>-->
-                <div class="jh-article-p">
+                <div class="jh-article-p" style="min-height: 380px;">
+		</br>
                     ${cmsContent.contentText?default("")}
                 </div>
             </div>
@@ -59,7 +58,7 @@
         				   <#list cmsAttachments as cmsAttachment>
         				  
         				   <a href='${cmsAttachment.attachmentUrl}'><div class="btn btn-default btn-lg btn-download">
-        				   <span class="glyphicon glyphicon-save-file"></span><span>&nbsp; 
+        				   <span class="glyphicon glyphicon-save-file"></span><span style="font-size: 1.3ex;">&nbsp; 
         				   ${cmsAttachment.attachmentName?default("未命名")}
         				   &nbsp;</span>
         				   </div></a>
@@ -69,7 +68,7 @@
         		  
         	 </#if>
          
-            <#include "/template/jh-links.ftl">
+            
         </div>
         <#include "/template/jh-footer.ftl">
         <script type="text/javascript" src="/html/jinhu-static/js/jquery-1.12.1.min.js"></script>

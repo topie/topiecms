@@ -43,19 +43,19 @@ public class AdvertisingListDirective implements TemplateDirectiveModel {
 		Long siteId = Long.valueOf(params.get("siteId").toString());
 		CmsAdvertising ad = new CmsAdvertising();
 		ad.setSiteId(siteId);
-		ad.setEnabled(true);
-		if (params.get("checkDate") != null
-				&& Boolean.valueOf(params.get("checkDate").toString())) {
+		//ad.setEnabled(true);
+		/*if (params.get("checkDate") != null
+				&& Boolean.valueOf(params.get("checkDate").toString())) {*/
 			Date now = new Date();
 			ad.setStartime(DmDateUtil.DateToStr(now));
 			ad.setEndtime(DmDateUtil.DateToStr(now));
-		}
+		//}
 		if (params.get("type") != null) {
 			ad.setType(params.get("type").toString());
 		}
 		Map map = new HashMap();
 		map.put("model", ad);
-		PageInfo<CmsAdvertising> page = this.cmsAdvertisingService.findCmsAdvertisingByPage(1, pageSize, map);
+		PageInfo<CmsAdvertising> page = this.cmsAdvertisingService.findCmsAdvertisingByPageForPortal(1, pageSize, map);
 		List<CmsAdvertising> ads = page.getList();
 		env.setVariable("advertisings",
 				ObjectWrapper.DEFAULT_WRAPPER.wrap(ads));

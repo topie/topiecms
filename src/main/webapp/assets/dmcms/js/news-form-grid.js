@@ -16,9 +16,16 @@ function dateTostr(utc)
 function flushGrid()
 {
 	$("#content_grid").html("");
+	if(currentChannelIsParent){
+		currentChannelId="";
+	}
 	if (currentChannelType == '0') {
-		options.url = "./list?channelId=" + currentChannelId;
-		grid = $("#content_grid").dmGrid(options);
+		 var action = "./list?channelId=" + currentChannelId;
+		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,currentChannelType));
+	} 
+	if (currentChannelType == '11') {
+		 var action = "./list?channelId=" + currentChannelId;
+		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,currentChannelType));
 	}
 	if (currentChannelType == '2') {
 		$("#content_grid").html('<div class="note note-success note-bordered">'
@@ -27,8 +34,8 @@ function flushGrid()
 						+'</p></div>');
 	}
 	if (currentChannelType == '4') {
-		options.url = "./list?channelId=" + currentChannelId;
-		grid = $("#content_grid").dmGrid(options);
+		var action= "./list?channelId=" + currentChannelId;
+		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,currentChannelType));
 	}
 	if (currentChannelType == '3') {
 		$("#content_grid").html('<div class="note note-success note-bordered">'
@@ -37,9 +44,9 @@ function flushGrid()
 						+'</p></div>');
 	}
 	else if (currentChannelType == '5') {
-		videoOptions.url = "../video/list?channelId="
+		var action = "../video/list?channelId="
 				+ currentChannelId;
-		grid = $("#content_grid").dmGrid(videoOptions);
+		grid = $("#content_grid").dmGrid(getvideoOptions(action,hasPublishRole));
 	} else if (currentChannelType == '6') {
 		audioOptions.url = "../audio/list?channelId="
 				+ currentChannelId;
@@ -63,8 +70,8 @@ function flushGrid()
 		grid = $("#content_grid").dmGrid(voteOptions);
 	}else if (currentChannelType == '10') {
 		$("#content_grid").html("");
-		fileoptions.url = "./list?channelId=" + currentChannelId;
-		grid = $("#content_grid").dmGrid(fileoptions);
+		var action = "./list?channelId=" + currentChannelId;
+		grid = $("#content_grid").dmGrid(getfileoptions(action,hasPublishRole));
 	}
 }
 var channelSetting = {
@@ -240,8 +247,131 @@ function refreshSite() {
 }
 
 /** **********普通新闻表格选项*************** */
+function getnewsoption(action,hasPublishRole,currentChannelType){
+var actionColoums =[{
+	text : "预览",
+	cls : "green btn-sm",
+	icon : "fa fa-search",
+	handle : function(index, data) {
+		window.open(data.url);
+	}
+}, {
+
+	text : "编辑",
+	cls : "green btn-sm",
+	visable : function(i, c) {
+		/*if (c.status == "1")
+			return false;*/
+		return true;
+	},
+	handle : function(index, data) {
+		// index为点击操作的行数
+		// data为该行的数据
+		/*modal = $.dmModal({
+			id : "siteForm",
+			title : "编辑内容信息-" + data.title,
+			distroy : true
+		});
+		modal.show();*/
+		$("#content_grid").html("");
+		form = $("#content_grid").dmForm(getForm(data.contentType,hasPublishRole,currentChannelType));
+		form.loadRemote("./load?contentId=" + data.id,function(){
+			if(data.titleStyle){
+				var color = data.titleStyle.split(";");
+				$("#titleStyle").val((color[0].split(":"))[1]);
+				$("select[name='titleStyle']")[0].value = (color[1].split(":"))[1];
+			}
+			var l = dateTostr(data.publishDate);
+			$("#publishDate").val(l);
+		});
+		
+	}
+}, {
+	text : "排序",
+	cls : "yellow btn-sm",
+	handle : function(i, c) {
+		sortfun(i, c,c.title);
+	}
+} ];
+
+if(hasPublishRole){
+actionColoums.push({
+	text:"发布",
+	cls:"green btn-sm",
+	handle : function(i, data) {
+		bootbox.confirm("确定发布?",function(res){
+			if(res){
+		var url = "./check?status=2&ids="+data.id;
+		$.ajax({
+			url:url,
+			type:'POST',
+			success:function(res){
+				bootbox.alert(res.msg);
+				flushGrid();
+			}
+		});
+			}
+		});
+	}
+});
+}
+var tools=[// 工具属性
+       	/*{
+   		text : "添加",
+   		cls : "btn green btn-sm",
+   		handle : function(grid) {// 按钮点击事件
+   			if(currentChannelId==undefined)
+   				bootbox.alert("请先选择频道");
+   			else
+   				showForm(0, "文本内容");
+   		}
+   	},*/ {
+   		text : "移动",
+   		cls : "btn green btn-sm",
+   		handle : function(grid) {
+   			cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../content/cutTo");
+   		}
+   	}, {
+   		text : "复制",
+   		cls : "btn green btn-sm",
+   		handle : function(grid) {
+   			cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../content/copyTo");
+   		}
+   	},{
+   		text : " 删 除",
+   		cls : "btn red btn-sm",// 按钮样式
+   		handle : function(grid) {
+   			deleteItems(grid.getSelectIds());
+   		}
+   	} ];
+if(!hasPublishRole){
+	tools.push( {
+	   		text : "提交",
+	   		cls : "btn green btn-sm",
+	   		handle : function(grid) {
+	   			var ids = grid.getSelectIds();
+	   			if (ids.length > 0) {
+	   				var url = "./commit?contentId=" + ids;
+	   				$.ajax({
+	   					url : url,
+	   					type : "POST",
+	   					dataType : "json",
+	   					success : function(res) {
+	   						bootbox.alert(res.msg);
+	   						grid.reload();
+	   					},
+	   					error : function() {
+	   						bootbox.alert("请求异常！");
+	   					}
+	   				});
+	   			} else {
+	   				bootbox.alert("请选择要提交的项");
+	   			}
+	   		}
+	   	});
+}
 var options = {
-	url : "./list", // ajax地址
+	url : action, // ajax地址
 	pageNum : 1,// 当前页码
 	pageSize : 5,// 每页显示条数
 	idFiled : "id",// id域指定
@@ -257,6 +387,10 @@ var options = {
 	}, {
 		title : "来源",
 		field : "origin",
+		sort : true
+	}, {
+		title : "作者",
+		field : "author",
 		sort : true
 	}, {
 		title : "状态",
@@ -275,51 +409,7 @@ var options = {
 	} ],
 	actionCloumText : "操作",// 操作列文本
 	actionCloumWidth : "30%",
-	actionCloums : [ {
-		text : "预览",
-		cls : "green btn-sm",
-		icon : "fa fa-search",
-		handle : function(index, data) {
-			window.open(data.url);
-		}
-	}, {
-
-		text : "编辑",
-		cls : "green btn-sm",
-		visable : function(i, c) {
-			if (c.status == "1")
-				return false;
-			return true;
-		},
-		handle : function(index, data) {
-			// index为点击操作的行数
-			// data为该行的数据
-			/*modal = $.dmModal({
-				id : "siteForm",
-				title : "编辑内容信息-" + data.title,
-				distroy : true
-			});
-			modal.show();*/
-			$("#content_grid").html("");
-			var form = $("#content_grid").dmForm(getForm(data.contentType));
-			form.loadRemote("./load?contentId=" + data.id,function(){
-				if(data.titleStyle){
-					var color = data.titleStyle.split(";");
-					$("#titleStyle").val((color[0].split(":"))[1]);
-					$("select[name='titleStyle']")[0].value = (color[1].split(":"))[1];
-				}
-				var l = dateTostr(data.publishDate);
-				$("#publishDate").val(l);
-			});
-			
-		}
-	}, {
-		text : "排序",
-		cls : "yellow btn-sm",
-		handle : function(i, c) {
-			sortfun(i, c,c.title);
-		}
-	} ],
+	actionCloums : actionColoums,
 	dropdowns:{
 	    text:"添加",     
 	    cls:"green btn-sm",
@@ -333,7 +423,10 @@ var options = {
 				else if(currentChannelIsParent)
 					bootbox.alert("请选择子频道进行添加!");
 				else{
-				showForm('0',"普通内容");
+					$("#content_grid").html("");
+					form = $("#content_grid").dmForm(getForm('0',hasPublishRole,currentChannelType));
+					form.loadLocal({"channelId":currentChannelId,"contentType":"10"});
+				//showForm('0',"普通内容");
 				}
 			}
 		},
@@ -353,58 +446,7 @@ var options = {
 		}
 		]
 },
-	tools : [// 工具属性
-	/*{
-		text : "添加",
-		cls : "btn green btn-sm",
-		handle : function(grid) {// 按钮点击事件
-			if(currentChannelId==undefined)
-				bootbox.alert("请先选择频道");
-			else
-				showForm(0, "文本内容");
-		}
-	},*/ {
-		text : "移动",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../content/cutTo");
-		}
-	}, {
-		text : "复制",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../content/copyTo");
-		}
-	}, {
-		text : "提交",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			var ids = grid.getSelectIds();
-			if (ids.length > 0) {
-				var url = "./commit?contentId=" + ids;
-				$.ajax({
-					url : url,
-					type : "POST",
-					dataType : "json",
-					success : function(res) {
-						bootbox.alert(res.msg);
-						grid.reload();
-					},
-					error : function() {
-						bootbox.alert("请求异常！");
-					}
-				});
-			} else {
-				bootbox.alert("请选择要提交的项");
-			}
-		}
-	}, {
-		text : " 删 除",
-		cls : "btn red btn-sm",// 按钮样式
-		handle : function(grid) {
-			deleteItems(grid.getSelectIds());
-		}
-	} ],
+	tools :tools ,
 	search : {
 		rowEleNum : 2,
 		// 搜索栏元素
@@ -416,10 +458,41 @@ var options = {
 		} ]
 	}
 };
+return options;
+}
 // form
 /** **************普通内容表单选项*************** */
-function getForm(contentType) {
-	
+function getForm(contentType,hasPublishRole,currentChannelType) {
+	var buttons = [];
+	if(hasPublishRole){
+		buttons.push(
+		{
+			type : 'submit',
+			attribute:'role=submit',
+			cls:'blue btn-lg',
+			text : '直接发布',
+			handle : function() {
+				form.setAction("./saveAndPublish");
+			}
+		});
+	}else{
+		buttons.push( {
+			type : 'submit',
+			attribute:'role=submit',
+			cls:'blue btn-lg',
+			text : '提交审核',
+			handle : function() {
+				form.setAction("./saveAndCommit");
+			}
+		} );
+	}
+	buttons.push({
+		type : 'button',
+		text : '关闭',
+		handle : function() {
+			flushGrid();
+		}
+	} );
 	if(contentType=='2')
 	{
 	var formOpts = {
@@ -440,13 +513,7 @@ function getForm(contentType) {
 			showReset : true,// 是否显示重置按钮
 			resetText : "重置",// 重置按钮文本
 			isValidate : true,// 开启验证
-			buttons : [ {
-				type : 'button',
-				text : '关闭',
-				handle : function() {
-					flushGrid();
-				}
-			} ],
+			buttons : buttons,
 			buttonsAlign : "center",
 			// 表单元素
 			items : [
@@ -522,17 +589,21 @@ function getForm(contentType) {
 								text : '50px'
 							}]
 						},{
+							type : 'datepicker',//类型
+							name : 'publishDate',//name
+							id : 'publishDate',//id
+							label : '发布时间',//左边label
+							cls : 'input-large'
+						},{
 							type : 'text',// 类型
 							name : 'origin',// name
 							id : 'origin',// id
 							label : '来源',// 左边label
 							cls : 'input-large',
 							rule : {
-								required : true,
 								maxlength : 12
 							},
 							message : {
-								required : "请输入来源信息",
 								maxlength : "最多输入12字节"
 							}
 						},
@@ -544,11 +615,11 @@ function getForm(contentType) {
 								cls : 'input-large',
 								rule : {
 									required : true,
-									maxlength : 256
+									maxlength : 356
 								},
 								message : {
 									required : "请输入链接",
-									maxlength : "最多输入256字符"
+									maxlength : "最多输入356字符"
 								}
 							}
 					]
@@ -557,6 +628,11 @@ function getForm(contentType) {
 	}
 	
 	var items = [
+	             {
+	            	 type:'hidden',
+	            	 name:'specialNeeds',
+	            	 id:'specialNeeds'
+	             },
 			{
 				type : 'hidden',
 				name : 'id',
@@ -646,11 +722,9 @@ function getForm(contentType) {
 				label : '摘要',// 左边label
 				cls : 'input-large',
 				rule : {
-					required : true,
-					maxlength : 100
+					maxlength : 400
 				},
 				message : {
-					required : "请输入内容信息摘要",
 					maxlength : "最多输入100个字"
 				}
 			},
@@ -667,12 +741,10 @@ function getForm(contentType) {
 				label : '作者',//左边label
 				cls : 'input-large',
 				rule : {
-					required : true,
-					maxlength : 12
+					maxlength : 30
 				},
 				message : {
-					required : "请输入作者信息",
-					maxlength : "最多输入12字节"
+					maxlength : "最多输入30字节"
 				}
 			},{
 				type : 'text',// 类型
@@ -681,27 +753,12 @@ function getForm(contentType) {
 				label : '来源',// 左边label
 				cls : 'input-large',
 				rule : {
-					required : true,
-					maxlength : 12
+					maxlength : 20
 				},
 				message : {
-					required : "请输入来源信息",
-					maxlength : "最多输入12字节"
+					maxlength : "最多输入20字节"
 				}
-			},/*{
-				type : '',
-				name : 'contentType',
-				id : 'contentType',
-				label : '是否头条',
-				cls : 'input-large',
-				items : [ {
-					value : '0',
-					text : '否'
-				},{
-					value : '4',
-					text : '是'
-				}]
-			},*/
+			},
 			{
 				type : 'select',
 				name : 'templateId',
@@ -714,19 +771,6 @@ function getForm(contentType) {
 				} ],
 				itemsUrl : "../template/selects?templateType=2&siteId="
 						+ currentSiteId
-			},{
-				type : 'select',// 类型
-				name : 'isComment',// name
-				id : 'isComment',// id
-				label : '是否开启评论',// 左边label
-				cls : 'input-large',
-				items : [ {
-					value : false,
-					text : '否'
-				},{
-					value : true,
-					text : '是'
-				} ]
 			}];
 	var titleImg = {
 		type : 'image',
@@ -768,13 +812,13 @@ function getForm(contentType) {
 		id : 'contentText',
 		label : '内容文本',
 		height : "300px",
-		width : "500px",
+		width : "500px"/*,
 		rule : {
 			required : true
 		},
 		message : {
 			required : "请输入内容文本"
-		}
+		}*/
 	};
 	var offic = {
 		type : 'files',
@@ -795,12 +839,33 @@ function getForm(contentType) {
 		label : '上传附件',
 		detail : "最多上传3个附件"
 	};
+	if(currentChannelType ==11){ 
+		items.push({
+			type : 'checkboxGroup',
+			name : 'specialNeeds',
+			id : 'specialNeeds',
+			label : '相关设置',
+			cls : 'input-large',
+			items : [ {
+				value : '1',
+				text : '头条展示'
+			},{
+				value : '2',
+				text : '幻灯片展示'
+			}/*,{
+				value : '3',
+				text : '开启评论'
+			}*/]
+		});  
+	}
 	if (contentType == 0) {
 		items.push(titleImg);
 		items.push(titleImgTitle);
 		items.push(contentText);
 		items.push(offic);
 	}
+
+	
 	var formOpts = {
 		id : "site_form",// 表单id
 		name : "site_form",// 表单名
@@ -820,21 +885,7 @@ function getForm(contentType) {
 		resetText : "重置",// 重置按钮文本
 		isValidate : true,// 开启验证
 		buttonsAlign : "center",
-		buttons : [ {
-			type : 'button',
-			text : '关闭',
-			handle : function() {
-				flushGrid();
-			}
-		} ],
-		// 表单元素
-		buttons : [ {
-			type : 'button',
-			text : '关闭',
-			handle : function() {
-				flushGrid();
-			}
-		} ],
+		buttons : buttons,
 		items : items
 	};
 	return formOpts;
@@ -842,7 +893,35 @@ function getForm(contentType) {
 
 
 /** **************容表单选项*************** */
-function getFileForm(contentType) {
+function getFileForm(contentType,hasPublishRole) {
+	var buttons = [/*--{
+		type : 'submit',
+		attribute:'role=submit',
+		cls:'blue btn-lg',
+		text : '提交审核',
+		handle : function() {
+			form.setAction("./saveAndCommit");
+		}
+	}*/];
+	//if(hasPublishRole){
+		buttons.push(
+		{
+			type : 'submit',
+			attribute:'role=submit',
+			cls:'blue btn-lg',
+			text : '直接发布',
+			handle : function() {
+				form.setAction("./saveAndPublish");
+			}
+		});
+	//}
+	buttons.push({
+		type : 'button',
+		text : '关闭',
+		handle : function() {
+			flushGrid();
+		}
+	} );
 	var items = [
 			{
 				type : 'hidden',
@@ -933,13 +1012,11 @@ function getFileForm(contentType) {
 				id : 'brief',// id
 				label : '摘要',// 左边label
 				cls : 'input-large',
-				rule : {
-					required : true,
-					maxlength : 256
+				rule : { 
+					maxlength : 456
 				},
-				message : {
-					required : "请输入内容信息摘要",
-					maxlength : "最多输入256字节"
+				message : { 
+					maxlength : "最多输入456字节"
 				}
 			},
 			{
@@ -1051,17 +1128,11 @@ function getFileForm(contentType) {
 		ajaxSuccess : function() {
 			flushGrid();
 		},
-		submitText : "保存",// 保存按钮的文本
+		submitText : "暂存",// 保存按钮的文本
 		showReset : true,// 是否显示重置按钮
 		resetText : "重置",// 重置按钮文本
 		isValidate : true,// 开启验证
-		buttons : [ {
-			type : 'button',
-			text : '关闭',
-			handle : function() {
-				flushGrid();
-			}
-		} ],
+		buttons : buttons,
 		buttonsAlign : "center",
 		// 表单元素
 		items : items
@@ -1069,10 +1140,158 @@ function getFileForm(contentType) {
 	return formOpts;
 }
 	
-	
-	
+	/**最新政府文件**/
+	function getfileoptions(action,hasPublishRole){
+		var actionColoums =[{
+			text : "预览",
+			cls : "green btn-sm",
+			icon : "fa fa-search",
+			handle : function(index, data) {
+				window.open(data.url);
+			}
+		}, {
+
+			text : "编辑",
+			cls : "green btn-sm",
+			visable : function(i, c) {
+				/*if (c.status == "1")
+					return false;*/
+				return true;
+			},
+			handle : function(index, data) {
+				// index为点击操作的行数
+				// data为该行的数据
+				/*modal = $.dmModal({
+					id : "siteForm",
+					title : "编辑内容信息-" + data.title,
+					distroy : true
+				});
+				modal.show();*/
+				$("#content_grid").html("");
+				form = $("#content_grid").dmForm(getFileForm(data.contentType,hasPublishRole));
+				form.loadLocal({"channelId":currentChannelId});
+				form.loadRemote("./load?contentId=" + data.id,function(){
+					$("#publishDate").val(dateTostr(data.publishDate));
+				}); 
+			}
+		}, {
+			text : "排序",
+			cls : "yellow btn-sm",
+			handle : function(i, c) {
+				sortfun(i, c,c.title);
+			}
+		} ];
+
+		if(hasPublishRole){
+		actionColoums.push({
+			text:"发布",
+			cls:"green btn-sm",
+			handle : function(i, data) {
+				bootbox.confirm("确定发布?",function(res){
+					if(res){
+						var url = "./check?status=2&ids="+data.id;
+						$.ajax({
+							url:url,
+							type:'POST',
+							success:function(res){
+								bootbox.alert(res.msg);
+								flushGrid();
+							}
+						});
+						
+					}
+				});
+			}
+		});
+		}
+		var tools=[// 工具属性
+					{
+						text : "添加",
+						cls : "btn green btn-sm",
+						handle : function(grid) {// 按钮点击事件
+							if(currentChannelId==undefined)
+								bootbox.alert("请先选择频道");
+							else if(currentChannelIsParent)
+								bootbox.alert("请选择子频道进行添加!");
+							else{
+								$("#content_grid").html("");
+								var form = $("#content_grid").dmForm(getFileForm('10',hasPublishRole));
+								form.loadLocal({"channelId":currentChannelId,"contentType":"10"});
+							}
+								
+								//$("#").dmForm()
+								//showForm(0, "文本内容");
+						}
+					},/* {
+						text : "移动",
+						cls : "btn green btn-sm",
+						handle : function(grid) {
+							cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../content/cutTo");
+						}
+					}, {
+						text : "复制",
+						cls : "btn green btn-sm",
+						handle : function(grid) {
+							cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../content/copyTo");
+						}
+					},*/ /*--{
+						text : "提交",
+						cls : "btn green btn-sm",
+						handle : function(grid) {
+							var ids = grid.getSelectIds();
+							if (ids.length > 0) {
+								var url = "./commit?contentId=" + ids;
+								$.ajax({
+									url : url,
+									type : "POST",
+									dataType : "json",
+									success : function(res) {
+										bootbox.alert(res.msg);
+										//grid.reload();
+									},
+									error : function() {
+										bootbox.alert("请求异常！");
+									}
+								});
+							} else {
+								bootbox.alert("请选择要提交的项");
+							}
+						}
+					}, */{
+						text : " 删 除",
+						cls : "btn red btn-sm",// 按钮样式
+						handle : function(grid) {
+							deleteItems(grid.getSelectIds());
+						}
+					}];
+		if(!hasPublishRole){
+			tools.push( {
+			   		text : "提交",
+			   		cls : "btn green btn-sm",
+			   		handle : function(grid) {
+			   			var ids = grid.getSelectIds();
+			   			if (ids.length > 0) {
+			   				var url = "./commit?contentId=" + ids;
+			   				$.ajax({
+			   					url : url,
+			   					type : "POST",
+			   					dataType : "json",
+			   					success : function(res) {
+			   						bootbox.alert(res.msg);
+			   						grid.reload();
+			   					},
+			   					error : function() {
+			   						bootbox.alert("请求异常！");
+			   					}
+			   				});
+			   			} else {
+			   				bootbox.alert("请选择要提交的项");
+			   			}
+			   		}
+			   	});
+		}
 	var fileoptions = {
-			url : "./list", // ajax地址
+			url : action, // ajax地址
 			pageNum : 1,// 当前页码
 			pageSize : 5,// 每页显示条数
 			idFiled : "id",// id域指定
@@ -1114,106 +1333,8 @@ function getFileForm(contentType) {
 			} ],
 			actionCloumText : "操作",// 操作列文本
 			actionCloumWidth : "30%",
-			actionCloums : [ {
-				text : "预览",
-				cls : "green btn-sm",
-				icon : "fa fa-search",
-				handle : function(index, data) {
-					window.open(data.url);
-				}
-			}, {
-
-				text : "编辑",
-				cls : "green btn-sm",
-				visable : function(i, c) {
-					if (c.status == "1")
-						return false;
-					return true;
-				},
-				handle : function(index, data) {
-					// index为点击操作的行数
-					// data为该行的数据
-					/*modal = $.dmModal({
-						id : "siteForm",
-						title : "编辑内容信息-" + data.title,
-						distroy : true
-					});
-					modal.show();
-					var form = modal.$body.dmForm(getFileForm(data.contentType));*/
-					$("#content_grid").html("");
-					var form = $("#content_grid").dmForm(getFileForm());
-					form.loadLocal({"channelId":currentChannelId});
-					form.loadRemote("./load?contentId=" + data.id,function(){
-						$("#publishDate").val(dateTostr(data.publishDate));
-					});
-				}
-			}, {
-				text : "排序",
-				cls : "yellow btn-sm",
-				handle : function(i, c) {
-					sortfun(i, c,c.title);
-				}
-			} ],
-			tools : [// 工具属性
-			{
-				text : "添加",
-				cls : "btn green btn-sm",
-				handle : function(grid) {// 按钮点击事件
-					if(currentChannelId==undefined)
-						bootbox.alert("请先选择频道");
-					else if(currentChannelIsParent)
-						bootbox.alert("请选择子频道进行添加!");
-					else{
-						$("#content_grid").html("");
-						var form = $("#content_grid").dmForm(getFileForm());
-						form.loadLocal({"channelId":currentChannelId,"contentType":"10"});
-					}
-						
-						//$("#").dmForm()
-						//showForm(0, "文本内容");
-				}
-			},/* {
-				text : "移动",
-				cls : "btn green btn-sm",
-				handle : function(grid) {
-					cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../content/cutTo");
-				}
-			}, {
-				text : "复制",
-				cls : "btn green btn-sm",
-				handle : function(grid) {
-					cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../content/copyTo");
-				}
-			},*/ {
-				text : "提交",
-				cls : "btn green btn-sm",
-				handle : function(grid) {
-					var ids = grid.getSelectIds();
-					if (ids.length > 0) {
-						var url = "./commit?contentId=" + ids;
-						$.ajax({
-							url : url,
-							type : "POST",
-							dataType : "json",
-							success : function(res) {
-								bootbox.alert(res.msg);
-								//grid.reload();
-							},
-							error : function() {
-								bootbox.alert("请求异常！");
-							}
-						});
-					} else {
-						bootbox.alert("请选择要提交的项");
-					}
-				}
-			}, {
-				text : " 删 除",
-				cls : "btn red btn-sm",// 按钮样式
-				handle : function(grid) {
-					deleteItems(grid.getSelectIds());
-				}
-			} ],
+			actionCloums : actionColoums,
+			tools : tools,
 			search : {
 				rowEleNum : 2,
 				// 搜索栏元素
@@ -1225,4 +1346,6 @@ function getFileForm(contentType) {
 				} ]
 			}
 		};
+	return fileoptions;
+	}
 

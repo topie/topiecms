@@ -102,6 +102,8 @@
 				<entry key="pubDocDirective" value-ref="pubDocDirective"></entry>
 				<entry key="pubDocListDirective" value-ref="pubDocListDirective"></entry>
 				<entry key="websurveyListDirective" value-ref="websurveyListDirective"></entry>
+				<entry key="pictureListDirective" value-ref="pictureListDirective"></entry>
+				<entry key="microcobolListDirective" value-ref="microcobolListDirective"></entry>
 
 			</map>
 		</property>
@@ -142,6 +144,8 @@
 	<bean id="pubDocListDirective" class="com.dm.cms.directive.PubDocListDirective"></bean>
 	<bean id="websurveyListDirective" class="com.dm.cms.directive.WebsurveyListDirective" />
    <bean id="topOneDirective" class="com.dm.cms.directive.TopOneDirective"/>
+   <bean id="pictureListDirective" class="com.dm.cms.directive.PictureListDirective"/>
+   <bean id="microcobolListDirective" class ="com.dm.module.directive.MicrocobolListDirective"></bean>
     <!-- 自定义标签结束 -->
 
 

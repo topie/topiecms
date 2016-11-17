@@ -236,6 +236,9 @@ public class CmsInterviewController {
 	@RequestMapping("/insertOrUpdateRecord")
 	@ResponseBody
 	public Object insertOrUpdateRecord(CmsInterviewRecord interviewRecord){
+		if(interviewRecord.getPublishTime()==null){
+			interviewRecord.setPublishTime(new Date());
+		}
 		if(interviewRecord.getId()!=null){
 			this.cmsInterviewService.updateRecord(interviewRecord);
 		}else{

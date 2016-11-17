@@ -54,6 +54,8 @@ public class WebSurvey {
     private String state;
     
     private String title;
+    
+    private String isSatisfied;
 
     public String getId() {
         return id;
@@ -62,8 +64,16 @@ public class WebSurvey {
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
     }
+    
+    public String getIsSatisfied() {
+		return isSatisfied;
+	}
 
-    public String getUsername() {
+	public void setIsSatisfied(String isSatisfied) {
+		this.isSatisfied = isSatisfied;
+	}
+
+	public String getUsername() {
         return username;
     }
 

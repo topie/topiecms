@@ -1,22 +1,16 @@
 package com.dm.cms.controller;
 
-import com.dm.cms.model.CmsChannel;
-import com.dm.cms.model.CmsCheck;
-import com.dm.cms.model.CmsContent;
-import com.dm.cms.service.CmsChannelService;
-import com.dm.cms.service.CmsContentService;
-import com.dm.cms.service.CmsInterviewService;
-import com.dm.cms.service.CmsSiteService;
-import com.dm.cms.service.CmsVideoService;
-import com.dm.cms.service.CmsVoteService;
-import com.dm.platform.util.PageConvertUtil;
-import com.dm.platform.util.ResponseUtil;
-import com.dm.platform.util.SqlParam;
-import com.github.pagehelper.PageInfo;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,12 +20,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
+import com.dm.cms.model.CmsChannel;
+import com.dm.cms.model.CmsCheck;
+import com.dm.cms.model.CmsContent;
+import com.dm.cms.service.CmsChannelService;
+import com.dm.cms.service.CmsContentService;
+import com.dm.cms.service.CmsInterviewService;
+import com.dm.cms.service.CmsSiteService;
+import com.dm.cms.service.CmsVideoService;
+import com.dm.cms.service.CmsVoteService;
+import com.dm.platform.model.UserAccount;
+import com.dm.platform.model.UserRole;
+import com.dm.platform.util.PageConvertUtil;
+import com.dm.platform.util.ResponseUtil;
+import com.dm.platform.util.SqlParam;
+import com.dm.platform.util.UserAccountUtil;
+import com.github.pagehelper.PageInfo;
 
 /**
  * Created by cgj on 2015/11/29.
@@ -51,8 +55,20 @@ public class CmsContentController {
 	CmsSiteService cmsSiteService;
 	@Autowired
 	CmsInterviewService cmsInterviewService;
+	@Value("${publishRoleId}")
+	private String publishRoleId;
+
 	@RequestMapping("/page")
 	public String page(Model model) {
+		model.addAttribute("publish", false);
+		Set<UserRole> list = UserAccountUtil.getInstance()
+				.getCurrentUserAccount().getRoles();
+		for (UserRole r : list) {
+			if (r.getCode().equals(this.publishRoleId)) {
+				model.addAttribute("hasPublishRole", true);
+				break;
+			}
+		}
 		return "/cms/content/page";
 	}
 
@@ -66,52 +82,100 @@ public class CmsContentController {
 	public String shpage(Model model) {
 		return "/cms/content/shpage";
 	}
-	
+
+	@RequestMapping("/reclpage")
+	public String reclpage(Model model) {
+		return "/cms/content/reclpage";
+	}
+
 	@RequestMapping("/checkList")
 	public @ResponseBody Object checkLlist(
 			@RequestParam(value = "pageNum", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", required = false) Integer pageSize,
 			CmsCheck cmsCheck,
 			@RequestParam(value = "sort", required = false) String sort) {
-		if(StringUtils.isEmpty(sort))
-		{
-		  sort = "channel_id_asc";
+		if (StringUtils.isEmpty(sort)) {
+			sort = "channel_id_asc";
 		}
 		Map map = new SqlParam<CmsCheck>().autoParam(cmsCheck, sort);
-		PageInfo<CmsCheck> page = cmsContentService.findCmsContentByViewPage(pageNum, pageSize, map);
+		PageInfo<CmsCheck> page = cmsContentService.findCmsContentByViewPage(
+				pageNum, pageSize, map);
 		return PageConvertUtil.grid(page);
 	}
 
 	@RequestMapping("/checkAllType")
 	public @ResponseBody Map checkAllType(HttpServletRequest request,
-			Short status,String channelType,Integer id) {
-		if(channelType.equals("0"))
-		{
+			Short status, String channelType, Integer id) {
+		if (channelType.equals("0")) {
 			boolean succ = this.cmsContentService.updateContentState(request,
 					id, status);
-			if(succ)
-			{
+			if (succ) {
 				return ResponseUtil.error("操作成功！！");
 			}
-		}else if(channelType.equals("5"))
-		{
+		} else if (channelType.equals("5")) {
 
-			cmsVideoService.updateStatus(Integer.valueOf(status),id.toString(),request);
+			cmsVideoService.updateStatus(Integer.valueOf(status),
+					id.toString(), request);
 			return ResponseUtil.error("操作成功！！");
-		}
-		else if(channelType.equals("9"))
-		{
+		} else if (channelType.equals("9")) {
 			cmsVoteService.updateStatus(id, status.toString());
 			return ResponseUtil.error("操作成功！！");
-		}
-		else if(channelType.equals("8"))
-		{
-			cmsInterviewService.checke(id.toString(),String.valueOf(status));
+		} else if (channelType.equals("8")) {
+			cmsInterviewService.checke(id.toString(), String.valueOf(status));
 			return ResponseUtil.error("操作成功！！");
 		}
 		return ResponseUtil.error("操作失败！");
 	}
-	
+
+	@RequestMapping("/checkAll")
+	public @ResponseBody Map checkAll(HttpServletRequest request, Short status,
+			String channelTypes, String ids) {
+		if (channelTypes != null && channelTypes.equals("")) {
+			int i = 0;
+			String[] idArray = ids.split(",");
+			for (String channelType : channelTypes.split(",")) {
+				Integer id = Integer.valueOf(idArray[i++]);
+				if (channelType.equals("0")) {
+					boolean succ = this.cmsContentService.updateContentState(
+							request, id, status);
+					if (succ) {
+						return ResponseUtil.error("操作成功！！");
+					}
+				} else if (channelType.equals("5")) {
+
+					cmsVideoService.updateStatus(Integer.valueOf(status),
+							id.toString(), request);
+					return ResponseUtil.error("操作成功！！");
+				} else if (channelType.equals("9")) {
+					cmsVoteService.updateStatus(id, status.toString());
+					return ResponseUtil.error("操作成功！！");
+				} else if (channelType.equals("8")) {
+					cmsInterviewService.checke(id.toString(),
+							String.valueOf(status));
+					return ResponseUtil.error("操作成功！！");
+				}
+			}
+		}
+		return ResponseUtil.error("操作失败！");
+	}
+
+	@RequestMapping("/rlist")
+	public @ResponseBody Object rlist(
+			@RequestParam(value = "pageNum", required = false) Integer pageNum,
+			@RequestParam(value = "pageSize", required = false) Integer pageSize,
+			CmsContent cmsContent,
+			@RequestParam(value = "sort", required = false) String sort) {
+		Map map = new SqlParam<CmsContent>().autoParam(cmsContent, sort);
+		map.put("model", cmsContent);
+		cmsContent.setIsDelete(true);
+		cmsContent.setDeleteUser(UserAccountUtil.getInstance()
+				.getCurrentUserId());
+		PageInfo<CmsContent> page = cmsContentService.findCmsContentByPage(
+				pageNum, pageSize, map);
+		Map m = PageConvertUtil.grid(page);
+		return m;
+	}
+
 	@RequestMapping("/list")
 	public @ResponseBody Object list(
 			@RequestParam(value = "pageNum", required = false) Integer pageNum,
@@ -120,11 +184,16 @@ public class CmsContentController {
 			@RequestParam(value = "sort", required = false) String sort) {
 		if (cmsContent.getChannelId() == null)
 			return PageConvertUtil.emptyGrid();
+
 		Map map = new SqlParam<CmsContent>().autoParam(cmsContent, sort);
+		if (cmsContent.getIsDelete() == null) {
+			cmsContent.setIsDelete(false);
+		}
 		map.put("model", cmsContent);
 		PageInfo<CmsContent> page = cmsContentService.findCmsContentByPage(
 				pageNum, pageSize, map);
-		return PageConvertUtil.grid(page);
+		Map m = PageConvertUtil.grid(page);
+		return m;
 	}
 
 	@RequestMapping("/load")
@@ -136,12 +205,19 @@ public class CmsContentController {
 		return cmsContent;
 	}
 
+	@RequestMapping("/restore")
+	@ResponseBody
+	public Object restore(String contentId) {
+		this.cmsContentService.restore(contentId);
+		return ResponseUtil.success("操作成功");
+	}
+
 	@RequestMapping("/insertOrUpdate")
 	public @ResponseBody Object insertOrUpdate(
 			CmsContent cmsContent,
 			@RequestParam(value = "attachmentIds", required = false) String attachmentIds) {
-		if(cmsContent.getContentType()!=null && cmsContent.getContentType()==4)
-		{
+		if (cmsContent.getContentType() != null
+				&& cmsContent.getContentType() == 4) {
 			cmsContentService.selectTopOneAndUpdate();
 		}
 		if (cmsContent.getId() == null) {
@@ -156,15 +232,73 @@ public class CmsContentController {
 		return ResponseUtil.success("操作成功");
 	}
 
+	@RequestMapping("/saveAndPublish")
+	@ResponseBody
+	public Object saveAddPublish(
+			HttpServletRequest request,
+			CmsContent cmsContent,
+			@RequestParam(value = "attachmentIds", required = false) String attachmentIds) {
+		if (cmsContent.getContentType() != null
+				&& cmsContent.getContentType() == 4) {
+			cmsContentService.selectTopOneAndUpdate();
+		}
+		if (cmsContent.getId() == null) {
+			insert(cmsContent);
+			cmsContentService.insertAttachment(cmsContent.getId(),
+					attachmentIds);
+		} else {
+			update(cmsContent);
+			cmsContentService.updateAttachment(cmsContent.getId(),
+					attachmentIds);
+		}
+		boolean succ = this.cmsContentService.updateContentState(request,
+				cmsContent.getId(), new Short("2"));
+		if (succ)
+			return ResponseUtil.success("发布成功");
+		return ResponseUtil.success("操作失败");
+	}
+
+	@RequestMapping("/saveAndCommit")
+	@ResponseBody
+	public Object saveAndCommit(
+			HttpServletRequest request,
+			CmsContent cmsContent,
+			@RequestParam(value = "attachmentIds", required = false) String attachmentIds) {
+		if (cmsContent.getContentType() != null
+				&& cmsContent.getContentType() == 4) {
+			cmsContentService.selectTopOneAndUpdate();
+		}
+		if (cmsContent.getId() == null) {
+			insert(cmsContent);
+			cmsContentService.insertAttachment(cmsContent.getId(),
+					attachmentIds);
+		} else {
+			update(cmsContent);
+			cmsContentService.updateAttachment(cmsContent.getId(),
+					attachmentIds);
+		}
+		boolean succ = this.cmsContentService.updateContentState(request,
+				cmsContent.getId(), new Short("1"));
+		if (succ)
+			return ResponseUtil.success("操作成功");
+		return ResponseUtil.success("操作失败");
+	}
+
 	private void insert(CmsContent cmsContent) {
 		CmsChannel cmsChannel = cmsChannelService.findOneById(cmsContent
 				.getChannelId());
 		cmsContent.setSiteDomain(cmsChannel.getSiteDomain());
 		cmsContent.setChannelEnName(cmsChannel.getEnName());
+		cmsContent.setIsDelete(false);
+		UserAccount user = UserAccountUtil.getInstance()
+				.getCurrentUserAccount();
+		cmsContent.setCreateUser(user.getCode());
+		cmsContent.setCreateUserName(user.getUsername());
 		if (cmsContent.getTitleStyle() != null
 				&& !cmsContent.getTitleStyle().equals("")) {
 			String titleStyleArray[] = cmsContent.getTitleStyle().split(",");
-			cmsContent.setTitleStyle("color:"+titleStyleArray[0]+";font-size:"+titleStyleArray[1]);
+			cmsContent.setTitleStyle("color:" + titleStyleArray[0]
+					+ ";font-size:" + titleStyleArray[1]);
 		}
 		cmsContentService.insertCmsContent(cmsContent);
 	}
@@ -175,20 +309,41 @@ public class CmsContentController {
 		cmsContent.setSiteDomain(cmsChannel.getSiteDomain());
 		cmsContent.setChannelEnName(cmsChannel.getEnName());
 		cmsContent.setStatus(new Short("0"));
-		if(!StringUtils.isEmpty(cmsContent.getTitleStyle()))
-		{
-		String titleStyleArray[] = cmsContent.getTitleStyle().split(","); 
-		if(titleStyleArray.length==2){
-			cmsContent.setTitleStyle("color:"+titleStyleArray[0]+";font-size:"+titleStyleArray[1]);
-		}if(titleStyleArray.length==1){
-			cmsContent.setTitleStyle("color:"+titleStyleArray[0]+";font-size:"+titleStyleArray[0]);
-		}
+		if (!StringUtils.isEmpty(cmsContent.getTitleStyle())) {
+			String titleStyleArray[] = cmsContent.getTitleStyle().split(",");
+			if (titleStyleArray.length == 2) {
+				cmsContent.setTitleStyle("color:" + titleStyleArray[0]
+						+ ";font-size:" + titleStyleArray[1]);
+			} else if (titleStyleArray.length == 1) {
+				cmsContent.setTitleStyle("color:" + titleStyleArray[0]
+						+ ";font-size:" + titleStyleArray[0]);
+			}
 		}
 		cmsContentService.updateCmsContent(cmsContent);
 	}
 
 	@RequestMapping("/delete")
 	public @ResponseBody Object delete(
+			@RequestParam(value = "contentId", required = true) String contentId,
+			HttpServletRequest request) {
+		if (StringUtils.isBlank(contentId)) {
+			return ResponseUtil.success("请选择要删除的项！");
+		}
+		String[] id = contentId.split(",");
+		CmsContent content = cmsContentService.findOneById(Integer
+				.valueOf(Integer.valueOf(id[0])));
+		for (String primaryKey : id) {
+			cmsContentService.setContentIsDelete(Integer.valueOf(primaryKey));
+			// cmsContentService.deleteCmsContentById(Integer.valueOf(primaryKey));
+		}
+		CmsChannel cmsChannel = cmsChannelService.findOneById(content
+				.getChannelId());
+		cmsSiteService.generatorHtml(cmsChannel.getSiteId(), request);
+		return ResponseUtil.success("操作成功");
+	}
+
+	@RequestMapping("/rdelete")
+	public @ResponseBody Object rdelete(
 			@RequestParam(value = "contentId", required = true) String contentId,
 			HttpServletRequest request) {
 		if (StringUtils.isBlank(contentId)) {
@@ -359,9 +514,10 @@ public class CmsContentController {
 		}
 		return ResponseUtil.success("复制成功！");
 	}
+
 	@InitBinder
-    public void initBinder(ServletRequestDataBinder binder){
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
-                true));
-    }
+	public void initBinder(ServletRequestDataBinder binder) {
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(
+				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
+	}
 }

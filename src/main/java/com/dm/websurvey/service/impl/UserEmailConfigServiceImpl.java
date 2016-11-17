@@ -17,7 +17,7 @@ public class UserEmailConfigServiceImpl implements UserEmailConfigService{
 	com.dm.websurvey.sqldao.UserEmailConfigMapper userEmailConfigMapper;
 	 
 	@Override
-	public void addOrUpdate(String userId, String leadIds, String orgIds) {
+	public void addOrUpdate(String userId, String leadIds, String orgIds,String isShowIp) {
 		// TODO Auto-generated method stub
 		List<UserEmailConfig> config =  userEmailConfigMapper.findByUserId(userId);
         if(config.size()>0)
@@ -25,6 +25,7 @@ public class UserEmailConfigServiceImpl implements UserEmailConfigService{
           UserEmailConfig userEmailConfig = config.get(0);
           userEmailConfig.setLeaderId(leadIds);
           userEmailConfig.setOrgId(orgIds);
+          userEmailConfig.setIsShowIp(isShowIp);
           if(StringUtils.isEmpty(leadIds) && StringUtils.isEmpty(orgIds))
           {
         	  userEmailConfigMapper.deleteByPrimaryKey(config.get(0).getId());

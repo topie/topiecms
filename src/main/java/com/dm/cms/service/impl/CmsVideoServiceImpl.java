@@ -318,7 +318,9 @@ public class CmsVideoServiceImpl extends generatorHtmlHandler implements CmsVide
 		Map root = new HashMap();
 		Date now = new Date();
 		cmsVideo.setUpdateTime(now);
-		cmsVideo.setPublishDate(now);
+		if(cmsVideo.getPublishDate()==null){
+			cmsVideo.setPublishDate(now);
+		}
 		root.put("own", cmsVideo.getId());
 		root.put("site", site);
 		root.put("cmsVideo", cmsVideo);

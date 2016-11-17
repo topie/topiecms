@@ -59,16 +59,14 @@ public class ChannelListDirective implements TemplateDirectiveModel{
 		String[] excludeIds = params.get("excludeIds").toString().split(",");
 		params.put("excludeIds", excludeIds);
 		}
-		if(params.get("pageSize")!=null)
+		params.put("forbidden", 0);//默认隐藏的就不展示
+		if(params.get("all")!=null)
 		{
-			String pagesize = params.get("pageSize").toString();
-			params.put("pageSize", pagesize);
+			String all = params.get("all").toString();
+			if(all.equals("ture")||all.equals("1"))
+			params.put("forbidden", null);
 		}
-		if(params.get("pageNum")!=null)
-		{
-			String pagenum = params.get("pageNum").toString();
-			params.put("pageNum", pagenum);
-		}
+		
 		if(params.get("includeIds")!=null)
 		{
 		String[] cludeIds = params.get("includeIds").toString().split(",");

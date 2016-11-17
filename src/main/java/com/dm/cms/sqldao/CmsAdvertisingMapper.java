@@ -19,4 +19,6 @@ public interface CmsAdvertisingMapper {
     int updateByPrimaryKey(CmsAdvertising record);
 
 	List<CmsAdvertising> findByArgMap(Map map);
+
+	List<CmsAdvertising> findByArgMapForProtal(Map map);
 }

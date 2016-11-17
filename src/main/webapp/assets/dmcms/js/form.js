@@ -27,6 +27,10 @@
         ajaxSubmit: true,
         showSubmit: true,
         submitText: "保存",
+        shenheText:"提交审核",
+        showShenheButton:false,
+        publishText:"直接发布",
+        showPublishButton:false,
         resetText: "重置",
         showReset: true,
         isValidate: true,
@@ -90,6 +94,12 @@
         setAction: function (action) {
             this._action = action;
         },
+        setShenheAction: function (action) {
+            this._shenheAction = action;
+        },
+        setPublishAction: function (action) {
+            this._publishAction = action;
+        },
         _setVariable: function (element, options) {
             this.$element = $(element);
             var id = element.id;
@@ -117,6 +127,8 @@
             }
             this._method = options.method;
             this._action = options.action;
+            this._shenheAction = options.shenheAction;
+            this._publishAction = options.publishAction;
             this._labelInline = options.labelInline;
             this._rowEleNum = options.rowEleNum;
             this._items = options.items;
@@ -126,6 +138,10 @@
             this._ajaxSuccess = options.ajaxSuccess;
             this._beforeSubmit = options.beforeSubmit;
             this._showSubmit = options.showSubmit;
+            this._showShenheButton=options.showShenheButton;
+            this._shenheText = options.shenheText;
+            this._showPublishButton=options.showPublishButton;
+            this._publishText = options.publishText;
             this._submitText = options.submitText;
             this._resetText = options.resetText;
             this._showReset = options.showReset;
@@ -328,6 +344,32 @@
                     "attribute_": "role=submit",
                     "cls_": "blue btn-lg",
                     "text_": that._submitText
+                });
+                formAction.append(submitBtn);
+                submitBtn.after("&nbsp;");
+            }
+            if (this._showShenheButton) {
+                var submitBtn = $.tmpl(Form.statics.buttonTmpl, {
+                    "type_": "submit",
+                    "attribute_": "role=shenhe",
+                    "cls_": "blue btn-lg",
+                    "text_": that._shenheText
+                });
+                submitBtn.on("click", function () {
+                	this._action = that._shenheAction;
+                });
+                formAction.append(submitBtn);
+                submitBtn.after("&nbsp;");
+            }
+            if (this._showPublishButton) {
+                var submitBtn = $.tmpl(Form.statics.buttonTmpl, {
+                    "type_": "submit" ,
+                    "attribute_": "role=publish",
+                    "cls_": "blue btn-lg",
+                    "text_": that._publishText
+                });
+                submitBtn.on("click", function () {
+                	this._action = that._publishAction
                 });
                 formAction.append(submitBtn);
                 submitBtn.after("&nbsp;");
@@ -1147,6 +1189,7 @@
                 submitHandler: function (form) {
                     that._submitForm();
                 }
+                
             };
             this._validateOptions = $.extend(true, {}, validateOptions,
                 this._validateOptions);
@@ -1160,6 +1203,16 @@
                 $('button[role="submit"]').on("click", function () {
                     that._submitForm();
                 });
+                if(that._showPublishButton){
+	                $('button[role="publish"]').on("click", function () {
+	                    that._submitPublishForm();
+	                });
+                }
+                if(that._showShenheButton){
+                $('button[role="shenhe"]').on("click", function () {
+                    that._submitShenheForm();
+                });
+                }
             }
         },
         _initShowIconText: function () {
@@ -1181,6 +1234,70 @@
                 $.ajax({
                     type: that._method,
                     url: that._action,
+                    data: $('#' + that._formId).serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        if (!DmCheck(data)) {
+                            return;
+                        }
+                        if (that._ajaxSuccess != undefined) {
+                            that._ajaxSuccess(data);
+                        } else {
+                            alert("表单提交成功");
+                        }
+                    },
+                    error: function (data) {
+                        alert("异步提交表单错误.");
+                    }
+                });
+            } else {
+                that.$form.submit();
+            }
+        },
+        _submitShenheForm: function () {
+            var that = this;
+            if (this._beforeSubmit != undefined) {
+                var result = that._beforeSubmit();
+            }
+            if (result == false) {
+                return;
+            }
+            if (this._ajaxSubmit) {
+                $.ajax({
+                    type: that._method,
+                    url: that._shenheAction,
+                    data: $('#' + that._formId).serialize(),
+                    dataType: "json",
+                    success: function (data) {
+                        if (!DmCheck(data)) {
+                            return;
+                        }
+                        if (that._ajaxSuccess != undefined) {
+                            that._ajaxSuccess(data);
+                        } else {
+                            alert("表单提交成功");
+                        }
+                    },
+                    error: function (data) {
+                        alert("异步提交表单错误.");
+                    }
+                });
+            } else {
+                that.$form.submit();
+            }
+        },
+        _submitPublishForm: function () {
+            var that = this;
+            if (this._beforeSubmit != undefined) {
+                var result = that._beforeSubmit();
+            }
+            if (result == false) {
+                return;
+            }
+            if (this._ajaxSubmit) {
+                $.ajax({
+                    type: that._method,
+                    url: that._publishAction,
                     data: $('#' + that._formId).serialize(),
                     dataType: "json",
                     success: function (data) {

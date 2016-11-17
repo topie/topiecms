@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dm.cms.model.CmsTemplateConfig;
 import com.dm.cms.model.CmsVote;
 import com.dm.cms.model.CmsVoteOption;
+import com.dm.cms.service.CmsTemplateConfigService;
 import com.dm.cms.service.CmsVoteService;
 import com.dm.platform.util.PageConvertUtil;
 import com.dm.platform.util.ResponseUtil;
@@ -26,6 +28,8 @@ public class CmsVoteController {
 
 	@Autowired
 	private CmsVoteService cmsVoteService;
+	@Autowired
+	private CmsTemplateConfigService cmsTemplateConfigService;
 
 	@RequestMapping("/list")
 	@ResponseBody
@@ -38,6 +42,7 @@ public class CmsVoteController {
 			return PageConvertUtil.emptyGrid();
 		}
 		Map map = new SqlParam<CmsVote>().autoParam(record, sort);
+		record.setStatus("9");
 		return PageConvertUtil.grid(this.cmsVoteService.findPage(pageNum,
 				pageSize, map));
 	}
@@ -45,12 +50,20 @@ public class CmsVoteController {
 	@RequestMapping("/insertOrUpdate")
 	@ResponseBody
 	public Object insertOrUpdate(CmsVote record) {
+		if (record.getFiled2() == null) {// 设置默认模板
+			CmsTemplateConfig c =cmsTemplateConfigService.load(null,
+					record.getChannelId());
+			if(c!=null)
+				record.setFiled2(c.getContentTemplateId().toString());
+		}
 		if (record.getId() == null) {
+			record.setStatus("0");
 			this.cmsVoteService.insert(record);
 		} else {
+			record.setStatus("0");
 			this.cmsVoteService.update(record);
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/delete")
@@ -63,7 +76,7 @@ public class CmsVoteController {
 			Integer id = Integer.valueOf(index);
 			this.cmsVoteService.updateStatus(id, "9");
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/load")
@@ -77,7 +90,30 @@ public class CmsVoteController {
 	public Object loadOpt(Integer id) {
 		return this.cmsVoteService.findOneOpt(id);
 	}
-
+	@RequestMapping("/saveAndCommit")
+	@ResponseBody
+	public Object saveAndCommit(CmsVote record) {
+	if (record.getId() == null) {
+		record.setStatus("1");
+		this.cmsVoteService.insert(record);
+	} else {
+		record.setStatus("1");
+		this.cmsVoteService.update(record);
+	}
+	return ResponseUtil.success("提交成功");
+	}
+	@RequestMapping("/saveAndPublish")
+	@ResponseBody
+	public Object saveAndPublish(CmsVote record) {
+	if (record.getId() == null) {
+		record.setStatus("2");
+		this.cmsVoteService.insert(record);
+	} else {
+		record.setStatus("2");
+		this.cmsVoteService.update(record);
+	}
+	return ResponseUtil.success("提交成功");
+	}
 	@RequestMapping("/check")
 	@ResponseBody
 	public Object check(String voteIds) {
@@ -88,7 +124,7 @@ public class CmsVoteController {
 			Integer id = Integer.valueOf(i);
 			this.cmsVoteService.updateStatus(id, "1");
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/back")
@@ -101,7 +137,7 @@ public class CmsVoteController {
 			Integer id = Integer.valueOf(i);
 			this.cmsVoteService.updateStatus(id, "3");
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/pass")
@@ -114,7 +150,7 @@ public class CmsVoteController {
 			Integer id = Integer.valueOf(i);
 			this.cmsVoteService.updateStatus(id, "4");
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/publish")
@@ -127,7 +163,7 @@ public class CmsVoteController {
 			Integer id = Integer.valueOf(i);
 			this.cmsVoteService.updateStatus(id, "2");
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/listOpt")
@@ -153,14 +189,14 @@ public class CmsVoteController {
 		else {
 			cmsVoteService.updateOpt(record);
 		}
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@RequestMapping("/deleteOpt")
 	@ResponseBody
 	public Object deleteOpt(Integer id) {
 		this.cmsVoteService.deleteOpt(id);
-		return ResponseUtil.success();
+		return ResponseUtil.success("操作成功");
 	}
 
 	@InitBinder

@@ -96,6 +96,7 @@ public interface CmsContentMapper {
 	String selectContentIdsByAttachmentId(Integer id);
 
 	List<CmsContent> selectTopOne();
+	List<CmsContent> selectIsPictures();
 	
 	List<CmsCheck> selectViewByReord(Map map);
 

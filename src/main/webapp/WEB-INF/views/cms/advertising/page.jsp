@@ -182,6 +182,26 @@
 						return "位置2";
 					if(c.type=='AD3')
 						return "位置3";
+					if(c.type=='ADFLOAT')
+						return "浮动";
+				}
+			},{title:'永久展示',
+				field:'',
+				width:'10%',
+				format:function(i,c){
+					if(c.alwaysShow)
+						return '是';
+					return '否';
+					
+				}
+			},{title:'隐藏',
+				field:'',
+				width:'10%',
+				format:function(i,c){
+					if(c.layUp)
+						return '是';
+					return '否';
+					
 				}
 			}/* ,{
 				title : "是否展示",
@@ -249,15 +269,27 @@
 					var form = modal.$body.dmForm(getFormOptions());
 					form.loadLocal({siteId:currentSiteId});
 				}
+			},{
+				text : "立即生效",
+				cls : "btn green btn-sm",//按钮样式
+				handle : function(grid) {
+					generatorHtml();
+				}
 			} ], 
 			search : {
-				rowEleNum : 2,
+				rowEleNum : 1,
+				hide:false,
 				//搜索栏元素
 				items : [ {
 					type : "text",
 					label : "名称",
 					name : "name",
+					cls:"form-control input-large",
 					placeholder : "输入要搜索的名称"
+				},{type:"radioGroup",
+					label:"位置",
+					name:'type',
+					items:[{text:'全部',value:''},{text:"位置1",value:"AD1"},{text:"位置2",value:"AD2"},{text:"位置3",value:"AD3"},{text:"浮动",value:"ADFLOAT"}]
 				} ]
 			}
 		};
@@ -329,7 +361,7 @@
 				name:"type",
 				id :"type",
 				label:"位置",
-				items:[{text:"位置1",value:"AD1"},{text:"位置2",value:"AD2"},{text:"位置3",value:"AD3"}]
+				items:[{text:"位置1",value:"AD1"},{text:"位置2",value:"AD2"},{text:"位置3",value:"AD3"},{text:"浮动",value:"ADFLOAT"}]
 			},{
 				type : 'datepicker',//类型
 				name : 'startime',//name
@@ -355,18 +387,42 @@
 					required : "请输入"
 				}
 			},{
+				type:"radioGroup",
+				name:"alwaysShow",
+				id :"alwaysShow",
+				label:"一直展示",
+				items:[{text:"是",value:true},{text:"否",value:false,checked:true}]
+			},{
+				type:"radioGroup",
+				name:"layUp",
+				id :"layUp",
+				label:"暂停使用",
+				items:[{text:"是",value:true},{text:"否",value:false,checked:true}]
+			},{
 				type : 'text',//类型
 				name : 'imageWidth',//name
 				id : 'imageWidth',//id
 				label : '图片宽度',//左边label
-				cls : 'input-large'
+				cls : 'input-large',
+				placeHolder:"例:200px"
 			},{
 				type : 'text',//类型
 				name : 'imageHeight',//name
 				id : 'imageHeight',//id
 				label : '图片高度',//左边label
 				cls : 'input-large'
-			}];
+			},{type:'text',
+				name:'seq',
+				id:'seq',
+				label:'顺序',
+				cls:'input-large',
+				rule : {
+					required : true
+				},
+				message : {
+					required : "请输入"
+				}
+				}];
 			var formOpts = {
 				id : "channel_form",//表单id
 				name : "channel_form",//表单名
@@ -480,6 +536,16 @@
 			initSelect2Site();
 			grid = $("#channel_grid").dmGrid(options);
 		});
+		function generatorHtml()
+	    {
+	    	$.post("../site/generatorHtml",{siteId:currentSiteId},function(result){
+	    		if(result.status='1'){
+	    			bootbox.alert("操作成功");
+	    		}else{
+	    			bootbox.alert("操作失败");
+	    		}
+	    	})
+	    }
 	</script>
 	<!-- END JAVASCRIPTS -->
 </body>

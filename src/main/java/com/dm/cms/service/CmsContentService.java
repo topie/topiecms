@@ -55,8 +55,21 @@ public interface CmsContentService {
 	void selectTopOneAndUpdate();
 
 	CmsContent selectTopOne();
+	PageInfo<CmsContent> selectIsPictures(Integer pageNum,
+			Integer pageSize);
 	
 	PageInfo<CmsCheck> findCmsContentByViewPage(Integer pageNum,
 			Integer pageSize, Map argMap);
+	/**
+	 * 设置为删除状态 放入回收站
+	 * @param valueOf
+	 */
+	void setContentIsDelete(Integer valueOf);
+	/**
+	 * 还原
+	 * @param contentId
+	 */
+	void restore(String contentId);
+	
 	
 }

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
                                                                  <html>
                                                                  <head lang="en">
-                                                                     <meta charset="UTF-8">
-                                                                     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-                                                                     <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-                                                                     <meta http-equiv="X-UA-Compatible" content="IE=9" />
+                                                                     <#include "/template/jh-meta.ftl">
 								     <meta name="keywords" content="金湖,金湖县,金湖县政府,金湖政府网" />
                                                                      <title>${site.displayName!}</title>
                                                                      <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
                                                                      <link href="/html/jinhu-static/css/style.ts.css" rel="stylesheet">
+								     
+									<script type="text/javascript" src="/html/jinhu-static/js/advertise.js"></script>
+									<script type="text/javascript" src="/html/jinhu-static/js/qiehuan.js"></script>
                                                                      <!--[if lt IE 9]>
                                                                      <script src="/html/jinhu-static/js/html5shiv.min.js"></script>
                                                                      <script src="/html/jinhu-static/js/respond.min.js"></script>
@@ -33,7 +33,7 @@
                                                                  
                                                                                              <!-- Wrapper for slides -->
                                                                                              <div class="carousel-inner" role="listbox">
-                                                                 			    <@contentListDirective channelId=211 pageSize=4 pageNum=1  order=10>
+                                                                 			    <@pictureListDirective pageSize=4 pageNum=1 >
                                                                  			     <#list contents as cmsContent>
                                                                  			      <div class="item ${(cmsContent_index==0)?string('active','')}">
                                                                                                            <a href="${cmsContent.url}" target="_blank"><img src="${cmsContent.titleImageUrl!}" style="height: 406px;width: 100%;"/></a>
@@ -42,7 +42,7 @@
                                                                                                              </div>
                                                                                                  </div>
                                                                  				</#list> 
-                                                                                                </@contentListDirective>
+                                                                                                </@pictureListDirective>
                                                                                              </div>
                                                                  
                                                                                              <!-- Controls -->
@@ -63,7 +63,7 @@
                                                                                                          <a target="_blank" style="color:white" href="${channel.url}">${channel.displayName!}</a>
                                                                                                      </div>
                                                                                                  </div>
-                                                                                                  <@channelListDirective channelId=channel.id order=4 >
+                                                                                                  <@channelListDirective channelId=channel.id order=1 pageSize=6>
                                                                  				 <div class="col-xs-9 fontSize14">
                                                                                                      <div class="row ggfw-list-pd ggfw-list-pd2">
                                                                                                     <#list channels as cmschannel>
@@ -81,12 +81,11 @@
                                                                                          </div>
                                                                                      </div>
                                                                                      <div class="col-md-5 pdTop1em">
-                                                                                       <@contentListDirective channelId=225 pageSize=1 pageNum=1 titleLeft=20  order=1>
-                                                                                			<#list contents as cmsContent>
+                                                                                       <@topOneDirective titleLeft=20>
+                                                                                			
                                                                                 				<p class="fontSize22 color-green"><a href="${cmsContent.url!}" style="${cmsContent.titleStyle!}" target="_blank">${cmsContent.title!}</a></p>
         
-                                                                 				</#list>
-                                                                 				</@contentListDirective >
+                                                                 				</@topOneDirective >
                                                                                        
                                                                                          
                                                                                          <div>
@@ -95,7 +94,7 @@
                                                                                              <ul class="nav nav-tabs fontSize16 navTab1 navTab1s text-center" role="tablist" id="navTab1">
                                                                  			<#list channels as channel>
                                                                  				<li role="presentation" class='${(channel_index==0)?string("active","")}'>
-                                                                 				<a href="#con_${channel_index}" aria-controls="con_${channel_index}" role="tab" data-toggle="tab">${channel.displayName}</a></li>
+                                                                 				<a href="#con_${channel_index}" aria-controls="con_${channel_index}" role="tab" data-toggle="tab">${channel.displayName!}</a></li>
                                                                  			</#list> 
                                                                                              </ul>
                                                                                              <!-- Tab panes -->
@@ -141,7 +140,7 @@
                                                                                              <div class="tab-content navTab1-content navTab3-content1 pTextIndent">
                                                                                                  <div role="tabpanel" class="tab-pane active" id="gggs">
                                                                                                      <ul class="panel2-list panel2-list-sm">
-                                                                 				    <@contentListDirective channelId=17 pageSize=4 pageNum=1 order=10>
+                                                                 				    <@contentListDirective channelId=17 pageSize=3 pageNum=1 order=10>
                                                                  					<#list contents as cmsContent>
                                                                  						<li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">${cmsContent.title}</a></li>
                                                                  					</#list> 
@@ -150,7 +149,7 @@
                                                                                                  </div>
                                                                                                  <div role="tabpanel" class="tab-pane" id="zscd">
                                                                                                      <ul class="panel2-list">
-                                                                 				    <@contentListDirective channelId=18 pageSize=4 pageNum=1 order=10>
+                                                                 				    <@contentListDirective channelId=18 pageSize=3 pageNum=1 order=10>
                                                                  					<#list contents as cmsContent>
                                                                  						<li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">${cmsContent.title}</a></li>
                                                                  					</#list> 
@@ -163,13 +162,22 @@
                                                                              </div>
                                                                          </div>
                                                                       <!--广告-->
-                                 <@advertisingListDirective siteId=6 type='AD1' checkDate='ture'>
+						<@advertisingListDirective siteId=6 type='AD1' checkDate='ture'>
+							<#if advertisings?size gt 0>
+							<div class="row mgt10" style="margin-bottom:20px; padding:0 14px 0 14px;">
+								<div id="AD1"> </div> 
+							</div>
+							</#if>
+							<script type="text/javascript">
                        					<#list advertisings as ad>
-                       					
-                       						<a href="${ad.link!}" target="_blank" class="thumbnail thumbnails thumbnails1" >
-                       						       <img src="${ad.imageUrl!}">
-                       						   </a>
+								PImgPlayer.addItem( "${ad_index+1}", "${ad.link!}", "${ad.imageUrl!}");
+									
                        					</#list>
+							<#if advertisings?size gt 0>
+                       					
+							 PImgPlayer.init( "AD1","100%",100);
+							</#if>
+							</script>
                        				</@advertisingListDirective>
                                                                          
                                                                          <div class=""><!--政务公开-->
@@ -285,13 +293,22 @@
                                                                                  </div>
                                                                              </div>
                                                                          </div>
-                                                                          <@advertisingListDirective siteId=6 type='AD2' checkDate='ture'>
+                                                                          <!--广告-->
+						<@advertisingListDirective siteId=6 type='AD2' checkDate='ture'>
+							<#if advertisings?size gt 0>
+							<div class="row mgt10" style="margin-bottom:20px; padding:0 14px 0 14px;">
+								<div id="AD1"> </div> 
+							</div>
+							</#if>
+							<script type="text/javascript">
                        					<#list advertisings as ad>
-                       					
-                       						<a href="${ad.link!}" target="_blank" class="thumbnail thumbnails thumbnails1" >
-                       						       <img src="${ad.imageUrl!}">
-                       						   </a>
+								PImgPlayer.addItem( "${ad_index+1}", "${ad.link!}", "${ad.imageUrl!}");
+									
                        					</#list>
+							<#if advertisings?size gt 0>
+							 PImgPlayer.init( "AD2","100%",100);
+							</#if>
+							</script>
                        				</@advertisingListDirective>
                                                                          <div class="">
                                                                              <div class="index-toff border-gray1">
@@ -301,109 +318,10 @@
                                                                              <div class="row">
                                                                                  <div class="col-md-9">
                                                                                      <div class="panel panel-default panel1">
-                                                                                         <div class="panel-heading panel1-t"><a href="javascript:;" class="panel1-ton fontSize18">政务大厅</a></div>
-                                                                                         <div class="panel-body">
-                                                                                             <div class="row">
-                                                                                                 <div class="col-md-4">
-                                                                                                     <form class="form-horizontal ggfw-form">
-                                                                                                         <div class="form-group">
-                                                                                                             <label class="col-xs-3 col-md-4 control-label color-green">办件号</label>
-                                                                                                             <div class="col-xs-9 col-md-8">
-                                                                                                                 <input type="text" class="form-control" placeholder="请输入办件号">
-                                                                                                             </div>
-                                                                                                         </div>
-                                                                                                         <div class="form-group">
-                                                                                                             <label class="col-xs-3 col-md-4 control-label color-green">证件号</label>
-                                                                                                             <div class="col-xs-9 col-md-8">
-                                                                                                                 <input type="text" class="form-control" placeholder="请输入证件号">
-                                                                                                             </div>
-                                                                                                         </div>
-                                                                                                         <div class="form-group">
-                                                                                                             <div class="col-xs-12">
-                                                                                                                 <button type="submit" class="btn btn-lg btn-block fontSize14">办件查询</button>
-                                                                                                             </div>
-                                                                                                         </div>
-                                                                                                     </form>
-                                                                                                     <div class="color-green fontSize16 pd2 dis-b">办件统计</div>
-                                                                                                     <ul class="panel2-list panel2-list-pd fontSize12 ggfw-panel2">
-                                                                                                         <li><span class="panel2-list-content">累积收件</span><span class="panel2-list-time"><span class="color-green">170311</span>&nbsp; 件</span></li>
-                                                                                                         <li><span class="panel2-list-content">累积办件</span><span class="panel2-list-time"><span class="color-green">13746</span>&nbsp; 件</span></li>
-                                                                                                         <li><span class="panel2-list-content">当年收件</span><span class="panel2-list-time"><span class="color-green">12134</span>&nbsp; 件</span></li>
-                                                                                                         <li><span class="panel2-list-content">当年办件</span><span class="panel2-list-time"><span class="color-green">1447</span>&nbsp; 件</span></li>
-                                                                                                         <li><span class="panel2-list-content">昨日收件</span><span class="panel2-list-time"><span class="color-green">1245</span>&nbsp; 件</span></li>
-                                                                                                         <li><span class="panel2-list-content">昨日办件</span><span class="panel2-list-time"><span class="color-green">345</span>&nbsp; 件</span></li>
-                                                                                                     </ul>
-                                                                                                 </div>
-                                                                                                 <div class="col-md-8 pdTop1em">
-                                                                                                     <table class="table table-bordered table-hover table1 fontSize12">
-                                                                                                         <thead>
-                                                                                                         <tr>
-                                                                                                             <th>办件编号</th>
-                                                                                                             <th>办件单位</th>
-                                                                                                             <th>受理事项</th>
-                                                                                                             <th>状态</th>
-                                                                                                         </tr>
-                                                                                                         </thead>
-                                                                                                         <tbody>
-                                                                                                         <tr>
-                                                                                                             <td>201606080022</td>
-                                                                                                             <td>金翠香（金湖县金</td>
-                                                                                                             <td>环境影响报告表审批</td>
-                                                                                                             <td>已办结</td>
-                                                                                                         </tr>
-                                                                                                         <tr>
-                                                                                                             <td>201606080022</td>
-                                                                                                             <td>金翠香（金湖县金</td>
-                                                                                                             <td>环境影响报告表审批</td>
-                                                                                                             <td>已办结</td>
-                                                                                                         </tr>
-                                                                                                         <tr>
-                                                                                                             <td>201606080022</td>
-                                                                                                             <td>金翠香（金湖县金</td>
-                                                                                                             <td>环境影响报告表审批</td>
-                                                                                                             <td>已办结</td>
-                                                                                                         </tr>
-                                                                                                         <tr>
-                                                                                                             <td>201606080022</td>
-                                                                                                             <td>金翠香（金湖县金</td>
-                                                                                                             <td>环境影响报告表审批</td>
-                                                                                                             <td>已办结</td>
-                                                                                                         </tr>
-                                                                                                         <tr>
-                                                                                                             <td>201606080022</td>
-                                                                                                             <td>金翠香（金湖县金</td>
-                                                                                                             <td>环境影响报告表审批</td>
-                                                                                                             <td>已办结</td>
-                                                                                                         </tr>
-                                                                                                         <tr>
-                                                                                                             <td>201606080022</td>
-                                                                                                             <td>金翠香（金湖县金</td>
-                                                                                                             <td>环境影响报告表审批</td>
-                                                                                                             <td>已办结</td>
-                                                                                                         </tr>
-                                                                                                         <tr>
-                                                                                                             <td>201606080022</td>
-                                                                                                             <td>金翠香（金湖县金</td>
-                                                                                                             <td>环境影响报告表审批</td>
-                                                                                                             <td>已办结</td>
-                                                                                                         </tr>
-                                                                                                         <tr>
-                                                                                                             <td>201606080022</td>
-                                                                                                             <td>金翠香（金湖县金</td>
-                                                                                                             <td>环境影响报告表审批</td>
-                                                                                                             <td>已办结</td>
-                                                                                                         </tr>
-                                                                                                         <tr>
-                                                                                                             <td>201606080022</td>
-                                                                                                             <td>金翠香（金湖县金</td>
-                                                                                                             <td>环境影响报告表审批</td>
-                                                                                                             <td>已办结</td>
-                                                                                                         </tr>
-                                                                                                         </tbody>
-                                                                                                     </table>
-                                                                                                 </div>
-                                                                                             </div>
-                                                                                         </div>
+										     <@channelDirective channelId=38>
+                                                                                         <div class="panel-heading panel1-t"><a href="${channel.url!}" class="panel1-ton fontSize18" target="_blank">${channel.displayName!}</a></div>
+										     </@channelDirective>
+                                                                                         <iframe src="http://222.184.56.249:8088/hawbsprj/jhxq.do" width="100%" height="381px" frameborder="0"></iframe>
                                                                                      </div>
                                                                                      <div class="clearfix">
                                                                                          <div class="col-sm-2 ggfw-cycx1 box-center color-green">
@@ -479,9 +397,9 @@
                                                                                 	    </@channelDirective>
                                                                                          <div class="panel-body">
                                                                                              <ul class="panel2-list panel2-list-sm">
-                                                                 			    <@contentListDirective channelId=43 pageSize=3 pageNum=1 titleLeft=12 order=1>
+                                                                 			    <@contentListDirective channelId=43 pageSize=3 pageNum=1 titleLeft=20 order=1>
                                                                  				<#list contents as cmsContent>
-                                                                 					<li><span class="jh-dotted">·</span><a href="${cmsContent.url}" target="_blank">${cmsContent.title}</a></li>
+                                                                 					<li><a href="${cmsContent.url}" target="_blank" title="${cmsContent.title!}">${cmsContent.title!}</a></li>
                                                                  				</#list> 
                                                                  			</@contentListDirective>
                                                                                              </ul>
@@ -490,13 +408,23 @@
                                                                                  </div>
                                                                              </div>
                                                                          </div>
-                                                                          <@advertisingListDirective siteId=6 type='AD3' checkDate='ture'>
+                                                                          <!--广告-->
+						<@advertisingListDirective siteId=6 type='AD3' checkDate='ture'>
+							<#if advertisings?size gt 0>
+							<div class="row mgt10" style="margin-bottom:20px; padding:0 14px 0 14px;">
+								<div id="AD1"> </div> 
+							</div>
+							</#if>
+							<script type="text/javascript">
                        					<#list advertisings as ad>
-                       					
-                       						<a href="${ad.link!}" target="_blank" class="thumbnail thumbnails thumbnails1" >
-                       						       <img src="${ad.imageUrl!}">
-                       						   </a>
+								PImgPlayer.addItem( "${ad_index+1}", "${ad.link!}", "${ad.imageUrl!}");
+									
                        					</#list>
+							<#if advertisings?size gt 0>
+                       					
+							 PImgPlayer.init( "AD3","100%",100);
+							</#if>
+							</script>
                        				</@advertisingListDirective>
                                                                          <div class="">
                                                                              <div class="index-toff border-gray1"><@channelDirective channelId=7>
@@ -645,7 +573,36 @@
                                                                              </div>
                                                                          </div>
                                                                      </div>
-                                                                 
+								   <@advertisingListDirective siteId=6 type='ADFLOAT' checkDate='ture'>
+                       					<#list advertisings as ad> 
+								<div id="gg${ad.id!}" style="position: absolute; left: 196.803px; top: 414.163px; z-index:9999;" >
+									<table cellpadding="0" cellspacing="0">
+									<tbody>
+										<tr>
+										<td>
+											<p class="ParagraphIndentN" style="padding:0px; margin:0 auto;">
+											<a href="${ad.link!}">
+												<img lang="1" watermarksize="0" watermarkpos="0" alt="" src="${ad.imageUrl!}" width="${ad.imageWidth!}" height="${ad.imageHeight!}">
+											</a>
+										    </p>
+										</td>
+									    </tr>
+									    <tr>
+										<td align="right">
+											<div onclick="closeDL(&quot;gg${ad.id!}&quot;)" style="cursor:pointer;" align="right"><font color="black" style="font-size:12px;">关闭</font>
+											</div>
+										</td>
+									    </tr>
+									 </tbody>
+								      </table>
+								</div>
+								<script type="text/javascript">
+										function closeDL(StrID){document.getElementById(StrID).style.display='none';}
+										var ad0=new AdMove("gg${ad.id!}");
+										ad0.Run();
+								</script>
+                       					</#list>
+                       				</@advertisingListDirective>
                                                                     <#include "/template/jh-links.ftl">
                                                                  </div>
                                                                   <#include "/template/jh-footer.ftl"> 

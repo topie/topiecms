@@ -54,6 +54,7 @@ public class SearchController {
 	@ResponseBody
 	public Object insertOrUpdate(SearchConfig searchConfig)
     {
+		    searchConfig.setId("123");
 			boolean success = searchConfigService.insertOrUpdate(searchConfig);
 			if(success)
 			{
@@ -120,6 +121,7 @@ public class SearchController {
 	@ResponseBody
 	public Object search(
 			@RequestParam(required=true,value="text")String textValue,
+			@RequestParam(required=true,value="colum")String colum,
 			@RequestParam(required=false,value="pageNum",defaultValue="1")Integer pageNum,
 			@RequestParam(required=false,value="pageSize",defaultValue="5")Integer pageSize,
 			@RequestParam(required=false,value="days")Integer days,
@@ -139,7 +141,7 @@ public class SearchController {
 //			return callback+":("+jsonObject.toString()+")";
 //			return callback+":({'status':'0','mes', '请输入搜索关键词！'})";
 		}
-		 map = searchConfigService.searchResults(textValue, pageNum, pageSize,sortField,entity,days,device);
+		 map = searchConfigService.searchResults(textValue,colum, pageNum, pageSize,sortField,entity,days,device);
 		return map;
 //		JSONObject jsonObject = JSONObject.fromObject(map);
 //		return callback+":({'status':'0','mes', '请输入搜索关键词！'})";

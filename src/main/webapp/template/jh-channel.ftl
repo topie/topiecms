@@ -1,8 +1,8 @@
 <!doctype html>
          <html>
          <head>
-         <meta charset="utf-8">
-         <title>无标题文档</title>
+         <#include "/template/jh-meta.ftl">
+         <title>金湖政府网</title>
          <link rel="stylesheet" type="text/css" href="/html/jinhu-static/css/style.css">
          <script type="text/javascript" src="/html/jinhu-static/js/jquery-1.8.0.min.js"></script>
          </head>

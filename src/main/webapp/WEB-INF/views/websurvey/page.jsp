@@ -87,6 +87,7 @@
 		</div>
 		<!-- END PAGE CONTENT -->
 	</div>
+	<input type="hidden" id="isShowIp" value="${isShowIp}" />
 	<!-- END PAGE CONTAINER -->
 	<!-- BEGIN FOOTER -->
 	<%@include file="../includejsps/foot.jsp"%>
@@ -101,6 +102,16 @@
      
 	<script type="text/javascript">
 	/**********普通内容操作函数****************/
+	
+	function dateTostr(utc)
+{
+	if(utc)
+		{
+     var date = new Date(utc);
+     return date.getFullYear()+"-"+((date.getMonth()+1)>10?date.getMonth()+1:"0"+(date.getMonth()+1))+"-"+(date.getDate()>10?date.getDate():"0"+date.getDate())+" "+(date.getHours()>10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>10?date.getMinutes():"0"+date.getMinutes())+":"+(date.getSeconds()>10?date.getSeconds():"0"+date.getSeconds());
+   }
+}
+	
 	var modal;
 	function deleteItems(ids) {
 		if (ids.length > 0) {
@@ -216,7 +227,7 @@
 				name : "show_form",//表单名
 				method : "post",//表单method
 				//action : "",//表单action
-				ajaxSubmit : true,//是否使用ajax提交表单
+				ajaxSubmit : false,//是否使用ajax提交表单
 				labelInline : true,
 				rowEleNum : 1,
 				beforeSubmit : function() {
@@ -278,11 +289,11 @@
 							}
 						},{
 							type : 'display',
-							name : 'toUser',
-							label : '领导或部门',
+							name : 'inputDate',
+							label : '留言时间',
 							format : function(c) {
 								if (c) {
-									return c;
+									return dateTostr(c);
 								}
 								else
 									{
@@ -382,9 +393,30 @@
 			title : "发件人",
 			field : "username",
 			sort : true
-		}, {
-			title : "收件人",
-			field : "touser",
+		}, 
+		{
+			title : "留言时间",
+			field : "inputDate",
+			format : function(c,data) {
+				if (c) {
+					return dateTostr(data.inputDate);
+				}
+				else
+					{
+					return "";
+					}
+			}
+		},
+		{
+			title : "是否公开",
+			field : "isOpen",
+			format : function(i, c) {
+				if (c.isOpen == "0")
+					return "不公开";
+				if (c.status == "1")
+					return "公开";
+				return "--";
+			}
 		}],
 		actionCloumText : "操作",// 操作列文本
 		actionCloumWidth : "30%",
@@ -395,10 +427,28 @@
 			handle : function(index, data) {
 				modal = $.dmModal({
 					id : "reply-form",
-					title : "填写回复内容",
+					title : "查看详细",
 					distroy : true
 				});
 				modal.show();
+				if($("#isShowIp").val()=="1")
+				{
+					var ip = {
+							type : 'display',
+							name : 'ip',
+							label : 'ip',//左边label
+							format : function(c) {
+								if (c) {
+									return c;
+								}
+								else
+									{
+									return "";
+									}
+							}
+						};
+					showopt.items.push(ip);
+				}
 				var form = modal.$body.dmForm(showopt);
 				form.loadRemote("./load?id=" + data.id);
 			}
@@ -407,7 +457,7 @@
 			text : "回复",
 			cls : "green btn-sm",
 			visable : function(i, c) {
-				if (c.status == "1")
+				if (c.state == "1" || c.state== "2")
 					return false;
 				return true;
 			},
@@ -446,7 +496,29 @@
 				label : "标题",
 				name : "title",
 				placeholder : "输入要搜索的内容信息标题"
-			} ]
+			},
+			{
+				type : "select",
+				label : "分类",
+				name : "type",
+				items:[
+					{
+						text:"全部"
+					},
+				 {
+					text:"咨询",
+					value:"1"
+				},{
+					text:"投诉",
+					value:"2"
+				},{
+					text:"建议",
+					value:"3"
+				},{
+					text:"举报",
+					value:"4"
+				}]
+			}]
 		}
 	};
 	// form

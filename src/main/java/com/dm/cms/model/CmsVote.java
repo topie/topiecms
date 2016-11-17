@@ -142,28 +142,28 @@ public class CmsVote {
     public void setPublishTime(String publishTime) {
         this.publishTime = publishTime;
     }
-
+    /**url**/
     public String getFiled1() {
     	String projectName = ConfigUtil.getConfigContent("cms","projectName");
 		return "/"+projectName+"/portal/vote/"+id+".htm";
     }
-
+    /**url**/
     public void setFiled1(String filed1) {
         this.filed1 = filed1 == null ? null : filed1.trim();
     }
-
+    /**模板ID**/
     public String getFiled2() {
         return filed2;
     }
-
+    /**模板ID**/
     public void setFiled2(String filed2) {
         this.filed2 = filed2 == null ? null : filed2.trim();
     }
-
+    /**投票总人数**/
     public String getFiled3() {
         return filed3;
     }
-
+    /**投票总人数**/
     public void setFiled3(String filed3) {
         this.filed3 = filed3 == null ? null : filed3.trim();
     }

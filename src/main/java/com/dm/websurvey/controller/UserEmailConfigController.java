@@ -21,9 +21,9 @@ public class UserEmailConfigController {
 	
 	@RequestMapping("/addOrUpdate")
 	@ResponseBody
-	public Map add(String userId,String leadIds,String orgIds)
+	public Map add(String userId,String leadIds,String orgIds,String isShowIp)
 	{
-		userEmailConfigService.addOrUpdate(userId, leadIds, orgIds);
+		userEmailConfigService.addOrUpdate(userId, leadIds, orgIds,isShowIp);
 		return ResponseUtil.success("操作成功！");
 	}
 	

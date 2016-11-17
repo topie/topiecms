@@ -6,9 +6,10 @@
     <result column="leader_id" property="leaderId" jdbcType="VARCHAR" />
     <result column="org_id" property="orgId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="is_show_ip" property="isShowIp" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, leader_id, org_id, user_id
+    id, leader_id, org_id, user_id,is_show_ip
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -36,9 +37,9 @@
   
   <insert id="insert" parameterType="com.dm.websurvey.model.UserEmailConfig" >
     insert into user_email_config (id, leader_id, org_id, 
-      user_id)
+      user_id,is_show_ip)
     values (#{id,jdbcType=VARCHAR}, #{leaderId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, 
-      #{userId,jdbcType=VARCHAR})
+      #{userId,jdbcType=VARCHAR},#{isShowIp,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dm.websurvey.model.UserEmailConfig" >
     insert into user_email_config
@@ -55,6 +56,9 @@
       <if test="userId != null" >
         user_id,
       </if>
+      <if test="isShowIp != null" >
+        is_show_ip,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -68,6 +72,9 @@
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="isShowIp != null" >
+        #{isShowIp,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -83,6 +90,9 @@
       <if test="userId != null" >
         user_id = #{userId,jdbcType=VARCHAR},
       </if>
+      <if test="isShowIp != null" >
+        is_show_ip = #{isShowIp,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -90,7 +100,8 @@
     update user_email_config
     set leader_id = #{leaderId,jdbcType=VARCHAR},
       org_id = #{orgId,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR}
+      user_id = #{userId,jdbcType=VARCHAR},
+       is_show_ip = #{isShowIp,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

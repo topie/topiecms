@@ -16,7 +16,7 @@ import com.dm.platform.util.ResponseUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-@Service
+@Service("tDictServiceImpl")
 public class TDictServiceImpl implements TDictService{
 	
 	@Autowired

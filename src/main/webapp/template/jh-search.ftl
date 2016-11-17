@@ -1,10 +1,7 @@
 <!DOCTYPE html>
         <html>
         <head lang="en">
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-            <meta http-equiv="X-UA-Compatible" content="IE=9" />
+             <#include "/template/jh-meta.ftl">
             <title>金湖政府网</title>
           	<meta name="keywords" content="" />
             <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -21,17 +18,46 @@
         <div class="container bg-white">
             <div class="jh-main jh-article">
                <div class="search">
-            <form class="form-horizontal ggfw-form" action="/dmbase/portal/searchText" id = "searchForm">
+            <form class="form-horizontal ggfw-form" action="./searchText" id = "searchForm">
                 <div class="form-group">
+		<div class="col-md-2 ">
+                       
+                    </div>
                     <div class="col-xs-8 col-md-5">
                         <input type="text" id="searchText" name="textValue" class="form-control ht3em" value="${result.textValue!}" placeholder="请输入搜索内容">
 			<input type="hidden" value="1" name="pageNum" id = "pageNum">
 			<input type="hidden" value="10" name="pageSize" id = "pageSize">
+			
                     </div>
                     <div class="col-xs-4 col-md-2">
                         <button type="commit" class="btn btn-lg btn-block fontSize14" >搜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;索</button>
                     </div>
-                </div>
+		 </div>
+		    <div class="form-group" style="margin-top: -15px;margin-left: 10px;">
+					<div class="col-md-2 ">
+                       
+                    </div>
+                    <div class="col-xs-1 col-md-5">
+							<label class="checkbox-inline">
+                                <input name="searchField" type="checkbox" ${result.title?string('checked=checked','')} value="title"> 标题
+                            </label>
+                            <label class="checkbox-inline">
+                                <input name="searchField" type="checkbox" ${result.content?string('checked=checked','')} value="content"> 内容
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="days" ${(30==result.days)?string('checked=checked','')} id="form-xb1" value="30"> 一月内
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="days" ${(182==result.days)?string('checked=checked','')} id="form-xb2" value="182"> 半年内
+                            </label>
+			    <label class="radio-inline">
+                                <input type="radio" name="days" ${(365==result.days)?string('checked=checked','')} id="form-xb3" value="365"> 一年内
+                            </label>
+							<label class="radio-inline">
+                                <input type="radio" name="days"  id="form-xb2" value="">不选择时间 
+                            </label>
+					</div>
+					</div>
             </form>
         </div>
         <div class="ggfw-ztfw-list">
@@ -41,8 +67,6 @@
 			<p>${searchResult.content!}<span class="color-green">【详细】</span></p>
 			<p class="color-gray">${searchResult.publishDate?substring(0,10)}</p>
 		    </a>
-           
-
 		</#list>
             
         </div>
@@ -56,7 +80,6 @@
         </div>
     </div>
          
-            <#include "/template/jh-links.ftl">
         </div>
         <#include "/template/jh-footer.ftl">
         <script type="text/javascript" src="/html/jinhu-static/js/jquery-1.12.1.min.js"></script>

@@ -66,9 +66,31 @@ var voteOptions = {
 			});
 			modal.show();*/
 			$("#content_grid").html("");
-			var form =$("#content_grid").dmForm(getVoteForm());
+			form =$("#content_grid").dmForm(getVoteForm(1,hasPublishRole));
 			//var form = modal.$body.dmForm(getVoteForm());
 			form.loadRemote("../vote/load?id=" + data.id);
+		}
+	},{
+		text:"发布",
+		cls:"btn green btn-sm",
+		handle:function(i,c){
+
+			var url = "../vote/publish?voteIds="+c.id;
+			bootbox.confirm("确认发布!",function(res){
+				if(res){
+					$.ajax({
+					url : url,
+					type : "POST",
+					dataType : "json",
+					success : function(res) { 
+						grid.reload();
+					},
+					error : function() {
+						bootbox.alert("请求异常！");
+					}
+				});
+				}
+			})
 		}
 	}
 	
@@ -100,7 +122,7 @@ var voteOptions = {
 		handle : function(grid) {
 			cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../video/copyTo");
 		}
-	},*/ {
+	},{
 		text : "提交",
 		cls : "btn green btn-sm",
 		handle : function(grid) {
@@ -123,7 +145,7 @@ var voteOptions = {
 				bootbox.alert("请选择要提交的项");
 			}
 		}
-	}, {
+	}, */ {
 		text : " 删 除",
 		cls : "btn red btn-sm",// 按钮样式
 		handle : function(grid) {
@@ -133,7 +155,37 @@ var voteOptions = {
 	
 };
 
-function getVoteForm() {
+function getVoteForm(type,hasPublishRole) {
+	var buttons = [];
+	if(hasPublishRole){
+		buttons.push(
+		{
+			type : 'submit',
+			attribute:'role=submit',
+			cls:'blue btn-lg',
+			text : '直接发布',
+			handle : function() {
+				form.setAction("../vote/saveAndPublish");
+			}
+		});
+	}else{
+		buttons.push({
+			type : 'submit',
+			attribute:'role=submit',
+			cls:'blue btn-lg',
+			text : '提交审核',
+			handle : function() {
+				form.setAction("../vote/saveAndCommit");
+			}
+		});
+	}
+	buttons.push({
+		type : 'button',
+		text : '关闭',
+		handle : function() {
+			flushGrid();
+		}
+	} );
 	var items = [
 			{
 				type : 'hidden',
@@ -165,6 +217,20 @@ function getVoteForm() {
 				name : 'description',// name
 				id : 'description',// id
 				label : '说明',// 左边label
+				cls : 'input-large'
+			},
+			{
+				type : 'datepicker',// 类型
+				name : 'startTime',// name
+				id : 'startTime',// id
+				label : '开始时间',// 左边label
+				cls : 'input-large'
+			},
+			{
+				type : 'datepicker',// 类型
+				name : 'endTime',// name
+				id : 'endTime',// id
+				label : '结束时间',// 左边label
 				cls : 'input-large'
 			},{
 				type : 'radioGroup',// 类型
@@ -221,13 +287,7 @@ function getVoteForm() {
 		showReset : true,// 是否显示重置按钮
 		resetText : "重置",// 重置按钮文本
 		isValidate : true,// 开启验证
-		buttons : [ {
-			type : 'button',
-			text : '关闭',
-			handle : function() {
-				flushGrid();
-			}
-		} ],
+		buttons :buttons,
 		buttonsAlign : "center",
 		// 表单元素
 		items : items
@@ -332,7 +392,7 @@ function getoptions(id){
 					form.loadLocal({voteId:id});
 					/*var form = modal.$body.load("../interview/page?id="+data.id);*/
 					/*var form = modal.$body.dmForm(getVideoForm(data.contentType));*/
-					form.loadLocal(data);
+					//form.loadLocal(data);
 				}
 			},{
 				text : "删除",
@@ -344,16 +404,16 @@ function getoptions(id){
 					bootbox.confirm("确定删除?",function(r){
 						if(r){
 						
-					$.ajax({
-						url:"../vote/deleteOpt?id="+data.id,
-						type:"POST",
-						success:function(res){
-							in_grid.relaod();
-						} ,
-						error:function(){
-							alert("错误");
-						}
-					});	
+						$.ajax({
+							url:"../vote/deleteOpt?id="+data.id,
+							type:"POST",
+							success:function(res){
+								grid.reload();
+							} ,
+							error:function(){
+								alert("错误");
+							}
+						});	
 						}
 					});
 				}
@@ -381,19 +441,13 @@ function getoptions(id){
 					form.loadRemote("../video/load?videoId=" + data.id);*/
 					
 				}
-			}/*{
-				text : "移动",
-				cls : "btn green btn-sm",
+			},{
+				text : "返回",
+				cls : "btn btn-sm",
 				handle : function(grid) {
-					cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../video/cutTo");
+					flushGrid();
 				}
-			}, {
-				text : "复制",
-				cls : "btn green btn-sm",
-				handle : function(grid) {
-					cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../video/copyTo");
-				}
-			},*/  ]
+			}  ]
 			
 	};
 	return opt;

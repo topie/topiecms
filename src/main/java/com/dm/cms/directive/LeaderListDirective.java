@@ -31,6 +31,7 @@ public class LeaderListDirective implements TemplateDirectiveModel{
 		Integer pageNum = params.get("pageNum") == null ? 1 : Integer
 				.valueOf(params.get("pageNum").toString());
 		Map map = new HashMap();
+		map.put("sort", "seq asc");
 		List<Leader> leaders = leaderService.findByPage(pageNum, pageSize, map).getList();
 		env.setVariable("leaders",ObjectWrapper.DEFAULT_WRAPPER.wrap(leaders));
 		body.render(env.getOut());  

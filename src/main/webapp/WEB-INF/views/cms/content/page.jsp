@@ -177,12 +177,17 @@
      type="text/javascript"></script>
 	  --%><script type="text/javascript">
 	/**********普通内容操作函数****************/
+	var hasPublishRole = '${hasPublishRole}';
 	function deleteItems(ids) {
 		if (ids.length > 0) {
 			bootbox.confirm("确定删除吗？", function(result) {
 				var url;
 				if (result) {
 					if(currentChannelType=='0')
+					{
+					url = "../content/delete?contentId="+ids;
+					}
+					else if(currentChannelType=='11')
 					{
 					url = "../content/delete?contentId="+ids;
 					}
@@ -216,7 +221,7 @@
 						success : function(data) {
 							if (data.status == 1) {
 								grid.reload();
-								alert(data.msg);
+								bootbox.alert(data.msg);
 							}
 						}
 					});
@@ -426,40 +431,41 @@
 		var formOption;
 		if(currentChannelType == '0')
 		{
-		formOption = getForm(contentType);
+		formOption = getForm(contentType,hasPublishRole);
 		}
 		else if(contentType == '2')
 		{
-			formOption = getForm(contentType);
+			formOption = getForm(contentType,hasPublishRole);
 		}
 	else if(currentChannelType == '5')
 	{
-	formOption = getVideoForm(contentType);
+	formOption = getVideoForm(contentType,hasPublishRole);
 	}
 	else if(currentChannelType == '6')
 	{
-	formOption = getAudioForm(contentType);
+	formOption = getAudioForm(contentType,hasPublishRole);
 	}
 	else if(currentChannelType == '7')
 		{
-		formOption = getNovelForm(contentType);
+		formOption = getNovelForm(contentType,hasPublishRole);
 		}
 	else if(currentChannelType == '8')
 	{
-	formOption = getInterviewForm(contentType);
+	formOption = getInterviewForm(contentType,hasPublishRole);
 	}
 	else if(currentChannelType == '9')
 	{
-	formOption = getVoteForm(contentType);
+	formOption = getVoteForm(contentType,hasPublishRole);
 	}
 		$("#content_grid").html("");
-		var form = $("#content_grid").dmForm(formOption);
+		form = $("#content_grid").dmForm(formOption);
 		form.setValue("channelId", currentChannelId);
 		form.setValue("contentType",contentType);
 	}
+	var form;
 	jQuery(document).ready(function() {
 		initSelect2Site();
-		grid = $("#content_grid").dmGrid(options);
+		grid = $("#content_grid").dmGrid(getnewsoption("./list",getnewsoption));
 	});
 	
 	</script>

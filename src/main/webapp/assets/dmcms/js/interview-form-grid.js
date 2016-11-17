@@ -44,7 +44,7 @@ var interviewOptions = {
 			if (c.status == "4")
 				return "已核实";
 			if (c.status == "5")
-				return "已完成";
+				return "<font color='green'>已完成</font>";
 			return "--";
 		}
 	} ],
@@ -65,9 +65,7 @@ var interviewOptions = {
 			if(c.status=="1"){
 				return false;
 			}
-			if(c.status=="5"){
-				return false;
-			}
+			
 			return true;
 		},
 		handle : function(index, data) {
@@ -85,6 +83,28 @@ var interviewOptions = {
 			/*var form = modal.$body.load("../interview/page?id="+data.id);*/
 			/*var form = modal.$body.dmForm(getVideoForm(data.contentType));
 			form.loadRemote("../video/load?videoId=" + data.id);*/
+		}
+	},{
+		text:"发布",
+		cls:"green btn-sm",
+		handle:function(i,data){
+			var url = "../interview/check?status=2&ids="+data.id;
+			bootbox.confirm("确定发布?",function(res){
+				if(res){
+					$.ajax({
+						url:url,
+						type:"POST",
+						success:function(res){
+							if(res.status=="1"){
+								grid.reload();
+							}
+							else{
+								bootbox.alert(res.msg);
+							}
+						}
+					});
+				}
+			})
 		}
 	}
 	, {
@@ -149,7 +169,7 @@ var interviewOptions = {
 		handle : function(grid) {
 			cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../video/copyTo");
 		}
-	},*/ {
+	}, {
 		text : "提交",
 		cls : "btn green btn-sm",
 		handle : function(grid) {
@@ -172,7 +192,7 @@ var interviewOptions = {
 				bootbox.alert("请选择要提交的项");
 			}
 		}
-	}, {
+	},*/ {
 		text : " 删 除",
 		cls : "btn red btn-sm",// 按钮样式
 		handle : function(grid) {

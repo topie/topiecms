@@ -1,10 +1,7 @@
 <!DOCTYPE html>
            <html>
            <head lang="en">
-               <meta charset="UTF-8">
-               <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-               <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-               <meta http-equiv="X-UA-Compatible" content="IE=9" />
+                <#include "/template/jh-meta.ftl">
                <title>${site.displayName!}-${cmsVideo.name!}</title>
              	<meta name="keywords" content="" />
                <link href="/html/jinhu-static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -13,6 +10,14 @@
                <script src="/html/jinhu-static/js/html5shiv.min.js"></script>
                <script src="/html/jinhu-static/js/respond.min.js"></script>
                <![endif]-->
+	       <style>
+		.jhvideo{
+			width:60%;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top:30px;
+		}
+	       </style>
            </head>
            <body>
            
@@ -38,9 +43,13 @@
 			</span>
 <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 			
-		</div>
-                  <div class="thumbnail ">
-           		<div  style="width:50%;margin-left: auto;margin-right: auto;" >
+		</div></div>
+ <div class="jh-article-p">
+                  <div class=" ">
+           		<div class=" jhvideo mgt30" >
+			<#if cmsVideo.actor??>
+				
+			<#else>
 <div id="jp_container_1" class="jp-video jp-video-360p" role="application" aria-label="media player">
                                             <div class="jp-type-single">
                                               <div id="jquery_jplayer_1" class="jp-jplayer"></div>
@@ -85,22 +94,14 @@
                                             </div>
                                           </div>
 
-  				<!--<video  width="100%" height="" controls="controls">
-  				  <source src="http://www.w3school.com.cn/i/movie.ogg" type="video/ogg">
-  				  <source src="http://www.w3school.com.cn/i/movie.mp4" type="video/mp4">
-  				  <source src="${cmsVideo.videoUrl!}" type="video/mp4">
-  				  <source src="${cmsVideo.videoUrl!}" type="video/ogg">
-  				  
-  				</video>-->
+  				</#if>
   			</div>
                     </div>
-                   <div class="jh-article-p">
+                  </br>
                        ${cmsVideo.introduce?default("")}
                    </div>
                </div>
-           		
-            
-               <#include "/template/jh-links.ftl">
+           	
            </div>
            <#include "/template/jh-footer.ftl">
            <script type="text/javascript" src="/html/jinhu-static/js/jquery-1.12.1.min.js"></script>
@@ -113,7 +114,7 @@
            <script type="text/javascript">
                $(function () {
                    $('input, textarea').placeholder();
-                                    
+                                    if($("#jquery_jplayer_1")){
                                       $("#jquery_jplayer_1").jPlayer({
                                       ready: function () {
                                         $(this).jPlayer("setMedia", {
@@ -121,8 +122,7 @@
                                           m4v: "${cmsVideo.videoUrl!}",
                                           ogv: "${cmsVideo.videoUrl!}",
                                           webmv: "${cmsVideo.videoUrl!}"
-					 
-                                        });
+                                        }).jPlayer("play");;
                                       },
                                       swfPath: "/html/jinhu-static/plugins/jPlayer-2.9.1/dist/jplayer/jquery.jplayer.swf",
                                       supplied: "webmv, ogv, m4v,mp4,avi,flv",
@@ -138,6 +138,7 @@
                                       remainingDuration: true,
                                       toggleDuration: true
                                     });
+				    }
                });
            </script>
            </body>

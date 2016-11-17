@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,7 @@ import com.dm.cms.model.CmsCheck;
 import com.dm.cms.model.CmsContent;
 import com.dm.cms.model.CmsSite;
 import com.dm.cms.model.CmsTemplate;
+import com.dm.cms.model.CmsTemplateConfig;
 import com.dm.cms.service.CmsAttachmentService;
 import com.dm.cms.service.CmsContentService;
 import com.dm.cms.service.CmsSiteService;
@@ -32,6 +32,7 @@ import com.dm.cms.sqldao.CmsChannelMapper;
 import com.dm.cms.sqldao.CmsContentMapper;
 import com.dm.cms.sqldao.CmsSiteMapper;
 import com.dm.cms.sqldao.CmsTemplateMapper;
+import com.dm.platform.model.UserAccount;
 import com.dm.platform.util.UserAccountUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -75,8 +76,10 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 			seq = contents.get(0).getSeq() + 1;
 		cmsContent.setSeq(seq);
 		if (cmsContent.getTemplateId() == null) {// 设置默认模板
-			cmsContent.setTemplateId(cmsTemplateConfigService.load(null,
-					cmsContent.getChannelId()).getContentTemplateId());
+			CmsTemplateConfig c =cmsTemplateConfigService.load(null,
+					cmsContent.getChannelId());
+			if(c!=null)
+			cmsContent.setTemplateId(c.getContentTemplateId());
 		}
 		if(cmsContent.getPublishDate()==null){
 			cmsContent.setPublishDate(new Date());
@@ -111,7 +114,9 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	@Override
 	public PageInfo<CmsContent> findCmsContentByPage(Integer pageNum,
 			Integer pageSize, Map argMap) {
-		argMap.put("order", "seq desc,publish_date desc");
+		if(argMap.get("sort")==null){
+			argMap.put("sort", "seq desc,publish_date desc");
+		}
 		if (argMap.get("model") != null) {
 			Integer channelId = ((CmsContent) argMap.get("model"))
 					.getChannelId();
@@ -120,9 +125,11 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 						.selectByPId(channelId);
 				channelIds.add(channelId);
 				argMap.put("channelIds", channelIds);
+			}else{
+				/*argMap.put("channelIds", new Integer[]{0});*/
 			}
 		}else{
-			argMap.put("channelIds", new Integer[]{0});
+			/*argMap.put("channelIds", new Integer[]{0});*/
 		}
 		PageHelper.startPage(pageNum, pageSize);
 		List<CmsContent> cmsContents = cmsContentMapper
@@ -290,7 +297,7 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 			return false;
 		}
 		if (2 == status) {
-			if(cmsContent.getContentType()!=null &&cmsContent.getContentType()==2){
+			if(cmsContent.getContentType()!=null &&cmsContent.getContentType()==2){//链接频道
 				succ = true;
 				cmsContent.setStatus(status);
 				cmsContent.setIsHtml(true);
@@ -338,7 +345,7 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 
 	private void sort(CmsContent cmsContent, Integer seq) {
 		Map searchMap = new HashMap();
-		searchMap.put("order", "seq desc,publish_date desc");
+		searchMap.put("sort", "seq desc,publish_date desc");
 		CmsContent content = new CmsContent();
 		content.setChannelId(cmsContent.getChannelId());// 之传入channelId
 		searchMap.put("model", content);
@@ -424,6 +431,41 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		PageHelper.startPage(pageNum, pageSize);
 		List<CmsCheck> CmsChecks = cmsContentMapper.selectViewByReord(argMap);
 		return new PageInfo<CmsCheck>(CmsChecks);
+	}
+
+	@Override
+	public PageInfo<CmsContent> selectIsPictures(Integer pageNum,
+			Integer pageSize) {
+		PageHelper.startPage(pageNum,pageSize);
+		List<CmsContent> list =this.cmsContentMapper.selectIsPictures();
+		return new PageInfo<CmsContent>(list);
+	}
+
+	@Override
+	public void setContentIsDelete(Integer id) {
+		CmsContent record = new CmsContent();
+		record.setId(id);
+		UserAccount user = UserAccountUtil.getInstance().getCurrentUserAccount();
+		record.setDeleteUser(user.getCode());
+		record.setIsDelete(true);
+		record.setStatus(new Short("0"));
+		record.setIsHtml(false);
+		record.setIsPicture(false);
+		record.setIsTop(false);
+		this.cmsContentMapper.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public void restore(String contentId) {
+		if(contentId!=null && !contentId.equals("")){
+			for(String id:contentId.split(",")){
+				CmsContent record = new CmsContent();
+				record.setId(Integer.valueOf(id));
+				record.setIsDelete(false);
+				this.cmsContentMapper.updateByPrimaryKeySelective(record);
+			}
+		}
+		
 	}
 
 }

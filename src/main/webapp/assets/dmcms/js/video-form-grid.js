@@ -1,7 +1,129 @@
 /** ************视频grid表格************ */
+function dateTostr(utc)
+{
+	if(utc)
+		{
+     var date = new Date(utc);
+     return date.getFullYear()+"-"+((date.getMonth()+1)>10?date.getMonth()+1:"0"+(date.getMonth()+1))+"-"+(date.getDate()>10?date.getDate():"0"+date.getDate())+" "+(date.getHours()>10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>10?date.getMinutes():"0"+date.getMinutes())+":"+(date.getSeconds()>10?date.getSeconds():"0"+date.getSeconds());
+   }
+}
+function getvideoOptions(action,hasPublishRole){
+
+	var actionCloums=[ {
+		text : "预览",
+		cls : "green btn-sm",
+		icon : "fa fa-search",
+		handle : function(index, data) {
+			window.open(data.url);
+		}
+	}, {
+
+		text : "编辑",
+		cls : "green btn-sm",
+		visable : function(i, c) {
+			/*if (c.status == "1")
+				return false;*/
+			return true;
+		},
+		handle : function(index, data) {
+			// index为点击操作的行数
+			// data为该行的数据
+			$("#content_grid").html("");
+			 form = $("#content_grid").dmForm(getVideoForm(data.contentType,hasPublishRole));
+			form.loadRemote("../video/load?videoId=" + data.id,function(){
+				if(data.publishDate){
+				var l = dateTostr(data.publishDate);
+				$("#publishDate").val(l);
+				}
+			});
+		}
+	}
+	, {
+		text : "排序",
+		cls : "yellow btn-sm",
+		handle : function(i, c) {
+			sortfun(i, c,c.name);
+		}
+	}
+	];
+	var tools=[// 工具属性
+	       	{
+	    		text : "添加",
+	    		cls : "btn green btn-sm",
+	    		handle : function(grid) {// 按钮点击事件
+	    			if(currentChannelId==undefined)
+	    				bootbox.alert("请先选择频道");
+	    			else if(currentChannelIsParent)
+	    				bootbox.alert("请选择子频道进行添加!");
+	    			else
+	    				showForm(5, "视频内容");
+	    		}
+	    	},{
+	    		text : "移动",
+	    		cls : "btn green btn-sm",
+	    		handle : function(grid) {
+	    			cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../video/cutTo");
+	    		}
+	    	}, {
+	    		text : "复制",
+	    		cls : "btn green btn-sm",
+	    		handle : function(grid) {
+	    			cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../video/copyTo");
+	    		}
+	    	}, {
+	    		text : " 删 除",
+	    		cls : "btn red btn-sm",// 按钮样式
+	    		handle : function(grid) {
+	    			deleteItems(grid.getSelectIds());
+	    		}
+	    	} ];
+	if(hasPublishRole){
+		actionCloums.push(
+				{
+					text : "发布",
+					cls : "green btn-sm",
+					handle : function(i, data) {
+						var url = "../video/check?status=2&videoIds="+data.id;
+						$.ajax({
+							url:url,
+							type:'POST',
+							success:function(res){
+								bootbox.alert(res.msg);
+								flushGrid();
+							}
+						});
+						}
+					}
+		);
+	}else{
+		tools.push({
+    		text : "提交",
+    		cls : "btn green btn-sm",
+    		handle : function(grid) {
+    			var ids = grid.getSelectIds();
+    			if (ids.length > 0) {
+    				var url = "../video/commit?videoIds=" + ids;
+    				$.ajax({
+    					url : url,
+    					type : "POST",
+    					dataType : "json",
+    					success : function(res) {
+    						bootbox.alert(res.msg);
+    						grid.reload();
+    					},
+    					error : function() {
+    						bootbox.alert("请求异常！");
+    					}
+    				});
+    			} else {
+    				bootbox.alert("请选择要提交的项");
+    			}
+    		}
+    	});
+	}
 
 var videoOptions = {
-	url : "../video/list", // ajax地址
+	url : action, // ajax地址
 	pageNum : 1,// 当前页码
 	pageSize : 5,// 每页显示条数
 	idFiled : "id",// id域指定
@@ -33,97 +155,45 @@ var videoOptions = {
 	} ],
 	actionCloumText : "操作",// 操作列文本
 	actionCloumWidth : "30%",
-	actionCloums : [ {
-		text : "预览",
-		cls : "green btn-sm",
-		icon : "fa fa-search",
-		handle : function(index, data) {
-			window.open(data.url);
-		}
-	}, {
-
-		text : "编辑",
-		cls : "green btn-sm",
-		visable : function(i, c) {
-			if (c.status == "1")
-				return false;
-			return true;
-		},
-		handle : function(index, data) {
-			// index为点击操作的行数
-			// data为该行的数据
-			$("#content_grid").html("");
-			var form = $("#content_grid").dmForm(getVideoForm(data.contentType));
-			form.loadRemote("../video/load?videoId=" + data.id);
-		}
-	}
-	, {
-		text : "排序",
-		cls : "yellow btn-sm",
-		handle : function(i, c) {
-			sortfun(i, c,c.name);
-		}
-	}
-	],
-	tools : [// 工具属性
-	{
-		text : "添加",
-		cls : "btn green btn-sm",
-		handle : function(grid) {// 按钮点击事件
-			if(currentChannelId==undefined)
-				bootbox.alert("请先选择频道");
-			else if(currentChannelIsParent)
-				bootbox.alert("请选择子频道进行添加!");
-			else
-				showForm(5, "视频内容");
-		}
-	},{
-		text : "移动",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			cutOrCopyfun(grid.getSelectIds(), "移动", "radio", "../video/cutTo");
-		}
-	}, {
-		text : "复制",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			cutOrCopyfun(grid.getSelectIds(), "复制", "checkbox", "../video/copyTo");
-		}
-	}, {
-		text : "提交",
-		cls : "btn green btn-sm",
-		handle : function(grid) {
-			var ids = grid.getSelectIds();
-			if (ids.length > 0) {
-				var url = "../video/commit?videoIds=" + ids;
-				$.ajax({
-					url : url,
-					type : "POST",
-					dataType : "json",
-					success : function(res) {
-						bootbox.alert(res.msg);
-						grid.reload();
-					},
-					error : function() {
-						bootbox.alert("请求异常！");
-					}
-				});
-			} else {
-				bootbox.alert("请选择要提交的项");
-			}
-		}
-	}, {
-		text : " 删 除",
-		cls : "btn red btn-sm",// 按钮样式
-		handle : function(grid) {
-			deleteItems(grid.getSelectIds());
-		}
-	} ]
+	actionCloums : actionCloums,
+	tools : tools
 	
 };
+return videoOptions;
+}
 
 /** *************视频表单*************** */
-function getVideoForm(typeId) {
+function getVideoForm(typeId,hasPublishRole) {
+	var buttons = [];
+	if(hasPublishRole){
+		buttons.push(
+		{
+			type : 'submit',
+			attribute:'role=submit',
+			cls:'blue btn-lg',
+			text : '直接发布',
+			handle : function() {
+				form.setAction("../video/saveAndPublish");
+			}
+		});
+	}else{
+		buttons.push({
+			type : 'submit',
+			attribute:'role=submit',
+			cls:'blue btn-lg',
+			text : '提交审核',
+			handle : function() {
+				form.setAction("../video/saveAndCommit");
+			}
+		});
+	}
+	buttons.push({
+		type : 'button',
+		text : '关闭',
+		handle : function() {
+			flushGrid();
+		}
+	} );
 	var items = [
 			{
 				type : 'hidden',
@@ -160,6 +230,13 @@ function getVideoForm(typeId) {
 				name : 'director',// name
 				id : 'director',// id
 				label : '作者',// 左边label
+				cls : 'input-large'
+			},
+			{
+				type : 'datepicker',//类型
+				name : 'publishDate',//name
+				id : 'publishDate',//id
+				label : '发布时间',//左边label
 				cls : 'input-large'
 			},
 			{
@@ -256,14 +333,8 @@ function getVideoForm(typeId) {
 			type : 'text',
 			name : 'origin',
 			id : 'origin',
-			label : '来源',
-			rule : {
-				required :true
-			},
-			message : {
-				required : "请填写来源",
-			}
-	}
+			label : '来源' 
+	};
 	//items.push(videoUrl);
 	items.push(fileUrl);
 	items.push(videoOrigen);
@@ -287,13 +358,7 @@ function getVideoForm(typeId) {
 		showReset : true,// 是否显示重置按钮
 		resetText : "重置",// 重置按钮文本
 		isValidate : true,// 开启验证
-		buttons : [ {
-			type : 'button',
-			text : '关闭',
-			handle : function() {
-				flushGrid();
-			}
-		} ],
+		buttons : buttons,
 		buttonsAlign : "center",
 		// 表单元素
 		items : items
