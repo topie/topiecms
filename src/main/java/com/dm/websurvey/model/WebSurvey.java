@@ -20,6 +20,8 @@ public class WebSurvey {
     private String reply;
 
     private String redept;
+    
+    private String orgName;
 
     private String code;
 
@@ -68,6 +70,14 @@ public class WebSurvey {
 
 	public void setShortTitle(String shortTitle) {
 		this.shortTitle = shortTitle;
+	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
 	}
 
 	public String getId() {

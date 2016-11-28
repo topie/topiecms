@@ -29,24 +29,25 @@
     <result column="is_open" property="isOpen" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="VARCHAR" />
     <result column="is_satisfied" property="isSatisfied" jdbcType="VARCHAR"/>
+    <result column ="org_name" property="orgName" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, phone,title, postcode, address, type, content, reply, redept, code, recontent, 
+    t.id, username, phone,title, postcode, address, type, content, reply, redept, t.code, recontent, 
     effect, is_on_page, input_date, reply_date, email, update_date, seq_id, touser, code_id, 
-    ip, mac, sex, is_open, state ,is_satisfied
+    ip, mac, sex, is_open, state ,is_satisfied,name org_name
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from web_survey
-    where id = #{id,jdbcType=VARCHAR}
+    from web_survey t LEFT JOIN t_org o ON t.code_id=o.id 
+    where t.id = #{id,jdbcType=VARCHAR}
   </select>
   
   <select id="selectRecordByArgMap" resultMap="BaseResultMap"
             parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
-        from web_survey
+        from web_survey t LEFT JOIN t_org o ON t.code_id=o.id 
         <where>
             <!-- <if test="codeId !=null">
               code_id in
@@ -59,7 +60,7 @@
             </if>
             <if test="model!=null">
 	            <if test="model.code !=null and model.code!=''">
-	                 and code = #{model.code}
+	                 and t.code = #{model.code}
 	            </if>
                <if test="model.state !=null and model.state!=''">
                  and state = #{model.state}
@@ -83,11 +84,11 @@
             parameterType="java.util.Map">
         select
         <include refid="Base_Column_List"/>
-        from web_survey
+        from web_survey t LEFT JOIN t_org o ON t.code_id=o.id 
         <where>
             <if test="model!=null">
 		        <if test="model.code !=null and model.code!=''">
-		                 and code = #{model.code}
+		                 and t.code = #{model.code}
 		        </if>
 	             <if test="model.state !=null and model.state!=''">
 	               and state = #{model.state}

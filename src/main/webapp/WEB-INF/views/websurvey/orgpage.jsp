@@ -544,13 +544,15 @@
 		pageSelect : [ 2, 15, 30, 50 ],
 		cloums : [ {
 			title : "标题",
-			field : "title",
-			sort : true
+			field : "title"
 		}, {
 			title : "发件人",
-			field : "username",
-			sort : true
-		}, 
+			field : "username"
+		},
+		{
+			title : "部门",
+			field : "orgName"
+		},
 		{
 			title : "留言时间",
 			field : "inputDate",

@@ -73,9 +73,9 @@
 						</div>
 					</div>
 						<!-- END TRACKING CURVES PORTLET-->
-				<!-- <div class="row margin-top-10">
+				 <div class="row margin-top-10">
 					<div class="col-md-6 col-sm-12">
-						BEGIN PORTLET
+						<!-- BEGIN PORTLET -->
 						<div class="portlet light">
 							<div class="portlet-title">
 								<div class="caption caption-md">
@@ -104,10 +104,10 @@
 							</div>
 							<div class="portlet-body" id="content_grid"></div>
 						</div>
-						END PORTLET
+						<!-- END PORTLET -->
 					</div>
 					<div class="col-md-6 col-sm-12">
-						BEGIN PORTLET
+						<!-- BEGIN PORTLET -->
 						<div class="portlet light">
 							<div class="portlet-title">
 								<div class="caption caption-md">
@@ -135,9 +135,9 @@
 							</div>
 							<div class="portlet-body" id="channel_grid"></div>
 						</div>
-						END PORTLET
+						<!-- END PORTLET -->
 					</div>
-				</div> -->
+				</div> 
 				<!-- END PAGE CONTENT INNER -->
 			</div>
 		</div>
@@ -151,7 +151,7 @@
 	<%@include file="../includejsps/js.jsp"%>
 	<%@include file="../includejsps/plugin-js.jsp"%>
 	<script type="text/javascript">
-    /* var grid,channel_grid,content_grid;
+    var grid,channel_grid,content_grid;
     var contentType = "0";
     var content_options = {
             url: "cmsStatic/contentVisitList?days=30&channelType="+contentType, // ajax地址
@@ -201,7 +201,7 @@
     jQuery(document).ready(function () {
         content_grid = $("#content_grid").dmGrid(content_options);
         channel_grid = $("#channel_grid").dmGrid(channel_options);
-    }); */
+    }); 
 </script>
 	<!-- <script src="<%=basePath%>assets/dmcms/js/visit-record.js"></script> -->
 	<script
