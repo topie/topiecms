@@ -47,7 +47,7 @@ public class ContentGenerateHtml implements Runnable {
 	private CmsAudioService cmsAudioService;
 	@Autowired
 	private CmsNovelService cmsNovelService;
-	
+    
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {

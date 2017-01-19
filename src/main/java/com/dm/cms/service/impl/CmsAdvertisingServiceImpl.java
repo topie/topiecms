@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import com.dm.cms.model.CmsAdvertising;
@@ -11,15 +12,25 @@ import com.dm.cms.service.CmsAdvertisingService;
 import com.dm.cms.sqldao.CmsAdvertisingMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 @Service
 public class CmsAdvertisingServiceImpl implements CmsAdvertisingService {
 
 	@Autowired
+	MongoTemplate mongoTemplate; 
+	@Autowired
 	private CmsAdvertisingMapper cmsAdvertisingMapper;
 	@Override
 	public PageInfo<CmsAdvertising> findCmsAdvertisingByPage(Integer pageNum,
 			Integer pageSize, Map map) {
+		DBCursor dc = mongoTemplate.getCollection("person").find();
+		while (dc.hasNext()) {
+            DBObject obj = dc.next();
+            
+            System.out.println(obj);
+        }
 		PageHelper.startPage(pageNum, pageSize);
 		List<CmsAdvertising> list = this.cmsAdvertisingMapper.findByArgMap(map);
 		PageInfo<CmsAdvertising> page = new PageInfo<CmsAdvertising>(list);

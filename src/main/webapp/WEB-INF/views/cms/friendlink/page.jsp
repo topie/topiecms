@@ -181,7 +181,7 @@
 					}
 					return "隐藏";
 				}
-			},{
+			}/* ,{
 				title : "类型",
 				field : "",
 				width : "10%",
@@ -203,7 +203,7 @@
 					}
 					return "--";
 				}
-			},{
+			} */,{
 				title : "顺序",
 				field : "seq",
 				width : "10%"
@@ -244,7 +244,7 @@
 				}
 			} ], 
 			search : {
-				rowEleNum : 1,
+				rowEleNum : 2,
 				hide:false,
 				//搜索栏元素
 				items : [ {
@@ -253,18 +253,16 @@
 					name : "name",
 					cls:"form-control input-large",
 					placeholder : "输入要搜索的名称"
-				},{
-					type : 'radioGroup',//类型
-					name : 'type',//name
-					id : 'type',//id
-					label : '类型',//左边label 
-					items:[	{text:'全部',value:''},
-					       	{text:'中央部委网站',value:"zybw"},
-					       {text:'省（区市）网站',value:"sqs"},
-					       {text:'江苏省辖市网站',value:"jxs"},
-					       {text:'淮安市辖县区网站',value:"hxx"},
-					       {text:'本地网站 ',value:"bdw"}]
-				} ]
+				},
+				 {
+						type:"radioGroup",
+						name:"type",
+						id:"type",
+						label:'类型',
+						items:[{text:"全部",value:''}],
+						itemsUrl:'../dict/getItems?code=C04'
+					}
+				 ]
 			}
 		};
 		function setRead(data){
@@ -362,22 +360,18 @@
 				label : '描述',//左边label
 				cls : 'input-large'
 			},{
-				type : 'radioGroup',//类型
-				name : 'type',//name
-				id : 'type',//id
-				label : '类型',//左边label
-				cls : 'input-large',
-				items:[{text:'中央部委网站',value:"zybw"},
-				       {text:'省（区市）网站',value:"sqs"},
-				       {text:'江苏省辖市网站',value:"jxs"},
-				       {text:'淮安市辖县区网站',value:"hxx"},
-				       {text:'本地网站 ',value:"bdw"}],
-				       rule : {
-							required : true
-						},
-						message : {
-							required : "请选择"
-						}
+				type:"radioGroup",
+				name:"type",
+				id:"type",
+				label:'类型',
+				items:[],
+				itemsUrl:'../dict/getItems?code=C04',
+				rule : {
+					required : true
+				},
+				message : {
+					required : "请选择"
+				}
 			},{
 				type : 'radioGroup',//类型
 				name : 'isShow',//name

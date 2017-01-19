@@ -57,12 +57,14 @@ import com.dm.cms.service.CmsSiteService;
 import com.dm.cms.service.CmsTemplateService;
 import com.dm.cms.service.CmsVideoService;
 import com.dm.cms.service.CmsVoteService;
+import com.dm.cms.util.PageUtil;
 import com.dm.module.model.OrgPerson;
 import com.dm.module.service.MicrocobolService;
 import com.dm.module.service.OrgPersonService;
 import com.dm.platform.model.Org;
 import com.dm.platform.service.OrgService;
 import com.dm.platform.util.DmDateUtil;
+import com.dm.platform.util.PageConvertUtil;
 import com.dm.platform.util.RandomValidateCode;
 import com.dm.platform.util.RequestUtil;
 import com.dm.platform.util.ResponseUtil;
@@ -71,7 +73,6 @@ import com.dm.websurvey.model.Leader;
 import com.dm.websurvey.model.WebSurvey;
 import com.dm.websurvey.service.LeaderService;
 import com.dm.websurvey.service.WebSurveyService;
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 
 /**
@@ -81,14 +82,14 @@ import com.github.pagehelper.PageInfo;
 @RequestMapping("/portal")
 public class CmsPortalController {
 
-	@Value("${projectName}")
-	String projectName;
+	/*@Value("${projectName}")
+	String projectName;*/
 
-	@Value("${htmlMobileDir}")
+	/*@Value("${htmlMobileDir}")
 	String htmlMobileFolder;
 
 	@Value("${htmlDir}")
-	String htmlFolder;
+	String htmlFolder;*/
 	@Value("${template.mobileBasePath}")
 	String mobileFolder;
 	@Value("${template.basePath}")
@@ -130,6 +131,7 @@ public class CmsPortalController {
 	private CmsInterviewService cmsInterviewService;
 	@Autowired
 	private CmsInterviewQuestionsService cmsInterviewQServie;
+
 	public static final String VILIDATECODE = "webSurveyValidateCode";
 
 	private Logger log = LoggerFactory.getLogger(CmsPortalController.class);
@@ -142,8 +144,8 @@ public class CmsPortalController {
 			return "404";
 		}
 		model.addAttribute("site", cmsSite);
-		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
-		model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		//model.addAttribute("htmlFolder", htmlFolder);
 		return getTemplatePath(cmsSite.getTemplateId(), device.isMobile());
 	}
 
@@ -303,9 +305,9 @@ public class CmsPortalController {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("site", cmsSite);
 		model.addAttribute("channel", cmsChannel);
-		model.addAttribute("htmlFolder", htmlFolder);
-		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
-		model.addAttribute("projectName", projectName);
+		//model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		////model.addAttribute("projectName", projectName);
 		model.addAttribute("param", param);
 		return "/template/jh-websuerveypage";
 	}
@@ -322,7 +324,7 @@ public class CmsPortalController {
 			text = "";
 		}
 		model.addAttribute("text", text);
-		model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("htmlFolder", htmlFolder);
 		if (device.isMobile()) {
 			return mobileFolder + "/seach_page";
 		}
@@ -345,9 +347,9 @@ public class CmsPortalController {
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("site", cmsSite);
 		model.addAttribute("channel", cmsChannel);
-		model.addAttribute("htmlFolder", htmlFolder);
-		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
-		model.addAttribute("projectName", projectName);
+		//model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		////model.addAttribute("projectName", projectName);
 		model.addAttribute("param", param);
 		return getTemplatePath(cmsChannel.getTemplateId(), device.isMobile());
 	}
@@ -376,11 +378,11 @@ public class CmsPortalController {
 			model.addAttribute("doc", doc);
 		} else
 			model.addAttribute("cmsContent", cmsContent);
-		model.addAttribute("projectName", projectName);
+		//model.addAttribute("projectName", projectName);
 		model.addAttribute("site", cmsSite);
 		model.addAttribute("own", contentId);
-		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
-		model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		//model.addAttribute("htmlFolder", htmlFolder);
 		List<CmsAttachment> cmsAttachmentList = cmsContentService
 				.findCmsAttachmentByCmsContentId(contentId);
 		if (cmsAttachmentList.size() > 0) {
@@ -395,8 +397,8 @@ public class CmsPortalController {
 	@RequestMapping("/content_video/{videoId}.htm")
 	public String videoShow(Model model, Device device,
 			@PathVariable("videoId") Integer videoId) {
-		model.addAttribute("projectName", projectName);
-		model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("projectName", projectName);
+		//model.addAttribute("htmlFolder", htmlFolder);
 		CmsVideo cmsVideo = cmsVideoService.findOne(videoId);
 		CmsChannel cmsChannel = cmsChannelService.findOneById(cmsVideo
 				.getChannelId());
@@ -405,15 +407,15 @@ public class CmsPortalController {
 		model.addAttribute("cmsVideo", cmsVideo);
 		model.addAttribute("own", cmsVideo.getId());
 		model.addAttribute("site", cmsSite);
-		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		//model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		return getTemplatePath(cmsVideo.getTemplateId(), device.isMobile());
 	}
 
 	@RequestMapping("/content_audio/{audioId}.htm")
 	public String audioShow(Model model, Device device,
 			@PathVariable("audioId") Integer audioId) {
-		model.addAttribute("projectName", projectName);
-		model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("projectName", projectName);
+		//model.addAttribute("htmlFolder", htmlFolder);
 		CmsAudio cmsAudio = cmsAudioService.findOne(audioId);
 		CmsChannel cmsChannel = cmsChannelService.findOneById(cmsAudio
 				.getChannelId());
@@ -422,7 +424,7 @@ public class CmsPortalController {
 		model.addAttribute("cmsAudio", cmsAudio);
 		model.addAttribute("own", cmsAudio.getId());
 		model.addAttribute("site", cmsSite);
-		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		//model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		return getTemplatePath(cmsAudio.getTemplateId(), device.isMobile());
 	}
 
@@ -433,15 +435,15 @@ public class CmsPortalController {
 		if (novel == null)
 			return "404";
 		model.addAttribute("cmsNovel", novel);
-		model.addAttribute("projectName", projectName);
+		//model.addAttribute("projectName", projectName);
 		model.addAttribute("own", novelId);
 		CmsChannel cmsChannel = cmsChannelService.findOneById(novel
 				.getChannelId());
 		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
 		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
-		model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("htmlFolder", htmlFolder);
 		model.addAttribute("site", cmsSite);
-		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		//model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		return getTemplatePath(novel.getTemplateId(), device.isMobile());
 	}
 
@@ -601,9 +603,9 @@ public class CmsPortalController {
 	public String interiew(Model model,
 			@PathVariable("inteviewId") Integer inteviewId) {
 		CmsInterview c = this.cmsInterviewService.loadOne(inteviewId);
-		model.addAttribute("projectName", projectName);
-		model.addAttribute("htmlFolder", htmlFolder);
-		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		//model.addAttribute("projectName", projectName);
+		//model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		CmsChannel cmsChannel = cmsChannelService.findOneById(c.getChannelId());
 		model.addAttribute("superChannel", getSuperChannel(cmsChannel));
 		CmsSite cmsSite = cmsSiteService.findOneById(cmsChannel.getSiteId());
@@ -615,9 +617,9 @@ public class CmsPortalController {
 
 	@RequestMapping("/vote/{voteId}.htm")
 	public String vote(Model model, @PathVariable("voteId") Integer voteId) {
-		model.addAttribute("projectName", projectName);
-		model.addAttribute("htmlFolder", htmlFolder);
-		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		//model.addAttribute("projectName", projectName);
+		//model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		CmsVote webSur = this.cmsVoteService.findOne(voteId);
 		CmsChannel cmsChannel = cmsChannelService.findOneById(webSur
 				.getChannelId());
@@ -634,9 +636,9 @@ public class CmsPortalController {
 
 	@RequestMapping("/vote/{voteId}r.htm")
 	public String voter(Model model, @PathVariable("voteId") Integer voteId) {
-		model.addAttribute("projectName", projectName);
-		model.addAttribute("htmlFolder", htmlFolder);
-		model.addAttribute("htmlMobileFolder", htmlMobileFolder);
+		//model.addAttribute("projectName", projectName);
+		//model.addAttribute("htmlFolder", htmlFolder);
+		//model.addAttribute("htmlMobileFolder", htmlMobileFolder);
 		CmsVote webSur = this.cmsVoteService.findOne(voteId);
 		CmsChannel cmsChannel = cmsChannelService.findOneById(webSur
 				.getChannelId());
@@ -719,7 +721,30 @@ public class CmsPortalController {
 		// System.out.println(jsonObject.toString());
 		return callback + "(" + jsonObject.toString() + ")";
 	}
-
+	@RequestMapping("/search_{pageNum}.html")
+	public Object search(@RequestParam(required = false, value = "keywords") String textValue,
+			Device device, 
+			Model model,
+			@PathVariable Integer pageNum,
+			@RequestParam(required = false, value = "pageSize",defaultValue="20")Integer pageSize){
+		CmsContent cms = new CmsContent();
+		cms.setTitle(textValue);
+		Map argMap = new HashMap();
+		argMap.put("model", cms);
+		CmsSite cmsSite = cmsSiteService.findOneById(1);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("site", cmsSite);
+		PageInfo page= this.cmsContentService.findCmsContentByPage(pageNum, pageSize, argMap);
+		model.addAttribute("page",PageConvertUtil.grid(page));
+		CmsChannel  channel = new CmsChannel();
+		channel.setId(0);
+		channel.setUrl("/topiecms/portal/search_1.html");
+		channel.setIsHtml(true);
+		String pages = PageUtil.getInstance().channelPaginationList(channel,pageNum,page.getTotal(),pageSize).toString();
+		model.addAttribute("textValue", textValue);
+		model.addAttribute("paginationlist",pages);
+		return "/template/my-search";
+	}
 	@RequestMapping("/searchText")
 	public ModelAndView searchText(
 			@RequestParam(required = false, value = "textValue") String textValue,
@@ -808,7 +833,6 @@ public class CmsPortalController {
 		model.setViewName("template/jh-wsdc");
 		return model;
 	}
-
 	@RequestMapping("/randomImage")
 	public void randomImage(HttpServletRequest request,
 			HttpServletResponse response) {

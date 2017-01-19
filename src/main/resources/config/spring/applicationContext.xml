@@ -6,7 +6,10 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:cache="http://www.springframework.org/schema/cache"
        xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"  
        xsi:schemaLocation="
+       		http://www.springframework.org/schema/data/mongo 
+        	http://www.springframework.org/schema/data/mongo/spring-mongo.xsd
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/context
@@ -16,7 +19,9 @@
             http://www.springframework.org/schema/tx
             http://www.springframework.org/schema/tx/spring-tx.xsd
     		http://www.springframework.org/schema/cache 
-			http://www.springframework.org/schema/cache/spring-cache.xsd">
+			http://www.springframework.org/schema/cache/spring-cache.xsd
+            http://www.springframework.org/schema/data/repository
+            http://www.springframework.org/schema/data/repository/spring-repository-1.5.xsd">
 
     
      <context:property-placeholder
@@ -164,5 +169,46 @@
             <tx:method name="select*" propagation="SUPPORTS"/>
         </tx:attributes>
     </tx:advice>
-
+<!-- mongodb的配置 -->
+	 <mongo:mongo id="mongo" host="${mongo.host}" port="${mongo.port}">  
+         <mongo:options connections-per-host="${mongo.connectionsPerHost}"
+             threads-allowed-to-block-for-connection-multiplier="${mongo.threadsAllowedToBlockForConnectionMultiplier}"  
+             connect-timeout="${mongo.connectTimeout}" 
+             max-wait-time="${mongo.maxWaitTime}"  
+             auto-connect-retry="${mongo.autoConnectRetry}" 
+             socket-keep-alive="${mongo.socketKeepAlive}" 
+             socket-timeout="${mongo.socketTimeout}"  
+             slave-ok="${mongo.slaveOk}"  
+             write-number="${mongo.writeNumber}" 
+             write-timeout="${mongo.writeTimeout}" 
+             write-fsync="${mongo.writeFsync}"/>
+	</mongo:mongo>
+	
+	<mongo:db-factory id="mongoDbFactory" dbname="${mongo.dbName}" mongo-ref="mongo" /><!-- username="${mongo.user}" password="${mongo.password}" -->
+	
+	<!-- <bean id="defaultMongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">
+		<constructor-arg name="typeKey">
+			<null />
+		</constructor-arg> 
+	</bean>   -->
+	
+	<!-- mongodb 的实体映射器  根据注释，把它们作为mongodb的一个collection的映射-->
+	<!--  <mongo:mapping-converter id="mongoConverter" base-package="com.dm.cms.model" db-factory-ref="mongoDbFactory" type-mapper-ref="defaultMongoTypeMapper"/>
+	 -->
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongoDbFactory"/>
+		<!-- <constructor-arg ref="mongoConverter"/>  -->
+		<property name="writeConcern" value="${mongo.writeConcern}" />
+	</bean> 
+	  
+	<!-- mongodb bean的仓库目录,使用springdata时用此, 会自动扫描扩展了MongoRepository接口的接口进行注入-->
+<!-- 	<mongo:repositories base-package="com.xkw.xy360.repository.mongo"/> -->
+    
+    
+    <!-- 默认访问127.0.0.1：27017 -->
+      <!-- <mongo:db-factory id="mongoDbFactory" dbname="test"/>
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg ref="mongoDbFactory" />
+        <property name="writeConcern" value="SAFE" />
+    </bean>  -->
 </beans>

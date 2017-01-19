@@ -23,6 +23,7 @@
         indexNumWidth: "2%",
         indexNumText: "序号",
         showPaging: true,
+        dataLength:20,
         actionCloumText: "操作",
         actionCloumAlign: "left",
         actionCloumWidth: "20%",
@@ -134,6 +135,11 @@
             this._indexNumWidth = options.indexNumWidth;
             this._indexNumText = options.indexNumText;
             this._showPaging = options.showPaging;
+            if (options.dataLength != undefined) {
+                // 表格内容显示长度
+                this._dataLength = options.dataLength;
+            }
+            
             if (options.tools != undefined) {
                 // 左侧工具栏
                 this._tools = options.tools;
@@ -144,6 +150,7 @@
             }
             if (options.search != undefined) {
                 this._search = options.search;
+                //console.log(this._search);
             }
             if (options.actionCloums != undefined) {
                 // 操作栏
@@ -282,6 +289,7 @@
                     }
                     button.after("&nbsp;");
                 });
+                this.$toolsEle = toolRow;
             }
         },
         // 渲染搜索栏
@@ -626,26 +634,26 @@
             }
             if(hide){
             	showBtn = $.tmpl(Grid.statics.buttonTmpl, {
-                    "class_": "btn blue",
+                    "class_": "btn btn-sm blue",
                     "text_": "显示搜索面板",
                     "title_": "显示",
                     "type_": "button"
                 }).show();
                 hideBtn = $.tmpl(Grid.statics.buttonTmpl, {
-                    "class_": "btn yellow",
+                    "class_": "btn btn-sm yellow",
                     "text_": "隐藏搜索面板",
                     "title_": "隐藏",
                     "type_": "button"
                 }).hide();
             }else{
 	            showBtn = $.tmpl(Grid.statics.buttonTmpl, {
-	                "class_": "btn blue",
+	                "class_": "btn btn-sm blue",
 	                "text_": "显示搜索面板",
 	                "title_": "显示",
 	                "type_": "button"
 	            }).hide();
 	            hideBtn = $.tmpl(Grid.statics.buttonTmpl, {
-	                "class_": "btn yellow",
+	                "class_": "btn btn-sm yellow",
 	                "text_": "隐藏搜索面板",
 	                "title_": "隐藏",
 	                "type_": "button"
@@ -665,7 +673,7 @@
                 hideBtn.toggle();
             });
             var resetbtn = $.tmpl(Grid.statics.buttonTmpl, {
-                "class_": "btn default",
+                "class_": "btn btn-sm default",
                 "text_": "重置",
                 "title_": "重置",
                 "type_": "reset"
@@ -674,7 +682,7 @@
             resetbtn.after("&nbsp;");
 
             var searchbtn = $.tmpl(Grid.statics.buttonTmpl, {
-                "class_": "btn blue",
+                "class_": "btn btn-sm blue",
                 "text_": " 搜索",
                 "title_": "搜索",
                 "type_": "button"
@@ -798,11 +806,15 @@
                             sort = "sorting_" + sortMode;
                         }
                     }
+                    var text = cloum.title == undefined ? "未定义" : cloum.title;
+                    if(text.length<=4){//2017/01/19如果标题字少 可能会出现列太窄,竖着显示字
+                    	style+="padding-right:40px;";
+                    }
                     var th = $.tmpl(thTmpl, {
                         "style_": style,
                         "sorting_": sort
                     });
-                    th.text(cloum.title == undefined ? "未定义" : cloum.title);
+                    th.text(text);
                     th.data("field", cloum.field);
                     tr.append(th);
                 });
@@ -846,28 +858,48 @@
                     var td = $.tmpl(tdTmpl, {});
                     var html = grid[cloum.field];
                     if (cloum.format != undefined) {
-                        html = cloum.format(num, grid);
+                        var fun = cloum.format;
+                        if( typeof fun == "string"){//20161220 字符串functionbody定义函数 添加第三个参数id wjl
+                        	fun = new Function("index", "data","id",fun);
+                        }
+                        html = fun(num, grid,grid[that._idFiled]);
                     } else {
-                        td.attr("title", html);
+                    	if(html)
+                    		if(html.length<200)
+                    			td.attr("title", html);//如果字数超过200 不加title属性
+                    }
+                    if(that._dataLength){//添加默认截取表格字数限制20
+                    	if(html)
+                    		if(html.length>that._dataLength)
+                    			html = html.substring(0,that._dataLength)+'...';
                     }
                     td.html(html);
                     tr.append(td);
                 });
                 if (that._actionCloums != undefined) {
+                	//console.log(that._actionCloums);
                     var cltd = $.tmpl(tdTmpl, {});
                     var _index = index;
                     var current_data = grid;
                     $.each(that._actionCloums, function (index, colum) {
                         var visable = true;
                         if (colum.visable != undefined) {
-                            visable = colum.visable(_index, current_data);
+                        	var fun = colum.visable;
+                            if( typeof fun == "string"){//20161220 字符串functionbody定义函数 添加第三个参数id wjl
+                            	fun = new Function("index", "data","id",fun);
+                            }
+                            visable = fun(_index, current_data,grid[that._idFiled]);
                         }
                         if (visable == false) {
                             return;
                         }
                         var text = colum.text;
                         if (colum.textHandle != undefined) {
-                            text = colum.textHandle(num, current_data);
+                        	var fun = colum.textHandle;
+                            if( typeof fun == "string"){//20161220 字符串functionbody定义函数 添加第三个参数id wjl
+                            	fun = new Function("index", "data","id",fun);
+                            }
+                            text = fun(num, current_data,grid[that._idFiled]);
                         }
                         var button = $.tmpl(Grid.statics.buttonTmpl, {
                             "class_": "btn " + colum.cls,
@@ -877,7 +909,11 @@
                         });
                         if (colum.handle != undefined) {
                             button.click(function (e) {
-                                colum.handle(num, current_data);
+                            	var fun = colum.handle;
+                                if( typeof fun == "string"){//20161220 字符串functionbody定义函数 添加第三个参数id wjl
+                                	fun = new Function("index", "data","id",fun);
+                                }
+                                fun(num, current_data,grid[that._idFiled]);
                                 e.stopPropagation();
                             });
                         }
@@ -1233,7 +1269,35 @@
         // 重新加载
         _reload: function (options) {
             if (options != undefined) {
+            	if (options.actionCloums != undefined) {//20170119
+                    // 操作栏
+                    this._options.actionCloums = [];
+                }
+            	/*if (options.search != undefined) {//20170119
+                    this._options.search=[];
+                    this._searchInited = false;//如果列改变 searchForm要重新生成
+                    if(this.$searchForm)
+                    	this.$searchForm.remove();
+                }*/
+            	/*if (options.tools != undefined) {//20170119
+	            	this._options.tools=[];
+	            	this._toolsInited = false;
+	            	if(this.$toolsEle)
+	            		this.$toolsEle.remove();
+            	}*/
+            	if(options.cloums !=undefined){
+            		this._options.cloums=[];//20161219 清空原来的列wjl
+            		this._options.tools=[];
+	            	this._toolsInited = false;
+	            	if(this.$toolsEle)
+	            		this.$toolsEle.remove();
+	            	this._options.search=[];
+                    this._searchInited = false;//如果列改变 searchForm要重新生成
+                    if(this.$searchForm)
+                    	this.$searchForm.remove();
+            	}
                 this._options = $.extend(true, {}, this._options, options);
+                //console.log(this._options);
                 this._setOptions(this._options, this);
             }
             this._load();

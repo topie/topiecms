@@ -73,9 +73,9 @@
 						</div>
 					</div>
 						<!-- END TRACKING CURVES PORTLET-->
-				 <div class="row margin-top-10">
+				 <!-- <div class="row margin-top-10">
 					<div class="col-md-6 col-sm-12">
-						<!-- BEGIN PORTLET -->
+						BEGIN PORTLET
 						<div class="portlet light">
 							<div class="portlet-title">
 								<div class="caption caption-md">
@@ -104,10 +104,10 @@
 							</div>
 							<div class="portlet-body" id="content_grid"></div>
 						</div>
-						<!-- END PORTLET -->
-					</div>
-					<div class="col-md-6 col-sm-12">
-						<!-- BEGIN PORTLET -->
+						END PORTLET
+					</div> -->
+					<!-- <div class="col-md-6 col-sm-12">
+						BEGIN PORTLET
 						<div class="portlet light">
 							<div class="portlet-title">
 								<div class="caption caption-md">
@@ -135,8 +135,8 @@
 							</div>
 							<div class="portlet-body" id="channel_grid"></div>
 						</div>
-						<!-- END PORTLET -->
-					</div>
+						END PORTLET
+					</div> -->
 				</div> 
 				<!-- END PAGE CONTENT INNER -->
 			</div>
@@ -199,8 +199,8 @@
 		channel_grid.reload({url:"cmsStatic/channelVisitList?days="+days});
 	}
     jQuery(document).ready(function () {
-        content_grid = $("#content_grid").dmGrid(content_options);
-        channel_grid = $("#channel_grid").dmGrid(channel_options);
+//         content_grid = $("#content_grid").dmGrid(content_options);
+//         channel_grid = $("#channel_grid").dmGrid(channel_options);
     }); 
 </script>
 	<!-- <script src="<%=basePath%>assets/dmcms/js/visit-record.js"></script> -->

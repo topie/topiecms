@@ -308,19 +308,71 @@ public class PageUtil {
 				href = href +i+extendName;
 			}
 			if(i==thispage){
-				sb.append("<a href='"+href+"' class='page_current'>"+i+"</a>");
+				sb.append("<a href='"+href+"' class='active new-btn'>"+i+"</a>");
 			}else{
-				sb.append("<a href='"+href+"'>"+i+"</a>");
+				sb.append("<a href='"+href+"' class='new-btn'>"+i+"</a>");
 			}
 		}
 		if(end<totalpage){
-			sb.append("<a href='javascript:;class='page_disable'>...</a>");
+			sb.append("<a href='javascript:;class='new-btn'>...</a>");
 		}
 		return sb;
 	} 
 	
 	
+   
 	public StringBuffer channelPaginationList(CmsChannel channel,int thispage,long totalcount,int pagesize) {
+		String cId = channel.getId().toString();
+		Boolean isHtml = channel.getIsHtml();
+		Integer totalpage = (int) (totalcount / pagesize);
+		if (totalcount % pagesize != 0) {
+			totalpage++;
+		}
+		String extendName = ".htm" ;
+		if(isHtml!=null && isHtml)
+		{
+			extendName = ".html";
+		}
+		String url = channel.getUrl();
+		String lastUrl = url.substring(0, url.indexOf(extendName)-1)+totalpage+extendName;
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("<div class='new-page pdb10'>");
+		sb.append("<span class='new-page-pd'> 页数&nbsp;&nbsp;&nbsp;<span class='border-orange'>"+thispage+"/"+totalpage+"</span></span>");
+		sb.append("<span class='new-page-pd'> 总和&nbsp;&nbsp;&nbsp;<span class='border-orange'>"+totalcount+"</span></span>");
+		List<Map> list = new ArrayList<Map>();
+		if(thispage==1){
+			sb.append("<a class='new-btn' href='javascript:;'>&nbsp;</a>");
+		}else{
+			int newPage = thispage-1;
+			String href;
+			if(newPage==1){
+				href = url;
+			}else{
+				 href = url.substring(0, url.indexOf(extendName)-1);
+				 href = href + newPage+extendName;
+			}
+			sb.append("<a class='new-btn' href='"+url+"'>&nbsp;</a>");
+			
+		}
+		sb = getSubChannelPaginationList(channel,list,sb,thispage,totalpage);
+		if((thispage==totalpage)||(totalpage==0)){
+			sb.append("<a class='new-btn' href='javascript:;'>&nbsp;</a>");
+		}else{
+			int newPage = thispage+1;
+			String href;
+			if(newPage==1){
+				href = url;
+			}else{
+				href = url.substring(0, url.indexOf(extendName)-1);
+				href = href +newPage+extendName;
+			}
+			sb.append("<a class='new-btn' href='"+lastUrl+"'>&nbsp;</a>");
+		}
+		sb.append("</div>");
+		return sb;
+	}
+	public StringBuffer channelPaginationList1(CmsChannel channel,int thispage,long totalcount,int pagesize) {
 		String cId = channel.getId().toString();
 		Boolean isHtml = channel.getIsHtml();
 		Integer totalpage = (int) (totalcount / pagesize);

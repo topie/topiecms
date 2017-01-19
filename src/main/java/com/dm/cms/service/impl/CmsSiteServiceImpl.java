@@ -137,7 +137,7 @@ public class CmsSiteServiceImpl extends generatorHtmlHandler implements CmsSiteS
 		site.setUrl(htmlFolder + "/" + site.getDomain() + "/index.html");
 		root.put("site", site);
 		succ = this.generatorHtmlPCAndModile(cmsTemplate.getTemplatePath(), htmldir, htmlFile, root, request);
-		succ = this.generatorHtmlPCAndModile(cmsTemplate.getTemplatePath(), htmldir, htmlFile, root, request);
+		//succ = this.generatorHtmlPCAndModile(cmsTemplate.getTemplatePath(), htmldir, htmlFile, root, request);
 		if (succ) {
 			log.info("站点静态化成功:id={},name={}", site.getId(),
 					site.getDisplayName());

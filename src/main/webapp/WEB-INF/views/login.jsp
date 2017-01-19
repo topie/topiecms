@@ -91,8 +91,8 @@
 <!-- BEGIN LOGO -->
 <div class="logo">
     <a href="#"> <img
-            src="<%=basePath%>assets/admin/layout3/img/logo-big-white-jinhu.png"
-            style="height: 60px;" alt="中国·金湖"/> </a>
+            src="<%=basePath%>assets/admin/layout3/img/logo-big-white.png"
+            style="height: 19px;" alt="TOPIECMS"/> </a>
 </div>
 <!-- END LOGO -->
 <!-- BEGIN LOGIN -->

@@ -593,7 +593,7 @@
                                 "name_": data.name,
                                 "value_": checkbox.value,
                                 "text_": checkbox.text,
-                                "checked": (checkbox.checked ? "checked=checked"
+                                "checked_": (checkbox.checked ? "checked=checked"
                                     : ""),
                                 "disabled_": (checkbox.disabled ? "disabled"
                                     : ""),

@@ -1,16 +1,16 @@
 package com.dm.cms.service;
 
-import com.dm.cms.model.CmsAttachment;
-import com.dm.cms.model.CmsChannel;
-import com.dm.cms.model.CmsCheck;
-import com.dm.cms.model.CmsContent;
-import com.github.pagehelper.PageInfo;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.dm.cms.model.CmsAttachment;
+import com.dm.cms.model.CmsChannel;
+import com.dm.cms.model.CmsCheck;
+import com.dm.cms.model.CmsContent;
+import com.github.pagehelper.PageInfo;
 
 /**
  * Created by cgj on 2015/11/29.
@@ -80,6 +80,8 @@ public interface CmsContentService {
 	
 	PageInfo<CmsContent> findLeaderContentsByPage(Integer pageNum,
 			Integer pageSize, String leaderId);
+
+	List<CmsContent> selectTopOne(Map params);
 	
 	
 }

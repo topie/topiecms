@@ -41,7 +41,7 @@
 	<bean id="viewResolverFtl"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="viewClass"
-			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+			value="com.dm.view.LimiFreeMarkerView" />
 		<property name="prefix" value="/" />
 		<property name="contentType" value="text/html; charset=utf-8" />
 		<property name="cache" value="true" />
@@ -114,7 +114,10 @@
 		</property>
 		<property name="freemarkerSettings">
 			<props>
-				<prop key="template_update_delay">0</prop>
+				  <prop key="template_update_delay">0</prop>
+			      <prop key="number_format">0</prop>
+			      <prop key="date_format">yyyy-MM-dd</prop>
+			      <prop key="datetime_format">yyyy-MM-dd</prop>
 			</props>
 		</property>
 	</bean>

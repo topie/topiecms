@@ -112,10 +112,11 @@ public class CmsContentController {
 		if (StringUtils.isEmpty(sort)) {
 			sort = "channel_id_asc";
 		}
-		Map map = new SqlParam<CmsCheck>().autoParam(cmsCheck, sort);
-		PageInfo<CmsCheck> page = cmsContentService.findCmsContentByViewPage(
-				pageNum, pageSize, map);
-		return PageConvertUtil.grid(page);
+//		Map map = new SqlParam<CmsCheck>().autoParam(cmsCheck, sort);
+//		PageInfo<CmsCheck> page = cmsContentService.findCmsContentByViewPage(
+//				pageNum, pageSize, map);
+		return PageConvertUtil.emptyGrid();
+		//return PageConvertUtil.grid(page);
 	}
 
 	@RequestMapping("/checkAllType")

@@ -22,7 +22,7 @@
 <!-- END PRE-FOOTER -->
 <div class="page-footer">
 	<div class="container">
-		 2016 &copy; 中国.金湖
+		 2016 &copy; TOPIECMS
 	</div>
 </div>
 <div class="scroll-to-top">

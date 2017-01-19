@@ -25,6 +25,9 @@ public class generatorHtmlHandler{
 	private String templateMobileFolder;
 	@Value("${template.basePath}")
 	private String templateFolder;
+	private static final String CONTEXT_PATH = "application";
+	private static final String HTML_PATH = "htmlFolder";
+	private static final String HTML_MOBILE_PATH = "htmlMobileFolder";
 
 	public boolean generatorHtmlPCAndModile(String templatePathName,
 			String htmldir, String htmlFile, Map root,
@@ -32,9 +35,9 @@ public class generatorHtmlHandler{
 		String projectName = request.getContextPath();
 		String baseDir = System.getProperty("web.root");
 		String webappDir = baseDir.substring(0,
-				baseDir.indexOf(projectName.substring(1)) - 1);
-		root.put("projectName", projectName);
-		root.put("htmlFolder", htmlFolder);
+				baseDir.lastIndexOf(projectName.substring(1)) - 1);
+		root.put(CONTEXT_PATH, projectName);
+		root.put(HTML_PATH, htmlFolder);
 		//pc
 		String pchtmldir = webappDir + htmlFolder + htmldir;
 		String pctemplatePathName = templatePathName;
@@ -42,8 +45,7 @@ public class generatorHtmlHandler{
 		//mobile
 		if (success && templateMobileFolder != null
 				&& !templateMobileFolder.equals("")) {
-			root.put("htmlFolder", htmlFolder);
-			root.put("htmlMobileFolder", htmlMobileFolder);
+			root.put(HTML_MOBILE_PATH, htmlMobileFolder);
 			String mobilehtmldir = webappDir + htmlFolder+htmlMobileFolder+ htmldir;
 			String mobiletemplatePathName = templateFolder+templatePathName.replace(templateFolder, templateMobileFolder);
 			success = this.html(baseDir,mobiletemplatePathName, mobilehtmldir, htmlFile, root, request);

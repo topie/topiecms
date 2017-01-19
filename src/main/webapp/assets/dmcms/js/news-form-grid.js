@@ -9,9 +9,9 @@ var currentChannelIsParent;
 function flushGrid()
 {
 	$("#content_grid").html("");
-	if(currentChannelIsParent){
+	/*if(currentChannelIsParent){
 		currentChannelId="";
-	}
+	}*/
 	if (currentChannelType == '0') {
 		 var action = "./list?channelId=" + currentChannelId;
 		grid = $("#content_grid").dmGrid(getnewsoption(action,hasPublishRole,hasShenheRole,currentChannelType));
@@ -110,7 +110,7 @@ var channelSetting = {
 					closeInSeconds : 5
 				});
 			}
-			channelTree.expandAll(false);
+			channelTree.expandAll(true);
 		},
 		onClick : function(event, treeId, treeNode) {
 			currentChannelId = treeNode.id;
@@ -649,7 +649,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 									required : "请输入链接",
 									maxlength : "最多输入356字符"
 								}
-							},{
+							}/*,{
 								type : "tree",
 								name : "filed1",
 								id : "filed1",
@@ -659,7 +659,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 								expandAll : false,
 								chkboxType:{"Y":"s","N":"s"},
 								chkStyle : "checkbox"
-							}
+							}*/
 					]
 		};
 	return formOpts;
@@ -898,10 +898,10 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 			cls : 'input-xlarge',
 			items : [ {
 				value : '1',
-				text : '头条展示'
+				text : '热点新闻'
 			},{
 				value : '2',
-				text : '幻灯片展示'
+				text : '图片新闻'
 			}/*,{
 				value : '3',
 				text : '开启评论'
@@ -920,7 +920,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 					maxlength : "最多输入100字"
 				}
 			};
-		items.push(topTitle);
+		//items.push(topTitle);
 	}
 	
 	items.push(titleImg);
@@ -929,7 +929,7 @@ function getForm(contentType,hasPublishRole,hasShenheRole,currentChannelType) {
 		items.push(contentText);
 		items.push(offic);
 	}
-	items.push(leader);
+	//items.push(leader);
 
 	
 	var formOpts = {

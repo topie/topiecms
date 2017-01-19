@@ -216,7 +216,7 @@
 							closeInSeconds : 5
 						});
 					}
-					channelTree.expandAll(false);
+					channelTree.expandAll(true);
 				},
 				onClick : function(event, treeId, treeNode) {
 					currentChannelId = treeNode.id;
@@ -287,9 +287,9 @@
 				field : "channelType",
 				format:function(i,c){
 					if(c.channelType==0)
-						return "普通频道";
+							return "普通频道";
 					if(c.channelType==11)
-						return "可发布头条频道";
+						return "可发布热点新闻频道";
 					if(c.channelType==1)
 						return "图片频道";
 					if(c.channelType==2)
@@ -304,14 +304,14 @@
 						return "音频频道";
 					if(c.channelType==7)
 						return "小说频道"; */
-					if(c.channelType==8)
-						return "访谈频道";
-					if(c.channelType==9)
-						return "投票频道";
-					if(c.channelType==10)
-						return "公开文件";
-					if(c.channelType==11)
-						return "可发布头条频道";
+					//if(c.channelType==8)
+					////	return "访谈频道";
+					//if(c.channelType==9)
+					//	return "投票频道";
+					//if(c.channelType==10)
+					//	return "公开文件";
+					//if(c.channelType==11)
+					//	return "可发布头条频道";
 					return "普通频道";
 				},
 				width : "10%"
@@ -417,7 +417,7 @@
 					}
 				},
 				{
-					text : "可发布头条频道",//按钮文本
+					text : "可发布热点新闻频道",//按钮文本
 					cls : "btn green",//按钮样式
 					icon : "fa fa-cubes",
 					handle : function(grid) {//按钮点击事件
@@ -447,14 +447,14 @@
 						showForm('5',"视频频道");
 					}
 				},
-				{
+				/* {
 					text : "访谈频道",//按钮文本
 					cls : "btn green btn-sm",//按钮样式
 					icon : "fa fa-cubes",
 					handle : function(grid) {//按钮点击事件
 						showForm('8',"访谈频道");
 					}
-				},
+				}, 
 				{
 					text : "投票频道",//按钮文本
 					cls : "btn green btn-sm",//按钮样式
@@ -469,7 +469,7 @@
 					handle : function(grid) {//按钮点击事件
 						showForm('10',"文件频道");
 					}
-				}/* ,{
+				}*//* ,{
 					text : "音频频道",//按钮文本
 					cls : "btn green btn-sm",//按钮样式
 					icon : "fa fa-cubes",

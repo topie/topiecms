@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -439,14 +438,41 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	@Override
 	public void selectTopOneAndUpdate() {
 		// TODO Auto-generated method stub
+		PageHelper.startPage(1, 1);
 		List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
-		if(cmsContents.size()>0)
+		PageInfo<CmsContent> page = new PageInfo<CmsContent>(cmsContents);
+		List<CmsContent> list = page.getList();
+		if(list.size()>0)
 		{
-			cmsContents.get(0).setContentType(0);
-		   cmsContentMapper.updateByPrimaryKey(cmsContents.get(0));
+			list.get(0).setContentType(0);
+		   cmsContentMapper.updateByPrimaryKey(list.get(0));
 		 }
 	}
-	
+
+	@Override
+	public List<CmsContent> selectTopOne(Map params) {
+		if(params==null){
+			PageHelper.startPage(1, 1);
+			List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
+			PageInfo<CmsContent> page = new PageInfo<CmsContent>(cmsContents);
+			List<CmsContent> list = page.getList();
+			return list;
+		}
+		if(params.get("pageSize")==null){
+			PageHelper.startPage(1, 1);
+			List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
+			PageInfo<CmsContent> page = new PageInfo<CmsContent>(cmsContents);
+			List<CmsContent> list = page.getList();
+			return list;
+		}
+		Integer pageSize = Integer.valueOf(params.get("pageSize").toString());
+		Integer pageNum =params.get("pageNum")==null?1: Integer.valueOf(params.get("pageNum").toString());
+		PageHelper.startPage(pageNum, pageSize);
+		List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
+		PageInfo<CmsContent> page = new PageInfo<CmsContent>(cmsContents);
+		List<CmsContent> list = page.getList();
+		return list;
+	}
 	@Override
 	public CmsContent selectTopOne() {
 		// TODO Auto-generated method stub
@@ -536,5 +562,6 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		List<CmsContent> list = this.cmsContentMapper.selectByLeaderId(leaderId);
 		return new PageInfo<CmsContent>(list);
 	}
+
 
 }

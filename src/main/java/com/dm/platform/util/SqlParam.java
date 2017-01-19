@@ -1,9 +1,9 @@
 package com.dm.platform.util;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Created by cgj on 2015/11/26.
@@ -31,4 +31,13 @@ public class SqlParam<T> {
         order(sort, argMap);
         return argMap;
     }
+
+	public Map autoParam(T model, String sort, Integer pageNum,
+			Integer pageSize) {
+		Map argMap = autoParam(model, sort);
+		argMap.put("start", pageNum);
+		argMap.put("limit", pageSize);
+		return argMap;
+	}
+
 }
