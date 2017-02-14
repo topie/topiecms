@@ -26,4 +26,6 @@ public interface AtTableMapper {
 	List<TreeNode> selectTreeNode(@Param("pId")String pid,@Param("status") String status);
 
 	Integer selectMaxSeq();
+
+	Long countByArg(Map map);
 }

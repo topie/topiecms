@@ -377,12 +377,31 @@ public class MongoServiceImpl implements MongoService {
 			e.printStackTrace();
 		}
 	}
-
+	public void groupByManyFiled1(AtTable atTable){
+		//this.getColl(atTable).aggregate(firstOp, additionalOps)
+	}
+	public void GroupByManyField1() throws UnknownHostException {
+		// 此方法没有运行成功
+		Mongo mongo = new Mongo("localhost", 27017);
+		DB db = mongo.getDB("datamanage");
+		DBCollection books = db.getCollection("m_ST_REG_VILLAGE");
+		BasicDBObject groupKeys = new BasicDBObject();
+		groupKeys.put("_id", "$SZ_QX");
+		groupKeys.put("village_count", new BasicDBObject().append("$sum", 1));
+		
+		AggregationOutput ouput = books.aggregate(new BasicDBObject("$group",
+				groupKeys));
+		System.out.println(ouput.getCommandResult());
+	}
+	public static void main(String[] args) throws UnknownHostException {
+		new MongoServiceImpl().GroupByManyField1();
+		
+	}
 	public void GroupByManyField() throws UnknownHostException {
 		// 此方法没有运行成功
 		Mongo mongo = new Mongo("localhost", 27017);
-		DB db = mongo.getDB("libary");
-		DBCollection books = db.getCollection("books");
+		DB db = mongo.getDB("datamanage");
+		DBCollection books = db.getCollection("m_ST_REG_VILLAGE");
 		BasicDBObject groupKeys = new BasicDBObject();
 		groupKeys.put("total", new BasicDBObject("$sum", "pages"));
 

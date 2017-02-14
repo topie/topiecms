@@ -115,10 +115,11 @@
 		src="<%=basePath%>assets/global/plugins/select2/select2.min.js"></script>
 	<script type="text/javascript">
 		/**********普通内容操作函数****************/
+		var COOKIE_LASRNODEID = "last_node_id";
 		var tableTree;
 		var form;
 		var grid;
-		var currentTableId;
+		var currentTableId = $.cookie(COOKIE_LASRNODEID);
 		var currentTableType;
 		function refreshTree() {
 
@@ -187,10 +188,21 @@
 							closeInSeconds : 5
 						});
 					}
-					tableTree.expandAll(true);
+					tableTree.expandAll(false);
+					var node = tableTree.getNodeByParam('id', currentTableId);//获取id为1的点  
+					//tableTree.selectNode(node);//选择点  
+					if(node){
+						 if(!node.isParent){
+							node = node.getParentNode();
+						}
+					}
+					//console.log(node);
+					tableTree.expandNode(node, true, false);//指定选中ID节点展开  
+				
 				},
 				onClick : function(event, treeId, treeNode) {
 					currentTableId = treeNode.id;
+					$.cookie(COOKIE_LASRNODEID,currentTableId,{expires:7});
 					currentTableType = treeNode.s;
 					grid.reload({
 						url : "./gridlist?tableId=" + currentTableId

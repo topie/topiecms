@@ -52,7 +52,7 @@
 <%-- <link href="<%=basePath%>assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css" rel="stylesheet" type="text/css"> --%>
 <%-- <link href="<%=basePath%>assets/global/plugins/jquery-tags-input/jquery.tagsinput.css" rel="stylesheet" type="text/css" > --%>
 <%-- <link href="<%=basePath%>assets/global/plugins/jquery-minicolors/jquery.minicolors.css" rel="stylesheet" type="text/css"> --%>
-<link href="<%=basePath%>assets/dmcms/plugins/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css"  rel="stylesheet" >	
+<link href="<%=basePath%>assets/dmcms/plugins/zTree/css/zTreeStyle/sn_zTreeStyle.css" type="text/css"  rel="stylesheet" >	
 	<%-- 
 	
 <%@include file="../../includejsps/style.jsp"%>
@@ -111,7 +111,7 @@
 								<span id="helper" class="caption-helper"></span>
 							</div>
 						</div>
-						<div class="portlet-body" id="content_grid"></div>
+						<div class="portlet-body" id="content_grid" style="min-height:500px;"></div>
 					</div>
 					<!-- END PORTLET-->
 				</div>
@@ -172,22 +172,22 @@
 <%-- <script type="text/javascript" src="<%=basePath%>assets/global/plugins/jquery-file-upload/js/jquery.fileupload.js"></script> --%>
 <%-- <script type="text/javascript" src="<%=basePath%>assets/global/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script> --%>
 <%-- <script type="text/javascript" src="<%=basePath%>assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script> --%>
-<script src="<%=basePath%>assets/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" type="text/javascript"></script>
-<script src="<%=basePath%>assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js" type="text/javascript"></script>
+<%-- <script src="<%=basePath%>assets/global/plugins/jquery-tags-input/jquery.tagsinput.min.js" type="text/javascript"></script> --%>
+<%-- <script src="<%=basePath%>assets/global/plugins/jquery-minicolors/jquery.minicolors.min.js" type="text/javascript"></script> --%>
 <%-- <script type="text/javascript" src="<%=basePath%>assets/dmcms/plugins/datePicker/laydate.js"></script> --%>
 <script type="text/javascript" src="<%=basePath%>assets/dmcms/plugins/zTree/js/jquery.ztree.core-3.5.js"></script>
 <script type="text/javascript" src="<%=basePath%>assets/dmcms/plugins/zTree/js/jquery.ztree.excheck-3.5.js"></script>
 <script type="text/javascript" src="<%=basePath%>assets/dmcms/plugins/zTree/js/jquery.ztree.exedit-3.5.js"></script>
 <%-- <script charset="utf-8" src="<%=basePath%>assets/dmcms/plugins/kindeditor-4.1.10/kindeditor.js"></script> --%>
 <%-- <script charset="utf-8" src="<%=basePath%>assets/dmcms/plugins/kindeditor-4.1.10/lang/zh_CN.js"></script> --%>
-<%-- <script type="text/javascript" src="<%=basePath%>assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script> --%>
+<script type="text/javascript" src="<%=basePath%>assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script> 
 <%-- <script type="text/javascript" src="<%=basePath%>assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script> --%>
-<script src="<%=basePath%>assets/dmcms/js/ajaxfileupload.js" type="text/javascript"></script>
-<script src="<%=basePath%>assets/dmcms/js/inbox.js" type="text/javascript"></script>
+<%-- <script src="<%=basePath%>assets/dmcms/js/ajaxfileupload.js" type="text/javascript"></script> --%>
+<%-- <script src="<%=basePath%>assets/dmcms/js/inbox.js" type="text/javascript"></script> --%>
 <script src="<%=basePath%>assets/dmcms/js/grid.js" type="text/javascript"></script>
 <script src="<%=basePath%>assets/dmcms/js/form.js" type="text/javascript"></script>
 <script src="<%=basePath%>assets/dmcms/js/modal.js" type="text/javascript"></script>
-<script src="<%=basePath%>assets/dmcms/js/file-manager.js?v=1" type="text/javascript"></script>
+<%-- <script src="<%=basePath%>assets/dmcms/js/file-manager.js?v=1" type="text/javascript"></script> --%>
 <!-- END PAGE LEVEL PLUGINS -->
 	<script type="text/javascript"
 		src="<%=basePath%>assets/global/plugins/bootstrap-select/bootstrap-select.min.js"></script>
@@ -195,11 +195,13 @@
 		src="<%=basePath%>assets/global/plugins/select2/select2.min.js"></script>
 	<script type="text/javascript">
 		/**********普通内容操作函数****************/
+		var COOKIE_LASRNODEID = "last_node_id";
+		/**********普通内容操作函数****************/
 		var root ='<%=basePath%>';
 		var tableTree;
 		var form;
 		var grid;
-		var currentTableId='';
+		var currentTableId = $.cookie(COOKIE_LASRNODEID);
 		var currentTableType;
 		function refreshTree() {
 
@@ -211,7 +213,7 @@
 			}
 			if (typeof (grid) != "undefined") {
 				grid.reload({
-					url : root+"portal/list?tableId=" + currentTableId
+					url : root+"portal/list?tableId="// + currentTableId
 				});
 			}
 		}
@@ -268,7 +270,17 @@
 							closeInSeconds : 5
 						});
 					}
-					tableTree.expandAll(true);
+					tableTree.expandAll(false);
+					var node = tableTree.getNodeByParam('id', currentTableId);//获取id为1的点  
+					//tableTree.selectNode(node);//选择点  
+					if(node){
+						 if(!node.isParent){
+							node = node.getParentNode();
+						}
+					}
+					//console.log(node);
+					tableTree.expandNode(node, true, false);//指定选中ID节点展开  
+				
 				},
 				onClick : function(event, treeId, treeNode) {
 					//双击不操作
@@ -289,11 +301,17 @@
 		};
 		function treeOnClike(event,treeId,treeNode){
 		currentTableId = treeNode.id;
+		$.cookie(COOKIE_LASRNODEID,currentTableId,{expires:7});
 		currentTableType = treeNode.s;
 		if(treeNode.s =='0'){
 		beforReload(currentTableId,function(data){
 			$('#gridName').html(data.info.gridName);
-			$('#helper').html(data.info.info);
+			var helper = '';
+			helper += '</br>数据名称:'+(data.info.gridName== null ?'':data.info.gridName );
+			helper += '</br>数据来源:'+(data.info.origin== null ?'':data.info.origin );
+			helper += '</br>数据采集时间:'+(data.info.dataTime== null ?'':data.info.dataTime ) ;
+			helper += '</br>数据描述:'+(data.info.info== null ?'':data.info.info ) ;;
+			$('#helper').html(helper);
 			//console.log(data);
 				 formOpts.items = data.formItem;
 				/*if(typeof data.gridItem =='undefined'){
@@ -431,9 +449,9 @@
 		var gridOption = {
 			url : root+"/portal/list", // ajax地址
 			pageNum : 1,//当前页码
-			pageSize : 5,//每页显示条数
+			pageSize : 10,//每页显示条数
 			idFiled : "id",//id域指定
-			showCheckbox : false,//是否显示checkbox
+			showCheck : false,//是否显示checkbox
 			checkboxWidth : "3%",
 			showIndexNum : true,
 			indexNumWidth : "5%",

@@ -11,13 +11,18 @@ public interface AtTableService {
 
 	PageInfo<AtTable> findByArg(Map map);
 
+	List<AtTable> findAllByArg(Map map);
+	
 	AtTable findOne(String id);
 
 	void saveOrUpdate(AtTable atTable);
 
 	void delete(String id);
+	
+	Long countByArg(Map map);
 
 	List<TreeNode> getTree(String tableId,String status);
+
 
 	
 }

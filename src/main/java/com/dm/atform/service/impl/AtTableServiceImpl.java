@@ -29,6 +29,11 @@ public class AtTableServiceImpl implements AtTableService{
 		return page;
 	}
 	@Override
+	public List<AtTable> findAllByArg(Map map) {
+		List<AtTable> list = this.tableMapper.selectByArgMap(map);
+		return list;
+	}
+	@Override
 	public AtTable findOne(String id) {
 		return this.tableMapper.selectByPrimaryKey(id);
 	}
@@ -54,6 +59,10 @@ public class AtTableServiceImpl implements AtTableService{
 	@Override
 	public List<TreeNode> getTree(String tableId,String status) {
 		return this.tableMapper.selectTreeNode(tableId,status);
+	}
+	@Override
+	public Long countByArg(Map map) {
+		return this.tableMapper.countByArg(map);
 	}
 	
 	

@@ -93,23 +93,25 @@ show_num(5);
                         	<div class="part1">
                             	<p>
                                 	<span class="blue">对接系统数：</span>
-                                    <span class="a-num1 num">1</span>
+                                    <span class="a-num1 num">3</span>
                                 </p>
                                 <p>
                                 	<span class="blue">部门数：</span>
-                                    <span class="a-num2 num"></span>
+                                    <span class="a-num2 num">12</span>
                                 </p>
                             </div>
                         </div>
                         <div class="col-md-4">
                         	<div class="part1">
                             	<p>
-                                	<span class="blue">数据目录数：64</span>
-                                    <span class="a-num3 num"></span>
+                                	<span class="blue">数据目录数：</span>
+                                    <span class="a-num3 num"><@directoryNumberDirective type=1 >
+					${directoryNumber}
+				    </@directoryNumberDirective></span>
                                 </p>
                                 <p>
-                                	<span class="blue">数据专题数：1</span>
-                                    <span class="a-num4 num"></span>
+                                	<span class="blue">数据专题数：</span>
+                                    <span class="a-num4 num">1</span>
                                 </p>
                             </div>
                         </div>
@@ -117,11 +119,11 @@ show_num(5);
                         	<div class="part1">
                             	<p>
                                 	<span class="blue">数据条数：</span>
-                                    <span class="a-num5 num">1765677</span>
+                                    <span class="a-num5 num">1,765,677</span>
                                 </p>
                                 <p>
                                 	<span class="blue">数据增量：</span>
-                                    <span class="a-num6 num">295</span>
+                                    <span class="a-num6 num">0</span>
                                 </p>
                             </div>
                         </div>
@@ -141,20 +143,20 @@ show_num(5);
                     	<ul class="hot-data-list clearfix">
                         	<li class="new-active">
                             	<div>
-                            	<a href=""><img src="/html/shenong-static/img/chart1.png" style="width:100%;" height="172"></a>
-                                <p>一级白砂糖现货价格监测</p>
+                            	<a href="/html/shenong/rmsj/content/807.html"><img src="/html/shenong-static/img/chart1.png" style="width:100%;" height="218"></a>
+                                <p>柱状图统计分布情况</p>
                                 </div>
                             </li>
                             <li>
                             	<div>
-                            	<a href=""><img src="/html/shenong-static/img/chart2.png" style="width:100%;" height="172"></a>
-                                <p>一级白砂糖现货价格监测</p>
+                            	<a href="/html/shenong/rmsj/content/808.html"><img src="/html/shenong-static/img/chart2.png" style="width:100%;" height="218"></a>
+                                <p>折线图统计分析</p>
                                 </div>
                             </li>
                             <li>
                             	<div>
-                            	<a href=""><img src="/html/shenong-static/img/chart3.png" style="width:100%;" height="172"></a>
-                                <p>一级白砂糖现货价格监测</p>
+                            	<a href="/html/shenong/rmsj/content/810.html"><img src="/html/shenong-static/img/chart3.png" style="width:100%;" height="218"></a>
+                                <p>农机服务组织分布统计</p>
                                 </div>
                             </li>
                         </ul>
@@ -175,7 +177,7 @@ show_num(5);
                         	<li><a title="${cont.title}" href="${cont.url}" target="_blank" class="clearfix">
                             	
                                 <span>${cont.shortTitle}</span>
-                                <span class="pull-right">2${cont.publishDate?string('yyyy-MM-dd')}</span>
+                                <span class="pull-right">${cont.publishDate?string('yyyy-MM-dd')}</span>
                             	</a>
                             </li>
 			    </#list>
@@ -204,17 +206,17 @@ show_num(5);
                                                 <table>
                                                     <tbody>
                                                         <tr>
-                                                            <td><a href=""><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
-                                                            <!--<td><a href=""><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
-                                                            <td><a href=""><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
-                                                            <td><a href=""><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
-                                                            <td><a href=""><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
-                                                            <td><a href=""><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
-                                                            <td><a href=""><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
-                                                            <td><a href=""><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
-                                                            <td><a href=""><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
-                                                            <td><a href=""><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
-                                                        --></tr>
+                                                            <td><a href="/html/shenong/sjzt/content/806.html"><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
+                                                            <td><a href="/html/shenong/sjzt/content/806.html"><img src="/html/shenong-static/img/img2.png" class="img-circle" width="130" height="127"><p>蔬菜备案</p></a></td>
+                                                            <td><a href="/html/shenong/sjzt/content/806.html"><img src="/html/shenong-static/img/imga1.png" class="img-circle" width="130" height="127"><p>农机补贴</p></a></td>
+                                                            <td><a href="/html/shenong/sjzt/content/806.html"><img src="/html/shenong-static/img/imga2.png" class="img-circle" width="130" height="127"><p>现代化农业基地</p></a></td>
+                                                            <td><a href="/html/shenong/sjzt/content/806.html"><img src="/html/shenong-static/img/imga3.png" class="img-circle" width="130" height="127"><p>测图配方</p></a></td><!--
+                                                            <td><a href="/html/shenong/sjzt/content/806.html"><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
+                                                            <td><a href="/html/shenong/sjzt/content/806.html"><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
+                                                            <td><a href="/html/shenong/sjzt/content/806.html"><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
+                                                            <td><a href="/html/shenong/sjzt/content/806.html"><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>
+                                                            <td><a href="/html/shenong/sjzt/content/806.html"><img src="/html/shenong-static/img/img1.png" class="img-circle" width="130" height="127"><p>种子备案</p></a></td>-->
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </td>
@@ -261,7 +263,7 @@ show_num(5);
 	function right(){
 		if (dir=1)dir=-1;
 	}
-	//Marquee();
+	Marquee();
 </script>
 </body>
 </html>

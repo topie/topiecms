@@ -1,6 +1,7 @@
 package com.dm.atform.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +20,17 @@ import com.dm.atform.model.AtTable;
 import com.dm.atform.service.AtFieldService;
 import com.dm.atform.service.AtTableService;
 import com.dm.atform.service.MongoService;
+import com.dm.cms.model.CmsChannel;
+import com.dm.cms.model.CmsContent;
+import com.dm.cms.service.CmsChannelService;
+import com.dm.cms.service.CmsContentService;
+import com.dm.platform.model.UserAccount;
 import com.dm.platform.util.PageConvertUtil;
 import com.dm.platform.util.ResponseUtil;
 import com.dm.platform.util.SearchConditionUtil;
+import com.dm.platform.util.UserAccountUtil;
 import com.github.pagehelper.PageInfo;
+import com.mongodb.DBObject;
 
 @Controller
 @RequestMapping("show")
@@ -36,6 +44,11 @@ public class TableShowController {
 
 	@Autowired
 	private MongoService mongo;
+
+	@Autowired
+	CmsContentService cmsContentService;
+	@Autowired
+	CmsChannelService cmsChannelService;
 
 	@RequestMapping("/page")
 	public String page(Model model) {
@@ -98,12 +111,12 @@ public class TableShowController {
 		m.put("id", atTable.getIdField());
 		if (atTable.getIdField() == null)
 			m.put("id", "_id");
-		if (list.size() == 0) {// 如果没有配置 查询集合的所有字段  //初始化配置 
+		if (list.size() == 0) {// 如果没有配置 查询集合的所有字段 //初始化配置
 			// return ResponseUtil.error("未配置!");
 			gridItem = formItem = this.mongo.findOne(atTable);
 			if (gridItem.size() != 0) {
-				initCol(gridItem,atTable.getId());//初始化
-				return getColConf(searchMap, atTable);//重新读取
+				initCol(gridItem, atTable.getId());// 初始化
+				return getColConf(searchMap, atTable);// 重新读取
 			}
 		}
 		m.put("gridItem", gridItem);
@@ -112,9 +125,9 @@ public class TableShowController {
 		return m;
 	}
 
-	private void initCol(List<Map> gridItem,String tableId) {
-		for(Map co:gridItem){
-			String col = (String)co.get("id");
+	private void initCol(List<Map> gridItem, String tableId) {
+		for (Map co : gridItem) {
+			String col = (String) co.get("id");
 			AtField atField = new AtField();
 			atField.setaType("text");
 			atField.setaField(col);
@@ -122,7 +135,7 @@ public class TableShowController {
 			atField.setTableId(tableId);
 			atField.setDetailShow(true);
 			atField.setGridShow(true);
-			if(col.equalsIgnoreCase("id")||col.equalsIgnoreCase("objectid")){
+			if (col.equalsIgnoreCase("id") || col.equalsIgnoreCase("objectid")) {
 				atField.setGridShow(false);
 			}
 			this.colService.saveOrUpdate(atField);
@@ -138,6 +151,62 @@ public class TableShowController {
 		if (atTable == null)
 			return ResponseUtil.error("tableId参数错误!");
 		return this.mongo.findOne(atTable, id);
+	}
+
+	@RequestMapping("publish")
+	@ResponseBody
+	public Object publish(HttpServletRequest request,String tableId, String id) {
+		if (tableId == null)
+			return ResponseUtil.error("tableId参数必须的!");
+		AtTable atTable = this.table.findOne(tableId);
+		if (atTable == null)
+			return ResponseUtil.error("tableId参数错误!");
+		DBObject o = (DBObject) this.mongo.findOne(atTable, id);
+		//Iterator<String> iter = o.keySet().iterator();
+		if(o==null){
+			return ResponseUtil.error("未找到该数据");
+		}
+		CmsContent content = new CmsContent();
+		Object cont = o.get("content");
+		if(cont==null){
+			return ResponseUtil.error("数据不正确");
+		}
+		content.setContentText((String)cont);
+		content.setAuthor((String)o.get("author"));
+		content.setTitle((String)o.get("title"));
+		//content.setPublishDate(publishDate);
+		content.setOrigin((String)o.get("origin"));
+		content.setChannelId(5);//TODO 发布到默认频道
+		content.setContentType(0);
+		content.setTemplateId(12);
+		content.setSeq(1);
+		content.setFiled1((String)o.get("url"));
+		content.setCreateTime(new Date());
+		insert(content);
+		boolean succ = this.cmsContentService.updateContentState(request,
+				content.getId(), new Short("2"));
+		if (succ)
+			return ResponseUtil.success("发布成功");
+		return ResponseUtil.success("操作失败");
+	}
+
+	private void insert(CmsContent cmsContent) {
+		CmsChannel cmsChannel = cmsChannelService.findOneById(cmsContent
+				.getChannelId());
+		cmsContent.setSiteDomain(cmsChannel.getSiteDomain());
+		cmsContent.setChannelEnName(cmsChannel.getEnName());
+		cmsContent.setIsDelete(false);
+		UserAccount user = UserAccountUtil.getInstance()
+				.getCurrentUserAccount();
+		cmsContent.setCreateUser(user.getCode());
+		cmsContent.setCreateUserName(user.getName());
+		if (cmsContent.getTitleStyle() != null
+				&& !cmsContent.getTitleStyle().equals("")) {
+			String titleStyleArray[] = cmsContent.getTitleStyle().split(",");
+			cmsContent.setTitleStyle("color:" + titleStyleArray[0]
+					+ ";font-size:" + titleStyleArray[1]);
+		}
+		cmsContentService.insertCmsContent(cmsContent);
 	}
 
 	@RequestMapping("insertOrUpdate")

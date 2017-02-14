@@ -5,30 +5,32 @@ import java.util.Date;
 public class AtTable {
 	private String id;
 
-	private String tableName;
+	private String tableName;//表名
 
-	private String status;
+	private String status;//0 新建 1 可用 9 删除
 
-	private String sortField;
+	private String sortField;//默认排序
 
-	private String whereField;
+	private String whereField;//默认过滤条件
 
-	private String info;
+	private String info;//数据介绍
 
-	private Integer seq;
+	private Date createDate;//创建时间
 
-	private Date createDate;
+	private String createUser;//创建用户
 
-	private String createUser;
+	private String gridName;//数据名称
 
-	private String gridName;
+	private String idField;//主键ID
 
-	private String idField;
+	private String dataTime;//数据采集时间
+	
+	private String origin;//数据来源
 
 	private String pId;
-
-	private String type;
-
+	private Integer seq;
+	private String type;//1分类  2数据
+	
 	private Boolean isInsert;
 	private Boolean isUpdate;
 	private Boolean isDelete;
@@ -197,5 +199,22 @@ public class AtTable {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	public String getDataTime() {
+		return dataTime;
+	}
+
+	public void setDataTime(String dataTime) {
+		this.dataTime = dataTime;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+	
 
 }

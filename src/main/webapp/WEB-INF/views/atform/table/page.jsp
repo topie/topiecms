@@ -114,11 +114,12 @@
 	<script type="text/javascript"
 		src="<%=basePath%>assets/global/plugins/select2/select2.min.js"></script>
 	<script type="text/javascript">
+	var COOKIE_LASRNODEID = "last_node_id";
 		/**********普通内容操作函数****************/
 		var tableTree;
 		var form;
 		var grid;
-		var currentTableId;
+		var currentTableId = $.cookie(COOKIE_LASRNODEID);
 		function refreshTree() {
 
 			if (typeof (tableTree) == "undefined") {
@@ -188,7 +189,15 @@
 							closeInSeconds : 5
 						});
 					}
-					tableTree.expandAll(true);
+					tableTree.expandAll(false);
+					var node = tableTree.getNodeByParam('id', currentTableId);//获取id为1的点  
+					//tableTree.selectNode(node);//选择点  
+					if(node){
+						 if(!node.isParent){
+							node = node.getParentNode();
+						}
+					}
+					tableTree.expandNode(node, true, false);//指定选中ID节点展开  
 				},
 				onClick : function(event, treeId, treeNode) {
 					// 用于解决双击时候会调用两次单击事件的问题
@@ -198,6 +207,7 @@
 					} else {
 						treeNode.clickTimeout = setTimeout(function() {
 							currentTableId = treeNode.id;
+							$.cookie(COOKIE_LASRNODEID,currentTableId,{expires:7});
 							grid.reload({
 								url : "./gridlist?pId=" + currentTableId
 							});
@@ -266,7 +276,7 @@
 			checkboxWidth : "3%",
 			showIndexNum : true,
 			indexNumWidth : "5%",
-			pageSelect : [ 2, 15, 30, 50 ],
+			pageSelect : [ 5, 15, 30, 50 ],
 			cloums : [
 					{
 						title : "名称",
@@ -381,6 +391,7 @@
 			buttonsAlign : "center",
 		//表单元素
 		};
+		//表设置
 		var aItems = [ {
 			type : 'hidden',
 			name : 'id',
@@ -437,6 +448,24 @@
 			}
 		}, {
 			type : 'text',//类型
+			name : 'origin',//name
+			id : 'origin',//id
+			label : '数据来源',//左边label
+			cls : 'input-large'
+		}, {
+			type : 'text',//类型
+			name : 'dataTime',//name
+			id : 'dataTime',//id
+			label : '数据采集时间',//左边label
+			cls : 'input-large'
+		}, {
+			type : 'textarea',//类型
+			name : 'info',//name
+			id : 'info',//id
+			label : '备注',//左边label
+			cls : 'input-large'
+		}, {
+			type : 'text',//类型
 			name : 'sortField',//name
 			id : 'sortField',//id
 			label : '默认排序字段',//左边label
@@ -446,12 +475,6 @@
 			name : 'whereField',//name
 			id : 'whereField',//id
 			label : '过滤条件',//左边label
-			cls : 'input-large'
-		}, {
-			type : 'textarea',//类型
-			name : 'info',//name
-			id : 'info',//id
-			label : '备注',//左边label
 			cls : 'input-large'
 		}, {
 			type : 'radioGroup',//类型
@@ -489,6 +512,7 @@
 				value : 'isDelete'
 			} ]
 		} ];
+		//分类设置
 		var tItems = [ {
 			type : 'hidden',
 			name : 'id',
@@ -547,10 +571,10 @@
 			});
 			modal.show();
 			if (type == '0') {
-				formOpts.items = aItems;//
+				formOpts.items = aItems;//表设置
 				return modal.$body.dmForm(formOpts);
 			} else {
-				formOpts.items = tItems;
+				formOpts.items = tItems;//分类
 				return modal.$body.dmForm(formOpts);
 			}
 		}

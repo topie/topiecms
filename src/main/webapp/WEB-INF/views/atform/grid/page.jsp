@@ -115,10 +115,12 @@
 		src="<%=basePath%>assets/global/plugins/select2/select2.min.js"></script>
 	<script type="text/javascript">
 		/**********普通内容操作函数****************/
+		var COOKIE_LASRNODEID = "last_node_id";
+		/**********普通内容操作函数****************/
+		var currentTableId = $.cookie(COOKIE_LASRNODEID);
 		var tableTree;
 		var form;
 		var grid;
-		var currentTableId;
 		var currentTableType;
 		function refreshTree() {
 
@@ -187,7 +189,16 @@
 							closeInSeconds : 5
 						});
 					}
-					tableTree.expandAll(true);
+					tableTree.expandAll(false);
+					var node = tableTree.getNodeByParam('id', currentTableId);//获取id为1的点  
+					//tableTree.selectNode(node);//选择点  
+					if(node){
+						 if(!node.isParent){
+							node = node.getParentNode();
+						}
+					}
+					//console.log(node);
+					tableTree.expandNode(node, true, false);//指定选中ID节点展开  
 				},
 				onClick : function(event, treeId, treeNode) {
 					//双击不操作
@@ -253,6 +264,7 @@
 		}
 		function treeOnClike(event,treeId,treeNode){
 		currentTableId = treeNode.id;
+		$.cookie(COOKIE_LASRNODEID,currentTableId,{expires:7});
 		currentTableType = treeNode.s;
 		if(treeNode.s =='0'){
 		beforReload(currentTableId,function(data){
@@ -300,6 +312,11 @@
 				if(data.info.isDelete){
 					actionCloums.push(deleteButton);
 				}
+				if(data.info.tableName.indexOf("cmsContent")!=-1){
+					//alert(data.info.tableName.indexOf("cmsContent"));
+					actionCloums.push(publishButton);
+					
+				}
 				grid.reload({
 					url : "./list?tableId=" + currentTableId,
 					cloums:data.gridItem,
@@ -337,6 +354,21 @@
 				});
 			}
 		};
+		  var publishButton = {
+					text : "发布到新闻",
+					cls : "green btn-sm",
+					handle : function(index, data,id) {
+						$.ajax({
+							url:"./publish?tableId="+currentTableId+"&id=" + id,
+							type:'POST',
+							success:function(res){
+								if(res.status=='1'){
+									bootbox.alert("操作成功");
+								}
+							}
+						});
+					}
+				};
 		var updateButton = {
 			text : "编辑",
 			cls : "green btn-sm",
@@ -395,13 +427,13 @@
 		var gridOption = {
 			url : "./list", // ajax地址
 			pageNum : 1,//当前页码
-			pageSize : 5,//每页显示条数
+			pageSize : 10,//每页显示条数
 			idFiled : "id",//id域指定
 			showCheckbox : false,//是否显示checkbox
 			checkboxWidth : "3%",
 			showIndexNum : true,
 			indexNumWidth : "5%",
-			pageSelect : [ 2, 15, 30, 50 ],
+			pageSelect : [ 5, 15, 30, 50 ],
 			cloums : [
 					{
 						title : "名称",
