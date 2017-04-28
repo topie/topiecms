@@ -106,8 +106,6 @@
 				<entry key="microcobolListDirective" value-ref="microcobolListDirective"></entry>
 				<entry key="orgPersonDirective" value-ref="orgPersonDirective"></entry>
 				<entry key="leaderContentListDirective" value-ref="leaderContentListDirective"></entry>
-				<entry key="directoryNumberDirective" value-ref="directoryNumberDirective"></entry>
-				<entry key="atTableListDirective" value-ref="atTableListDirective"></entry>
 			</map>
 		</property>
 		<property name="defaultEncoding">
@@ -156,8 +154,6 @@
    <bean id="microcobolListDirective" class ="com.dm.module.directive.MicrocobolListDirective"></bean>
    <bean id="orgPersonDirective" class ="com.dm.module.directive.OrgPersonListDirective"></bean>
    
-   <bean id="directoryNumberDirective" class ="com.dm.atform.directive.DirectoryNumberDirective"></bean>
-    <bean id="atTableListDirective" class ="com.dm.atform.directive.AtTableListDirective"></bean>
     <!-- 自定义标签结束 -->
 
 
@@ -182,5 +178,7 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="appUtil" class="com.dm.cms.util.AppUtil"/>
 </beans>
 

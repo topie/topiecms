@@ -1,24 +1,22 @@
 package com.dm.platform.util;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-import freemarker.core.InvalidReferenceException;
+import com.dm.cms.util.AppUtil;
+
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -91,15 +89,17 @@ public class FreeMarkertUtil {
  
         // 设置标签类型([]、<>),[]这种标记解析要快些
         configuration.setTagSyntax(Configuration.AUTO_DETECT_TAG_SYNTAX);
- 
+        Map<String, TemplateDirectiveModel> beans = new HashMap<String, TemplateDirectiveModel>();
         // 设置允许属性为空
         configuration.setClassicCompatible(true);
-        
+        if(request != null) {
         WebApplicationContext webApp=RequestContextUtils.getWebApplicationContext(request, request.getSession().getServletContext());
         // 获取实现TemplateDirectiveModel的bean
-        Map<String, TemplateDirectiveModel> beans = webApp
-                .getBeansOfType(TemplateDirectiveModel.class);
- 
+        beans = webApp.getBeansOfType(TemplateDirectiveModel.class);
+        }else{
+        	beans = AppUtil
+        			.getBeansOfType(TemplateDirectiveModel.class);
+        }
         for (String key : beans.keySet()) {
             Object obj = beans.get(key);
             if (obj != null && obj instanceof TemplateDirectiveModel) {

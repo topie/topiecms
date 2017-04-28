@@ -64,7 +64,7 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	CmsAttachmentService cmsAttachmentService;
 	@Autowired
 	CmsTemplateConfigService cmsTemplateConfigService;
-	
+
 	@Autowired
 	CmsChannelService cmsChannelService;
 
@@ -72,9 +72,13 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	CmsSiteMapper cmsSiteMapper;
 	@Autowired
 	CmsSiteService cmsSiteService;
-	
+
 	@Value("${isChannelStatic}")
-    boolean isChannelStatic;
+	boolean isChannelStatic;
+
+	@Value("${isContentStatic}")
+	boolean isContentStatic;
+
 	String serperator = System.getProperty("file.separator");
 
 	@Override
@@ -90,12 +94,12 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 			seq = contents.get(0).getSeq() + 1;
 		cmsContent.setSeq(seq);
 		if (cmsContent.getTemplateId() == null) {// 设置默认模板
-			CmsTemplateConfig c =cmsTemplateConfigService.load(null,
+			CmsTemplateConfig c = cmsTemplateConfigService.load(null,
 					cmsContent.getChannelId());
-			if(c!=null)
-			cmsContent.setTemplateId(c.getContentTemplateId());
+			if (c != null)
+				cmsContent.setTemplateId(c.getContentTemplateId());
 		}
-		if(cmsContent.getPublishDate()==null){
+		if (cmsContent.getPublishDate() == null) {
 			cmsContent.setPublishDate(new Date());
 		}
 		cmsContentMapper.insertSelective(cmsContent);
@@ -103,13 +107,12 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 
 	@Override
 	public void updateCmsContent(CmsContent cmsContent) {
-		/*if(cmsContent.getContentType()!=null)
-				{
-		if(!cmsContent.getContentType().equals("10")){
-		String author = UserAccountUtil.getInstance().getCurrentUser();
-		cmsContent.setAuthor(author);
-		}
-				}*/
+		/*
+		 * if(cmsContent.getContentType()!=null) {
+		 * if(!cmsContent.getContentType().equals("10")){ String author =
+		 * UserAccountUtil.getInstance().getCurrentUser();
+		 * cmsContent.setAuthor(author); } }
+		 */
 		cmsContentMapper.updateByPrimaryKeySelective(cmsContent);
 	}
 
@@ -128,10 +131,10 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	@Override
 	public PageInfo<CmsContent> findCmsContentByPage(Integer pageNum,
 			Integer pageSize, Map argMap) {
-		if(argMap.get("sort")==null){
+		if (argMap.get("sort") == null) {
 			argMap.put("sort", "seq desc,publish_date desc");
 		}
-		if (argMap.get("model") != null) {
+		if (argMap.get("channelIds") == null && argMap.get("model") != null) {
 			Integer channelId = ((CmsContent) argMap.get("model"))
 					.getChannelId();
 			if (channelId != null) {
@@ -139,11 +142,9 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 						.selectByPId(channelId);
 				channelIds.add(channelId);
 				argMap.put("channelIds", channelIds);
-			}else{
-				/*argMap.put("channelIds", new Integer[]{0});*/
+			} else {
+				/* argMap.put("channelIds", new Integer[]{0}); */
 			}
-		}else{
-			/*argMap.put("channelIds", new Integer[]{0});*/
 		}
 		PageHelper.startPage(pageNum, pageSize);
 		List<CmsContent> cmsContents = cmsContentMapper
@@ -210,16 +211,20 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		boolean success = false;
 		CmsContent content = this.cmsContentMapper
 				.selectByPrimaryKey(contentId);
-        if(content.getContentType()==2)
-        {
-        	return content;
-        }
+		if (content.getContentType() == 2) {
+			return content;
+		}
 		content.setStatus(new Short("2"));
 		Date now = new Date();
-		if(content.getPublishDate()==null){
-			content.setPublishDate(now);
+		if (content.getPublishDate() == null) {
+			content.setPublishDate(now); 
 		}
 		content.setUpdateTime(now);
+		if (!isContentStatic) {//如果potal
+			content.setIsHtml(false);
+			cmsContentMapper.updateByPrimaryKeySelective(content);
+			return content;
+		}
 		content.setIsHtml(true);
 		CmsChannel channel = cmsChannelMapper.selectByPrimaryKey(content
 				.getChannelId());
@@ -244,9 +249,10 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		}
 		root.put("own", contentId);
 		root.put("site", site);
-		if(content.getContentType()!=null && content.getContentType().equals("10")){
-			root.put("doc",content.toDoc());
-		}else{
+		if (content.getContentType() != null
+				&& content.getContentType().equals("10")) {
+			root.put("doc", content.toDoc());
+		} else {
 			root.put("cmsContent", content);
 		}
 		root.put("superChannel", this.getSuperChannel(channel));
@@ -273,13 +279,16 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 
 		return content;
 	}
+
 	private CmsChannel getSuperChannel(CmsChannel channel) {
-		CmsChannel pChannel = this.cmsChannelMapper.selectByPrimaryKey(channel.getPid());
-		if(pChannel==null){
+		CmsChannel pChannel = this.cmsChannelMapper.selectByPrimaryKey(channel
+				.getPid());
+		if (pChannel == null) {
 			return channel;
 		}
 		return getSuperChannel(pChannel);
 	}
+
 	public StringBuffer getChannelenNameByIterator(Integer ChannelId,
 			StringBuffer channelEnNamedir) {
 		CmsChannel channel = cmsChannelMapper.selectByPrimaryKey(ChannelId);
@@ -304,44 +313,43 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		CmsContent cmsContent = this.cmsContentMapper
 				.selectByPrimaryKey(contentId);
 		boolean succ = true;
-		if (cmsContent == null || (cmsContent.getStatus().equals(status)&&!(status==2))) {
+		if (cmsContent == null
+				|| (cmsContent.getStatus().equals(status) && !(status == 2))) {
 			return false;
 		}
 		if (status == 1 && cmsContent.getStatus() == 1) {
 			return false;
 		}
 		if (2 == status) {
-			if(cmsContent.getContentType()!=null &&cmsContent.getContentType()==2){//链接频道
+			if (cmsContent.getContentType() != null
+					&& cmsContent.getContentType() == 2) {// 链接频道
 				succ = true;
 				cmsContent.setStatus(status);
 				cmsContent.setIsHtml(true);
-				this.cmsContentMapper.updateByPrimaryKeySelective(cmsContent);	
+				this.cmsContentMapper.updateByPrimaryKeySelective(cmsContent);
 				CmsChannel cms = cmsChannelMapper.selectByPrimaryKey(cmsContent
 						.getChannelId());
-				if(isChannelStatic)
-				{
-				ExecutorService excutor = Executors.newFixedThreadPool(10);
-				//多线程静态化频道，如无需注释即可
-				generateChannelMutipleThread(request, cms, excutor);
+				if (isChannelStatic) {
+					ExecutorService excutor = Executors.newFixedThreadPool(10);
+					// 多线程静态化频道，如无需注释即可
+					generateChannelMutipleThread(request, cms, excutor);
 				}
 				succ = cmsSiteService.generatorHtml(cms.getSiteId(), request);
-			}
-			else{
+			} else {
 				CmsContent c = this.generateHtml(request, contentId);
 				if (c != null) {
-					CmsChannel cms = cmsChannelMapper.selectByPrimaryKey(cmsContent
-							.getChannelId());
-					if(isChannelStatic)
-					{
-					ExecutorService excutor = Executors.newFixedThreadPool(10);
-					//多线程静态化频道，如无需注释即可
-					generateChannelMutipleThread(request, cms, excutor);
+					CmsChannel cms = cmsChannelMapper
+							.selectByPrimaryKey(cmsContent.getChannelId());
+					if (isChannelStatic) {
+						ExecutorService excutor = Executors
+								.newFixedThreadPool(10);
+						// 多线程静态化频道，如无需注释即可
+						generateChannelMutipleThread(request, cms, excutor);
 					}
-					succ = cmsSiteService.generatorHtml(cms.getSiteId(), request);
-				}
-				else
-				{
-					succ=false;
+					succ = cmsSiteService.generatorHtml(cms.getSiteId(),
+							request);
+				} else {
+					succ = false;
 				}
 			}
 		} else {
@@ -361,10 +369,10 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 			return 0;
 		return cmsContentMapper.selectCount(channelIds);
 	}
-	
+
 	@Override
 	public int selectCountBychannelIdOnly(Integer channelId) {
-		List<Integer> channelIds =new ArrayList<Integer>();
+		List<Integer> channelIds = new ArrayList<Integer>();
 		channelIds.add(channelId);
 		return cmsContentMapper.selectCount(channelIds);
 	}
@@ -429,56 +437,57 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		cmsContent.setSeq(cmsContentSeq);
 		this.cmsContentMapper.updateByPrimaryKeySelective(cmsContent);
 	}
+
 	@InitBinder
-    public void initBinder(ServletRequestDataBinder binder){
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"),
-                true));
-    }
+	public void initBinder(ServletRequestDataBinder binder) {
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(
+				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
+	}
 
 	@Override
 	public void selectTopOneAndUpdate() {
 		// TODO Auto-generated method stub
 		PageHelper.startPage(1, 1);
-		List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
+		List<CmsContent> cmsContents = cmsContentMapper.selectTopOne();
 		PageInfo<CmsContent> page = new PageInfo<CmsContent>(cmsContents);
 		List<CmsContent> list = page.getList();
-		if(list.size()>0)
-		{
+		if (list.size() > 0) {
 			list.get(0).setContentType(0);
-		   cmsContentMapper.updateByPrimaryKey(list.get(0));
-		 }
+			cmsContentMapper.updateByPrimaryKey(list.get(0));
+		}
 	}
 
 	@Override
 	public List<CmsContent> selectTopOne(Map params) {
-		if(params==null){
+		if (params == null) {
 			PageHelper.startPage(1, 1);
-			List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
+			List<CmsContent> cmsContents = cmsContentMapper.selectTopOne();
 			PageInfo<CmsContent> page = new PageInfo<CmsContent>(cmsContents);
 			List<CmsContent> list = page.getList();
 			return list;
 		}
-		if(params.get("pageSize")==null){
+		if (params.get("pageSize") == null) {
 			PageHelper.startPage(1, 1);
-			List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
+			List<CmsContent> cmsContents = cmsContentMapper.selectTopOne();
 			PageInfo<CmsContent> page = new PageInfo<CmsContent>(cmsContents);
 			List<CmsContent> list = page.getList();
 			return list;
 		}
 		Integer pageSize = Integer.valueOf(params.get("pageSize").toString());
-		Integer pageNum =params.get("pageNum")==null?1: Integer.valueOf(params.get("pageNum").toString());
+		Integer pageNum = params.get("pageNum") == null ? 1 : Integer
+				.valueOf(params.get("pageNum").toString());
 		PageHelper.startPage(pageNum, pageSize);
-		List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
+		List<CmsContent> cmsContents = cmsContentMapper.selectTopOne();
 		PageInfo<CmsContent> page = new PageInfo<CmsContent>(cmsContents);
 		List<CmsContent> list = page.getList();
 		return list;
 	}
+
 	@Override
 	public CmsContent selectTopOne() {
 		// TODO Auto-generated method stub
-		List<CmsContent> cmsContents =  cmsContentMapper.selectTopOne();
-		if(cmsContents.size()>0)
-		{
+		List<CmsContent> cmsContents = cmsContentMapper.selectTopOne();
+		if (cmsContents.size() > 0) {
 			return cmsContents.get(0);
 		}
 		return new CmsContent();
@@ -496,8 +505,8 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	@Override
 	public PageInfo<CmsContent> selectIsPictures(Integer pageNum,
 			Integer pageSize) {
-		PageHelper.startPage(pageNum,pageSize);
-		List<CmsContent> list =this.cmsContentMapper.selectIsPictures();
+		PageHelper.startPage(pageNum, pageSize);
+		List<CmsContent> list = this.cmsContentMapper.selectIsPictures();
 		return new PageInfo<CmsContent>(list);
 	}
 
@@ -505,7 +514,8 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	public void setContentIsDelete(Integer id) {
 		CmsContent record = new CmsContent();
 		record.setId(id);
-		UserAccount user = UserAccountUtil.getInstance().getCurrentUserAccount();
+		UserAccount user = UserAccountUtil.getInstance()
+				.getCurrentUserAccount();
 		record.setDeleteUser(user.getCode());
 		record.setIsDelete(true);
 		record.setStatus(new Short("0"));
@@ -517,20 +527,20 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 
 	@Override
 	public void restore(String contentId) {
-		if(contentId!=null && !contentId.equals("")){
-			for(String id:contentId.split(",")){
+		if (contentId != null && !contentId.equals("")) {
+			for (String id : contentId.split(",")) {
 				CmsContent record = new CmsContent();
 				record.setId(Integer.valueOf(id));
 				record.setIsDelete(false);
 				this.cmsContentMapper.updateByPrimaryKeySelective(record);
 			}
 		}
-		
+
 	}
-	
+
 	@Override
-	public void generateChannelMutipleThread(HttpServletRequest request,CmsChannel channel, ExecutorService executor)
-	{
+	public void generateChannelMutipleThread(HttpServletRequest request,
+			CmsChannel channel, ExecutorService executor) {
 		ContentGenerateHtml runable = (ContentGenerateHtml) AppUtil
 				.getBean("contentGenerateHtml");
 		runable.setChannelId(channel.getId());
@@ -538,13 +548,11 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 		runable.setRequest(request);
 		runable.setSiteChannelContent("channel");
 		executor.execute(runable);
-		if(channel.getPid()!=0)
-		{
-			CmsChannel ch = cmsChannelMapper.selectByPrimaryKey(channel.getPid());
+		if (channel.getPid() != 0) {
+			CmsChannel ch = cmsChannelMapper.selectByPrimaryKey(channel
+					.getPid());
 			generateChannelMutipleThread(request, ch, executor);
-		}
-		else
-		{
+		} else {
 			executor.shutdown();
 			try {
 				executor.awaitTermination(1200, TimeUnit.MINUTES);
@@ -559,9 +567,9 @@ public class CmsContentServiceImpl extends generatorHtmlHandler implements
 	public PageInfo<CmsContent> findLeaderContentsByPage(Integer pageNum,
 			Integer pageSize, String leaderId) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<CmsContent> list = this.cmsContentMapper.selectByLeaderId(leaderId);
+		List<CmsContent> list = this.cmsContentMapper
+				.selectByLeaderId(leaderId);
 		return new PageInfo<CmsContent>(list);
 	}
-
 
 }

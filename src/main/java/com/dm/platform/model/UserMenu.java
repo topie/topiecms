@@ -165,7 +165,7 @@ public class UserMenu implements Serializable{
 		this.children = children;
 	}
 	
-	@ManyToMany(mappedBy="menus",fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy="menus",fetch = FetchType.LAZY)
 	@OrderBy("seq")
 	public Set<MenuGroup> getMenugroups() {
 		return menugroups;

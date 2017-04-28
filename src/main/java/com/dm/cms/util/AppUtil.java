@@ -1,6 +1,8 @@
 package com.dm.cms.util;
 
 
+import java.util.Map;
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -22,5 +24,10 @@ public class AppUtil implements ApplicationContextAware {
 	 public static Object getBean(String paramString)
 	  {
 	    return appContext.getBean(paramString);
+	  }
+	 public static <T> Map<String, T> getBeansOfType(Class type)
+	  {
+		 Map<String, T> map = appContext.getBeansOfType(type);
+	    return map;
 	  }
 }

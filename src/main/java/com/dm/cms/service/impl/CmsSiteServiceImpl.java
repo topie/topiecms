@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.dm.cms.handler.generatorHtmlHandler;
@@ -51,6 +52,8 @@ public class CmsSiteServiceImpl extends generatorHtmlHandler implements CmsSiteS
 	CmsChannelService cmsChannelService;
 	// @Autowired
 	// ContentGenerateHtml runable;
+	@Value("${isSiteStatic}")
+	private boolean isSiteStatic;
 
 	@Override
 	public void insertCmsSite(CmsSite cmsSite) {
@@ -124,6 +127,13 @@ public class CmsSiteServiceImpl extends generatorHtmlHandler implements CmsSiteS
 	public boolean generatorHtml(Integer siteId, HttpServletRequest request) {
 		boolean succ = false;
 		CmsSite site = cmsSiteMapper.selectByPrimaryKey(siteId);
+		if(!isSiteStatic){
+			if(site.getIsHtml()){
+				site.setIsHtml(false);
+				cmsSiteMapper.updateByPrimaryKeySelective(site);
+			}
+		return true;
+		}
 		CmsTemplate cmsTemplate = new CmsTemplate();
 		if (site.getTemplateId() != null) {
 			cmsTemplate = cmsTemplateMapper.selectByPrimaryKey(site
