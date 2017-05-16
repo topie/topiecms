@@ -396,6 +396,11 @@
             <artifactId>apache-mime4j-core</artifactId>
             <version>0.7.2</version>
         </dependency>
+        <dependency>
+		    <groupId>rome</groupId>
+		    <artifactId>rome</artifactId>
+		    <version>1.0</version>
+		</dependency>
         
 		<dependency>
 		    <groupId>commons-codec</groupId>

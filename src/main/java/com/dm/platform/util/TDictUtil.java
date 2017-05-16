@@ -2,17 +2,13 @@ package com.dm.platform.util;
 
 import java.util.List;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+import com.dm.cms.util.AppUtil;
 import com.dm.platform.model.TDict;
 import com.dm.platform.model.TDictItem;
 import com.dm.platform.service.TDictService;
 
 public class TDictUtil{
-	public static ApplicationContext ct = new ClassPathXmlApplicationContext(
-			"config/spring/applicationContext.xml");
-	public static TDictService dictService = (TDictService)ct.getBean("tDictServiceImpl");
+	public static TDictService dictService = (TDictService)AppUtil.getBean("tDictServiceImpl");
 	public static String toName(String dictCode,String itemCode){
 		return TDictCache.getInstance().getTDictItemNameByCode(dictCode, itemCode);
 	}

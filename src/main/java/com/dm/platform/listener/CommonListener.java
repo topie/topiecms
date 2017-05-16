@@ -1,13 +1,5 @@
 package com.dm.platform.listener;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-
 import javax.servlet.ServletContextEvent;
 
 import org.apache.log4j.LogManager;

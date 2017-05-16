@@ -28,6 +28,8 @@ public class LogEntity implements Serializable{
 	
 	private String type;
 	
+	private String sbtype;
+	
 	private String title;
 	
 	private String content;
@@ -73,12 +75,19 @@ public class LogEntity implements Serializable{
 	public String getType() {
 		return type;
 	}
-
 	public void setType(String type) {
 		this.type = type;
 	}
 	
-	
+	@Column(name="SBTYPE",length=10)
+	public String getSbtype() {
+		return sbtype;
+	}
+
+	public void setSbtype(String sbtype) {
+		this.sbtype = sbtype;
+	}
+
 	@Column(name="CONTENT",length=1000)
 	public String getContent() {
 		return content;

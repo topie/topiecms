@@ -5,12 +5,13 @@
     <id column="item_id" property="itemId" jdbcType="INTEGER" />
     <result column="item_code" property="itemCode" jdbcType="VARCHAR" />
     <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+    <result column="item_desc" property="itemDesc" jdbcType="VARCHAR" />
     <result column="item_seq" property="itemSeq" jdbcType="BIGINT" />
     <result column="dict_id" property="dictId" jdbcType="INTEGER" />
     <result column="item_pid" property="itemPid" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    item_id, item_code, item_name, item_seq, dict_id, item_pid
+    item_id, item_code, item_name, item_seq, dict_id, item_pid,item_desc
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -34,10 +35,10 @@
   <insert id="insert" parameterType="com.dm.platform.model.TDictItem" useGeneratedKeys="true"
   	keyProperty="itemId">
     insert into t_dict_item ( item_code, item_name, 
-      item_seq, dict_id, item_pid
+      item_seq, dict_id, item_pid,item_desc
       )
     values ( #{itemCode,jdbcType=VARCHAR}, #{itemName,jdbcType=VARCHAR}, 
-      #{itemSeq,jdbcType=BIGINT}, #{dictId,jdbcType=INTEGER}, #{itemPid,jdbcType=INTEGER}
+      #{itemSeq,jdbcType=BIGINT}, #{dictId,jdbcType=INTEGER}, #{itemPid,jdbcType=INTEGER},#{itemDesc,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.dm.platform.model.TDictItem" useGeneratedKeys="true"
@@ -62,6 +63,9 @@
       <if test="itemPid != null" >
         item_pid,
       </if>
+      <if test="itemDesc != null" >
+        item_desc,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="itemId != null" >
@@ -81,6 +85,9 @@
       </if>
       <if test="itemPid != null" >
         #{itemPid,jdbcType=INTEGER},
+      </if>
+      <if test="itemDesc != null" >
+        #{itemDesc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -102,6 +109,9 @@
       <if test="itemPid != null" >
         item_pid = #{itemPid,jdbcType=INTEGER},
       </if>
+      <if test="itemDesc != null" >
+        item_desc = #{itemDesc,jdbcType=VARCHAR},
+      </if>
     </set>
     where item_id = #{itemId,jdbcType=INTEGER}
   </update>
@@ -111,7 +121,8 @@
       item_name = #{itemName,jdbcType=VARCHAR},
       item_seq = #{itemSeq,jdbcType=BIGINT},
       dict_id = #{dictId,jdbcType=INTEGER},
-      item_pid = #{itemPid,jdbcType=INTEGER}
+      item_pid = #{itemPid,jdbcType=INTEGER},
+      item_desc = #{itemDesc,jdbcType=VARCHAR}
     where item_id = #{itemId,jdbcType=INTEGER}
   </update>
 </mapper>

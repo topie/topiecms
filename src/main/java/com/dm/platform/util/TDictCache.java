@@ -84,6 +84,7 @@ public class TDictCache {
 			map.put("id", dictItem.getItemId());
 			map.put("itemCode", dictItem.getItemCode());
 			map.put("itemName", dictItem.getItemName());
+			map.put("itemDesc", dictItem.getItemDesc());
 			map.put("pid",
 					dictItem.getItemPid() == null ? "0" : dictItem.getItemPid());
 			jsonList.add(map);
@@ -119,6 +120,7 @@ public class TDictCache {
 				map.put("id", dictItem.getItemId());
 				map.put("itemCode", dictItem.getItemCode());
 				map.put("itemName", dictItem.getItemName());
+				map.put("itemDesc", dictItem.getItemDesc());
 				map.put("pid",
 						dictItem.getItemPid() == null ? "0" : dictItem
 								.getItemPid());

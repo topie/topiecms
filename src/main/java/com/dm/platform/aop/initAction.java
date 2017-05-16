@@ -1,6 +1,8 @@
  
 package com.dm.platform.aop;
 
+import java.io.UnsupportedEncodingException;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
@@ -46,6 +48,10 @@ public class initAction implements InitializingBean
 				System.exit(0);
 			}
 		}
+	}
+	public static void main(String[] args) throws UnsupportedEncodingException {
+		BASE64Encoder encode = new BASE64Encoder();
+		System.out.println(encode.encode("0F8BFBFF000406F1".getBytes("utf-8")));
 	}
  }
 

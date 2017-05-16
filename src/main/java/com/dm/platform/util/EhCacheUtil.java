@@ -1,11 +1,6 @@
 package com.dm.platform.util;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,7 +19,7 @@ import com.dm.platform.model.UserMenu;
 import com.dm.platform.model.UserRole;
 
 public class EhCacheUtil {
-	private static EhCacheUtil instance = new EhCacheUtil();
+	private static EhCacheUtil instance = null;
 	private EhCacheUtil(){
 	}
 	public ApplicationContext ct = new ClassPathXmlApplicationContext(
@@ -33,6 +28,9 @@ public class EhCacheUtil {
 			.getBean("commonDAOImpl");
 	public JdbcTemplate jdbcTemplate = (JdbcTemplate)ct.getBean("jdbcTemplate");
 	public static EhCacheUtil getInstance(){
+		if(instance==null){
+			instance =  new EhCacheUtil();
+		}
 		return instance;
 	}
 	/*private void commonMethod(Cache myCache,UserRole u){
@@ -71,7 +69,7 @@ public class EhCacheUtil {
 	}
 	//启动listener加载的时候初始化数据
 	public void init(WebApplicationContext context){
-		CommonDAO commonDAO = (CommonDAO) ct
+		CommonDAO commonDAO = (CommonDAO) context
 				.getBean("commonDAOImpl");
 		Cache myCache = (Cache)context
 				.getBean("myCache");

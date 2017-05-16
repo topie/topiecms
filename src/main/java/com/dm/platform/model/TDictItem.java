@@ -12,6 +12,8 @@ public class TDictItem {
     private Integer dictId;
 
     private Integer itemPid;
+    
+    private String itemDesc;
 
     public Integer getItemId() {
         return itemId;
@@ -60,4 +62,13 @@ public class TDictItem {
     public void setItemPid(Integer itemPid) {
         this.itemPid = itemPid;
     }
+
+	public String getItemDesc() {
+		return itemDesc;
+	}
+
+	public void setItemDesc(String itemDesc) {
+		this.itemDesc = itemDesc;
+	}
+    
 }

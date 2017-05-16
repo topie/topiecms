@@ -52,16 +52,24 @@ public class LogAspect {
 	@Pointcut("execution(* com..controller.*.*(..))")
 	public void allCall() {
 	}
+	
+	@Pointcut("(execution(* com..controller.*.download*(..))||execution(* com..controller.*.export*(..)))"
+			+ "&& (!execution(* com.dm.atform.controller.*.download*(..))&&!execution(* com.dm.atform.controller.*.export*(..)))")
+	public void downloadCall() {
+	}
 
-	@Pointcut("execution(* com.dm.*.service.*.insert*(..))")
+	@Pointcut("(execution(* com.dm.*.service.*.insert*(..))||execution(* com.dm.*.service.*.save*(..)))"
+			+ "&& (!execution(* com.dm.atform.service.*.insert*(..))&&!execution(* com.dm.atform.service.*.save*(..)))")
 	public void insertServiceCall() {
 	}
 
-	@Pointcut("execution(* com.dm.*.service.*.update*(..))")
+	@Pointcut("execution(* com.dm.*.service.*.update*(..))"
+			+ "&& !execution(* com.dm.atform.service.*.update*(..))")
 	public void updateServiceCall() {
 	}
 
-	@Pointcut("execution(* com.dm.*.service.*.delete*(..)) && !execution(* com.dm.platform.service.LogService.delete*(..))")
+	@Pointcut("execution(* com.dm.*.service.*.delete*(..)) && !execution(* com.dm.platform.service.LogService.delete*(..))"
+			+ "&& !execution(* com.dm.atform.service.*.delete*(..))")
 	public void deleteServiceCall() {
 	}
 
@@ -102,6 +110,7 @@ public class LogAspect {
 				+ ":新建"));
 		log.setDate(DmDateUtil.DateToStr(new Date(), "yyyy-MM-dd HH:mm:ss"));
 		log.setType("1");
+		log.setSbtype("1");
 		log.setIp(UserAccountUtil.getInstance().getCurrentIp());
 		commonDAO.save(log);
 		}
@@ -132,6 +141,7 @@ public class LogAspect {
 				+ ":修改"));
 		log.setDate(DmDateUtil.DateToStr(new Date(), "yyyy-MM-dd HH:mm:ss"));
 		log.setType("1");
+		log.setSbtype("2");
 		try{
 			log.setIp(UserAccountUtil.getInstance().getCurrentIp());
 		}catch(RuntimeException e){
@@ -156,9 +166,31 @@ public class LogAspect {
 				+ ":删除"));
 		log.setDate(DmDateUtil.DateToStr(new Date(), "yyyy-MM-dd HH:mm:ss"));
 		log.setType("1");
+		log.setSbtype("3");
 		log.setIp(UserAccountUtil.getInstance().getCurrentIp());
 		commonDAO.save(log);
 	}
+	@AfterReturning(value = "downloadCall()", argNames = "rtv", returning = "rtv")
+	public void downloadCallCalls(JoinPoint joinPoint, Object rtv)
+			throws Throwable {
+		// 获取方法名
+		String methodName = joinPoint.getSignature().getName();
+		// 创建日志对象
+		LogEntity log = new LogEntity();
+		UserAccount user = UserAccountUtil.getInstance()
+				.getCurrentUserAccount();
+		log.setUser(user.getName() + "(" + user.getCode() + ")");
+		log.setTitle(joinPoint.getTarget().getClass().getName() + "."
+				+ methodName + "正常。");
+		log.setContent(adminOptionContent(joinPoint.getArgs(), user.getName()
+				+ ":下载"));
+		log.setSbtype("4");
+		log.setDate(DmDateUtil.DateToStr(new Date(), "yyyy-MM-dd HH:mm:ss"));
+		log.setType("1");
+		log.setIp(UserAccountUtil.getInstance().getCurrentIp());
+		commonDAO.save(log);
+	}
+	
 
 	@AfterThrowing(value = "allCall()", throwing = "e")
 	public void afterThrowing(JoinPoint joinPoint, RuntimeException e) {
@@ -170,6 +202,7 @@ public class LogAspect {
 		log.setContent("抛出的异常: " + e.getMessage().substring(0, 500));
 		log.setDate(DmDateUtil.DateToStr(new Date(), "yyyy-MM-dd HH:mm:ss"));
 		log.setType("1");
+		log.setSbtype("5");
 		log.setIp(UserAccountUtil.getInstance().getCurrentIp());
 		commonDAO.save(log);
 		logger.error(user.getName() + "(" + user.getCode() + ")"
