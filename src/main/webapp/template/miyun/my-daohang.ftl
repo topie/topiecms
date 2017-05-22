@@ -1,7 +1,7 @@
 <div class="container">
     	<div class="row">
         	<div class="col-md-6 hd-logo">
-            	<a href="${site.url}" title="密云水库综合信息门户"><img src="/html/miyun-static/img/hd-logo.png" width="100%" height="100%;"></a>	
+            	<a href="${site.url}" title="密云水库综合信息门户"></a>	
             </div>
         </div>
     </div>

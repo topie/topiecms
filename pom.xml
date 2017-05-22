@@ -249,11 +249,11 @@
 			<version>${org.springframework.mobile-version}</version>
 		</dependency>
 
-		<!-- <dependency>
+		 <dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
 			<version>1.9.1.RELEASE</version>
-		</dependency> -->
+		</dependency> 
 		<!-- springframe end -->
 
 		<!-- security start -->
@@ -396,7 +396,7 @@
             <artifactId>apache-mime4j-core</artifactId>
             <version>0.7.2</version>
         </dependency>
-        <dependency>
+        <dependency> 
 		    <groupId>rome</groupId>
 		    <artifactId>rome</artifactId>
 		    <version>1.0</version>
@@ -413,26 +413,7 @@
         <artifactId>annogen</artifactId>
        <version>0.1.0</version>
        </dependency>
-   <dependency>
-    <groupId>org.mongodb</groupId>
-     <artifactId>mongo-java-driver</artifactId>
-     <version>2.11.0</version>
-</dependency><!--
-<dependency>
-    <groupId>org.springframework.data</groupId>
-    <artifactId>spring-data-mongodb</artifactId>
-    <version>1.9.1.RELEASE</version>
-</dependency> -->
-<!--<dependency>
-        <groupId>org.springframework.data</groupId>
-        <artifactId>spring-data-mongodb</artifactId>
-        <version>1.4.1.RELEASE</version>
-    </dependency> -->
-      <dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.2.0.RELEASE</version>
-		</dependency> 
+  
    </dependencies> 
        
 </project>
